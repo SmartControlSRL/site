@@ -79,11 +79,7 @@
         <div class="row margin-top-50">
           <div class="col-md-5 text-left animate fadeInLeft" data-wow-delay="0.4s"> <img class="img-responsive" src="images/privacy.jpg" alt=""> </div>
           <div class="col-md-7 animate fadeInRight" data-wow-delay="0.4s"> 
-            <p class="fz-20">Smart Control is committed in providing its customers with products and services that fulfill their contractual requirements, comply with the relevant statutory and regulatory requirements and achieve the quality and security objectives set for each project. in order to achieve the aforementioned, the company has established the following policies: </p>
-            <ul class="bullet fz-20">
-              <li>ISO 27701 Privacy Information Management System;</li>
-              <li>ISO 45001 standard for management systems of occupational health and safety;</li>
-            </ul>
+            <p class="fz-20">Smart Control is committed in providing its customers with products and services that fulfill their contractual requirements, comply with the relevant statutory and regulatory requirements and achieve the quality and security objectives set for each project. in order to achieve the aforementioned, the company has established the following policies: ISO 9001, ISO 27001, ISO 14001, ISO 45001, ISO 27701 </p>
           </div>
         </div>
         

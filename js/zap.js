@@ -567,12 +567,12 @@ jQuery(document).ready(function ($) {
         !$this.data("isCounting") &&
         current < $this.data("count2")
       ) {
-        $this.html(++current);
+        $this.html(current + 5);
         $this.data("isCounting", true);
         setTimeout(function () {
           $this.data("isCounting", false);
           count2($this);
-        }, 12.5);
+        }, 25);
       }
     }
 
