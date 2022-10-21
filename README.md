@@ -14,3 +14,10 @@ docker build . -t test
 docker run -p 80:80 test
 ```
 ***
+
+## Release
+
+```
+docker build . -t dockersmc/site:tag
+docker push dockersmc/site:tag
+```
