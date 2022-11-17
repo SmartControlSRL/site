@@ -1,8 +1,8 @@
 <?php 
 
 	date_default_timezone_set('Europe/Bucharest');//or change to whatever timezone you want
-	$site_url = "https://smartcontrol.zimdev.ro/";
-	define('base_url','https://smartcontrol.zimdev.ro/');
+	$site_url = "https://smartcontrol.ro/";
+	define('base_url','https://smartcontrol.ro/');
 	function url_slug($str, $replace=array(), $delimiter='-', $maxLength=200) {
 	if( !empty($replace) ) {
 		$str = str_replace((array)$replace, ' ', $str);
