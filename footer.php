@@ -55,10 +55,7 @@
                 <p> <a href="<?=$site_url;?>">SMART CONTROL</a> &copy; <?= date("Y");?></p>
               </div>
               <div class="col-md-6 social-links">
-                <!-- <ul class="right">
-                  <li><a href="#."><i class="fa fa-facebook"></i></a></li>
-                  <li><a href="#."><i class="fa fa-twitter"></i></a></li>
-                </ul> -->
+               <p class="right"><a target="_blank" href="/docs/Politica de confidentialitate.pdf">Politica de confidentialitate</a> </p>
               </div>
             </div>
           </div>
