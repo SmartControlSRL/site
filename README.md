@@ -18,8 +18,6 @@ docker run -p 80:80 test
 ## Release
 
 ```
-docker build . -t dockersmc/site:1.9
-docker build . -t dockersmc/site:latest
-docker push dockersmc/site:tag
-docker push dockersmc/site:latest
+docker build . -t dockersmc/site:1.9.1 && docker build . -t dockersmc/site:latest
+docker push dockersmc/site:1.9.1 && docker push dockersmc/site:latest
 ```
