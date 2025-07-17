@@ -19,7 +19,7 @@
       </div>
       <div class="col-md-8">
         <div class="text-expertise animate fadeInLeft appear27" data-wow-delay = "0.4s">
-          <h4>EXPERTISSE</h4>
+          <h4>EXPERTISE</h4>
           <span>The expertise of our system engineers is defined by:</span>
         </div>
           <ul class="row">

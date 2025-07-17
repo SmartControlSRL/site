@@ -30,7 +30,7 @@
                       <li id="who1"><a href="javascript:void(0)">WHO WE ARE</a></li>
                       <li id="how1"><a href="javascript:void(0)">HOW CAN WE HELP YOU</a></li>
                       <li id="partners1"><a href="javascript:void(0)">OUR PARTNERS</a></li>
-                      <li id="team1"><a href="javascript:void(0)">THE TEAM & EXPERTISSE</a></li>
+                      <li id="team1"><a href="javascript:void(0)">THE TEAM & EXPERTISE</a></li>
                     </ul>
                   </div>
                 </div>
