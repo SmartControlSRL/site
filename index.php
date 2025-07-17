@@ -65,7 +65,7 @@
               <li id="who"><a href="javascript:void(0)" >WHO WE ARE</a></li>
               <li id="how"><a href="javascript:void(0)">HOW CAN WE HELP YOU</a></li>
               <li id="partners"><a href="javascript:void(0)">OUR PARTNERS</a></li>
-              <li id="team"><a href="javascript:void(0)">THE TEAM & EXPERTISSE</a></li>
+              <li id="team"><a href="javascript:void(0)">THE TEAM & EXPERTISE</a></li>
             </ul>
           </nav>
         </div>
