@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Control — Brand Color Guide 2026 (Revised)</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Inter, Calibri, Arial, sans-serif; background: #EDF5FC; color: #374151; line-height: 1.6; }
+  .page { max-width: 960px; margin: 0 auto; padding: 40px 32px 80px; }
+
+  /* Typography */
+  h1 { font-size: 2rem; font-weight: 700; color: #0E1F5B; letter-spacing: -0.5px; }
+  h2 { font-size: 1.25rem; font-weight: 700; color: #0E1F5B; margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 2px solid #4487DC; }
+  h3 { font-size: 1rem; font-weight: 700; color: #0E1F5B; margin: 24px 0 8px; }
+  p  { color: #374151; margin-bottom: 12px; }
+  code { background: #D6E8F7; color: #0E1F5B; padding: 2px 6px; border-radius: 4px; font-size: .85em; font-family: 'Courier New', monospace; }
+
+  /* Header */
+  .header { background: #0E1F5B; color: #fff; border-radius: 12px; padding: 40px 48px; margin-bottom: 40px; }
+  .header h1 { color: #fff; font-size: 1.8rem; }
+  .header .sub { color: #7AB4E8; font-size: .9rem; margin-top: 8px; }
+  .badge { display: inline-block; background: #4487DC; color: #fff; font-size: .75rem; font-weight: 600; padding: 3px 10px; border-radius: 20px; margin-left: 12px; vertical-align: middle; }
+
+  /* Alert box */
+  .alert { border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; border-left: 4px solid; }
+  .alert-warning { background: #FFFBEB; border-color: #F59E0B; color: #92400E; }
+  .alert-info    { background: #EDF5FC; border-color: #4487DC; color: #0E1F5B; }
+  .alert-success { background: #F0FDF4; border-color: #10B981; color: #065F46; }
+  .alert strong  { display: block; margin-bottom: 4px; }
+
+  /* Section label */
+  .section-label { font-size: .7rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #4487DC; margin-bottom: 4px; }
+
+  /* ─── WORKING SET ─── */
+  .working-set { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin: 20px 0; }
+  .ws-card { border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(14,31,91,.10); background: #fff; }
+  .ws-swatch { height: 72px; }
+  .ws-body { padding: 10px 12px; }
+  .ws-name { font-size: .85rem; font-weight: 700; color: #0E1F5B; }
+  .ws-hex  { font-size: .78rem; color: #6B7280; font-family: 'Courier New', monospace; }
+  .ws-role { font-size: .73rem; color: #9CA3AF; margin-top: 2px; }
+
+  /* ─── FULL PALETTE ─── */
+  .palette-row { display: flex; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(14,31,91,.10); margin-bottom: 16px; }
+  .palette-swatch { flex: 1; min-height: 64px; display: flex; flex-direction: column; justify-content: flex-end; padding: 8px 10px; }
+  .ps-name { font-size: .7rem; font-weight: 700; }
+  .ps-hex  { font-size: .68rem; opacity: .8; font-family: 'Courier New', monospace; }
+  .text-light { color: rgba(255,255,255,.9); }
+  .text-dark  { color: rgba(14,31,91,.8); }
+
+  /* ─── NEUTRALS ─── */
+  .neutral-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0; }
+  .neutral-chip { border-radius: 8px; padding: 10px 14px; font-size: .78rem; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+
+  /* ─── SEMANTIC ─── */
+  .semantic-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 16px 0; }
+  .sem-card { border-radius: 10px; padding: 16px; box-shadow: 0 1px 4px rgba(14,31,91,.08); }
+  .sem-dot  { width: 32px; height: 32px; border-radius: 50%; margin-bottom: 8px; }
+  .sem-label { font-size: .8rem; font-weight: 700; }
+  .sem-desc  { font-size: .72rem; color: #6B7280; }
+  .sem-hex   { font-size: .72rem; font-family: 'Courier New', monospace; color: #9CA3AF; }
+
+  /* ─── USAGE TABLE ─── */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: .85rem; }
+  thead th { background: #0E1F5B; color: #fff; padding: 10px 14px; text-align: left; font-weight: 600; }
+  tbody tr:nth-child(even) { background: #F8FAFF; }
+  tbody td { padding: 10px 14px; border-bottom: 1px solid #E5E7EB; vertical-align: top; }
+  .chip { display: inline-block; border-radius: 4px; padding: 1px 7px; font-size: .72rem; font-weight: 700; margin-right: 4px; }
+
+  /* ─── TYPOGRAPHY ─── */
+  .type-demo { background: #fff; border-radius: 10px; padding: 28px 32px; box-shadow: 0 1px 4px rgba(14,31,91,.08); margin: 16px 0; }
+  .type-h1 { font-size: 2rem;   font-weight: 700; color: #0E1F5B; line-height: 1.2; }
+  .type-h2 { font-size: 1.4rem; font-weight: 700; color: #0E1F5B; margin-top: 16px; }
+  .type-h3 { font-size: 1.1rem; font-weight: 700; color: #132563; margin-top: 12px; }
+  .type-body   { font-size: 1rem; color: #374151; margin-top: 8px; line-height: 1.7; }
+  .type-accent { font-size: .9rem; color: #4487DC; margin-top: 8px; font-weight: 500; }
+  .type-label  { font-size: .72rem; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: #6B7280; margin-top: 10px; }
+  .font-spec { background: #0E1F5B; color: #fff; border-radius: 10px; padding: 20px 24px; margin: 16px 0; }
+  .font-spec h3 { color: #7AB4E8; font-size: .8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  .font-row { display: flex; gap: 20px; flex-wrap: wrap; }
+  .font-card { background: rgba(255,255,255,.08); border-radius: 8px; padding: 14px 18px; flex: 1; min-width: 180px; }
+  .font-name { font-size: 1rem; font-weight: 700; color: #fff; }
+  .font-use  { font-size: .78rem; color: #7AB4E8; margin-top: 4px; }
+  .font-weights { font-size: .75rem; color: rgba(255,255,255,.6); margin-top: 6px; }
+
+  /* ─── LOGO RULES ─── */
+  .logo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+  .logo-bg { border-radius: 10px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; box-shadow: 0 1px 4px rgba(14,31,91,.10); }
+  .logo-placeholder { width: 100px; height: 40px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 700; letter-spacing: 1px; }
+  .logo-status { font-size: .8rem; font-weight: 600; }
+  .logo-note   { font-size: .7rem; text-align: center; line-height: 1.4; }
+
+  /* ─── CONTRAST ─── */
+  .contrast-grid { display: grid; gap: 10px; margin: 16px 0; }
+  .contrast-row-item { display: flex; align-items: center; gap: 14px; border-radius: 8px; padding: 12px 16px; box-shadow: 0 1px 3px rgba(14,31,91,.08); }
+  .contrast-sample { min-width: 130px; padding: 8px 14px; border-radius: 6px; font-weight: 700; font-size: .85rem; text-align: center; }
+  .contrast-score { font-weight: 700; font-size: .9rem; }
+  .contrast-label { font-size: .78rem; color: #6B7280; }
+
+  /* ─── PPTX PALETTE ─── */
+  .pptx-swatches { display: flex; gap: 6px; flex-wrap: wrap; margin: 12px 0; }
+  .pptx-chip { width: 44px; height: 44px; border-radius: 6px; display: flex; align-items: flex-end; padding: 2px 3px; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+  .pptx-chip span { font-size: .52rem; color: rgba(255,255,255,.85); font-family: 'Courier New', monospace; }
+  .pptx-chip.light span { color: rgba(14,31,91,.7); }
+
+  /* Footer */
+  .footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid #D6E8F7; text-align: center; font-size: .78rem; color: #9CA3AF; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="section-label" style="color:#7AB4E8;margin-bottom:8px;">BRAND GUIDE v2.0 · 2026</div>
+    <h1>Smart Control — Brand Color System <span class="badge">REVISED</span></h1>
+    <div class="sub">Schemă oficială de culori · Tipografie · Reguli de utilizare · Enterprise IT</div>
+  </div>
+
+  <!-- REVISION NOTICE -->
+  <div class="alert alert-success">
+    <strong>Ce s-a schimbat față de v1.0</strong>
+    Această versiune adaugă: setul de lucru zilnic (5 culori esențiale), specificația tipografică (Inter + Calibri), reguli clare pentru logo pe fundal închis, și simplificarea nomenclaturii. Toate culorile din v1.0 sunt păstrate — schimbările sunt de organizare și claritate.
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- 00 — WORKING SET -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <h2>00 — Setul de Lucru Zilnic <span class="badge" style="background:#10B981">NOU</span></h2>
+  <p>Folosește <strong>aceste 5 culori</strong> în toate documentele, prezentările și materialele de zi cu zi. Celelalte culori din paletă sunt pentru hover, borduri și detalii de interfață — nu pentru documente și slides.</p>
+
+  <div class="working-set">
+    <div class="ws-card">
+      <div class="ws-swatch" style="background:#0E1F5B"></div>
+      <div class="ws-body">
+        <div class="ws-name">SC Deep Navy</div>
+        <div class="ws-hex">#0E1F5B</div>
+        <div class="ws-role">Headere, titluri, slide-uri de copertă</div>
+      </div>
+    </div>
+    <div class="ws-card">
+      <div class="ws-swatch" style="background:#374151"></div>
+      <div class="ws-body">
+        <div class="ws-name">Dark Gray</div>
+        <div class="ws-hex">#374151</div>
+        <div class="ws-role">Text body în documente</div>
+      </div>
+    </div>
+    <div class="ws-card">
+      <div class="ws-swatch" style="background:#4487DC"></div>
+      <div class="ws-body">
+        <div class="ws-name">SC Sky Blue</div>
+        <div class="ws-hex">#4487DC</div>
+        <div class="ws-role">Butoane, linkuri, accent, CTA</div>
+      </div>
+    </div>
+    <div class="ws-card">
+      <div class="ws-swatch" style="background:#EDF5FC; border: 1px solid #D6E8F7;"></div>
+      <div class="ws-body">
+        <div class="ws-name">SC Ice</div>
+        <div class="ws-hex">#EDF5FC</div>
+        <div class="ws-role">Fundal pagini, slide-uri light</div>
+      </div>
+    </div>
+    <div class="ws-card">
+      <div class="ws-swatch" style="background:#FFFFFF; border: 1px solid #E5E7EB;"></div>
+      <div class="ws-body">
+        <div class="ws-name">White</div>
+        <div class="ws-hex">#FFFFFF</div>
+        <div class="ws-role">Carduri, documente, text pe dark</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- 01 — TYPOGRAPHY (NEW SECTION) -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <h2>01 — Tipografie <span class="badge" style="background:#10B981">NOU</span></h2>
+
+  <div class="font-spec">
+    <h3>Font oficial Smart Control</h3>
+    <div class="font-row">
+      <div class="font-card">
+        <div class="font-name">Inter</div>
+        <div class="font-use">Font principal — digital, prezentări web, site</div>
+        <div class="font-weights">Weights: 400 (body) · 500 (subtitluri) · 700 (titluri)</div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,.5);margin-top:6px;">Gratuit — Google Fonts / fonts.google.com</div>
+      </div>
+      <div class="font-card">
+        <div class="font-name">Calibri</div>
+        <div class="font-use">Fallback Office — Word, PowerPoint, Excel</div>
+        <div class="font-weights">Weights: Regular · Bold (nu se folosesc alte weights)</div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,.5);margin-top:6px;">Preinstalat în Microsoft Office</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-warning">
+    <strong>Regulă de aur tipografică</strong>
+    Nu se amestecă fonturi. Dacă un document folosește Calibri, tot documentul folosește Calibri. Nu se folosesc fonturi decorative, serif, sau alte variante. Niciodată mai mult de 2 dimensiuni de font pe același slide.
+  </div>
+
+  <div class="type-demo">
+    <div class="type-h1">Smart Control · Trusted Partner in IT</div>
+    <div class="type-h2">Servicii de Infrastructură IT Enterprise</div>
+    <div class="type-h3">Data Center Transformation &amp; Virtualizare</div>
+    <div class="type-body">Smart Control oferă soluții complete de IT — de la infrastructura fizică și virtualizare, până la securitate cibernetică și automatizare AI. Susținut de 50+ profesioniști și 20+ ani de expertiză.</div>
+    <div class="type-accent">Contactează-ne pentru un assessment gratuit →</div>
+    <div class="type-label">ISO 9001 · ISO 27001 · ISO 14001 · ISO 45001 · ISO 27701</div>
+  </div>
+
+  <table>
+    <thead><tr><th>Element</th><th>Dimensiune</th><th>Weight</th><th>Culoare</th></tr></thead>
+    <tbody>
+      <tr><td>H1 — Titlu principal</td><td>32pt / 2rem</td><td>700 Bold</td><td><span class="chip" style="background:#0E1F5B;color:#fff;">#0E1F5B</span></td></tr>
+      <tr><td>H2 — Titlu secțiune</td><td>24pt / 1.4rem</td><td>700 Bold</td><td><span class="chip" style="background:#0E1F5B;color:#fff;">#0E1F5B</span></td></tr>
+      <tr><td>H3 — Subtitlu</td><td>18pt / 1.1rem</td><td>700 Bold</td><td><span class="chip" style="background:#132563;color:#fff;">#132563</span></td></tr>
+      <tr><td>Body text</td><td>11pt / 1rem</td><td>400 Regular</td><td><span class="chip" style="background:#374151;color:#fff;">#374151</span></td></tr>
+      <tr><td>Text accent / link</td><td>10pt / .9rem</td><td>500 Medium</td><td><span class="chip" style="background:#4487DC;color:#fff;">#4487DC</span></td></tr>
+      <tr><td>Label / Tag / Metadata</td><td>8pt / .72rem</td><td>700 Bold, uppercase</td><td><span class="chip" style="background:#6B7280;color:#fff;">#6B7280</span></td></tr>
+    </tbody>
+  </table>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- 02 — LOGO RULES -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <h2>02 — Logo pe Fundal — Reguli Actualizate</h2>
+
+  <div class="alert alert-warning">
+    <strong>Problemă identificată în v1.0</strong>
+    Logo-ul actual (optimizat pentru fundal deschis) nu funcționează pe fundal închis. Până când versiunea albă/inversă este creată, <strong>slide-urile cu fundal dark nu vor afișa logo-ul</strong> — mai bine fără logo decât cu unul care se pierde.
+  </div>
+
+  <div class="logo-grid">
+    <div class="logo-bg" style="background:#FFFFFF;border:1px solid #E5E7EB;">
+      <div class="logo-placeholder" style="background:#EDF5FC;color:#0E1F5B;">SC LOGO</div>
+      <div class="logo-status" style="color:#10B981;">✅ Recomandat</div>
+      <div class="logo-note" style="color:#6B7280;">White · #FFFFFF<br>Utilizare principală</div>
+    </div>
+    <div class="logo-bg" style="background:#EDF5FC;border:1px solid #D6E8F7;">
+      <div class="logo-placeholder" style="background:#D6E8F7;color:#0E1F5B;">SC LOGO</div>
+      <div class="logo-status" style="color:#10B981;">✅ Recomandat</div>
+      <div class="logo-note" style="color:#6B7280;">SC Ice · #EDF5FC<br>Documente, email, site</div>
+    </div>
+    <div class="logo-bg" style="background:#4487DC;">
+      <div class="logo-placeholder" style="background:rgba(255,255,255,.2);color:#fff;">SC LOGO</div>
+      <div class="logo-status" style="color:#FCD34D;">⚠️ Limitat</div>
+      <div class="logo-note" style="color:rgba(255,255,255,.8);">SC Sky Blue · #4487DC<br>Doar contexte secundare</div>
+    </div>
+    <div class="logo-bg" style="background:#0E1F5B;">
+      <div class="logo-placeholder" style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.5);font-size:.65rem;">LOGO ALB<br>NECESAR</div>
+      <div class="logo-status" style="color:#FCD34D;">⚠️ Necesită versiune albă</div>
+      <div class="logo-note" style="color:#7AB4E8;">SC Deep Navy · #0E1F5B<br>Folosiți doar versiunea albă</div>
+    </div>
+    <div class="logo-bg" style="background:#040C2B;">
+      <div class="logo-placeholder" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.4);font-size:.65rem;">LOGO ALB<br>NECESAR</div>
+      <div class="logo-status" style="color:#EF4444;">❌ Evitați fără logo alb</div>
+      <div class="logo-note" style="color:#7AB4E8;">SC Midnight · #040C2B<br>Fără versiunea albă: fără logo</div>
+    </div>
+    <div class="logo-bg" style="background:linear-gradient(135deg,#040C2B,#4487DC);">
+      <div class="logo-placeholder" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.4);font-size:.65rem;">LOGO ALB<br>NECESAR</div>
+      <div class="logo-status" style="color:#EF4444;">❌ Evitați fără logo alb</div>
+      <div class="logo-note" style="color:#fff;">Gradient Brand<br>Fără versiunea albă: fără logo</div>
+    </div>
+  </div>
+
+  <div class="alert alert-info">
+    <strong>💡 Acțiune necesară: Creați versiunea albă a logo-ului</strong>
+    Rugați designerul să exporte logo-ul cu toate elementele în alb pur (#FFFFFF). Această versiune se folosește exclusiv pe fonduri închise (navy, midnight, gradient). Este o practică standard pentru orice brand cu identitate dark. Format: SVG + PNG transparent.
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- 03 — FULL PALETTE -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <h2>03 — Paleta Completă — Culori Primare</h2>
+  <p>Derivate din gradientul logo-ului. Culorile din <strong>Setul de Lucru Zilnic</strong> sunt marcate cu ★</p>
+
+  <div class="palette-row">
+    <div class="palette-swatch text-light" style="background:#040C2B;flex:0.7;">
+      <div class="ps-name">Midnight</div><div class="ps-hex">#040C2B</div>
+    </div>
+    <div class="palette-swatch text-light" style="background:#0E1F5B;">
+      <div class="ps-name">Deep Navy ★</div><div class="ps-hex">#0E1F5B · Primary</div>
+    </div>
+    <div class="palette-swatch text-light" style="background:#132563;flex:0.9;">
+      <div class="ps-name">Navy</div><div class="ps-hex">#132563</div>
+    </div>
+    <div class="palette-swatch text-light" style="background:#1F3C80;">
+      <div class="ps-name">Mid Navy</div><div class="ps-hex">#1F3C80</div>
+    </div>
+    <div class="palette-swatch text-light" style="background:#3470C0;">
+      <div class="ps-name">Blue</div><div class="ps-hex">#3470C0</div>
+    </div>
+    <div class="palette-swatch text-light" style="background:#4487DC;">
+      <div class="ps-name">Sky Blue ★</div><div class="ps-hex">#4487DC · Accent</div>
+    </div>
+    <div class="palette-swatch text-dark" style="background:#7AB4E8;">
+      <div class="ps-name">Light Blue</div><div class="ps-hex">#7AB4E8</div>
+    </div>
+    <div class="palette-swatch text-dark" style="background:#D6E8F7;flex:0.7;">
+      <div class="ps-name">Pale Blue</div><div class="ps-hex">#D6E8F7</div>
+    </div>
+    <div class="palette-swatch text-dark" style="background:#EDF5FC;border:1px solid #D6E8F7;flex:0.8;">
+      <div class="ps-name">Ice ★</div><div class="ps-hex">#EDF5FC · BG</div>
+    </div>
+  </div>
+
+  <div class="alert alert-info" style="margin-top:8px;">
+    <strong>Regulă pentru paleta extinsă</strong>
+    Culorile fără ★ (Midnight, Navy, Mid Navy, Blue, Light Blue, Pale Blue) sunt pentru hover states, borduri, iconuri tehnice, și elemente de interfață. Nu se folosesc ca culori principale în prezentări sau documente Word.
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- 04 — NEUTRALS -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <h2>04 — Gri &amp; Negru</h2>
+  <div class="neutral-row">
+    <div class="neutral-chip" style="background:#111827;color:#fff;">Near Black<br><code style="background:rgba(255,255,255,.15);color:#fff;">#111827</code></div>
+    <div class="neutral-chip" style="background:#374151;color:#fff;">Dark Gray ★<br><code style="background:rgba(255,255,255,.15);color:#fff;">#374151</code></div>
+    <div class="neutral-chip" style="background:#6B7280;color:#fff;">Mid Gray<br><code style="background:rgba(255,255,255,.15);color:#fff;">#6B7280</code></div>
+    <div class="neutral-chip" style="background:#D1D5DB;color:#374151;">Light Gray<br><code style="background:rgba(0,0,0,.06);color:#374151;">#D1D5DB</code></div>
+    <div class="neutral-chip" style="background:#F3F4F6;color:#374151;border:1px solid #E5E7EB;">Off White<br><code style="background:rgba(0,0,0,.06);color:#374151;">#F3F4F6</code></div>
+    <div class="neutral-chip" style="background:#FFFFFF;color:#374151;border:1px solid #E5E7EB;">White ★<br><code style="background:rgba(0,0,0,.06);color:#374151;">#FFFFFF</code></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- 05 — SEMANTIC / STATUS -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <h2>05 — Culori Funcționale / Status</h2>
+
+  <div class="alert alert-info">
+    <strong>Modificare față de v1.0</strong>
+    Culoarea Info a fost consolidată cu SC Sky Blue (#4487DC) pentru a evita confuzia vizuală cu albastrul de brand. Nu mai există o culoare Info separată.
+  </div>
+
+  <div class="semantic-row">
+    <div class="sem-card" style="background:#F0FDF4;border:1px solid #86EFAC;">
+      <div class="sem-dot" style="background:#10B981;"></div>
+      <div class="sem-label" style="color:#065F46;">Success</div>
+      <div class="sem-desc">Finalizat · Activ · OK</div>
+      <div class="sem-hex">#10B981</div>
+    </div>
+    <div class="sem-card" style="background:#FFFBEB;border:1px solid #FCD34D;">
+      <div class="sem-dot" style="background:#F59E0B;"></div>
+      <div class="sem-label" style="color:#92400E;">Warning</div>
+      <div class="sem-desc">Atenție · În progres</div>
+      <div class="sem-hex">#F59E0B</div>
+    </div>
+    <div class="sem-card" style="background:#FEF2F2;border:1px solid #FCA5A5;">
+      <div class="sem-dot" style="background:#EF4444;"></div>
+      <div class="sem-label" style="color:#991B1B;">Error</div>
+      <div class="sem-desc">Eroare · Risc · Stop</div>
+      <div class="sem-hex">#EF4444</div>
+    </div>
+    <div class="sem-card" style="background:#EDF5FC;border:1px solid #7AB4E8;">
+      <div class="sem-dot" style="background:#4487DC;"></div>
+      <div class="sem-label" style="color:#0E1F5B;">Info</div>
+      <div class="sem-desc">Informație · Notă</div>
+      <div class="sem-hex">#4487DC (Sky Blue)</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- 06 — USAGE GUIDE -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <h2>06 — Ghid de Utilizare per Document</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Culoare</th>
+        <th>Hex</th>
+        <th>PowerPoint / Google Slides</th>
+        <th>Word / Documente</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>SC Deep Navy ★</strong></td>
+        <td><code>#0E1F5B</code></td>
+        <td>Slide-uri de titlu, headere secțiuni, fundal dark</td>
+        <td>H1, navbar, footer, titluri principale</td>
+      </tr>
+      <tr>
+        <td><strong>SC Navy</strong></td>
+        <td><code>#132563</code></td>
+        <td>Text principal pe fundal alb, subtitluri slide</td>
+        <td>H2, H3, sidebar, butoane primary</td>
+      </tr>
+      <tr>
+        <td><strong>SC Sky Blue ★</strong></td>
+        <td><code>#4487DC</code></td>
+        <td>Accent pe slide-uri dark, bullets, CTA</td>
+        <td>Linkuri, accente, badges, info boxes</td>
+      </tr>
+      <tr>
+        <td><strong>SC Ice ★</strong></td>
+        <td><code>#EDF5FC</code></td>
+        <td>Fundal slide-uri light, zone alternante</td>
+        <td>Fundal pagini, card backgrounds</td>
+      </tr>
+      <tr>
+        <td><strong>White ★</strong></td>
+        <td><code>#FFFFFF</code></td>
+        <td>Text pe fundal dark, slide-uri content</td>
+        <td>Card backgrounds, input fields</td>
+      </tr>
+      <tr>
+        <td><strong>Dark Gray ★</strong></td>
+        <td><code>#374151</code></td>
+        <td>Text body pe slide-uri light</td>
+        <td>Text paragraf, descrieri, conținut secundar</td>
+      </tr>
+      <tr>
+        <td><strong>Mid Navy</strong></td>
+        <td><code>#1F3C80</code></td>
+        <td>Evidențieri tabele, casete info</td>
+        <td>Hover states, variante butoane, iconuri</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- 07 — POWERPOINT CONFIG -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <h2>07 — Configurare PowerPoint / Google Slides</h2>
+  <p>Adaugă culorile în ordinea de mai jos ca "Custom Colors" în tema prezentărilor. <strong>Numerele SC- (ex: SC-800) sunt coduri tehnice</strong> — folosiți numele prietenoase (Deep Navy, Sky Blue etc.) în comunicare.</p>
+
+  <h3>Tema recomandată — 10 culori principale</h3>
+  <div class="pptx-swatches">
+    <div class="pptx-chip" style="background:#040C2B;"><span>#040C2B</span></div>
+    <div class="pptx-chip" style="background:#0E1F5B;"><span>#0E1F5B</span></div>
+    <div class="pptx-chip" style="background:#132563;"><span>#132563</span></div>
+    <div class="pptx-chip" style="background:#1F3C80;"><span>#1F3C80</span></div>
+    <div class="pptx-chip" style="background:#3470C0;"><span>#3470C0</span></div>
+    <div class="pptx-chip" style="background:#4487DC;"><span>#4487DC</span></div>
+    <div class="pptx-chip" style="background:#7AB4E8;"><span style="color:rgba(14,31,91,.8);">#7AB4E8</span></div>
+    <div class="pptx-chip light" style="background:#EDF5FC;border:1px solid #D6E8F7;"><span>#EDF5FC</span></div>
+    <div class="pptx-chip" style="background:#374151;"><span>#374151</span></div>
+    <div class="pptx-chip light" style="background:#FFFFFF;border:1px solid #E5E7EB;"><span>#FFF</span></div>
+  </div>
+
+  <h3>Culori complementare (accent / status)</h3>
+  <div class="pptx-swatches">
+    <div class="pptx-chip" style="background:#10B981;"><span>#10B981</span></div>
+    <div class="pptx-chip" style="background:#F59E0B;"><span style="color:rgba(14,31,91,.8);">#F59E0B</span></div>
+    <div class="pptx-chip" style="background:#EF4444;"><span>#EF4444</span></div>
+    <div class="pptx-chip" style="background:#6B7280;"><span>#6B7280</span></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- 08 — CONTRAST -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <h2>08 — Contrast &amp; Lizibilitate (WCAG AA)</h2>
+
+  <div class="contrast-grid">
+    <div class="contrast-row-item" style="background:#fff;">
+      <div class="contrast-sample" style="background:#040C2B;color:#fff;">Text alb</div>
+      <div><div class="contrast-score" style="color:#10B981;">✅ ~18:1 Excelent</div><div class="contrast-label">Alb pe SC Midnight — slide-uri titlu, headers dark</div></div>
+    </div>
+    <div class="contrast-row-item" style="background:#fff;">
+      <div class="contrast-sample" style="background:#0E1F5B;color:#fff;">Text alb</div>
+      <div><div class="contrast-score" style="color:#10B981;">✅ ~14:1 Excelent</div><div class="contrast-label">Alb pe SC Deep Navy — butoane, carduri dark, navbar</div></div>
+    </div>
+    <div class="contrast-row-item" style="background:#fff;">
+      <div class="contrast-sample" style="background:#4487DC;color:#fff;">Text alb</div>
+      <div><div class="contrast-score" style="color:#10B981;">✅ ~4.8:1 AA</div><div class="contrast-label">Alb pe SC Sky Blue — butoane CTA, badges, tags</div></div>
+    </div>
+    <div class="contrast-row-item" style="background:#fff;">
+      <div class="contrast-sample" style="background:#EDF5FC;color:#111827;">Text dark</div>
+      <div><div class="contrast-score" style="color:#10B981;">✅ ~17:1 Excelent</div><div class="contrast-label">Near Black pe SC Ice — text body pe background light</div></div>
+    </div>
+    <div class="contrast-row-item" style="background:#fff;">
+      <div class="contrast-sample" style="background:#040C2B;color:#4487DC;">Text Sky Blue</div>
+      <div><div class="contrast-score" style="color:#10B981;">✅ ~5.8:1 AA</div><div class="contrast-label">Sky Blue pe Midnight — accent pe slide-uri dark, linkuri</div></div>
+    </div>
+    <div class="contrast-row-item" style="background:#fff;">
+      <div class="contrast-sample" style="background:#0E1F5B;color:#7AB4E8;">Text Light Blue</div>
+      <div><div class="contrast-score" style="color:#10B981;">✅ ~6.2:1 AA</div><div class="contrast-label">Light Blue pe Deep Navy — subtitluri pe fundal dark</div></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Smart Control Brand Color Guide v2.0 · 2026 · Revizuit cu recomandări brand review · Uz intern
+  </div>
+</div>
+</body>
+</html>

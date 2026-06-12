@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: #FFFFFF; }
+    @keyframes scWordIn { from { opacity: 0; transform: translateY(20px); filter: blur(3px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+    @keyframes scFadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-delay: 0ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+      html { scroll-behavior: auto; }
+    }
+    ::selection { background: rgba(68,135,220,0.25); }
+  </style>
+</helmet>
+<div ref="{{ rootRef }}" style="font-family: Inter, 'Segoe UI', -apple-system, sans-serif; background: #FFFFFF; color: #374151; font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden;">
+
+  <!-- ============ NAV (light, shared) ============ -->
+  <nav ref="{{ navRef }}" data-screen-label="Nav" style="position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 18px 40px; background: #FFFFFF; border-bottom: 1px solid rgba(229,231,235,0); transition: padding 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s, border-color 0.3s;">
+    <div style="max-width: 1180px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 32px;">
+      <a href="Home.dc.html" style="display: flex; align-items: center; gap: 11px; text-decoration: none;">
+        <img src="ds/assets/smartcontrol-mark.png" alt="Smart Control" style="width: 34px; height: 34px; display: block;">
+        <span style="font-size: 17px; font-weight: 700; letter-spacing: -0.3px; color: #0E1F5B;">Smart<span style="color: #4487DC;">Control</span></span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 28px;">
+        <a href="Home.dc.html#servicii" style="font-size: 13.5px; font-weight: 500; color: #374151; text-decoration: none; padding-bottom: 3px; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s;" style-hover="color: #0E1F5B; border-bottom-color: #4487DC;">Servicii</a>
+        <a href="SEKNET.dc.html" style="font-size: 13.5px; font-weight: 500; color: #374151; text-decoration: none; padding-bottom: 3px; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s;" style-hover="color: #0E1F5B; border-bottom-color: #4487DC;">SEKNET</a>
+        <a href="SVPN.dc.html" style="font-size: 13.5px; font-weight: 600; color: #0E1F5B; text-decoration: none; padding-bottom: 3px; border-bottom: 2px solid #4487DC;">S-VPN</a>
+        <a href="Cloud.dc.html" style="font-size: 13.5px; font-weight: 500; color: #374151; text-decoration: none; padding-bottom: 3px; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s;" style-hover="color: #0E1F5B; border-bottom-color: #4487DC;">Cloud &amp; Modernization</a>
+        <a href="#contact" style="font-size: 13.5px; font-weight: 600; color: #FFFFFF; text-decoration: none; padding: 9px 18px; border-radius: 10px; background: #0E1F5B; transition: background 0.2s, box-shadow 0.2s;" style-hover="background: #040C2B; box-shadow: 0 4px 16px rgba(14,31,91,0.25);">Solicită demo</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ PRODUCT HERO (dark + network) ============ -->
+  <header data-screen-label="S-VPN Hero (dark)" style="position: relative; overflow: hidden; background: #040C2B;">
+    <canvas ref="{{ heroCanvasRef }}" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.75;"></canvas>
+    <div style="position: absolute; inset: 0; background: radial-gradient(ellipse 75% 65% at 35% 40%, rgba(4,12,43,0) 0%, rgba(4,12,43,0.5) 60%, #040C2B 100%);"></div>
+    <div data-hero-scrub style="position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; padding: 190px 40px 120px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: #7AB4E8; display: inline-block; padding-bottom: 10px; border-bottom: 2px solid rgba(122,180,232,0.3); opacity: 0; animation: scFadeIn 0.8s ease-out 0.1s forwards;">Produs proprietar · Suită integrată de acces remote</div>
+      <h1 style="margin: 26px 0 0; font-size: 62px; font-weight: 800; letter-spacing: -2px; line-height: 1.08; color: #FFFFFF; max-width: 860px;">
+        <span style="display: inline-block; opacity: 0; animation: scWordIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.25s forwards;">S-VPN.</span>
+        <span style="display: inline-block; opacity: 0; animation: scWordIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.45s forwards; color: #7AB4E8;">Acces</span>
+        <span style="display: inline-block; opacity: 0; animation: scWordIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.57s forwards; color: #7AB4E8;">remote</span>
+        <span style="display: inline-block; opacity: 0; animation: scWordIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.69s forwards; color: #7AB4E8;">sigur.</span>
+        <br>
+        <span style="display: inline-block; opacity: 0; animation: scWordIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.86s forwards; color: #7AB4E8;">Fără</span>
+        <span style="display: inline-block; opacity: 0; animation: scWordIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.98s forwards; color: #7AB4E8;">compromisuri.</span>
+      </h1>
+      <p style="margin: 26px 0 0; font-size: 18px; line-height: 1.7; max-width: 640px; color: rgba(226,233,245,0.72); opacity: 0; animation: scFadeIn 0.9s ease-out 1.15s forwards;">Ce la alți furnizori se cumpără și se administrează separat, S-VPN livrează integrat: <strong style="color: #FFFFFF; font-weight: 600;">VPN, MFA, WAF, protecție endpoint și consolă de management</strong> — la o fracțiune din costul soluțiilor tradiționale, cu toate serviciile incluse în licență.</p>
+      <div style="margin-top: 38px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; opacity: 0; animation: scFadeIn 0.9s ease-out 1.35s forwards;">
+        <a href="#contact" style="display: inline-flex; align-items: center; font-size: 14.5px; font-weight: 600; color: #FFFFFF; text-decoration: none; padding: 13px 26px; border-radius: 10px; background: #4487DC; box-shadow: 0 0 28px rgba(68,135,220,0.45); transition: background 0.25s, box-shadow 0.25s;" style-hover="background: #3470C0; box-shadow: 0 0 40px rgba(68,135,220,0.65);">Solicită un demo</a>
+        <a href="#module" style="font-size: 14.5px; font-weight: 600; color: #7AB4E8; text-decoration: none; padding: 13px 8px; transition: color 0.2s;" style-hover="color: #FFFFFF;">Vezi modulele ›</a>
+      </div>
+      <div style="margin-top: 56px; display: flex; gap: 36px; flex-wrap: wrap; opacity: 0; animation: scFadeIn 0.9s ease-out 1.55s forwards;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: rgba(226,233,245,0.55);"><span style="color: #7AB4E8;">▸</span> TLS 1.2 / 1.3 · AES-256 + PFS</div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: rgba(226,233,245,0.55);"><span style="color: #7AB4E8;">▸</span> 5 metode MFA, active simultan</div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: rgba(226,233,245,0.55);"><span style="color: #7AB4E8;">▸</span> Zero hardware proprietar</div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: rgba(226,233,245,0.55);"><span style="color: #7AB4E8;">▸</span> −60% față de Cisco / Fortinet</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ PERFORMANTA (count-up) ============ -->
+  <section data-screen-label="Performanță" style="padding: 72px 40px 0;">
+    <div style="max-width: 1180px; margin: 0 auto;">
+      <div data-reveal style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #E5E7EB; border: 1px solid #E5E7EB; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(14,31,91,0.06);">
+        <div style="background: #FFFFFF; padding: 34px 32px;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 48px; font-weight: 600; line-height: 1; color: #0E1F5B;"><span data-count="20">20</span><span style="color: #4487DC;">Gbps+</span></div>
+          <div style="margin-top: 12px; font-size: 14px; color: #6B7280;">Inspecție trafic Layer 7</div>
+        </div>
+        <div style="background: #FFFFFF; padding: 34px 32px;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 48px; font-weight: 600; line-height: 1; color: #0E1F5B;"><span data-count="10">10</span><span style="color: #4487DC;">K+</span></div>
+          <div style="margin-top: 12px; font-size: 14px; color: #6B7280;">Tuneluri IPSec simultane</div>
+        </div>
+        <div style="background: #FFFFFF; padding: 34px 32px;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 48px; font-weight: 600; line-height: 1; color: #0E1F5B;"><span data-count="400">400</span><span style="color: #4487DC;">+</span></div>
+          <div style="margin-top: 12px; font-size: 14px; color: #6B7280;">Tuneluri SSL concurente</div>
+        </div>
+        <div style="background: #FFFFFF; padding: 34px 32px;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 48px; font-weight: 600; line-height: 1; color: #0E1F5B;"><span data-count="200">200</span><span style="color: #4487DC;">+</span></div>
+          <div style="margin-top: 12px; font-size: 14px; color: #6B7280;">Locații site-to-site IPSec</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MODULE (5 module, 3+2) ============ -->
+  <section id="module" data-screen-label="Module" style="padding: 110px 40px; scroll-margin-top: 76px;">
+    <div style="max-width: 1180px; margin: 0 auto;">
+      <div data-reveal>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: #4487DC; display: inline-block; padding-bottom: 10px; border-bottom: 2px solid #D6E8F7;">Module</div>
+        <h2 data-word-fill="light" style="margin: 24px 0 0; font-size: 38px; font-weight: 700; letter-spacing: -1px; line-height: 1.15; color: #0E1F5B; max-width: 700px;">Cinci capabilități, un singur produs</h2>
+        <p style="margin: 16px 0 0; font-size: 16.5px; max-width: 640px; color: #6B7280;">30 de specificații funcționale și 19 non-funcționale, documentate în fișa tehnică. 5 module · 1 produs · 1 licență.</p>
+      </div>
+      <div data-skew="4" style="margin-top: 52px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px;">
+
+        <div data-reveal data-reveal-rotate="-4" data-drift="0.07" style="grid-column: span 2;">
+          <div style="height: 100%; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 16px; padding: 30px 32px; box-shadow: 0 2px 12px rgba(14,31,91,0.06); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s, border-color 0.35s;" style-hover="transform: translateY(-5px); box-shadow: 0 12px 32px rgba(14,31,91,0.14); border-color: #D6E8F7;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <span style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 10px; background: #EDF5FC; border: 1px solid #D6E8F7;"><i data-lucide="network" style="width: 22px; height: 22px; color: #0E1F5B;"></i></span>
+              <div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: #4487DC;">S-VPN</div>
+                <h3 style="margin: 2px 0 0; font-size: 19px; font-weight: 700; letter-spacing: -0.3px; color: #0E1F5B;">VPN</h3>
+              </div>
+            </div>
+            <p style="margin: 16px 0 0; font-size: 13.5px; color: #6B7280;">Conectivitate securizată SSL &amp; IPSec.</p>
+            <div style="margin-top: 16px; display: grid; gap: 8px;">
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>SSL VPN — până la 400 tuneluri concurente</div>
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>IPSec — peste 10.000 tuneluri simultane</div>
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Site-to-site — 200+ locații</div>
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Windows, macOS, Linux, iOS, Android</div>
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Split tunneling per utilizator / grup</div>
+            </div>
+          </div>
+        </div>
+
+        <div data-reveal data-reveal-delay="80" data-reveal-rotate="4" style="grid-column: span 2;">
+          <div style="height: 100%; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 16px; padding: 30px 32px; box-shadow: 0 2px 12px rgba(14,31,91,0.06); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s, border-color 0.35s;" style-hover="transform: translateY(-5px); box-shadow: 0 12px 32px rgba(14,31,91,0.14); border-color: #D6E8F7;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <span style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 10px; background: #EDF5FC; border: 1px solid #D6E8F7;"><i data-lucide="key-round" style="width: 22px; height: 22px; color: #0E1F5B;"></i></span>
+              <div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: #4487DC;">S-VPN</div>
+                <h3 style="margin: 2px 0 0; font-size: 19px; font-weight: 700; letter-spacing: -0.3px; color: #0E1F5B;">MFA</h3>
+              </div>
+            </div>
+            <p style="margin: 16px 0 0; font-size: 13.5px; color: #6B7280;">Cinci metode — alegi varianta potrivită.</p>
+            <div style="margin-top: 16px; display: grid; gap: 8px;">
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>SMS On-Premises — server la client</div>
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>SMS Shared — gestionat de SmartControl</div>
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>E-mail OTP — fără infrastructură nouă</div>
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>TOTP — Google / Microsoft Authenticator</div>
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Certificate X.509 — nivel maxim de asigurare</div>
+            </div>
+          </div>
+        </div>
+
+        <div data-reveal data-reveal-delay="160" data-reveal-rotate="-4" data-drift="-0.07" style="grid-column: span 2;">
+          <div style="height: 100%; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 16px; padding: 30px 32px; box-shadow: 0 2px 12px rgba(14,31,91,0.06); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s, border-color 0.35s;" style-hover="transform: translateY(-5px); box-shadow: 0 12px 32px rgba(14,31,91,0.14); border-color: #D6E8F7;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <span style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 10px; background: #EDF5FC; border: 1px solid #D6E8F7;"><i data-lucide="shield-alert" style="width: 22px; height: 22px; color: #0E1F5B;"></i></span>
+              <div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: #4487DC;">S-VPN</div>
+                <h3 style="margin: 2px 0 0; font-size: 19px; font-weight: 700; letter-spacing: -0.3px; color: #0E1F5B;">WAF</h3>
+              </div>
+            </div>
+            <p style="margin: 16px 0 0; font-size: 13.5px; color: #6B7280;">Web Application Firewall + UTM.</p>
+            <div style="margin-top: 16px; display: grid; gap: 8px;">
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Protecție SQL Injection și XSS</div>
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>HTTP constraints și rate limiting</div>
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Semnături OWASP Top 10, actualizate</div>
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>DPI Layer 7 la peste 20 Gbps</div>
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Filtrare URL și categorii la gateway</div>
+            </div>
+          </div>
+        </div>
+
+        <div data-reveal data-reveal-rotate="4" data-drift="0.07" style="grid-column: span 3;">
+          <div style="height: 100%; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 16px; padding: 30px 32px; box-shadow: 0 2px 12px rgba(14,31,91,0.06); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s, border-color 0.35s;" style-hover="transform: translateY(-5px); box-shadow: 0 12px 32px rgba(14,31,91,0.14); border-color: #D6E8F7;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <span style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 10px; background: #EDF5FC; border: 1px solid #D6E8F7;"><i data-lucide="laptop" style="width: 22px; height: 22px; color: #0E1F5B;"></i></span>
+              <div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: #4487DC;">S-VPN</div>
+                <h3 style="margin: 2px 0 0; font-size: 19px; font-weight: 700; letter-spacing: -0.3px; color: #0E1F5B;">Endpoint</h3>
+              </div>
+            </div>
+            <p style="margin: 16px 0 0; font-size: 13.5px; color: #6B7280;">Protecția stației client — niciun dispozitiv neconform nu intră în rețea.</p>
+            <div style="margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px;">
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Scanare vulnerabilități OS în timp real</div>
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Detecție CVE aplicații terțe</div>
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Verificare conformitate la conectare</div>
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Blocare dispozitive neconforme</div>
+            </div>
+          </div>
+        </div>
+
+        <div data-reveal data-reveal-delay="80" data-reveal-rotate="-4" data-drift="-0.07" style="grid-column: span 3;">
+          <div style="height: 100%; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 16px; padding: 30px 32px; box-shadow: 0 2px 12px rgba(14,31,91,0.06); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s, border-color 0.35s;" style-hover="transform: translateY(-5px); box-shadow: 0 12px 32px rgba(14,31,91,0.14); border-color: #D6E8F7;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <span style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 10px; background: #EDF5FC; border: 1px solid #D6E8F7;"><i data-lucide="sliders-horizontal" style="width: 22px; height: 22px; color: #0E1F5B;"></i></span>
+              <div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: #4487DC;">S-VPN</div>
+                <h3 style="margin: 2px 0 0; font-size: 19px; font-weight: 700; letter-spacing: -0.3px; color: #0E1F5B;">Console</h3>
+              </div>
+            </div>
+            <p style="margin: 16px 0 0; font-size: 13.5px; color: #6B7280;">Management centralizat — totul dintr-un singur loc, prin browser.</p>
+            <div style="margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px;">
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Politici VPN, MFA, WAF, Endpoint</div>
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Monitorizare trafic în timp real</div>
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Audit log tamper-proof</div>
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Rapoarte NIS 2, ISO 27001, GDPR</div>
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>AD / LDAP / RADIUS nativ</div>
+              <div style="font-size: 13.5px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>API REST — OpenAPI / Swagger</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DE CE S-VPN (gray band) ============ -->
+  <section data-band data-screen-label="Beneficii" style="padding: 110px 40px; background: #F3F6FC;">
+    <div style="max-width: 1180px; margin: 0 auto;">
+      <div data-reveal>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: #4487DC; display: inline-block; padding-bottom: 10px; border-bottom: 2px solid #D6E8F7;">De ce S-VPN</div>
+        <h2 data-word-fill="light" style="margin: 24px 0 0; font-size: 38px; font-weight: 700; letter-spacing: -1px; line-height: 1.15; color: #0E1F5B; max-width: 720px;">Securitate enterprise, fără privilegiul bugetelor mari</h2>
+      </div>
+      <div data-skew="4" style="margin-top: 48px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+        <div data-reveal data-drift="0.06">
+          <div style="height: 100%; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 16px; padding: 30px 32px; box-shadow: 0 2px 12px rgba(14,31,91,0.06);">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 40px; font-weight: 600; line-height: 1; color: #0E1F5B;">−60<span style="color: #4487DC;">%</span></div>
+            <h3 style="margin: 16px 0 0; font-size: 16px; font-weight: 700; color: #0E1F5B;">Cost predictibil</h3>
+            <p style="margin: 8px 0 0; font-size: 13.5px; line-height: 1.65; color: #6B7280;">Set complet de capabilități la o fracțiune din costul Cisco / Fortinet — fără facturare per utilizator sau dispozitiv.</p>
+          </div>
+        </div>
+        <div data-reveal data-reveal-delay="80" data-drift="-0.05">
+          <div style="height: 100%; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 16px; padding: 30px 32px; box-shadow: 0 2px 12px rgba(14,31,91,0.06);">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 40px; font-weight: 600; line-height: 1; color: #0E1F5B;">0</div>
+            <h3 style="margin: 16px 0 0; font-size: 16px; font-weight: 700; color: #0E1F5B;">Costuri ascunse</h3>
+            <p style="margin: 8px 0 0; font-size: 13.5px; line-height: 1.65; color: #6B7280;">Toate licențele includ instalare, configurare, integrare, suport, mentenanță și garanție. Fără dependență de terți.</p>
+          </div>
+        </div>
+        <div data-reveal data-reveal-delay="160" data-drift="0.06">
+          <div style="height: 100%; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 16px; padding: 30px 32px; box-shadow: 0 2px 12px rgba(14,31,91,0.06);">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 40px; font-weight: 600; line-height: 1; color: #0E1F5B;">360<span style="color: #4487DC;">°</span></div>
+            <h3 style="margin: 16px 0 0; font-size: 16px; font-weight: 700; color: #0E1F5B;">Vizibilitate deplină</h3>
+            <p style="margin: 8px 0 0; font-size: 13.5px; line-height: 1.65; color: #6B7280;">Imagine completă în timp real asupra suprafeței de atac — politici, trafic, vulnerabilități, conformitate.</p>
+          </div>
+        </div>
+        <div data-reveal data-reveal-delay="240" data-drift="-0.05">
+          <div style="height: 100%; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 16px; padding: 30px 32px; box-shadow: 0 2px 12px rgba(14,31,91,0.06);">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 40px; font-weight: 600; line-height: 1; color: #0E1F5B;">&lt;5<span style="color: #4487DC;">min</span></div>
+            <h3 style="margin: 16px 0 0; font-size: 16px; font-weight: 700; color: #0E1F5B;">Setup în minute</h3>
+            <p style="margin: 8px 0 0; font-size: 13.5px; line-height: 1.65; color: #6B7280;">Clientul se instalează și se conectează în mai puțin de 5 minute de la provizionare — fără expertiză tehnică avansată.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SPEC TABLE (mono) ============ -->
+  <section data-screen-label="Specificații" style="padding: 110px 40px;">
+    <div style="max-width: 1180px; margin: 0 auto;">
+      <div data-reveal>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: #4487DC; display: inline-block; padding-bottom: 10px; border-bottom: 2px solid #D6E8F7;">Specificații · v1.0</div>
+        <h2 data-word-fill="light" style="margin: 24px 0 0; font-size: 38px; font-weight: 700; letter-spacing: -1px; line-height: 1.15; color: #0E1F5B;">Construit pentru scară enterprise</h2>
+        <p style="margin: 16px 0 0; font-size: 16.5px; max-width: 620px; color: #6B7280;">Arhitectură software-first, testată la scară în perioada pandemiei — fără dependență de echipamente proprietare.</p>
+      </div>
+      <div data-reveal data-drift="-0.04" style="margin-top: 44px; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(14,31,91,0.06);">
+        <div style="display: grid; grid-template-columns: 200px 1fr; border-bottom: 1px solid #F1F5F9;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; letter-spacing: 1.5px; text-transform: uppercase; color: #4487DC; padding: 18px 28px; background: #FAFBFD;">Performanță</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.7; color: #374151; padding: 18px 28px;">&gt; 20 Gbps inspecție L7 · &gt; 10.000 tuneluri IPSec · &gt; 400 tuneluri SSL · &gt; 200 site-to-site · latență MFA &lt; 3s</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 200px 1fr; border-bottom: 1px solid #F1F5F9;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; letter-spacing: 1.5px; text-transform: uppercase; color: #4487DC; padding: 18px 28px; background: #FAFBFD;">Criptare</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.7; color: #374151; padding: 18px 28px;">TLS 1.2 / 1.3 (fără SSLv3, TLS 1.0) · IPSec AES-256 + SHA-2 + Perfect Forward Secrecy · X.509 v3 cu OCSP / CRL · secrete criptate la repaus</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 200px 1fr; border-bottom: 1px solid #F1F5F9;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; letter-spacing: 1.5px; text-transform: uppercase; color: #4487DC; padding: 18px 28px; background: #FAFBFD;">Scalabilitate</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.7; color: #374151; padding: 18px 28px;">Utilizatori simultani nelimitați — zero cost licență · scalare orizontală fără downtime · 5 / 5 metode MFA active simultan</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 200px 1fr; border-bottom: 1px solid #F1F5F9;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; letter-spacing: 1.5px; text-transform: uppercase; color: #4487DC; padding: 18px 28px; background: #FAFBFD;">Continuitate</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.7; color: #374151; padding: 18px 28px;">Rolling updates fără întreruperea sesiunilor · failover automat &lt; 30s · arhitectură testată la scară în perioada pandemiei</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 200px 1fr; border-bottom: 1px solid #F1F5F9;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; letter-spacing: 1.5px; text-transform: uppercase; color: #4487DC; padding: 18px 28px; background: #FAFBFD;">Integrări</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.7; color: #374151; padding: 18px 28px;">Active Directory · LDAP · RADIUS · API REST (OpenAPI / Swagger) pentru ITSM, SOAR, NOC · consolă exclusiv web (Chrome, Firefox, Edge)</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 200px 1fr;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; letter-spacing: 1.5px; text-transform: uppercase; color: #4487DC; padding: 18px 28px; background: #FAFBFD;">Deployment</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.7; color: #374151; padding: 18px 28px;">Hardware standard sau cloud (AWS, Azure, GCP) · on-premise, cloud sau hibrid · client &lt; 5 minute setup · wizard onboarding inclus</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICII INCLUSE + AUDIENTA ============ -->
+  <section data-screen-label="Servicii incluse" style="padding: 0 40px 110px;">
+    <div style="max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;">
+      <div data-reveal>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: #4487DC; display: inline-block; padding-bottom: 10px; border-bottom: 2px solid #D6E8F7;">Incluse în licență</div>
+        <h2 data-word-fill="light" style="margin: 24px 0 0; font-size: 30px; font-weight: 700; letter-spacing: -0.7px; line-height: 1.2; color: #0E1F5B;">Tot ce trebuie — inclus</h2>
+        <p style="margin: 14px 0 0; font-size: 15px; color: #6B7280;">Soluție operațională din prima zi, fără costuri suplimentare sau dependență de parteneri terți.</p>
+        <div style="margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px;">
+          <div style="font-size: 14px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">✓</span>Instalare &amp; configurare</div>
+          <div style="font-size: 14px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">✓</span>Suport tehnic</div>
+          <div style="font-size: 14px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">✓</span>Servicii de integrare</div>
+          <div style="font-size: 14px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">✓</span>Mentenanță &amp; actualizări</div>
+          <div style="font-size: 14px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">✓</span>Suport echipamente incluse</div>
+          <div style="font-size: 14px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">✓</span>Garanție certificată</div>
+        </div>
+      </div>
+      <div data-reveal data-reveal-delay="100" data-drift="-0.05" style="display: grid; gap: 12px;">
+        <div style="display: flex; gap: 16px; align-items: center; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 14px; padding: 18px 24px; box-shadow: 0 2px 12px rgba(14,31,91,0.06);">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px; color: #4487DC; flex: none; width: 104px;">ENTERPRISE</span>
+          <span style="font-size: 13.5px; color: #374151;">Protecție completă, fără bugetele prohibitive ale soluțiilor clasice.</span>
+        </div>
+        <div style="display: flex; gap: 16px; align-items: center; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 14px; padding: 18px 24px; box-shadow: 0 2px 12px rgba(14,31,91,0.06);">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px; color: #4487DC; flex: none; width: 104px;">SMB IT TEAM</span>
+          <span style="font-size: 13.5px; color: #374151;">Echipe IT mici-medii, fără expertiză pentru implementări complexe.</span>
+        </div>
+        <div style="display: flex; gap: 16px; align-items: center; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 14px; padding: 18px 24px; box-shadow: 0 2px 12px rgba(14,31,91,0.06);">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px; color: #4487DC; flex: none; width: 104px;">REGULATED</span>
+          <span style="font-size: 13.5px; color: #374151;">Medii reglementate — audit log imutabil și autentificare cu certificate.</span>
+        </div>
+        <div style="display: flex; gap: 16px; align-items: center; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 14px; padding: 18px 24px; box-shadow: 0 2px 12px rgba(14,31,91,0.06);">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px; color: #4487DC; flex: none; width: 104px;">DISTRIBUTED</span>
+          <span style="font-size: 13.5px; color: #374151;">Multiple locații, sute–mii de utilizatori remote, site-to-site 200+.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA (dark band) ============ -->
+  <section id="contact" data-band data-screen-label="CTA (dark)" style="position: relative; overflow: hidden; background: #040C2B; padding: 110px 40px; scroll-margin-top: 76px;">
+    <canvas ref="{{ ctaCanvasRef }}" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.5;"></canvas>
+    <div style="position: absolute; inset: 0; background: radial-gradient(ellipse 60% 70% at 50% 40%, rgba(68,135,220,0.16), rgba(4,12,43,0) 70%);"></div>
+    <div style="position: relative; z-index: 1; max-width: 760px; margin: 0 auto; text-align: center;">
+      <div data-reveal>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: #7AB4E8;">Pașii următori</div>
+        <h2 data-word-fill="dark" style="margin: 22px 0 0; font-size: 40px; font-weight: 700; letter-spacing: -1px; line-height: 1.15; color: #FFFFFF;">Assessment Inițial gratuit — 2 zile</h2>
+        <p style="margin: 18px auto 0; font-size: 16.5px; line-height: 1.7; max-width: 560px; color: rgba(226,233,245,0.7);">Fără angajamente. Identificăm împreună zona de interes prioritară și livrăm un raport de recomandări la final.</p>
+        <div style="margin-top: 34px; display: inline-flex; align-items: stretch; gap: 8px; padding: 7px; background: rgba(255,255,255,0.05); border: 1px solid rgba(122,180,232,0.25); border-radius: 14px;">
+          <input type="email" placeholder="email@companie.ro" style="font-family: Inter, sans-serif; font-size: 14.5px; color: #FFFFFF; background: transparent; border: none; outline: none; padding: 10px 14px; width: 230px;">
+          <a data-email-user="office" data-email-domain="smartcontrol.ro" href="#" style="display: inline-flex; align-items: center; font-size: 14.5px; font-weight: 600; color: #FFFFFF; text-decoration: none; padding: 11px 22px; border-radius: 10px; background: #4487DC; box-shadow: 0 0 28px rgba(68,135,220,0.45); transition: background 0.25s, box-shadow 0.25s;" style-hover="background: #3470C0; box-shadow: 0 0 40px rgba(68,135,220,0.65);">Solicită assessment-ul</a>
+        </div>
+        <div style="margin-top: 26px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: rgba(226,233,245,0.55);"><span data-email-user="office" data-email-domain="smartcontrol.ro"></span> · www.smartcontrol.ro</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER (light, shared) ============ -->
+  <footer data-screen-label="Footer" style="background: #FFFFFF; border-top: 1px solid #E5E7EB; padding: 64px 40px 40px;">
+    <div style="max-width: 1180px; margin: 0 auto;">
+      <div style="display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.2fr; gap: 48px;">
+        <div>
+          <a href="Home.dc.html" style="display: flex; align-items: center; gap: 11px; text-decoration: none;">
+            <img src="ds/assets/smartcontrol-mark.png" alt="Smart Control" style="width: 34px; height: 34px; display: block;">
+            <span style="font-size: 17px; font-weight: 700; letter-spacing: -0.3px; color: #0E1F5B;">Smart<span style="color: #4487DC;">Control</span></span>
+          </a>
+          <div style="margin-top: 14px; font-size: 13.5px; font-style: italic; color: #6B7280;">Trusted Service Delivery Partner</div>
+          <div style="margin-top: 18px; font-size: 13px; line-height: 1.7; color: #9CA3AF;">Fondată în 2003 · 650+ proiecte livrate<br>ISO 9001 · 27001 · 14001 · 45001 · 27701</div>
+        </div>
+        <div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #9CA3AF;">Servicii</div>
+          <div style="margin-top: 16px; display: grid; gap: 10px;">
+            <a href="Home.dc.html#servicii" style="font-size: 13.5px; color: #374151; text-decoration: none; transition: color 0.2s;" style-hover="color: #4487DC;">Infrastructură &amp; Cloud</a>
+            <a href="Home.dc.html#servicii" style="font-size: 13.5px; color: #374151; text-decoration: none; transition: color 0.2s;" style-hover="color: #4487DC;">Securitate &amp; Conformitate</a>
+            <a href="Home.dc.html#servicii" style="font-size: 13.5px; color: #374151; text-decoration: none; transition: color 0.2s;" style-hover="color: #4487DC;">Software &amp; Automatizare</a>
+            <a href="Home.dc.html#servicii" style="font-size: 13.5px; color: #374151; text-decoration: none; transition: color 0.2s;" style-hover="color: #4487DC;">Servicii Gestionate</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #9CA3AF;">Produse</div>
+          <div style="margin-top: 16px; display: grid; gap: 10px;">
+            <a href="SEKNET.dc.html" style="font-size: 13.5px; color: #374151; text-decoration: none; transition: color 0.2s;" style-hover="color: #4487DC;">SEKNET</a>
+            <a href="SVPN.dc.html" style="font-size: 13.5px; color: #374151; text-decoration: none; transition: color 0.2s;" style-hover="color: #4487DC;">S-VPN</a>
+            <a href="Home.dc.html#produse" style="font-size: 13.5px; color: #374151; text-decoration: none; transition: color 0.2s;" style-hover="color: #4487DC;">Asset Management</a>
+            <a href="Cloud.dc.html" style="font-size: 13.5px; color: #374151; text-decoration: none; transition: color 0.2s;" style-hover="color: #4487DC;">Cloud &amp; Modernization</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #9CA3AF;">Contact</div>
+          <div style="margin-top: 16px; display: grid; gap: 10px;">
+            <a data-email-user="office" data-email-domain="smartcontrol.ro" href="#" style="font-size: 13.5px; color: #374151; text-decoration: none; transition: color 0.2s;" style-hover="color: #4487DC;"></a>
+            <span style="font-size: 13.5px; color: #374151;">www.smartcontrol.ro</span>
+            <span style="font-size: 13.5px; line-height: 1.6; color: #6B7280;">Intrarea Aviator Teodor Iliescu 37,<br>011672 București</span>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top: 48px; padding-top: 24px; border-top: 1px solid #F1F5F9; display: flex; justify-content: space-between; align-items: center; gap: 24px;">
+        <span style="font-size: 12.5px; color: #9CA3AF;">© 2026 Smart Control. Toate drepturile rezervate.</span>
+        <div style="display: flex; gap: 20px;">
+          <span style="font-size: 12.5px; color: #9CA3AF;">Politica de confidențialitate</span>
+          <span style="font-size: 12.5px; color: #9CA3AF;">Termeni și condiții</span>
+          <span style="font-size: 12.5px; color: #9CA3AF;">Cookies</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  rootRef = (el) => { this.root = el; };
+  navRef = (el) => { this.nav = el; };
+  heroCanvasRef = (el) => { this.heroCanvas = el; };
+  ctaCanvasRef = (el) => { this.ctaCanvas = el; };
+
+  renderVals() {
+    return {
+      rootRef: this.rootRef,
+      navRef: this.navRef,
+      heroCanvasRef: this.heroCanvasRef,
+      ctaCanvasRef: this.ctaCanvasRef
+    };
+  }
+
+  componentDidMount() {
+    this._cleanups = [];
+    import('./motion.js').then((m) => {
+      if (this._unmounted) return;
+      m.hydrateIcons();
+      m.initEmails(this.root);
+      this._cleanups.push(m.initNavShrink(this.nav));
+      this._cleanups.push(m.initNetwork(this.heroCanvas, {
+        lineAlpha: 0.24, dotAlpha: 0.6, spread: 18000, lineDist: 155
+      }));
+      this._cleanups.push(m.initNetwork(this.ctaCanvas, {
+        lineAlpha: 0.18, dotAlpha: 0.45, spread: 24000, lineDist: 140
+      }));
+      this._cleanups.push(m.initReveals(this.root));
+      this._cleanups.push(m.initCounters(this.root));
+      this._cleanups.push(m.initWordFill(this.root));
+      this._cleanups.push(m.initParallax(this.root));
+      this._cleanups.push(m.initDrift(this.root));
+      this._cleanups.push(m.initBandScale(this.root));
+      this._cleanups.push(m.initHeroScrub(this.root));
+    });
+  }
+
+  componentWillUnmount() {
+    this._unmounted = true;
+    (this._cleanups || []).forEach((fn) => { if (typeof fn === 'function') fn(); });
+  }
+}
+</script>
+</body>
+</html>

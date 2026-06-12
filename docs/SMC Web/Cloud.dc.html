@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: #FFFFFF; }
+    @keyframes scWordIn { from { opacity: 0; transform: translateY(20px); filter: blur(3px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+    @keyframes scFadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes scDriftA { from { transform: translate(0, 0); } to { transform: translate(60px, 40px); } }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-delay: 0ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+      html { scroll-behavior: auto; }
+    }
+    ::selection { background: rgba(68,135,220,0.25); }
+  </style>
+</helmet>
+<div ref="{{ rootRef }}" style="font-family: Inter, 'Segoe UI', -apple-system, sans-serif; background: #FFFFFF; color: #374151; font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden;">
+
+  <!-- ============ NAV (light, shared) ============ -->
+  <nav ref="{{ navRef }}" data-screen-label="Nav" style="position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 18px 40px; background: #FFFFFF; border-bottom: 1px solid rgba(229,231,235,0); transition: padding 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s, border-color 0.3s;">
+    <div style="max-width: 1180px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 32px;">
+      <a href="Home.dc.html" style="display: flex; align-items: center; gap: 11px; text-decoration: none;">
+        <img src="ds/assets/smartcontrol-mark.png" alt="Smart Control" style="width: 34px; height: 34px; display: block;">
+        <span style="font-size: 17px; font-weight: 700; letter-spacing: -0.3px; color: #0E1F5B;">Smart<span style="color: #4487DC;">Control</span></span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 28px;">
+        <a href="Home.dc.html#servicii" style="font-size: 13.5px; font-weight: 500; color: #374151; text-decoration: none; padding-bottom: 3px; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s;" style-hover="color: #0E1F5B; border-bottom-color: #4487DC;">Servicii</a>
+        <a href="SEKNET.dc.html" style="font-size: 13.5px; font-weight: 500; color: #374151; text-decoration: none; padding-bottom: 3px; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s;" style-hover="color: #0E1F5B; border-bottom-color: #4487DC;">SEKNET</a>
+        <a href="SVPN.dc.html" style="font-size: 13.5px; font-weight: 500; color: #374151; text-decoration: none; padding-bottom: 3px; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s;" style-hover="color: #0E1F5B; border-bottom-color: #4487DC;">S-VPN</a>
+        <a href="Cloud.dc.html" style="font-size: 13.5px; font-weight: 600; color: #0E1F5B; text-decoration: none; padding-bottom: 3px; border-bottom: 2px solid #4487DC;">Cloud &amp; Modernization</a>
+        <a href="#contact" style="font-size: 13.5px; font-weight: 600; color: #FFFFFF; text-decoration: none; padding: 9px 18px; border-radius: 10px; background: #0E1F5B; transition: background 0.2s, box-shadow 0.2s;" style-hover="background: #040C2B; box-shadow: 0 4px 16px rgba(14,31,91,0.25);">Solicită assessment</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ HERO (light) ============ -->
+  <header data-screen-label="Cloud Hero" style="position: relative; overflow: hidden; background: linear-gradient(180deg, #F3F6FC 0%, #FFFFFF 100%);">
+    <div data-parallax="0.3" style="position: absolute; inset: 0; pointer-events: none;"><div style="position: absolute; top: -160px; right: -140px; width: 680px; height: 680px; border-radius: 999px; background: radial-gradient(circle, rgba(122,180,232,0.2), rgba(122,180,232,0) 65%); animation: scDriftA 18s ease-in-out infinite alternate;"></div></div>
+    <div data-hero-scrub style="position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; padding: 190px 40px 100px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: #4487DC; display: inline-block; padding-bottom: 10px; border-bottom: 2px solid #D6E8F7; opacity: 0; animation: scFadeIn 0.8s ease-out 0.1s forwards;">Cloud &amp; Modernization</div>
+      <h1 style="margin: 26px 0 0; font-size: 58px; font-weight: 800; letter-spacing: -1.8px; line-height: 1.1; color: #040C2B; max-width: 860px;">
+        <span style="display: inline-block; opacity: 0; animation: scWordIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.25s forwards;">Hardware-ul</span>
+        <span style="display: inline-block; opacity: 0; animation: scWordIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.37s forwards;">se</span>
+        <span style="display: inline-block; opacity: 0; animation: scWordIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.49s forwards;">scumpește.</span>
+        <br>
+        <span style="display: inline-block; opacity: 0; animation: scWordIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.67s forwards; color: #4487DC;">Aplicațiile</span>
+        <span style="display: inline-block; opacity: 0; animation: scWordIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.79s forwards; color: #4487DC;">tale</span>
+        <span style="display: inline-block; opacity: 0; animation: scWordIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.91s forwards; color: #4487DC;">nu</span>
+        <span style="display: inline-block; opacity: 0; animation: scWordIn 0.7s cubic-bezier(0.16,1,0.3,1) 1.03s forwards; color: #4487DC;">trebuie.</span>
+      </h1>
+      <p style="margin: 26px 0 0; font-size: 18px; line-height: 1.7; max-width: 640px; color: #374151; opacity: 0; animation: scFadeIn 0.9s ease-out 1.2s forwards;">Prețurile componentelor critice cresc sub presiunea cererii pentru infrastructură AI, iar bugetele de refresh nu mai ajung. <strong style="color: #0E1F5B; font-weight: 600;">Re-arhitecturarea și optimizarea aplicațiilor</strong> devine strategia principală — extragi mai multă performanță din infrastructura existentă, înainte să cumperi una nouă.</p>
+      <div style="margin-top: 38px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; opacity: 0; animation: scFadeIn 0.9s ease-out 1.4s forwards;">
+        <a href="#contact" style="display: inline-flex; align-items: center; font-size: 14.5px; font-weight: 600; color: #FFFFFF; text-decoration: none; padding: 13px 26px; border-radius: 10px; background: #4487DC; box-shadow: 0 4px 18px rgba(68,135,220,0.35); transition: background 0.25s, box-shadow 0.25s;" style-hover="background: #1F3C80; box-shadow: 0 6px 24px rgba(68,135,220,0.45);">Programează assessment-ul gratuit</a>
+        <a href="#flux" style="font-size: 14.5px; font-weight: 600; color: #4487DC; text-decoration: none; padding: 13px 4px; transition: color 0.2s;" style-hover="color: #1F3C80;">Vezi fluxul în 5 etape ›</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ DE CE ACUM (3 carduri) ============ -->
+  <section data-screen-label="De ce acum" style="padding: 40px 40px 110px;">
+    <div data-skew="4" style="max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+      <div data-reveal data-reveal-rotate="-4" data-drift="0.07">
+        <div style="height: 100%; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 16px; padding: 30px 32px; box-shadow: 0 2px 12px rgba(14,31,91,0.06); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s;" style-hover="transform: translateY(-5px); box-shadow: 0 12px 32px rgba(14,31,91,0.14);">
+          <span style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 10px; background: #EDF5FC; border: 1px solid #D6E8F7;"><i data-lucide="trending-up" style="width: 22px; height: 22px; color: #0E1F5B;"></i></span>
+          <h3 style="margin: 18px 0 0; font-size: 17px; font-weight: 700; color: #0E1F5B;">Costuri hardware în creștere</h3>
+          <p style="margin: 10px 0 0; font-size: 14px; line-height: 1.65; color: #6B7280;">Cererea pentru infrastructură AI pune presiune pe lanțul de aprovizionare — memorie, stocare și GPU-uri la prețuri record, cu termene de livrare imprevizibile.</p>
+        </div>
+      </div>
+      <div data-reveal data-reveal-delay="100" data-reveal-rotate="4">
+        <div style="height: 100%; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 16px; padding: 30px 32px; box-shadow: 0 2px 12px rgba(14,31,91,0.06); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s;" style-hover="transform: translateY(-5px); box-shadow: 0 12px 32px rgba(14,31,91,0.14);">
+          <span style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 10px; background: #EDF5FC; border: 1px solid #D6E8F7;"><i data-lucide="recycle" style="width: 22px; height: 22px; color: #0E1F5B;"></i></span>
+          <h3 style="margin: 18px 0 0; font-size: 17px; font-weight: 700; color: #0E1F5B;">Refresh-ul clasic nu mai e rentabil</h3>
+          <p style="margin: 10px 0 0; font-size: 14px; line-height: 1.65; color: #6B7280;">Înlocuirea „la 5 ani" a serverelor devine tot mai greu de justificat în business case — capacitatea existentă e adesea folosită sub 40%.</p>
+        </div>
+      </div>
+      <div data-reveal data-reveal-delay="200" data-reveal-rotate="-4" data-drift="-0.07">
+        <div style="height: 100%; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 16px; padding: 30px 32px; box-shadow: 0 2px 12px rgba(14,31,91,0.06); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s;" style-hover="transform: translateY(-5px); box-shadow: 0 12px 32px rgba(14,31,91,0.14);">
+          <span style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 10px; background: #EDF5FC; border: 1px solid #D6E8F7;"><i data-lucide="rocket" style="width: 22px; height: 22px; color: #0E1F5B;"></i></span>
+          <h3 style="margin: 18px 0 0; font-size: 17px; font-weight: 700; color: #0E1F5B;">Re-arhitecturarea câștigă</h3>
+          <p style="margin: 10px 0 0; font-size: 14px; line-height: 1.65; color: #6B7280;">Containerizare, tuning aplicativ și migrare selectivă în cloud extrag performanță din ce ai deja — cu costuri predictibile, CAPEX→OPEX.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FLUX 5 ETAPE (scroll stepper, gray band) ============ -->
+  <section id="flux" data-band data-screen-label="Flux 5 etape" style="padding: 110px 40px; background: #F3F6FC; scroll-margin-top: 76px;">
+    <div style="max-width: 1180px; margin: 0 auto;">
+      <div data-reveal>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: #4487DC; display: inline-block; padding-bottom: 10px; border-bottom: 2px solid #D6E8F7;">Abordare</div>
+        <h2 data-word-fill="light" style="margin: 24px 0 0; font-size: 38px; font-weight: 700; letter-spacing: -1px; line-height: 1.15; color: #0E1F5B; max-width: 700px;">Fluxul de lucru în 5 etape</h2>
+        <p style="margin: 16px 0 0; font-size: 16.5px; max-width: 640px; color: #6B7280;">Nu propunem doar o actualizare tehnică, ci o re-arhitecturare strategică — un flux validat în 650+ proiecte, care minimizează riscurile și maximizează ROI.</p>
+      </div>
+
+      <div ref="{{ stepsRef }}" style="position: relative; margin-top: 52px;">
+        <div style="position: absolute; left: 25px; top: 28px; bottom: 28px; width: 2px; background: #D6E8F7;"></div>
+        <div ref="{{ stepsFillRef }}" style="position: absolute; left: 25px; top: 28px; height: 0px; width: 2px; background: linear-gradient(180deg, #4487DC, #7AB4E8); box-shadow: 0 0 12px rgba(68,135,220,0.5);"></div>
+
+        <div data-step style="position: relative; display: grid; grid-template-columns: 52px 1fr; gap: 32px; padding: 26px 0;">
+          <div data-step-dot style="width: 52px; height: 52px; border-radius: 12px; background: #FFFFFF; border: 1px solid #D6E8F7; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 600; color: #9CA3AF; transition: border-color 0.4s, color 0.4s, box-shadow 0.4s, background 0.4s;">01</div>
+          <div data-step-body style="opacity: 0.45; transition: opacity 0.4s; max-width: 760px;">
+            <div style="display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;">
+              <h3 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.3px; color: #0E1F5B;">Propunere de re-arhitecturare</h3>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: #4487DC; padding: 3px 10px; border: 1px solid #D6E8F7; border-radius: 999px; background: #FFFFFF;">Fast Track</span>
+            </div>
+            <p style="margin: 10px 0 0; font-size: 14.5px; line-height: 1.7; color: #6B7280;">Pentru clienții cu care avem deja o relație stabilă: valorificăm cunoștințele despre infrastructura existentă pentru a identifica punctele critice și propunem modernizări bazate pe date reale, nu pe estimări teoretice.</p>
+          </div>
+        </div>
+
+        <div data-step style="position: relative; display: grid; grid-template-columns: 52px 1fr; gap: 32px; padding: 26px 0;">
+          <div data-step-dot style="width: 52px; height: 52px; border-radius: 12px; background: #FFFFFF; border: 1px solid #D6E8F7; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 600; color: #9CA3AF; transition: border-color 0.4s, color 0.4s, box-shadow 0.4s, background 0.4s;">02</div>
+          <div data-step-body style="opacity: 0.45; transition: opacity 0.4s; max-width: 760px;">
+            <div style="display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;">
+              <h3 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.3px; color: #0E1F5B;">Assessment inițial &amp; Quick Wins</h3>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: #4487DC; padding: 3px 10px; border: 1px solid #D6E8F7; border-radius: 999px; background: #FFFFFF;">2 zile · gratuit</span>
+            </div>
+            <p style="margin: 10px 0 0; font-size: 14.5px; line-height: 1.7; color: #6B7280;">Inventariere automatizată cu platforma proprie de Asset Management, analiză de performanță prin instrumentele noastre de monitorizare, evaluarea gap-urilor NIS 2 / GDPR — și rezolvarea problemelor minore încă din primele zile.</p>
+          </div>
+        </div>
+
+        <div data-step style="position: relative; display: grid; grid-template-columns: 52px 1fr; gap: 32px; padding: 26px 0;">
+          <div data-step-dot style="width: 52px; height: 52px; border-radius: 12px; background: #FFFFFF; border: 1px solid #D6E8F7; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 600; color: #9CA3AF; transition: border-color 0.4s, color 0.4s, box-shadow 0.4s, background 0.4s;">03</div>
+          <div data-step-body style="opacity: 0.45; transition: opacity 0.4s; max-width: 760px;">
+            <div style="display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;">
+              <h3 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.3px; color: #0E1F5B;">Planul de refactoring &amp; business case</h3>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: #4487DC; padding: 3px 10px; border: 1px solid #D6E8F7; border-radius: 999px; background: #FFFFFF;">ROI estimat</span>
+            </div>
+            <p style="margin: 10px 0 0; font-size: 14.5px; line-height: 1.7; color: #6B7280;">Roadmap tehnic cu prioritizarea aplicațiilor pentru containerizare (Kubernetes-ready), analiză cost-beneficiu înainte de implementare și strategii de testare în staging cu planuri de rollback pentru zero-downtime.</p>
+          </div>
+        </div>
+
+        <div data-step style="position: relative; display: grid; grid-template-columns: 52px 1fr; gap: 32px; padding: 26px 0;">
+          <div data-step-dot style="width: 52px; height: 52px; border-radius: 12px; background: #FFFFFF; border: 1px solid #D6E8F7; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 600; color: #9CA3AF; transition: border-color 0.4s, color 0.4s, box-shadow 0.4s, background 0.4s;">04</div>
+          <div data-step-body style="opacity: 0.45; transition: opacity 0.4s; max-width: 760px;">
+            <div style="display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;">
+              <h3 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.3px; color: #0E1F5B;">Implementare agilă &amp; transfer de cunoștințe</h3>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: #4487DC; padding: 3px 10px; border: 1px solid #D6E8F7; border-radius: 999px; background: #FFFFFF;">DevSecOps</span>
+            </div>
+            <p style="margin: 10px 0 0; font-size: 14.5px; line-height: 1.7; color: #6B7280;">Containerizare și migrare pe Kubernetes / OpenShift / AKS / GKE, pipeline-uri CI/CD, integrare hibridă on-premise–cloud — plus workshop-uri tehnice și documentație pentru autonomia echipei tale.</p>
+          </div>
+        </div>
+
+        <div data-step style="position: relative; display: grid; grid-template-columns: 52px 1fr; gap: 32px; padding: 26px 0;">
+          <div data-step-dot style="width: 52px; height: 52px; border-radius: 12px; background: #FFFFFF; border: 1px solid #D6E8F7; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 600; color: #9CA3AF; transition: border-color 0.4s, color 0.4s, box-shadow 0.4s, background 0.4s;">05</div>
+          <div data-step-body style="opacity: 0.45; transition: opacity 0.4s; max-width: 760px;">
+            <div style="display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;">
+              <h3 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.3px; color: #0E1F5B;">Observabilitate continuă &amp; optimizare</h3>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: #4487DC; padding: 3px 10px; border: 1px solid #D6E8F7; border-radius: 999px; background: #FFFFFF;">Raport ROI la 90 de zile</span>
+            </div>
+            <p style="margin: 10px 0 0; font-size: 14.5px; line-height: 1.7; color: #6B7280;">Monitorizare proactivă cu soluția proprietară Smart Control, validarea ROI printr-un raport de performanță la 90 de zile și iterație continuă pe baza datelor de telemetrie.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STACK / CE LIVRAM (light) ============ -->
+  <section data-screen-label="Stack" style="padding: 110px 40px;">
+    <div style="max-width: 1180px; margin: 0 auto;">
+      <div data-reveal>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: #4487DC; display: inline-block; padding-bottom: 10px; border-bottom: 2px solid #D6E8F7;">Capabilități</div>
+        <h2 data-word-fill="light" style="margin: 24px 0 0; font-size: 38px; font-weight: 700; letter-spacing: -1px; line-height: 1.15; color: #0E1F5B; max-width: 700px;">Ce livrăm concret</h2>
+      </div>
+      <div data-skew="4" style="margin-top: 44px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div data-reveal>
+          <div style="height: 100%; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 16px; padding: 30px 34px; box-shadow: 0 2px 12px rgba(14,31,91,0.06);">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <i data-lucide="container" style="width: 20px; height: 20px; color: #4487DC;"></i>
+              <h3 style="margin: 0; font-size: 17px; font-weight: 700; color: #0E1F5B;">Containerizare &amp; orchestrare</h3>
+            </div>
+            <div style="margin-top: 16px; display: grid; gap: 9px;">
+              <div style="font-size: 14px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Kubernetes · OpenShift · AKS · GKE</div>
+              <div style="font-size: 14px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Prioritizarea aplicațiilor Kubernetes-ready</div>
+              <div style="font-size: 14px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Migrare cu zero-downtime, rollback planificat</div>
+            </div>
+          </div>
+        </div>
+        <div data-reveal data-reveal-delay="80">
+          <div style="height: 100%; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 16px; padding: 30px 34px; box-shadow: 0 2px 12px rgba(14,31,91,0.06);">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <i data-lucide="git-branch" style="width: 20px; height: 20px; color: #4487DC;"></i>
+              <h3 style="margin: 0; font-size: 17px; font-weight: 700; color: #0E1F5B;">DevSecOps &amp; CI/CD</h3>
+            </div>
+            <div style="margin-top: 16px; display: grid; gap: 9px;">
+              <div style="font-size: 14px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Pipeline-uri CI/CD cu security gates</div>
+              <div style="font-size: 14px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Testare automată în staging</div>
+              <div style="font-size: 14px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Infrastructure-as-Code</div>
+            </div>
+          </div>
+        </div>
+        <div data-reveal>
+          <div style="height: 100%; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 16px; padding: 30px 34px; box-shadow: 0 2px 12px rgba(14,31,91,0.06);">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <i data-lucide="cloud" style="width: 20px; height: 20px; color: #4487DC;"></i>
+              <h3 style="margin: 0; font-size: 17px; font-weight: 700; color: #0E1F5B;">Integrare hibridă</h3>
+            </div>
+            <div style="margin-top: 16px; display: grid; gap: 9px;">
+              <div style="font-size: 14px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>On-premise ↔ cloud, fără lock-in</div>
+              <div style="font-size: 14px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Migrare selectivă — doar ce are sens economic</div>
+              <div style="font-size: 14px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>CAPEX→OPEX cu costuri predictibile</div>
+            </div>
+          </div>
+        </div>
+        <div data-reveal data-reveal-delay="80">
+          <div style="height: 100%; box-sizing: border-box; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 16px; padding: 30px 34px; box-shadow: 0 2px 12px rgba(14,31,91,0.06);">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <i data-lucide="gauge" style="width: 20px; height: 20px; color: #4487DC;"></i>
+              <h3 style="margin: 0; font-size: 17px; font-weight: 700; color: #0E1F5B;">Observabilitate &amp; ROI</h3>
+            </div>
+            <div style="margin-top: 16px; display: grid; gap: 9px;">
+              <div style="font-size: 14px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Monitorizare proactivă cu SEKNET</div>
+              <div style="font-size: 14px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Raport de performanță la 90 de zile</div>
+              <div style="font-size: 14px; color: #374151;"><span style="color: #4487DC; margin-right: 8px;">›</span>Iterație continuă pe date de telemetrie</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA (dark band) ============ -->
+  <section id="contact" data-band data-screen-label="CTA (dark)" style="position: relative; overflow: hidden; background: #040C2B; padding: 110px 40px; scroll-margin-top: 76px;">
+    <canvas ref="{{ ctaCanvasRef }}" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.5;"></canvas>
+    <div style="position: absolute; inset: 0; background: radial-gradient(ellipse 60% 70% at 50% 40%, rgba(68,135,220,0.16), rgba(4,12,43,0) 70%);"></div>
+    <div style="position: relative; z-index: 1; max-width: 760px; margin: 0 auto; text-align: center;">
+      <div data-reveal>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: #7AB4E8;">Etapa 1 · gratuită</div>
+        <h2 data-word-fill="dark" style="margin: 22px 0 0; font-size: 40px; font-weight: 700; letter-spacing: -1px; line-height: 1.15; color: #FFFFFF;">Assessment Inițial — 2 zile, fără angajamente</h2>
+        <p style="margin: 18px auto 0; font-size: 16.5px; line-height: 1.7; max-width: 560px; color: rgba(226,233,245,0.7);">Identificăm împreună zona de interes prioritară și livrăm un raport de recomandări la final. Decizia de a continua îți aparține.</p>
+        <div style="margin-top: 34px; display: inline-flex; align-items: stretch; gap: 8px; padding: 7px; background: rgba(255,255,255,0.05); border: 1px solid rgba(122,180,232,0.25); border-radius: 14px;">
+          <input type="email" placeholder="email@companie.ro" style="font-family: Inter, sans-serif; font-size: 14.5px; color: #FFFFFF; background: transparent; border: none; outline: none; padding: 10px 14px; width: 230px;">
+          <a data-email-user="office" data-email-domain="smartcontrol.ro" href="#" style="display: inline-flex; align-items: center; font-size: 14.5px; font-weight: 600; color: #FFFFFF; text-decoration: none; padding: 11px 22px; border-radius: 10px; background: #4487DC; box-shadow: 0 0 28px rgba(68,135,220,0.45); transition: background 0.25s, box-shadow 0.25s;" style-hover="background: #3470C0; box-shadow: 0 0 40px rgba(68,135,220,0.65);">Solicită assessment-ul</a>
+        </div>
+        <div style="margin-top: 26px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: rgba(226,233,245,0.55);"><span data-email-user="office" data-email-domain="smartcontrol.ro"></span> · www.smartcontrol.ro</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER (light, shared) ============ -->
+  <footer data-screen-label="Footer" style="background: #FFFFFF; border-top: 1px solid #E5E7EB; padding: 64px 40px 40px;">
+    <div style="max-width: 1180px; margin: 0 auto;">
+      <div style="display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.2fr; gap: 48px;">
+        <div>
+          <a href="Home.dc.html" style="display: flex; align-items: center; gap: 11px; text-decoration: none;">
+            <img src="ds/assets/smartcontrol-mark.png" alt="Smart Control" style="width: 34px; height: 34px; display: block;">
+            <span style="font-size: 17px; font-weight: 700; letter-spacing: -0.3px; color: #0E1F5B;">Smart<span style="color: #4487DC;">Control</span></span>
+          </a>
+          <div style="margin-top: 14px; font-size: 13.5px; font-style: italic; color: #6B7280;">Trusted Service Delivery Partner</div>
+          <div style="margin-top: 18px; font-size: 13px; line-height: 1.7; color: #9CA3AF;">Fondată în 2003 · 650+ proiecte livrate<br>ISO 9001 · 27001 · 14001 · 45001 · 27701</div>
+        </div>
+        <div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #9CA3AF;">Servicii</div>
+          <div style="margin-top: 16px; display: grid; gap: 10px;">
+            <a href="Home.dc.html#servicii" style="font-size: 13.5px; color: #374151; text-decoration: none; transition: color 0.2s;" style-hover="color: #4487DC;">Infrastructură &amp; Cloud</a>
+            <a href="Home.dc.html#servicii" style="font-size: 13.5px; color: #374151; text-decoration: none; transition: color 0.2s;" style-hover="color: #4487DC;">Securitate &amp; Conformitate</a>
+            <a href="Home.dc.html#servicii" style="font-size: 13.5px; color: #374151; text-decoration: none; transition: color 0.2s;" style-hover="color: #4487DC;">Software &amp; Automatizare</a>
+            <a href="Home.dc.html#servicii" style="font-size: 13.5px; color: #374151; text-decoration: none; transition: color 0.2s;" style-hover="color: #4487DC;">Servicii Gestionate</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #9CA3AF;">Produse</div>
+          <div style="margin-top: 16px; display: grid; gap: 10px;">
+            <a href="SEKNET.dc.html" style="font-size: 13.5px; color: #374151; text-decoration: none; transition: color 0.2s;" style-hover="color: #4487DC;">SEKNET</a>
+            <a href="SVPN.dc.html" style="font-size: 13.5px; color: #374151; text-decoration: none; transition: color 0.2s;" style-hover="color: #4487DC;">S-VPN</a>
+            <a href="Home.dc.html#produse" style="font-size: 13.5px; color: #374151; text-decoration: none; transition: color 0.2s;" style-hover="color: #4487DC;">Asset Management</a>
+            <a href="Cloud.dc.html" style="font-size: 13.5px; color: #374151; text-decoration: none; transition: color 0.2s;" style-hover="color: #4487DC;">Cloud &amp; Modernization</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #9CA3AF;">Contact</div>
+          <div style="margin-top: 16px; display: grid; gap: 10px;">
+            <a data-email-user="office" data-email-domain="smartcontrol.ro" href="#" style="font-size: 13.5px; color: #374151; text-decoration: none; transition: color 0.2s;" style-hover="color: #4487DC;"></a>
+            <span style="font-size: 13.5px; color: #374151;">www.smartcontrol.ro</span>
+            <span style="font-size: 13.5px; line-height: 1.6; color: #6B7280;">Intrarea Aviator Teodor Iliescu 37,<br>011672 București</span>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top: 48px; padding-top: 24px; border-top: 1px solid #F1F5F9; display: flex; justify-content: space-between; align-items: center; gap: 24px;">
+        <span style="font-size: 12.5px; color: #9CA3AF;">© 2026 Smart Control. Toate drepturile rezervate.</span>
+        <div style="display: flex; gap: 20px;">
+          <span style="font-size: 12.5px; color: #9CA3AF;">Politica de confidențialitate</span>
+          <span style="font-size: 12.5px; color: #9CA3AF;">Termeni și condiții</span>
+          <span style="font-size: 12.5px; color: #9CA3AF;">Cookies</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  rootRef = (el) => { this.root = el; };
+  navRef = (el) => { this.nav = el; };
+  ctaCanvasRef = (el) => { this.ctaCanvas = el; };
+  stepsRef = (el) => { this.steps = el; };
+  stepsFillRef = (el) => { this.stepsFill = el; };
+
+  renderVals() {
+    return {
+      rootRef: this.rootRef,
+      navRef: this.navRef,
+      ctaCanvasRef: this.ctaCanvasRef,
+      stepsRef: this.stepsRef,
+      stepsFillRef: this.stepsFillRef
+    };
+  }
+
+  componentDidMount() {
+    this._cleanups = [];
+    import('./motion.js').then((m) => {
+      if (this._unmounted) return;
+      m.hydrateIcons();
+      m.initEmails(this.root);
+      this._cleanups.push(m.initNavShrink(this.nav));
+      this._cleanups.push(m.initNetwork(this.ctaCanvas, {
+        lineAlpha: 0.18, dotAlpha: 0.45, spread: 24000, lineDist: 140
+      }));
+      this._cleanups.push(m.initReveals(this.root));
+      this._cleanups.push(m.initWordFill(this.root));
+      this._cleanups.push(m.initParallax(this.root));
+      this._cleanups.push(m.initDrift(this.root));
+      this._cleanups.push(m.initBandScale(this.root));
+      this._cleanups.push(m.initHeroScrub(this.root));
+      this._cleanups.push(m.initStepper(this.steps, this.stepsFill));
+    });
+  }
+
+  componentWillUnmount() {
+    this._unmounted = true;
+    (this._cleanups || []).forEach((fn) => { if (typeof fn === 'function') fn(); });
+  }
+}
+</script>
+</body>
+</html>

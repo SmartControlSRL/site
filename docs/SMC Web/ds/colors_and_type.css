@@ -1,0 +1,405 @@
+/* ============================================================
+   SMART CONTROL — COLORS & TYPE
+   Design tokens for the SMC brand system (2026)
+   Canonical source: /source/Brand_Guide_2026.html
+   ============================================================ */
+
+/* --- WEB FONT (open-source substitute for Segoe UI) ---------- */
+/* Brand canonical face: Segoe UI. When Segoe UI is not available
+   (Linux, Android, web outside Microsoft), Inter is the canonical
+   substitute — the most widely-used B2B sans on the web, with
+   the same neutral humanist register as Segoe UI. Loaded from
+   Google Fonts. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* ──────────────────────────────────────────────────────────
+     1. CORE BLUE LADDER  (the brand spine)
+     6 stops from midnight to sky, used in this exact order
+     for the brand gradient.
+     ────────────────────────────────────────────────────────── */
+  --sc-midnight:        #040C2B;   /* darkest, hero floors    */
+  --sc-deep-navy:       #0E1F5B;   /* PRIMARY brand color     */
+  --sc-royal:           #1F3C80;   /* secondary, H2 ink       */
+  --sc-mid-blue:        #3470C0;   /* gradient stop only      */
+  --sc-bright-blue:     #4487DC;   /* ACCENT — links, rules   */
+  --sc-sky:             #7AB4E8;   /* light accent, dark-bg   */
+
+  /* ──────────────────────────────────────────────────────────
+     2. SURFACE TINTS  (light theme only)
+     ────────────────────────────────────────────────────────── */
+  --sc-blue-wash:       #EDF5FC;   /* callouts, info blocks   */
+  --sc-page-wash:       #F3F6FC;   /* page background         */
+  --sc-surface:         #FFFFFF;   /* cards, panels           */
+  --sc-border-blue:     #D6E8F7;   /* tinted borders          */
+  --sc-border:          #E5E7EB;   /* neutral border          */
+  --sc-hover-tint:      #F8FAFF;   /* row hover               */
+
+  /* ──────────────────────────────────────────────────────────
+     3. NEUTRAL INK LADDER
+     ────────────────────────────────────────────────────────── */
+  --sc-ink:             #111827;   /* darkest neutral text    */
+  --sc-slate:           #374151;   /* body copy               */
+  --sc-cool-gray:       #6B7280;   /* secondary, captions     */
+  --sc-light-gray:      #9CA3AF;   /* labels, metadata        */
+  --sc-divider:         #F1F5F9;   /* hairline dividers       */
+
+  /* ──────────────────────────────────────────────────────────
+     4. COMPLIANCE TEAL  (RESERVED)
+     The ONLY non-blue colour in the system. Use ONLY on
+     compliance content (NIS 2, DORA, GDPR, ISO 27001).
+     Never decorative, never a CTA, never a heading colour.
+     ────────────────────────────────────────────────────────── */
+  --sc-compliance:      #1A7A6E;
+  --sc-compliance-tint: #E6F2F0;
+
+  /* ──────────────────────────────────────────────────────────
+     5. STATUS COLOURS  (UI products only, not marketing)
+     Tuned to coexist with the blue palette. Use sparingly.
+     ────────────────────────────────────────────────────────── */
+  --sc-success:         #10B981;
+  --sc-success-tint:    #ECFDF5;
+  --sc-warning:         #F59E0B;
+  --sc-warning-tint:    #FEF3C7;
+  --sc-danger:          #EF4444;
+  --sc-danger-tint:     #FEF2F2;
+
+  /* ──────────────────────────────────────────────────────────
+     6. SEMANTIC TOKENS  (use these in components, not raw hex)
+     ────────────────────────────────────────────────────────── */
+  --sc-primary:           var(--sc-deep-navy);
+  --sc-secondary:         var(--sc-royal);
+  --sc-accent:            var(--sc-bright-blue);
+  --sc-accent-light:      var(--sc-sky);
+
+  --sc-bg:                var(--sc-page-wash);
+  --sc-bg-card:           var(--sc-surface);
+  --sc-bg-info:           var(--sc-blue-wash);
+
+  --sc-text:              var(--sc-slate);
+  --sc-text-strong:       var(--sc-deep-navy);
+  --sc-text-heading:      var(--sc-midnight);
+  --sc-text-muted:        var(--sc-cool-gray);
+  --sc-text-faint:        var(--sc-light-gray);
+  --sc-text-on-dark:      #FFFFFF;
+  --sc-text-on-dark-mute: rgba(255,255,255,0.7);
+
+  --sc-link:              var(--sc-bright-blue);
+  --sc-link-hover:        var(--sc-royal);
+
+  /* ──────────────────────────────────────────────────────────
+     7. BRAND GRADIENT  (hero, covers, footer)
+     Used on hero banners and slide covers ONLY. Never behind
+     body copy — contrast collapses.
+     ────────────────────────────────────────────────────────── */
+  --sc-gradient-hero:
+    linear-gradient(135deg,
+      #040C2B 0%,
+      #0E1F5B 25%,
+      #1F3C80 50%,
+      #3470C0 75%,
+      #4487DC 92%,
+      #7AB4E8 100%); /* @kind color */
+
+  --sc-gradient-footer:
+    linear-gradient(135deg, #040C2B 0%, #0E1F5B 100%); /* @kind color */
+
+  --sc-gradient-card:
+    linear-gradient(180deg, #FFFFFF 0%, #F8FAFF 100%); /* @kind color */
+
+  /* ──────────────────────────────────────────────────────────
+     8. RADII  (tight, technical — never pill-soft)
+     ────────────────────────────────────────────────────────── */
+  --sc-radius-xs:  4px;   /* chips, dot indicators           */
+  --sc-radius-sm:  6px;   /* hex pills, inputs               */
+  --sc-radius-md:  10px;  /* buttons, small cards            */
+  --sc-radius-lg:  14px;  /* tables, info cards              */
+  --sc-radius-xl:  16px;  /* hero cards, logo tiles          */
+  --sc-radius-pill: 999px;
+
+  /* ──────────────────────────────────────────────────────────
+     9. SHADOWS  (low + navy-tinted — never neutral black)
+     ────────────────────────────────────────────────────────── */
+  --sc-shadow-xs: 0 1px 2px rgba(14, 31, 91, 0.06);
+  --sc-shadow-sm: 0 2px 8px rgba(14, 31, 91, 0.06);
+  --sc-shadow-md: 0 2px 12px rgba(14, 31, 91, 0.08);
+  --sc-shadow-lg: 0 12px 32px rgba(14, 31, 91, 0.14);
+  --sc-shadow-xl: 0 24px 56px rgba(4, 12, 43, 0.22);
+  --sc-shadow-focus: 0 0 0 3px rgba(68, 135, 220, 0.30);
+
+  /* ──────────────────────────────────────────────────────────
+     10. SPACING  (4-pt scale)
+     ────────────────────────────────────────────────────────── */
+  --sc-space-1:  4px;
+  --sc-space-2:  8px;
+  --sc-space-3:  12px;
+  --sc-space-4:  16px;
+  --sc-space-5:  20px;
+  --sc-space-6:  24px;
+  --sc-space-8:  32px;
+  --sc-space-10: 40px;
+  --sc-space-12: 48px;
+  --sc-space-16: 64px;
+  --sc-space-20: 80px;
+
+  /* ──────────────────────────────────────────────────────────
+     11. TYPOGRAPHY — families, weights, scales
+     ────────────────────────────────────────────────────────── */
+  --sc-font-sans: "Segoe UI", "Inter", -apple-system,
+                  BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --sc-font-mono: "JetBrains Mono", "Courier New", ui-monospace,
+                  SFMono-Regular, Menlo, monospace;
+
+  /* Brand uses 400/600/700 mostly. 500 reserved for nav, 800
+     only for hero display. */
+  --sc-w-regular:  400; /* @kind font */
+  --sc-w-medium:   500; /* @kind font */
+  --sc-w-semibold: 600; /* @kind font */
+  --sc-w-bold:     700; /* @kind font */
+  --sc-w-black:    800; /* @kind font */
+
+  /* Modular scale */
+  --sc-fs-display:  44px;   /* hero only                       */
+  --sc-fs-h1:       30px;
+  --sc-fs-h2:       22px;
+  --sc-fs-h3:       16px;
+  --sc-fs-body:     14px;
+  --sc-fs-small:    12px;
+  --sc-fs-label:    11px;
+
+  --sc-lh-tight:   1.2;  /* @kind font */
+  --sc-lh-snug:    1.4;  /* @kind font */
+  --sc-lh-body:    1.65; /* @kind font */
+  --sc-lh-loose:   1.7;  /* @kind font */
+
+  --sc-ls-tight:  -0.5px; /* @kind font */
+  --sc-ls-wide:    2px;   /* @kind font */
+}
+
+/* ============================================================
+   SEMANTIC ELEMENTS
+   Apply these as class names OR direct selectors when working
+   inside a `.sc` scope.
+   ============================================================ */
+.sc, .sc * { box-sizing: border-box; }
+
+.sc {
+  font-family: var(--sc-font-sans);
+  font-size: var(--sc-fs-body);
+  line-height: var(--sc-lh-body);
+  color: var(--sc-text);
+  background: var(--sc-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.sc-display {
+  font-size: var(--sc-fs-display);
+  font-weight: var(--sc-w-bold);
+  line-height: var(--sc-lh-tight);
+  letter-spacing: var(--sc-ls-tight);
+  color: var(--sc-text-heading);
+}
+.sc-h1 {
+  font-size: var(--sc-fs-h1);
+  font-weight: var(--sc-w-bold);
+  line-height: var(--sc-lh-tight);
+  letter-spacing: var(--sc-ls-tight);
+  color: var(--sc-text-heading);
+}
+.sc-h2 {
+  font-size: var(--sc-fs-h2);
+  font-weight: var(--sc-w-bold);
+  line-height: var(--sc-lh-snug);
+  color: var(--sc-text-strong);
+}
+.sc-h3 {
+  font-size: var(--sc-fs-h3);
+  font-weight: var(--sc-w-semibold);
+  color: var(--sc-secondary);
+}
+.sc-body { font-size: var(--sc-fs-body); color: var(--sc-text); }
+.sc-small { font-size: var(--sc-fs-small); color: var(--sc-text-muted); }
+.sc-label {
+  font-size: var(--sc-fs-label);
+  font-weight: var(--sc-w-bold);
+  letter-spacing: var(--sc-ls-wide);
+  text-transform: uppercase;
+  color: var(--sc-accent);
+}
+.sc-link {
+  color: var(--sc-link);
+  font-weight: var(--sc-w-semibold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s;
+}
+.sc-link:hover { color: var(--sc-link-hover); }
+.sc-mono {
+  font-family: var(--sc-font-mono);
+  font-size: var(--sc-fs-small);
+  font-weight: var(--sc-w-semibold);
+}
+.sc-hex {
+  font-family: var(--sc-font-mono);
+  font-size: var(--sc-fs-small);
+  font-weight: var(--sc-w-semibold);
+  background: var(--sc-page-wash);
+  color: var(--sc-slate);
+  padding: 2px 8px;
+  border-radius: var(--sc-radius-sm);
+}
+
+/* ──────────────────────────────────────────────────────────
+   SECTION-TITLE RULE  (signature element, see brand guide)
+   The little uppercase eyebrow with an accent rule under it.
+   ────────────────────────────────────────────────────────── */
+.sc-section-title {
+  font-size: var(--sc-fs-label);
+  font-weight: var(--sc-w-bold);
+  letter-spacing: var(--sc-ls-wide);
+  text-transform: uppercase;
+  color: var(--sc-accent);
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--sc-border-blue);
+  margin-bottom: 20px;
+}
+
+/* ──────────────────────────────────────────────────────────
+   CARDS  (default, soft navy shadow, no border)
+   ────────────────────────────────────────────────────────── */
+.sc-card {
+  background: var(--sc-bg-card);
+  border-radius: var(--sc-radius-xl);
+  box-shadow: var(--sc-shadow-md);
+  padding: 24px 28px;
+}
+.sc-callout {
+  background: var(--sc-bg-info);
+  border: 1px solid var(--sc-border-blue);
+  border-radius: var(--sc-radius-md);
+  padding: 14px 18px;
+  font-size: var(--sc-fs-body);
+  color: var(--sc-royal);
+}
+.sc-callout strong { color: var(--sc-deep-navy); }
+
+/* ──────────────────────────────────────────────────────────
+   BUTTONS
+   Primary = deep navy on white. Secondary = bright blue ghost.
+   Avoid green/red CTAs — this is a B2B technical brand.
+   ────────────────────────────────────────────────────────── */
+.sc-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--sc-font-sans);
+  font-size: var(--sc-fs-body);
+  font-weight: var(--sc-w-semibold);
+  padding: 10px 18px;
+  border-radius: var(--sc-radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.05s;
+  white-space: nowrap;
+}
+.sc-btn:active { transform: translateY(1px); }
+.sc-btn:focus-visible { outline: none; box-shadow: var(--sc-shadow-focus); }
+
+.sc-btn-primary {
+  background: var(--sc-deep-navy);
+  color: #fff;
+}
+.sc-btn-primary:hover { background: var(--sc-midnight); }
+
+.sc-btn-secondary {
+  background: transparent;
+  color: var(--sc-deep-navy);
+  border-color: var(--sc-border-blue);
+}
+.sc-btn-secondary:hover {
+  background: var(--sc-blue-wash);
+  border-color: var(--sc-bright-blue);
+}
+
+.sc-btn-accent {
+  background: var(--sc-bright-blue);
+  color: #fff;
+}
+.sc-btn-accent:hover { background: var(--sc-royal); }
+
+.sc-btn-ghost {
+  background: transparent;
+  color: var(--sc-bright-blue);
+  padding-left: 0; padding-right: 0;
+}
+.sc-btn-ghost:hover { color: var(--sc-deep-navy); }
+
+/* ──────────────────────────────────────────────────────────
+   BADGES & TAGS
+   ────────────────────────────────────────────────────────── */
+.sc-badge {
+  display: inline-block;
+  background: var(--sc-blue-wash);
+  border: 1px solid var(--sc-border-blue);
+  border-radius: var(--sc-radius-pill);
+  padding: 4px 14px;
+  font-size: var(--sc-fs-small);
+  font-weight: var(--sc-w-semibold);
+  color: var(--sc-royal);
+}
+.sc-badge-compliance {
+  background: var(--sc-compliance-tint);
+  border-color: rgba(26, 122, 110, 0.25);
+  color: var(--sc-compliance);
+}
+
+/* ──────────────────────────────────────────────────────────
+   INPUTS
+   ────────────────────────────────────────────────────────── */
+.sc-input {
+  font-family: var(--sc-font-sans);
+  font-size: var(--sc-fs-body);
+  color: var(--sc-ink);
+  background: var(--sc-surface);
+  border: 1px solid var(--sc-border);
+  border-radius: var(--sc-radius-md);
+  padding: 10px 14px;
+  width: 100%;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.sc-input::placeholder { color: var(--sc-light-gray); }
+.sc-input:focus {
+  outline: none;
+  border-color: var(--sc-bright-blue);
+  box-shadow: var(--sc-shadow-focus);
+}
+
+/* ──────────────────────────────────────────────────────────
+   TABLES  (technical, navy header bar)
+   ────────────────────────────────────────────────────────── */
+.sc-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: var(--sc-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--sc-shadow-md);
+  background: var(--sc-surface);
+  font-size: var(--sc-fs-body);
+}
+.sc-table th {
+  background: var(--sc-deep-navy);
+  color: #fff;
+  font-size: var(--sc-fs-small);
+  font-weight: var(--sc-w-semibold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 12px 18px;
+  text-align: left;
+}
+.sc-table td {
+  padding: 12px 18px;
+  color: var(--sc-slate);
+  border-bottom: 1px solid var(--sc-divider);
+}
+.sc-table tr:last-child td { border-bottom: none; }
+.sc-table tr:hover td { background: var(--sc-hover-tint); }
