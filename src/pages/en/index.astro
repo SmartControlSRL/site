@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { CTA_ASSESSMENT, yearsInBusiness } from '../../i18n/ui';
+
+const years = yearsInBusiness(new Date().getUTCFullYear());
+const stats = [
+  { value: '650+', label: 'projects delivered' },
+  { value: '250+', label: 'clients' },
+  { value: '25+', label: 'international clients' },
+  { value: `${Math.floor(years / 10) * 10}+`, label: 'years of experience' },
+];
+---
+
+<BaseLayout
+  title="Smart Control — Trusted Service Delivery Partner"
+  description="Enterprise IT, security and cloud services. Our own team, not subcontractors. 20+ years, 650+ projects, 4 ISO certifications, GDPR · NIS 2 · DORA."
+>
+  <section class="container py-24 md:py-32">
+    <p class="eyebrow pb-2.5 inline-block border-b-2 border-border-blue">
+      Trusted Service Delivery Partner
+    </p>
+    <h1 class="mt-6 max-w-3xl text-display font-extrabold tracking-tight text-midnight">
+      Infrastructure, security and cloud — delivered by our own team.
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg text-slate">
+      A consultative partner for enterprise organisations: infrastructure, cloud,
+      cybersecurity, software and managed services. Our own team, not
+      subcontractors — a long-term relationship, 90-day ROI.
+    </p>
+    <div class="mt-9">
+      <a
+        href={CTA_ASSESSMENT}
+        class="inline-block rounded-md bg-bright px-6 py-3 font-semibold text-white shadow-sm transition-colors hover:bg-royal"
+      >
+        Book the free 2-day assessment
+      </a>
+    </div>
+
+    <dl class="mt-20 grid grid-cols-2 gap-8 sm:grid-cols-4">
+      {stats.map((s) => (
+        <div>
+          <dt class="font-mono text-3xl font-bold text-navy md:text-4xl">{s.value}</dt>
+          <dd class="mt-1 text-small text-cool">{s.label}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+</BaseLayout>

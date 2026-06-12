@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CTA_ASSESSMENT, yearsInBusiness } from '../i18n/ui';
+
+const years = yearsInBusiness(new Date().getUTCFullYear());
+const stats = [
+  { value: '650+', label: 'proiecte livrate' },
+  { value: '250+', label: 'clienți' },
+  { value: '25+', label: 'clienți internaționali' },
+  { value: `${Math.floor(years / 10) * 10}+`, label: 'ani de experiență' },
+];
+---
+
+<BaseLayout
+  title="Smart Control — Trusted Service Delivery Partner"
+  description="Servicii enterprise IT, securitate și cloud. Echipă proprie, nu subcontractori. Peste 20 de ani, 650+ proiecte, 4 certificări ISO, GDPR · NIS 2 · DORA."
+>
+  <section class="container py-24 md:py-32">
+    <p class="eyebrow pb-2.5 inline-block border-b-2 border-border-blue">
+      Trusted Service Delivery Partner
+    </p>
+    <h1 class="mt-6 max-w-3xl text-display font-extrabold tracking-tight text-midnight">
+      Infrastructură, securitate și cloud — livrate de echipa noastră proprie.
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg text-slate">
+      Partener consultativ pentru organizații enterprise: infrastructură, cloud,
+      cibersecuritate, software și servicii gestionate. Echipă proprie, nu
+      subcontractori — relație pe termen lung, raport ROI la 90 de zile.
+    </p>
+    <div class="mt-9">
+      <a
+        href={CTA_ASSESSMENT}
+        class="inline-block rounded-md bg-bright px-6 py-3 font-semibold text-white shadow-sm transition-colors hover:bg-royal"
+      >
+        Programează evaluarea gratuită de 2 zile
+      </a>
+    </div>
+
+    <dl class="mt-20 grid grid-cols-2 gap-8 sm:grid-cols-4">
+      {stats.map((s) => (
+        <div>
+          <dt class="font-mono text-3xl font-bold text-navy md:text-4xl">{s.value}</dt>
+          <dd class="mt-1 text-small text-cool">{s.label}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+</BaseLayout>

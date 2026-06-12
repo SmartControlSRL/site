@@ -1,0 +1,57 @@
+---
+// Self-hosted variable fonts (Vite bundles them; NO Google Fonts CDN —
+// the CDN would leak visitor IPs to Google in the US, the same GDPR
+// problem that got the Google Map dropped). See /CLAUDE.md.
+import '@fontsource-variable/inter';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/global.css';
+
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { getLangFromUrl } from '../i18n/ui';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+
+// hreflang alternates: toggle the /en prefix for the same page.
+const path = Astro.url.pathname;
+const roPath = path.replace(/^\/en(\/|$)/, '/');
+const enPath = path.startsWith('/en') ? path : `/en${path === '/' ? '' : path}`;
+const canonical = new URL(path, Astro.site).href;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/favicon-192.png" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="ro" href={new URL(roPath, Astro.site).href} />
+    <link rel="alternate" hreflang="en" href={new URL(enPath, Astro.site).href} />
+    <link rel="alternate" hreflang="x-default" href={new URL(roPath, Astro.site).href} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body>
+    <a href="#main" class="sr-only focus:not-sr-only">Skip to content</a>
+    <Nav />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

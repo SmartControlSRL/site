@@ -1,0 +1,60 @@
+---
+// Nav is ALWAYS light on every page (logo on white) — a locked brand rule.
+// No "Login" entry: the SEKNET / S-VPN consoles are on-prem and out of scope.
+import { getLangFromUrl, useTranslations, CTA_ASSESSMENT } from '../i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Locale-aware path helper (RO at /, EN under /en/).
+const p = (path: string) => (lang === 'en' ? `/en${path === '/' ? '' : path}` : path);
+
+const links = [
+  { href: p('/servicii'), label: t('nav.services') },
+  { href: p('/servicii/cloud'), label: t('nav.cloud') },
+  { href: p('/solutii'), label: t('nav.products') },
+  { href: p('/#contact'), label: t('nav.contact') },
+];
+
+// Language switch target = the alternate-locale version of this page.
+const path = Astro.url.pathname;
+const altHref = lang === 'en' ? path.replace(/^\/en(\/|$)/, '/') : `/en${path === '/' ? '' : path}`;
+const altLabel = lang === 'en' ? 'RO' : 'EN';
+---
+
+<header class="sticky top-0 z-50 border-b border-border bg-surface/90 backdrop-blur-sm">
+  <nav class="container flex h-16 items-center justify-between gap-6" aria-label="Primary">
+    <a href={p('/')} class="flex items-center gap-2.5 shrink-0" aria-label="Smart Control — home">
+      <img src="/smartcontrol-mark.png" alt="" width="32" height="32" class="h-8 w-8" />
+      <span class="text-lg font-bold tracking-tight">
+        <span class="text-navy">Smart</span><span class="text-bright">Control</span>
+      </span>
+    </a>
+
+    <ul class="hidden items-center gap-7 md:flex">
+      {links.map((l) => (
+        <li>
+          <a href={l.href} class="text-small font-medium text-slate transition-colors hover:text-navy">
+            {l.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="flex items-center gap-3">
+      <a
+        href={altHref}
+        class="text-small font-semibold text-cool transition-colors hover:text-navy"
+        aria-label={`Switch language to ${altLabel}`}
+      >
+        {altLabel}
+      </a>
+      <a
+        href={CTA_ASSESSMENT}
+        class="hidden rounded-md bg-navy px-4 py-2 text-small font-semibold text-white transition-colors hover:bg-midnight sm:inline-block"
+      >
+        {t('cta.assessment.short')}
+      </a>
+    </div>
+  </nav>
+</header>

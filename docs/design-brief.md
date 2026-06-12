@@ -1,6 +1,8 @@
 # SmartControl.ro — Design & Motion Brief
 
 > Visual/motion spec for www.smartcontrol.ro. Companion to the project brief (`smartcontrol-ro-brief.md`). Built on the existing SmartControl design system in Claude Design; defines tone, page architecture, the light/dark rhythm, motion, iconography, and references. Ready-to-paste Claude Design prompt at the end (§12).
+>
+> **⚠️ `/CLAUDE.md` at the repo root is the authoritative final spec.** Corrected against locked decisions: icons are **Lucide** (not Hugeicons); the animated direction here **wins over** the brand system's "minimal motion" rule, but the node-graph is a **2D canvas (not WebGL/Three.js)**, all motion ships as deferred islands behind `prefers-reduced-motion`, and the web type scale is rederived larger than the deck tokens. Glow is kept (brand "no blur" overridden).
 
 ## 1. Direction
 
@@ -45,11 +47,11 @@ No standalone About / Partners / Contact / Privacy / Terms / Cookies pages — t
 - A **monospace** for technical labels, eyebrows, stats, and spec tables — reinforces the engineered feel.
 - Tight display tracking; generous body line-height; strong hierarchy, few weights.
 
-## 6. Iconography — Hugeicons
+## 6. Iconography — Lucide
 
-- Library: **Hugeicons** (React/Vue/Svelte/SVG/icon-font packages + Figma plugin — Figma for design, React/SVG for the Astro build).
-- **Locked style: Stroke Standard** — clean, neutral, professional; pairs well with light backgrounds. *(Alt for a more technical edge: Stroke Sharp. Pick one, never mix.)*
-- Treatment: consistent stroke weight + size grid; neutral by default, **accent on hover/active**. Treat the chosen style as a design token.
+- Library: **Lucide** (MIT, free; React/Svelte/SVG packages — already speced in the brand design system). Chosen over Hugeicons to avoid commercial licensing.
+- **Stroke: 1.5px, never filled, never duotone** — clean, neutral, professional; pairs well with light backgrounds. Pick one set, never mix.
+- Treatment: consistent stroke weight + size grid (24px default, 20px dense UI, 32px marketing pillar cards); icons inherit `currentColor` — neutral navy by default, **accent on hover/active**.
 
 ## 7. Motion language
 
@@ -91,7 +93,7 @@ Principle: light zones stay calm and crisp; dark zones (product heroes, products
 ## 10. Page-by-page treatment
 
 **Home (light, two dark bands) — now the catch-all page**
-Light hero (logo on white, faint network/gradient background, word-by-word headline reveal, glowing email CTA) → count-up stats → **About/company** (founding 2003, mission, team 50/500+ yrs, why-us pillars, certifications & compliance) → services bento (four areas, staggered reveal, soft-shadow hover) → **DARK** SEKNET/products teaser band (glow, node bg, abstract visual) → Cloud & Modernization teaser → **partners** logo grid (light) → **DARK** closing CTA → **contact** (email/address/map) → **light footer** with email and minimal legal (privacy/terms via in-page anchors).
+Light hero (logo on white, faint network/gradient background, word-by-word headline reveal, glowing email CTA) → count-up stats → **About/company** (founding 2003, mission, team 50/500+ yrs, why-us pillars, certifications & compliance) → services bento (four areas, staggered reveal, soft-shadow hover) → **DARK** SEKNET/products teaser band (glow, node bg, abstract visual) → Cloud & Modernization teaser → **partners** logo grid (light) → **DARK** closing CTA → **contact** (email/address, no map) → **light footer** with email and a link to the dedicated privacy page.
 
 **Product detail pages — SEKNET / S-VPN (Template A)**
 Light nav (logo on white) → **DARK hero**: product name + tagline glow, animated node background, abstract feature visual, email CTA → light overview ("what it is / who it's for") → feature/module grid (SEKNET: the 5 modules with glow-lift hover; S-VPN: VPN/MFA/WAF/endpoint/UTM/console) → mono **spec table** (SEKNET: 50k+ events/sec, <60s, 99.9%, encryption, audit log; S-VPN: 20 Gbps+, 10k+ tunnels, 400+ SSL, 200+ S2S) → use cases → integrations → **DARK** CTA → light footer. Both reuse this template with their own content + abstracts.
@@ -134,11 +136,11 @@ Light hero → short intro → capability bento → relevant proof (certs/compli
 
 **Reference sites to study** (modern, technical; note the restraint): Neon (neon.com), ente (ente.com), Tempo (tempo.xyz), Measured (measured.site), Remix (remix.run); plus enterprise leaders — Vercel, Linear, Cloudflare, Datadog, Wiz. Many are dark; translate their *structure and restraint* into our light-first system, not the dark palette.
 
-**Icons:** Hugeicons — https://hugeicons.com/?via=Abraham (Stroke Standard; Figma plugin for design, React/SVG packages for build).
+**Icons:** Lucide — https://lucide.dev/ (MIT, 1.5px stroke; React/SVG packages for build).
 
 ## 12. Ready-to-paste Claude Design prompt
 
-> Design a modern, **light-first, multi-page** enterprise IT/security website for Smart Control using our existing brand tokens. The **nav/header and footer are always light so the logo sits on white on every page**. Tone: clean, premium, approachable-but-engineered — geometric sans for UI with **monospace** accents for stats/labels/spec tables, generous whitespace, **bento-grid** sections, hairline borders, soft shadows. Reserve dark "showcase" treatment for three things only: **product-page heroes**, the homepage products band, and **closing CTA bands** — there, add an ambient **animated network-node background** and soft accent glow. Light sections use crisp scroll reveals, **count-up stats**, and soft-shadow hover lifts. Use **Hugeicons, Stroke Standard style only**, accent-colored on hover. For product visuals use **abstract "feature" graphics, not literal screenshots**, styled to the brand. Smooth, intentional motion only; honor reduced-motion.
+> Design a modern, **light-first, multi-page** enterprise IT/security website for Smart Control using our existing brand tokens. The **nav/header and footer are always light so the logo sits on white on every page**. Tone: clean, premium, approachable-but-engineered — geometric sans for UI with **monospace** accents for stats/labels/spec tables, generous whitespace, **bento-grid** sections, hairline borders, soft shadows. Reserve dark "showcase" treatment for three things only: **product-page heroes**, the homepage products band, and **closing CTA bands** — there, add an ambient **animated network-node background** and soft accent glow. Light sections use crisp scroll reveals, **count-up stats**, and soft-shadow hover lifts. Use **Lucide icons (1.5px stroke) only**, accent-colored on hover. For product visuals use **abstract "feature" graphics, not literal screenshots**, styled to the brand. Smooth, intentional motion only; honor reduced-motion.
 >
 > Show me these pages:
 > 1. **Homepage** (this is also the catch-all page) — light hero → count-up stats → About/company (mission, team, certifications) → bento services → dark SEKNET/products band → Cloud teaser → partners logo grid → dark CTA → contact (email/address) → light footer with minimal legal links.

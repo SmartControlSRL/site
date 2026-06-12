@@ -1,19 +1,21 @@
 # SmartControl.ro — Website Brief
 
 > Working spec for www.smartcontrol.ro, built from the 2026 services offer. Hand to Claude Code as project context. Content below describes **what goes where** — phrasing is for the build, not final copy. All decisions are settled (see §10).
+>
+> **⚠️ `/CLAUDE.md` at the repo root is the authoritative final spec.** Where this brief and CLAUDE.md disagree, CLAUDE.md wins. This brief has been corrected to match the locked decisions (2 products not 3, 4 ISO not 5, two CTAs, dedicated privacy page, no map, self-hosted Umami + fonts, Vercel-preview-only → EU VPS prod, Lucide icons, full animated direction).
 
 ## 1. Overview
 
 New public site for **Smart Control SRL** — an enterprise IT services and solutions company ("Trusted Service Delivery Partner"). Founded 2003, 20+ years, 50 in-house specialists. Domains: **Infrastructure · Cloud · Cybersecurity · Blockchain · Software Development.**
 
-The site's job: establish credibility with enterprise/B2B buyers, explain the service portfolio and the three proprietary products, and drive enquiries by **email** — primarily to book the free Initial Assessment. It is a static marketing site: no e-commerce, no customer portal, no forms.
+The site's job: establish credibility with enterprise/B2B buyers, explain the service portfolio and the two proprietary products (SEKNET, S-VPN), and drive enquiries by **email** — primarily to book the free Initial Assessment. It is a static marketing site: no e-commerce, no customer portal, no forms.
 
 ## 2. Positioning & key messages
 
 - **Partner, not vendor** — long-term, consultative, data-driven delivery.
 - **Own team, not subcontractors** — 50 internal specialists, 500+ years cumulative experience, on-site & remote.
 - **Proprietary solutions, no vendor lock-in** — SEKNET and S-VPN, both with source-code access, no third-party license costs.
-- **Certified & compliant** — 5 ISO systems, GDPR, NIS2, DORA.
+- **Certified & compliant** — 4 ISO certifications (ISO 9001, 27001, 14001, 45001), GDPR, NIS2, DORA.
 - **Proven scale** — 650+ projects, 250+ clients, 25+ international.
 
 ## 3. Audience & conversions
@@ -22,8 +24,9 @@ The site's job: establish credibility with enterprise/B2B buyers, explain the se
 
 **Primary actions (ranked):**
 1. **Email to book the free 2-day Initial Assessment** — main CTA, site-wide (mailto to office@smartcontrol.ro).
-2. Email sales / general enquiry (same address).
-3. Read a product/service page → then email.
+2. **Email to request a product demo** — "Cere un demo" CTA, on the SEKNET / S-VPN pages and the Home products band only (same address, product-specific subject so inbound self-routes).
+3. Email sales / general enquiry (same address).
+4. Read a product/service page → then email.
 
 ## 4. Sitemap
 
@@ -36,12 +39,12 @@ The site's job: establish credibility with enterprise/B2B buyers, explain the se
 - `/solutii` — **Proprietary products** index, **each a full detail page**:
   - `/solutii/seknet` — SEKNET
   - `/solutii/s-vpn` — S-VPN
-- **No standalone About / Partners / Contact / Privacy / Terms / Cookies pages** — that content lives in Home sections; footer legal links point to in-page anchors (e.g. `/#confidentialitate`).
+- **No standalone About / Partners / Contact pages, and no Terms / Cookies pages** (zero cookies, no forms → none needed) — that content lives in Home sections. **Exception: the privacy policy gets a dedicated page** — `/confidentialitate` (RO) + `/en/privacy` (EN), linked from the footer, rendered as accessible HTML (converted from `docs/Politica de confidentialitate.pdf`, not linked as a raw PDF).
 - Languages: **RO + EN**, both first-class from launch (see §8)
 
 ## 5. Content per page
 
-**Home (catch-all page):** hero (positioning line + "email us to book the free assessment" CTA), trust stats (650+/250+/25+/20+), **About/company block** (founding 2003, mission, team 50 / 500+ yrs), four service areas, proprietary-products teaser (SEKNET/S-VPN), why-us pillars, certifications strip (ISO ×5 + GDPR/NIS2/DORA badges), **partner logos**, closing email CTA, **contact block** (email/address/map), and a **footer with minimal legal** (privacy/terms as in-page anchored sections).
+**Home (catch-all page):** hero (positioning line + "email us to book the free assessment" CTA), trust stats (650+/250+/25+/20+), **About/company block** (founding 2003, mission, team 50 / 500+ yrs), four service areas, proprietary-products teaser (SEKNET/S-VPN), why-us pillars, certifications strip (ISO ×4 + GDPR/NIS2/DORA badges — frameworks rendered distinct from the ISO roundels), **partner logos**, closing email CTA, **contact block** (email/address, no map), and a **footer** linking the dedicated privacy page.
 
 **Services hub + area pages:** the hub gives a short intro and links to a dedicated page per area; each area page has its own intro + capability detail. Pull items from the offer:
 - ***Cloud & Modernization — flagship "cloudification" page:*** the deepest service page. Frames the market context (hardware-cost pressure → CAPEX-to-OPEX shift → re-architecture as the alternative to costly hardware), the Infrastructure & Cloud capabilities (Data Center design/consolidation, virtualization, private/hybrid cloud, BC & DR, storage & information management, access & application delivery, infrastructure management), the **5-stage methodology** (below) as its centerpiece, and an ROI/business-case angle. This is where prospects land for the modernization story.
@@ -57,7 +60,7 @@ The site's job: establish credibility with enterprise/B2B buyers, explain the se
 
 **Partners (Home section):** logo grid — Hitachi Vantara, Commvault, Fortinet, Cisco, Juniper, Lenovo, VMware, Fujitsu, Oracle, Microsoft, Palo Alto, Hanasis, IBM, HP, DELL.
 
-**Contact (Home section):** email (office@smartcontrol.ro, as a clear CTA), address (Intrarea Aviator Teodor Iliescu 37, 011672 București), map. No form, no phone.
+**Contact (Home section):** email (office@smartcontrol.ro, as a clear CTA), address (Intrarea Aviator Teodor Iliescu 37, 011672 București). No form, no phone, no map (a Google Map would set cookies / transfer data to the US — dropped; a static map image is acceptable if a visual is wanted).
 
 ## 6. Functional requirements
 
@@ -78,10 +81,11 @@ The site's job: establish credibility with enterprise/B2B buyers, explain the se
 **Stack:** Astro + Tailwind, React/Svelte islands only where needed, content in Markdown/MDX content collections, Astro built-in i18n. **No forms → the site is fully static (SSG), no server runtime required.**
 
 - **i18n:** RO + EN both first-class from launch. RO default at `/`, EN under `/en/`, full parity across all pages.
-- **Analytics:** Plausible or self-hosted Umami (cookieless → minimal/no consent banner).
-- **Hosting/CI:** Vercel **or** own VPS — both trivial for a static build; final pick at deploy.
-  - *Vercel:* zero-config, automatic preview deploys per PR, EU regions.
-  - *VPS:* full EU control/residency — build static, serve via Nginx, deploy via GitHub Action or rsync.
+- **Analytics:** self-hosted **Umami (EU), cookieless**. With no forms, no map, and self-hosted fonts → zero cookies → genuinely no consent banner.
+- **Fonts:** self-hosted WOFF2 (Inter + JetBrains Mono). **Do not** use the Google Fonts CDN — it transfers visitor IPs to Google (US), the same issue that dropped the map.
+- **Hosting/CI:** **Vercel free tier for team preview/validation only → production on the company's own EU VPS (datacenter).** EU data residency is part of the compliance pitch. Vercel Hobby is non-commercial — the production `smartcontrol.ro` domain never points at it.
+  - *Vercel (preview only):* zero-config, automatic preview deploys per PR.
+  - *VPS (production):* full EU control/residency — build static, serve via Nginx, deploy via GitHub Action or rsync.
 
 **Non-functional**
 - Performance: Core Web Vitals green; Astro `<Image>`; minimal JS.
@@ -102,7 +106,7 @@ The site's job: establish credibility with enterprise/B2B buyers, explain the se
 1. **Languages:** RO + EN from launch, full parity.
 2. **PDF offer:** none — site content is sufficient.
 3. **Contact:** email only, no form.
-4. **Hosting:** Vercel or own VPS (static build; pick at deploy).
+4. **Hosting:** Vercel free for preview/validation only; production on the company's own EU VPS.
 5. **Client proof:** partner logos only — no client names/logos/case studies.
 6. **Phone:** none — email only.
 7. **Blog & Careers:** excluded, now and ongoing.
@@ -115,4 +119,4 @@ The site's job: establish credibility with enterprise/B2B buyers, explain the se
 4. **Content & i18n:** RO + EN content collections, full parity.
 5. **Analytics + CTAs:** cookieless analytics; obfuscated mailto CTAs wired site-wide.
 6. **SEO + a11y pass:** meta/OG, sitemap, robots, hreflang, structured data (Org/Service/Product), contrast & landmark audit.
-7. **Deploy:** Vercel or VPS; verify Core Web Vitals; ship.
+7. **Deploy:** Vercel preview for validation → production on the EU VPS; verify Core Web Vitals; ship.
