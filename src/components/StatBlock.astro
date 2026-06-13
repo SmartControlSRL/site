@@ -16,10 +16,16 @@ interface Props {
 }
 
 const { value, count, suffix, caption, numberSize = 48, class: extra = '' } = Astro.props;
+
+// Fluid number: scales down on narrow viewports so long values (e.g. "20Gbps+")
+// never clip in the 2-up mobile grid; clamps up to the desktop numberSize.
+const minPx = Math.max(24, Math.round(numberSize * 0.54));
+const vw = Math.max(3, Math.round(numberSize * 0.1));
+const fluidSize = `clamp(${minPx}px, ${vw}vw + 8px, ${numberSize}px)`;
 ---
 
-<div class:list={['bg-surface px-8 py-[34px]', extra]}>
-  <div class="font-mono font-semibold leading-none text-navy" style={`font-size:${numberSize}px`}>
+<div class:list={['bg-surface px-5 py-7 sm:px-8 sm:py-[34px]', extra]}>
+  <div class="font-mono font-semibold leading-none text-navy" style={`font-size:${fluidSize}`}>
     <span data-count={count != null ? String(count) : undefined}>{value}</span>{
       suffix && <span class="text-bright">{suffix}</span>
     }

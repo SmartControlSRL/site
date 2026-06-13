@@ -79,7 +79,7 @@ const altHref = altLocalePath(path);
         <MailtoLink
           variant="button"
           subject={t('subject.assessment')}
-          class="hidden !px-[18px] !py-[9px] !text-[13.5px] sm:inline-flex"
+          class="!hidden !px-[18px] !py-[9px] !text-[13.5px] md:!inline-flex"
         >
           {t('cta.assessment')}
         </MailtoLink>
@@ -91,6 +91,8 @@ const altHref = altLocalePath(path);
           aria-expanded="false"
           aria-controls="nav-mobile-panel"
           aria-label={t('nav.menu.open')}
+          data-label-open={t('nav.menu.open')}
+          data-label-close={t('nav.menu.close')}
           class="flex h-10 w-10 items-center justify-center rounded-md text-navy transition-colors hover:bg-blue-wash md:hidden"
         >
           <svg data-nav-icon-open width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
@@ -154,6 +156,8 @@ const altHref = altLocalePath(path);
     const set = (next: boolean) => {
       open = next;
       toggle.setAttribute('aria-expanded', String(open));
+      const label = open ? toggle.dataset.labelClose : toggle.dataset.labelOpen;
+      if (label) toggle.setAttribute('aria-label', label);
       panel.hidden = !open;
       iconOpen?.classList.toggle('hidden', open);
       iconClose?.classList.toggle('hidden', !open);

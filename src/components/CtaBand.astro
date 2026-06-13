@@ -25,7 +25,7 @@ const { id, eyebrow, heading, cta, subject, class: extra = '' } = Astro.props;
 <section
   id={id}
   data-band
-  class:list={['relative overflow-hidden bg-midnight px-10 py-[110px]', extra]}
+  class:list={['relative overflow-hidden bg-midnight px-6 py-[72px] sm:px-10 sm:py-[110px]', extra]}
 >
   <NetworkCanvas lineAlpha={0.18} dotAlpha={0.45} spread={24000} lineDist={140} opacity={0.5} />
   <div
