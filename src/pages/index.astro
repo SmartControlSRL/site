@@ -198,20 +198,7 @@ const cloudRows = [
       </p>
 
       <div
-        class="mt-9 flex flex-wrap items-center gap-[18px] opacity-0 [animation:scFadeIn_0.9s_ease-out_1.5s_forwards]"
-      >
-        <MailtoLink
-          variant="button"
-          subject={t('subject.assessment')}
-          class="[box-shadow:0_4px_18px_rgba(68,135,220,0.35)] !bg-bright hover:!bg-royal hover:[box-shadow:0_6px_24px_rgba(68,135,220,0.45)]"
-        >
-          Programează un assessment gratuit
-        </MailtoLink>
-        <TextLink href="#servicii">Vezi serviciile</TextLink>
-      </div>
-
-      <div
-        class="mt-[52px] flex flex-wrap gap-2.5 opacity-0 [animation:scFadeIn_0.9s_ease-out_1.7s_forwards]"
+        class="mt-10 flex flex-wrap gap-2.5 opacity-0 [animation:scFadeIn_0.9s_ease-out_1.5s_forwards]"
       >
         {isoBadges.map((b) => <MonoPill>{b}</MonoPill>)}
         {frameworks.map((f) => <MonoPill variant="compliance">{f}</MonoPill>)}
