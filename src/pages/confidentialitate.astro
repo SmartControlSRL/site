@@ -9,10 +9,29 @@ import MailtoLink from '../components/MailtoLink.astro';
 >
   <div class="container privacy-content">
     <article>
+      <p class="translation-notice" role="note">
+        Aceasta este versiunea oficială în limba română. O{' '}
+        <a href="/en/privacy" class="notice-link">traducere în limba engleză</a>{' '}
+        este disponibilă pentru comoditate.
+      </p>
+
       <h1>Politică de confidențialitate</h1>
 
+      <nav class="toc" aria-label="Cuprins">
+        <p class="toc-title">Cuprins</p>
+        <ol>
+          <li><a href="#informatii-colectam">Ce informații colectăm și cum le utilizăm</a></li>
+          <li><a href="#minori">Datele cu caracter personal ale minorilor sub 16 ani</a></li>
+          <li><a href="#informatii-transmitem">Informațiile pe care le transmitem</a></li>
+          <li><a href="#linkuri">Link-uri către alte pagini</a></li>
+          <li><a href="#securitate">Securitate</a></li>
+          <li><a href="#drepturi">Drepturile dumneavoastră în legătură cu datele cu caracter personal</a></li>
+          <li><a href="#actualizare">Actualizarea politicii de confidențialitate</a></li>
+        </ol>
+      </nav>
+
       <p>
-        Această politică („Politica de confidențialitate") descrie practicile cu privire la datele
+        Această politică („Politica de confidențialitate”) descrie practicile cu privire la datele
         personale pe care le colectăm prin Site, care este găzduit și operat din România.
       </p>
 
@@ -41,11 +60,11 @@ import MailtoLink from '../components/MailtoLink.astro';
         Site, sunteți de acord cu termenii și condițiile acestei Politici.
       </p>
 
-      <h2>Ce informații colectăm și cum le utilizăm</h2>
+      <h2 id="informatii-colectam">Ce informații colectăm și cum le utilizăm</h2>
 
       <p>În cadrul acestui Site ne furnizați următoarele date cu caracter personal:</p>
 
-      <h3>Când accesați adresa de e-mail</h3>
+      <h3>Când ne contactați prin e-mail</h3>
 
       <p>Datele cu caracter personal pe care le colectăm în această secțiune sunt:</p>
 
@@ -53,7 +72,7 @@ import MailtoLink from '../components/MailtoLink.astro';
         <li>Nume</li>
         <li>Prenume</li>
         <li>Adresă de e-mail</li>
-        <li>Orice alte date cu caracter personal alegeți să ne transmiteți</li>
+        <li>Orice alte date cu caracter personal pe care alegeți să ni le transmiteți</li>
       </ul>
 
       <p>
@@ -68,7 +87,7 @@ import MailtoLink from '../components/MailtoLink.astro';
         corespunzătoare din prezenta politică de confidențialitate.
       </p>
 
-      <h2>Datele cu caracter personal ale minorilor sub 16 ani</h2>
+      <h2 id="minori">Datele cu caracter personal ale minorilor sub 16 ani</h2>
 
       <p>
         Minorii cu vârsta de până la 16 ani nu ar trebui să transmită niciun fel de date cu caracter
@@ -88,7 +107,7 @@ import MailtoLink from '../components/MailtoLink.astro';
         sub 16 ani.
       </p>
 
-      <h2>Informațiile pe care le transmitem</h2>
+      <h2 id="informatii-transmitem">Informațiile pe care le transmitem</h2>
 
       <p>
         Nu vom transmite către terțe părți datele dumneavoastră cu caracter personal, cu următoarele
@@ -124,7 +143,7 @@ import MailtoLink from '../components/MailtoLink.astro';
         </li>
       </ul>
 
-      <h2>Link-uri către alte pagini</h2>
+      <h2 id="linkuri">Link-uri către alte pagini</h2>
 
       <p>
         Nu uitați că atunci când folosiți un link pentru a ajunge de pe Site-ul nostru pe o altă
@@ -135,7 +154,7 @@ import MailtoLink from '../components/MailtoLink.astro';
         lor de colectare, utilizare și dezvăluire a datelor cu caracter personal.
       </p>
 
-      <h2>Securitate</h2>
+      <h2 id="securitate">Securitate</h2>
 
       <p>
         Securitatea datelor cu caracter personal este importantă pentru noi. Păstrăm măsuri adecvate
@@ -145,7 +164,7 @@ import MailtoLink from '../components/MailtoLink.astro';
         prelucrare a datelor cu caracter personal aflate în posesia noastră.
       </p>
 
-      <h2>Drepturile dumneavoastră în legătură cu datele cu caracter personal</h2>
+      <h2 id="drepturi">Drepturile dumneavoastră în legătură cu datele cu caracter personal</h2>
 
       <p>
         În conformitate cu dispozițiile Regulamentului UE nr. 679/2016, persoanele înregistrate, în
@@ -160,9 +179,9 @@ import MailtoLink from '../components/MailtoLink.astro';
         <li>dreptul de a solicita ștergerea (dreptul de a fi uitat);</li>
         <li>dreptul de a solicita restricționarea prelucrării;</li>
         <li>dreptul de portare;</li>
-        <li>dreptul de a nu fi supus unei decizii individuale;</li>
+        <li>dreptul de a nu fi supus unei decizii individuale automate;</li>
         <li>
-          dreptul de a vă adresa cu plângere către <a href="https://www.dataprotection.ro" rel="noopener" target="_blank">ANSPDCP</a> — Autoritatea de Supraveghere.
+          dreptul de a vă adresa cu plângere către <a href="https://www.dataprotection.ro" rel="noopener" target="_blank" class="ext-link">ANSPDCP<svg class="ext-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg><span class="sr-only"> (se deschide într-o filă nouă)</span></a> — Autoritatea Națională de Supraveghere a Prelucrării Datelor cu Caracter Personal.
         </li>
       </ul>
 
@@ -173,7 +192,7 @@ import MailtoLink from '../components/MailtoLink.astro';
         .
       </p>
 
-      <h2>Actualizarea politicii de confidențialitate</h2>
+      <h2 id="actualizare">Actualizarea politicii de confidențialitate</h2>
 
       <p>
         Instituția noastră își rezervă dreptul de a schimba, modifica sau actualiza politica de
@@ -192,8 +211,75 @@ import MailtoLink from '../components/MailtoLink.astro';
 
 <style>
   .privacy-content {
-    padding-block: 3.5rem 5rem;
+    padding-block: clamp(3.5rem, 7vw, 5.5rem) clamp(3.5rem, 7vw, 5rem);
     max-width: 780px;
+  }
+
+  .translation-notice {
+    font-size: 0.875rem;
+    color: var(--color-cool);
+    background: var(--color-blue-wash);
+    border-left: 3px solid var(--color-bright);
+    padding: 0.75rem 1rem;
+    border-radius: 0 6px 6px 0;
+    margin-block-end: 2rem;
+    line-height: 1.5;
+  }
+
+  .notice-link {
+    color: var(--color-royal);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .notice-link:hover {
+    color: var(--color-navy);
+  }
+
+  .toc {
+    background: var(--color-blue-wash);
+    border: 1px solid var(--color-border-blue);
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+    margin-block: 0 2.5rem;
+  }
+
+  .toc-title {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-cool);
+    margin: 0 0 0.75rem;
+  }
+
+  .toc ol {
+    margin: 0;
+    padding-inline-start: 1.25rem;
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .toc li {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--color-slate);
+    margin-block-end: 0;
+  }
+
+  .toc a {
+    color: var(--color-royal);
+    text-decoration: none;
+    text-underline-offset: 3px;
+    transition: color 0.15s ease;
+  }
+
+  .toc a:hover {
+    color: var(--color-navy);
+    text-decoration: underline;
+    text-decoration-color: var(--color-bright);
   }
 
   article h1 {
@@ -208,9 +294,12 @@ import MailtoLink from '../components/MailtoLink.astro';
     font-size: clamp(1.125rem, 2.5vw, 1.375rem);
     font-weight: 700;
     color: var(--color-navy);
-    margin-block-start: 2.5rem;
-    margin-block-end: 0.75rem;
+    margin-block-start: 3rem;
+    margin-block-end: 1rem;
+    padding-block-end: 0.5rem;
+    border-bottom: 2px solid var(--color-border-blue);
     line-height: 1.3;
+    scroll-margin-top: 6rem;
   }
 
   article h3 {
@@ -244,5 +333,28 @@ import MailtoLink from '../components/MailtoLink.astro';
 
   article li > ol {
     margin-block-start: 0.4rem;
+  }
+
+  .ext-link {
+    white-space: nowrap;
+  }
+
+  .ext-icon {
+    display: inline-block;
+    vertical-align: -1px;
+    margin-inline-start: 0.2em;
+    color: var(--color-royal);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 </style>

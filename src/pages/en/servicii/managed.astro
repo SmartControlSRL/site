@@ -33,7 +33,7 @@ import {
   Bot,
   Clock,
   CircleCheck,
-  ArrowRight,
+  FileText,
 } from '@lucide/astro';
 
 const lang = getLangFromUrl(Astro.url);
@@ -46,7 +46,7 @@ const jsonLd = {
   '@type': 'Service',
   name: 'Managed Services — Smart Control',
   description:
-    'Service desk outsourcing, managed infrastructure operations, managed cybersecurity, outsourced systems support (on-site & remote), cloud support and software automation for enterprise companies.',
+    'Service Desk Outsourcing, Managed Infrastructure Operations, Cyber Security Managed Services, Outsourced Systems Support (on-site & remote), Cloud Based System Support and Software Automation for enterprise companies.',
   url: 'https://smartcontrol.ro/en/servicii/managed',
   provider: {
     '@type': 'Organization',
@@ -84,12 +84,12 @@ const capabilities = [
   {
     index: '02',
     title: 'Managed Infrastructure Operations',
-    body: 'We operate and maintain client infrastructure — servers, storage, virtualisation — through proactive monitoring and intervention before incidents impact production.',
+    body: 'We operate and maintain client infrastructure — servers, storage, virtualization — through proactive monitoring and intervention before incidents impact production.',
     items: [
       '24/7 monitoring of critical systems',
       'Patch management and planned updates',
       'Periodically verified backup & recovery',
-      'Capacity planning and resource optimisation',
+      'Capacity planning and resource optimization',
     ],
     icon: Server,
     iconClass: 'h-[22px] w-[22px] text-navy',
@@ -97,7 +97,7 @@ const capabilities = [
   {
     index: '03',
     title: 'Network Managed Services',
-    body: 'We manage the network as a service: configuration, monitoring, troubleshooting and continuous optimisation — with full visibility over traffic and incidents.',
+    body: 'We manage the network as a service: configuration, monitoring, troubleshooting and continuous optimization — with full visibility over traffic and incidents.',
     items: [
       'LAN/WAN traffic and availability monitoring',
       'Management of Cisco, Juniper, Fortinet equipment',
@@ -109,7 +109,7 @@ const capabilities = [
   },
   {
     index: '04',
-    title: 'Managed Cybersecurity',
+    title: 'Cyber Security Managed Services',
     body: 'Outsourced SOC service: continuous security event monitoring, threat detection and incident response — backed by ISO 27001 certification.',
     items: [
       'SIEM monitoring and event correlation',
@@ -135,8 +135,8 @@ const capabilities = [
   },
   {
     index: '06',
-    title: 'Cloud-Based System Support',
-    body: 'We operate client cloud environments — AWS, Azure, GCP or private cloud — with proactive monitoring, cost governance and continuous resource optimisation.',
+    title: 'Cloud Based System Support',
+    body: 'We operate client cloud environments — AWS, Azure, GCP or private cloud — with proactive monitoring, cost governance and continuous resource optimization.',
     items: [
       'Operations and monitoring for AWS / Azure / GCP',
       'Cost governance and resource rightsizing',
@@ -164,7 +164,7 @@ const capabilities = [
 
 <BaseLayout
   title="Managed Services — Smart Control"
-  description="Service desk outsourcing, managed infrastructure operations, managed cybersecurity, cloud support and software automation. Our own team, contractual SLA, 24/7."
+  description="Service Desk Outsourcing, Managed Infrastructure Operations, Cyber Security Managed Services, Cloud Based System Support and Software Automation. Our own team, contractual SLA, 24/7."
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
@@ -189,7 +189,7 @@ const capabilities = [
 
         <h1
           class="mt-6 font-extrabold leading-[1.1] tracking-[-1.8px] text-midnight"
-          style="font-size:clamp(2.5rem,1.8rem+3vw,3.75rem)"
+          style="font-size:clamp(2.5rem, 1.8rem + 3vw, 3.75rem)"
         >
           Your infrastructure,<br />
           <span class="text-bright">operated by our team.</span>
@@ -212,7 +212,7 @@ const capabilities = [
             data-email-user="office"
             data-email-domain="smartcontrol.ro"
             data-email-subject="Free assessment"
-            class="inline-flex items-center justify-center rounded-md bg-bright px-[26px] py-[13px] text-[14.5px] font-semibold text-white transition-all [box-shadow:0_4px_18px_rgba(68,135,220,0.35)] hover:bg-royal hover:[box-shadow:0_6px_24px_rgba(68,135,220,0.45)]"
+            class="inline-flex items-center justify-center rounded-md bg-royal px-[26px] py-[13px] text-[14.5px] font-semibold text-white transition-all [box-shadow:0_4px_18px_rgba(68,135,220,0.35)] hover:bg-navy hover:-translate-y-[1px] hover:[box-shadow:0_6px_24px_rgba(68,135,220,0.45)]"
           >
             Request assessment
           </a>
@@ -227,7 +227,7 @@ const capabilities = [
   <!-- ═══════════════════════════════════════════════════════════
        STATS STRIP
        ═══════════════════════════════════════════════════════════ -->
-  <section class="bg-surface py-[56px]" aria-label="Key figures">
+  <section class="bg-surface py-[44px] sm:py-[56px]" aria-label="Key figures">
     <div class="container">
       <StatStrip>
         <StatBlock value="650" count={650} suffix="+" caption="Projects delivered" numberSize={40} />
@@ -247,7 +247,7 @@ const capabilities = [
   <!-- ═══════════════════════════════════════════════════════════
        SLA / COVERAGE — proof angle
        ═══════════════════════════════════════════════════════════ -->
-  <section class="bg-page py-[90px]" data-band aria-labelledby="sla-heading">
+  <section class="bg-page py-[64px] sm:py-[90px]" data-band aria-labelledby="sla-heading">
     <div class="container">
       <div data-reveal>
         <SectionHeading
@@ -310,18 +310,18 @@ const capabilities = [
           data-drift="-0.07"
         >
           <IconChip>
-            <ArrowRight class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+            <FileText class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
           </IconChip>
           <h3 class="mt-5 text-[17px] font-bold text-navy">Transparent monthly reporting</h3>
           <p class="mt-2.5 text-[14px] leading-[1.65] text-cool">
             Monthly report with performance metrics, incidents handled, trends identified
-            and optimisation recommendations — a foundation for informed decisions.
+            and optimization recommendations — a foundation for informed decisions.
           </p>
         </div>
       </div>
 
       <!-- Compliance badges -->
-      <div class="mt-8 flex flex-wrap gap-2.5" data-reveal data-reveal-delay="150">
+      <div class="mt-12 flex flex-wrap gap-2.5" data-reveal data-reveal-delay="150">
         <MonoPill>ISO 9001</MonoPill>
         <MonoPill>ISO 27001</MonoPill>
         <MonoPill>ISO 14001</MonoPill>
@@ -339,7 +339,7 @@ const capabilities = [
        ═══════════════════════════════════════════════════════════ -->
   <section
     id="capabilities"
-    class="bg-surface py-[110px]"
+    class="bg-surface py-[72px] sm:py-[110px]"
     aria-labelledby="capabilities-heading"
   >
     <div class="container">
@@ -369,6 +369,7 @@ const capabilities = [
                 data-reveal
                 data-reveal-delay={String(i * 60)}
                 data-reveal-rotate={i % 2 === 0 ? '-4' : '4'}
+                data-drift={i % 2 === 0 ? '0.05' : '-0.05'}
               >
                 <ModuleCard
                   title={cap.title}
@@ -390,7 +391,7 @@ const capabilities = [
   <!-- ═══════════════════════════════════════════════════════════
        CROSS-SELL — SEKNET + S-VPN
        ═══════════════════════════════════════════════════════════ -->
-  <section class="bg-page py-[90px]" aria-labelledby="crosssell-heading">
+  <section class="bg-page py-[64px] sm:py-[90px]" aria-labelledby="crosssell-heading">
     <div class="container">
       <div data-reveal>
         <SectionHeading
@@ -419,7 +420,7 @@ const capabilities = [
               <ShieldCheck class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
             </IconChip>
             <div>
-              <div class="font-mono text-[11px] uppercase tracking-[1.5px] text-bright">
+              <div class="font-mono text-[11px] uppercase tracking-[1.5px] text-royal">
                 Proprietary solution
               </div>
               <h3 class="mt-0.5 text-[19px] font-bold tracking-[-0.3px] text-navy">SEKNET</h3>
@@ -457,7 +458,7 @@ const capabilities = [
               <Network class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
             </IconChip>
             <div>
-              <div class="font-mono text-[11px] uppercase tracking-[1.5px] text-bright">
+              <div class="font-mono text-[11px] uppercase tracking-[1.5px] text-royal">
                 Proprietary solution
               </div>
               <h3 class="mt-0.5 text-[19px] font-bold tracking-[-0.3px] text-navy">S-VPN</h3>

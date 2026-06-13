@@ -15,14 +15,16 @@ const { rows, class: extra = '' } = Astro.props;
     rows.map((row, i) => (
       <div
         class:list={[
-          'grid grid-cols-1 sm:grid-cols-[200px_1fr]',
+          'group grid grid-cols-1 sm:grid-cols-[200px_1fr]',
           i < rows.length - 1 && 'border-b border-divider',
         ]}
       >
-        <div class="bg-hover-tint px-7 py-[18px] font-mono text-[11.5px] uppercase tracking-[1.5px] text-bright">
+        <div class="bg-hover-tint px-7 py-[18px] font-mono text-[11.5px] uppercase tracking-[1.5px] text-royal">
           {row.label}
         </div>
-        <div class="px-7 py-[18px] font-mono text-[13px] leading-[1.7] text-slate">{row.value}</div>
+        <div class="px-7 py-[18px] font-mono text-[13px] leading-[1.7] text-slate transition-colors group-hover:bg-hover-tint">
+          {row.value}
+        </div>
       </div>
     ))
   }

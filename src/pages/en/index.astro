@@ -203,7 +203,7 @@ const cloudRows = [
   </header>
 
   {/* ── Stats (count-up) ── */}
-  <section class="px-6 pt-[72px] md:px-10">
+  <section class="px-6 pt-[56px] sm:pt-[72px] md:px-10">
     <div class="mx-auto max-w-[1180px]">
       <div data-drift="-0.05">
         <StatStrip>
@@ -222,7 +222,7 @@ const cloudRows = [
   </section>
 
   {/* ── Services (bento, light) ── */}
-  <section id="servicii" class="px-6 py-[110px] md:px-10">
+  <section id="servicii" class="px-6 py-[72px] sm:py-[110px] md:px-10">
     <div class="mx-auto max-w-[1180px]">
       <div data-reveal>
         <SectionHeading
@@ -343,7 +343,7 @@ const cloudRows = [
   <section
     id="produse"
     data-band
-    class="relative overflow-hidden bg-midnight px-6 py-[110px] md:px-10"
+    class="relative overflow-hidden bg-midnight px-6 py-[72px] sm:py-[110px] md:px-10"
   >
     <NetworkCanvas
       lineAlpha={0.22}
@@ -369,12 +369,12 @@ const cloudRows = [
           >
             An integrated enterprise platform: full visibility, advanced threat detection and
             granular identity management. Five specialized modules, a single source of truth — now
-            with Seknet Trap, the active deception module.
+            with SEKNET Trap, the active deception module.
           </SectionHeading>
           <div class="mt-7 flex flex-wrap items-center gap-5">
             <a
               href={p('/solutii/seknet')}
-              class="inline-flex items-center gap-2 rounded-md bg-bright px-6 py-3 text-[14.5px] font-semibold text-white transition-all [box-shadow:0_0_28px_rgba(68,135,220,0.4)] hover:bg-mid-blue hover:[box-shadow:0_0_40px_rgba(68,135,220,0.6)]"
+              class="inline-flex items-center gap-2 rounded-md bg-royal px-6 py-3 text-[14.5px] font-semibold text-white transition-all [box-shadow:0_0_28px_rgba(68,135,220,0.4)] hover:bg-navy hover:[box-shadow:0_0_40px_rgba(68,135,220,0.6)]"
             >
               Explore SEKNET <span aria-hidden="true">›</span>
             </a>
@@ -455,7 +455,7 @@ const cloudRows = [
   </section>
 
   {/* ── Cloud teaser (light wash) ── */}
-  <section data-band class="bg-page px-6 py-[110px] md:px-10">
+  <section data-band class="bg-page px-6 py-[72px] sm:py-[110px] md:px-10">
     <div class="mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
       <div data-reveal>
         <SectionHeading
@@ -480,8 +480,8 @@ const cloudRows = [
       <div data-reveal data-reveal-delay="120" data-drift="-0.05" class="grid gap-3.5">
         {
           cloudRows.map(({ tag, body }) => (
-            <div class="flex flex-col gap-2 rounded-lg border border-border bg-surface px-6 py-5 shadow-sm sm:flex-row sm:items-center sm:gap-4">
-              <span class="shrink-0 font-mono text-[12px] tracking-[1px] text-bright sm:w-[88px]">
+            <div class="flex flex-col gap-2 rounded-xl border border-border bg-surface px-6 py-5 shadow-sm transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[2px] hover:border-border-blue hover:shadow-lg sm:flex-row sm:items-center sm:gap-4">
+              <span class="shrink-0 font-mono text-[12px] tracking-[1px] text-royal sm:w-[88px]">
                 {tag}
               </span>
               <span class="text-[14px] text-slate">{body}</span>
@@ -524,7 +524,7 @@ const cloudRows = [
   <section aria-label="Contact details" class="bg-surface px-6 py-16 md:px-10">
     <div class="mx-auto grid max-w-[1180px] grid-cols-1 gap-8 sm:grid-cols-2">
       <div>
-        <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-faint">
+        <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-cool">
           Contact
         </h2>
         <div class="mt-4 grid gap-2.5 text-[13.5px]">
@@ -535,7 +535,7 @@ const cloudRows = [
         </div>
       </div>
       <div>
-        <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-faint">
+        <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-cool">
           Address
         </h2>
         <address class="mt-4 text-[13.5px] not-italic leading-[1.6] text-cool">

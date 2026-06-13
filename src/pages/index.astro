@@ -114,7 +114,7 @@ const produseModules = [
 const cloudRows = [
   {
     tag: 'CAPEX→OPEX',
-    body: 'Migrarea investițiilor hardware spre modele cloud sau hybrid, cu costuri predictibile.',
+    body: 'Migrarea investițiilor hardware spre modele cloud sau hibrid, cu costuri predictibile.',
   },
   {
     tag: 'K8S-READY',
@@ -192,7 +192,7 @@ const cloudRows = [
         class="mt-7 max-w-[600px] text-[18px] leading-[1.7] text-slate opacity-0 [animation:scFadeIn_0.9s_ease-out_1.3s_forwards]"
       >
         De {years} de ani, Smart Control proiectează, operează și securizează infrastructuri IT
-        pentru companii din România și internațional —{' '}
+        pentru companii din România și din străinătate —{' '}
         <strong class="font-semibold text-navy">echipă proprie, nu subcontractori</strong>, abordare
         consultativă și livrare bazată pe date reale.
       </p>
@@ -207,7 +207,7 @@ const cloudRows = [
   </header>
 
   {/* ── SECTION 3 — Statistici (count-up) ── */}
-  <section class="px-6 pt-[72px] md:px-10">
+  <section class="px-6 pt-[56px] sm:pt-[72px] md:px-10">
     <div class="mx-auto max-w-[1180px]">
       <div data-drift="-0.05">
         <StatStrip>
@@ -226,7 +226,7 @@ const cloudRows = [
   </section>
 
   {/* ── SECTION 4 — Servicii (bento, light) ── */}
-  <section id="servicii" class="px-6 py-[110px] md:px-10">
+  <section id="servicii" class="px-6 py-[72px] sm:py-[110px] md:px-10">
     <div class="mx-auto max-w-[1180px]">
       <div data-reveal>
         <SectionHeading
@@ -350,7 +350,7 @@ const cloudRows = [
   <section
     id="produse"
     data-band
-    class="relative overflow-hidden bg-midnight px-6 py-[110px] md:px-10"
+    class="relative overflow-hidden bg-midnight px-6 py-[72px] sm:py-[110px] md:px-10"
   >
     <NetworkCanvas
       lineAlpha={0.22}
@@ -378,12 +378,12 @@ const cloudRows = [
           >
             Platformă enterprise integrată: vizibilitate completă, detectare avansată a amenințărilor
             și management granular al identității. Cinci module specializate, o singură sursă de
-            adevăr — acum cu Seknet Trap, modulul de decepție activă.
+            adevăr — acum cu SEKNET Trap, modulul de decepție activă.
           </SectionHeading>
           <div class="mt-7 flex flex-wrap items-center gap-5">
             <a
               href={p('/solutii/seknet')}
-              class="inline-flex items-center gap-2 rounded-md bg-bright px-6 py-3 text-[14.5px] font-semibold text-white transition-all [box-shadow:0_0_28px_rgba(68,135,220,0.4)] hover:bg-mid-blue hover:[box-shadow:0_0_40px_rgba(68,135,220,0.6)]"
+              class="inline-flex items-center gap-2 rounded-md bg-royal px-6 py-3 text-[14.5px] font-semibold text-white transition-all [box-shadow:0_0_28px_rgba(68,135,220,0.4)] hover:bg-navy hover:[box-shadow:0_0_40px_rgba(68,135,220,0.6)]"
             >
               Explorează SEKNET <span aria-hidden="true">›</span>
             </a>
@@ -468,7 +468,7 @@ const cloudRows = [
   </section>
 
   {/* ── SECTION 6 — Cloud teaser (light wash) ── */}
-  <section data-band class="bg-page px-6 py-[110px] md:px-10">
+  <section data-band class="bg-page px-6 py-[72px] sm:py-[110px] md:px-10">
     <div class="mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
       {/* Left column */}
       <div data-reveal>
@@ -495,8 +495,8 @@ const cloudRows = [
       <div data-reveal data-reveal-delay="120" data-drift="-0.05" class="grid gap-3.5">
         {
           cloudRows.map(({ tag, body }) => (
-            <div class="flex flex-col gap-2 rounded-lg border border-border bg-surface px-6 py-5 shadow-sm sm:flex-row sm:items-center sm:gap-4">
-              <span class="shrink-0 font-mono text-[12px] tracking-[1px] text-bright sm:w-[88px]">
+            <div class="flex flex-col gap-2 rounded-xl border border-border bg-surface px-6 py-5 shadow-sm transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[2px] hover:border-border-blue hover:shadow-lg sm:flex-row sm:items-center sm:gap-4">
+              <span class="shrink-0 font-mono text-[12px] tracking-[1px] text-royal sm:w-[88px]">
                 {tag}
               </span>
               <span class="text-[14px] text-slate">{body}</span>
@@ -527,7 +527,7 @@ const cloudRows = [
   <CtaBand
     id="contact"
     eyebrow="Pașii următori"
-    heading="Assessment Inițial gratuit — 2 zile"
+    heading="Assessment inițial gratuit — 2 zile"
     cta="Solicită assessment-ul"
     subject={t('subject.assessment')}
   >
@@ -539,7 +539,7 @@ const cloudRows = [
   <section aria-label="Date de contact" class="bg-surface px-6 py-16 md:px-10">
     <div class="mx-auto grid max-w-[1180px] grid-cols-1 gap-8 sm:grid-cols-2">
       <div>
-        <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-faint">
+        <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-cool">
           Contact
         </h2>
         <div class="mt-4 grid gap-2.5 text-[13.5px]">
@@ -550,7 +550,7 @@ const cloudRows = [
         </div>
       </div>
       <div>
-        <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-faint">
+        <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-cool">
           Adresă
         </h2>
         <address class="mt-4 text-[13.5px] not-italic leading-[1.6] text-cool">

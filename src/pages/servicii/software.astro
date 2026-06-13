@@ -34,6 +34,11 @@ import {
   Puzzle,
   Users,
   ArrowRight,
+  FileText,
+  MessageSquare,
+  FileChartColumn,
+  Workflow,
+  TriangleAlert,
 } from '@lucide/astro';
 
 const lang = getLangFromUrl(Astro.url);
@@ -99,7 +104,7 @@ const jsonLd = {
 
         <h1
           class="mt-6 font-extrabold leading-[1.1] tracking-[-1.8px] text-midnight"
-          style="font-size:clamp(2.25rem,1.4rem+3.6vw,3.625rem);max-width:880px"
+          style="font-size:clamp(2.25rem, 1.4rem + 3.6vw, 3.625rem);max-width:880px"
         >
           Aplicații livrate de<br />
           <span class="text-bright">echipă proprie, cod sursă inclus.</span>
@@ -151,7 +156,7 @@ const jsonLd = {
   <!-- ═══════════════════════════════════════════════════════════
        "DE CE SMART CONTROL" — 3 context cards
        ═══════════════════════════════════════════════════════════ -->
-  <section class="bg-surface" style="padding:40px 0 110px">
+  <section class="bg-surface pt-10 pb-[72px] sm:pb-[110px]">
     <div class="container">
       <div data-reveal>
         <SectionHeading
@@ -225,7 +230,7 @@ const jsonLd = {
   <!-- ═══════════════════════════════════════════════════════════
        CAPABILITĂȚI — bento grid (#capabilitati)
        ═══════════════════════════════════════════════════════════ -->
-  <section id="capabilitati" class="bg-page" data-band style="padding:110px 0">
+  <section id="capabilitati" class="bg-page py-[72px] sm:py-[110px]" data-band>
     <div class="container">
       <div data-reveal>
         <SectionHeading
@@ -353,7 +358,7 @@ const jsonLd = {
   <!-- ═══════════════════════════════════════════════════════════
        BLOCKCHAIN — detaliu pragmatic (light band)
        ═══════════════════════════════════════════════════════════ -->
-  <section class="bg-surface" style="padding:110px 0">
+  <section class="bg-surface py-[72px] sm:py-[110px]">
     <div class="container">
       <div class="grid gap-16 lg:grid-cols-2 lg:items-start">
         <!-- Left: text -->
@@ -367,15 +372,15 @@ const jsonLd = {
             este suficientă. Fiecare proiect pornește de la o analiză cost-beneficiu riguroasă.
           </SectionHeading>
 
-          <div class="mt-8 space-y-3">
+          <div class="mt-8">
             <p class="text-[14.5px] leading-[1.7] text-cool">
-              Expertiză acoperă atât consultanța pentru identificarea cazurilor de utilizare
+              Expertiza noastră acoperă atât consultanța pentru identificarea cazurilor de utilizare
               potrivite, cât și livrarea end-to-end cu audit de securitate inclus.
             </p>
           </div>
 
           <div class="mt-8">
-            <p class="mb-3 font-mono text-[11.5px] uppercase tracking-[2px] text-bright">
+            <p class="mb-3 font-mono text-[11.5px] uppercase tracking-[2px] text-royal">
               Cazuri de utilizare reale
             </p>
             <ChevronList
@@ -395,7 +400,7 @@ const jsonLd = {
           <div
             class="rounded-xl border border-border bg-page p-8 shadow-sm"
           >
-            <p class="font-mono text-[11.5px] uppercase tracking-[2px] text-bright">
+            <p class="font-mono text-[11.5px] uppercase tracking-[2px] text-royal">
               Tehnologii & concepte
             </p>
             <div class="mt-4 flex flex-wrap gap-2">
@@ -416,7 +421,7 @@ const jsonLd = {
             </div>
 
             <div class="mt-8 border-t border-border pt-6">
-              <p class="font-mono text-[11.5px] uppercase tracking-[2px] text-bright">
+              <p class="font-mono text-[11.5px] uppercase tracking-[2px] text-royal">
                 Abordare pragmatică
               </p>
               <p class="mt-3 text-[14px] leading-[1.7] text-cool">
@@ -434,7 +439,7 @@ const jsonLd = {
   <!-- ═══════════════════════════════════════════════════════════
        AI / LLM — detaliu (wash band)
        ═══════════════════════════════════════════════════════════ -->
-  <section class="bg-page" style="padding:110px 0">
+  <section class="bg-page py-[72px] sm:py-[110px]">
     <div class="container">
       <div data-reveal>
         <SectionHeading
@@ -455,31 +460,37 @@ const jsonLd = {
             {
               title: 'Procesare documente',
               body: 'Clasificare automată a facturilor, contractelor și formularelor cu extragere structurată de date.',
+              Icon: FileText,
               delay: 0,
             },
             {
               title: 'Asistenți virtuali interni',
               body: 'Chatboți pentru suport IT helpdesk, HR și operațiuni — complementari serviciului de Service Desk.',
+              Icon: MessageSquare,
               delay: 80,
             },
             {
               title: 'Raportare automată',
               body: 'Generare rapoarte și sumarizare documente lungi prin modele de limbaj (LLM), cu export configurat.',
+              Icon: FileChartColumn,
               delay: 160,
             },
             {
               title: 'Fluxuri de aprobare AI',
               body: 'Automatizarea fluxurilor de aprobare și decizii bazate pe reguli combinate cu inferențe AI.',
+              Icon: Workflow,
               delay: 0,
             },
             {
               title: 'Detectare anomalii',
               body: 'Alertare proactivă în procese operaționale — integrată cu platforma de monitorizare Smart Control.',
+              Icon: TriangleAlert,
               delay: 80,
             },
             {
               title: 'Agenți AI în DevOps',
               body: 'Integrare agenți AI în pipeline-uri DevOps pentru code review automat, testare și documentare.',
+              Icon: Bot,
               delay: 160,
             },
           ].map((item) => (
@@ -487,8 +498,11 @@ const jsonLd = {
               data-reveal
               data-reveal-delay={item.delay > 0 ? String(item.delay) : undefined}
             >
-              <div class="h-full rounded-xl border border-border bg-surface p-[26px] shadow-sm">
-                <h3 class="text-[16px] font-bold text-navy">{item.title}</h3>
+              <div class="h-full rounded-xl border border-border bg-surface p-[26px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg">
+                <div class="flex h-11 w-11 items-center justify-center rounded-md border border-border-blue bg-blue-wash">
+                  <item.Icon class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+                </div>
+                <h3 class="mt-[18px] text-[16px] font-bold text-navy">{item.title}</h3>
                 <p class="mt-2.5 text-[13.5px] leading-[1.65] text-cool">{item.body}</p>
               </div>
             </div>
@@ -500,7 +514,7 @@ const jsonLd = {
         <div
           class="rounded-xl border border-border-blue bg-blue-wash p-6"
         >
-          <p class="font-mono text-[11.5px] uppercase tracking-[2px] text-bright">
+          <p class="font-mono text-[11.5px] uppercase tracking-[2px] text-royal">
             Rezultate măsurabile
           </p>
           <p class="mt-2 text-[14.5px] leading-[1.7] text-slate">
@@ -516,7 +530,7 @@ const jsonLd = {
   <!-- ═══════════════════════════════════════════════════════════
        STAFF AUGMENTATION — light band
        ═══════════════════════════════════════════════════════════ -->
-  <section class="bg-surface" style="padding:110px 0">
+  <section class="bg-surface py-[72px] sm:py-[110px]">
     <div class="container">
       <div class="grid gap-16 lg:grid-cols-2 lg:items-center">
         <div data-reveal>
@@ -547,7 +561,7 @@ const jsonLd = {
         </div>
 
         <div data-reveal data-reveal-delay="120" data-drift="0.05">
-          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div class="grid grid-cols-2 gap-4">
             {
               [
                 { value: '50', label: 'Specialiști interni' },
@@ -572,14 +586,14 @@ const jsonLd = {
   <!-- ═══════════════════════════════════════════════════════════
        CROSS-SELL — Cloud & Modernization link
        ═══════════════════════════════════════════════════════════ -->
-  <section class="bg-page" style="padding:64px 0">
+  <section class="bg-page py-[48px] sm:py-[64px]">
     <div class="container">
       <div
         class="flex flex-col items-start justify-between gap-6 rounded-xl border border-border bg-surface p-8 shadow-sm sm:flex-row sm:items-center"
         data-reveal
       >
         <div>
-          <p class="font-mono text-[11.5px] uppercase tracking-[2px] text-bright">
+          <p class="font-mono text-[11.5px] uppercase tracking-[2px] text-royal">
             Serviciu conex
           </p>
           <p class="mt-1.5 text-[17px] font-bold text-navy">
@@ -602,7 +616,7 @@ const jsonLd = {
   <CtaBand
     id="contact"
     eyebrow="Pașii următori"
-    heading="Assessment Inițial gratuit — 2 zile"
+    heading="Assessment inițial gratuit — 2 zile"
     cta={t('cta.assessment')}
     subject={t('subject.assessment')}
   >

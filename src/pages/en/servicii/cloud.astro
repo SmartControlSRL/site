@@ -173,7 +173,7 @@ const serviceLd = {
         Prices for critical components are climbing under the pressure of demand
         for AI infrastructure, and refresh budgets no longer stretch far enough.
         <span class="font-semibold text-navy">Re-architecting and optimizing applications</span>
-        becomes the primary strategy — you extract more performance from your
+        is becoming the primary strategy — you extract more performance from your
         existing infrastructure before buying new hardware.
       </p>
 
@@ -182,7 +182,7 @@ const serviceLd = {
           data-email-user="office"
           data-email-domain="smartcontrol.ro"
           data-email-subject="Free assessment"
-          class="inline-flex items-center justify-center rounded-md bg-bright px-[26px] py-[13px] text-[14.5px] font-semibold text-white transition-all [box-shadow:0_4px_18px_rgba(68,135,220,0.35)] hover:bg-royal hover:[box-shadow:0_6px_24px_rgba(68,135,220,0.45)]"
+          class="inline-flex items-center justify-center rounded-md bg-royal px-[26px] py-[13px] text-[14.5px] font-semibold text-white transition-all [box-shadow:0_4px_18px_rgba(68,135,220,0.35)] hover:bg-navy hover:[box-shadow:0_6px_24px_rgba(68,135,220,0.45)]"
         >
           Schedule the free assessment
         </a>
@@ -193,7 +193,7 @@ const serviceLd = {
 
   {/* ============ SECTION 3 — "WHY NOW" (3 reason cards, light) ============ */}
   <section aria-labelledby="why-now" class="bg-surface">
-    <div class="container pb-[110px] pt-10">
+    <div class="container pb-[72px] pt-[72px] sm:pb-[110px] sm:pt-20">
       <h2 id="why-now" class="sr-only">Why now</h2>
       <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3" data-skew="4">
         {
@@ -247,11 +247,11 @@ const serviceLd = {
             steps.map((s, i) => (
               <li
                 data-step
-                class="relative grid grid-cols-[52px_1fr] gap-8 py-[26px]"
+                class="relative grid grid-cols-[52px_1fr] gap-5 py-[26px] md:gap-8"
               >
                 <span
                   data-step-dot
-                  class="flex h-[52px] w-[52px] items-center justify-center rounded-[12px] border border-border-blue bg-surface font-mono text-[15px] font-semibold text-faint transition-[border-color,color,box-shadow,background] duration-[400ms]"
+                  class="flex h-[52px] w-[52px] items-center justify-center rounded-[12px] border border-border-blue bg-surface font-mono text-[15px] font-semibold text-cool transition-[border-color,color,box-shadow,background] duration-[400ms]"
                 >
                   {String(i + 1).padStart(2, '0')}
                 </span>
@@ -262,7 +262,7 @@ const serviceLd = {
                 >
                   <div class="flex flex-wrap items-baseline gap-3.5">
                     <h3 class="text-[20px] font-bold tracking-[-0.3px] text-navy">{s.title}</h3>
-                    <span class="rounded-full border border-border-blue bg-surface px-2.5 py-[3px] font-mono text-[11px] uppercase tracking-[1px] text-bright">
+                    <span class="rounded-full border border-border-blue bg-surface px-2.5 py-[3px] font-mono text-[11px] uppercase tracking-[1px] text-royal">
                       {s.pill}
                     </span>
                   </div>
@@ -292,7 +292,7 @@ const serviceLd = {
         {
           capabilities.map(({ Icon, title, items, reveal }) => (
             <div {...reveal}>
-              <article class="box-border h-full rounded-xl border border-border bg-surface px-[34px] py-[30px] shadow-sm">
+              <article class="box-border h-full rounded-xl border border-border bg-surface px-[34px] py-[30px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[4px] hover:border-border-blue hover:shadow-lg">
                 <div class="flex items-center gap-3">
                   <Icon class="h-5 w-5 text-bright" stroke-width={1.5} />
                   <h3 class="text-[17px] font-bold text-navy">{title}</h3>
@@ -311,7 +311,7 @@ const serviceLd = {
     id="contact"
     eyebrow="Stage 1 · free"
     heading="Initial assessment — 2 days, no commitment"
-    cta="Request the assessment"
+    cta={t('cta.assessment')}
     subject={t('subject.assessment')}
   >
     Together we identify the priority area of interest and deliver a report of

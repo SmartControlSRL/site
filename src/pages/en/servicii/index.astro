@@ -11,7 +11,7 @@ import MonoPill from '../../../components/MonoPill.astro';
 import CtaBand from '../../../components/CtaBand.astro';
 import TextLink from '../../../components/TextLink.astro';
 import Eyebrow from '../../../components/Eyebrow.astro';
-import { Server, ShieldCheck, Code, Settings2 } from '@lucide/astro';
+import { Server, ShieldCheck, Code, Settings2, ChevronDown } from '@lucide/astro';
 import { useTranslations, getLangFromUrl, localizedPath, yearsInBusiness, FOUNDED } from '../../../i18n/ui';
 
 const lang = getLangFromUrl(Astro.url);
@@ -26,10 +26,10 @@ const pillars = [
     title: 'Infrastructure & Cloud',
     href: p('/servicii/cloud'),
     icon: Server,
-    body: 'We design and consolidate data centres, hybrid infrastructures and cloud solutions — from physical hardware to Kubernetes orchestration.',
+    body: 'We design and consolidate data centers, hybrid infrastructures and cloud solutions — from physical hardware to Kubernetes orchestration.',
     items: [
       'Data Center Design & Implementation',
-      'Consolidation & Virtualisation',
+      'Consolidation & Virtualization',
       'Private Cloud & Hybrid Cloud',
       'Business Continuity & Disaster Recovery',
     ],
@@ -39,7 +39,7 @@ const pillars = [
     title: 'Security & Compliance',
     href: p('/servicii/securitate'),
     icon: ShieldCheck,
-    body: 'We protect enterprise infrastructures with a full cybersecurity stack — from perimeter to identity — validated against ISO 27001, NIS 2 and DORA.',
+    body: 'We protect enterprise infrastructures with a full cybersecurity stack — from perimeter to identity — validated against ISO 27001 and compliant with NIS 2 and DORA.',
     items: [
       'Perimeter & End-point Security',
       'Enterprise SSO / PKI',
@@ -52,11 +52,11 @@ const pillars = [
     title: 'Software & Automation',
     href: p('/servicii/software'),
     icon: Code,
-    body: 'We build, modernise and automate enterprise applications — from refactoring and containerisation to DevSecOps, blockchain and AI integration.',
+    body: 'We build, modernize and automate enterprise applications — from refactoring and containerization to DevSecOps, blockchain and AI integration.',
     items: [
       'Custom software development & APIs',
       'DevOps / DevSecOps & CI/CD',
-      'Application migration & modernisation',
+      'Application migration & modernization',
       'AI / LLM automation',
     ],
   },
@@ -90,7 +90,7 @@ const jsonLd = {
       'item': {
         '@type': 'Service',
         'name': 'Infrastructure & Cloud',
-        'description': 'Data Center Design & Implementation, Consolidation & Virtualisation, Private Cloud & Hybrid Cloud, Business Continuity & Disaster Recovery.',
+        'description': 'Data Center Design & Implementation, Consolidation & Virtualization, Private Cloud & Hybrid Cloud, Business Continuity & Disaster Recovery.',
         'url': 'https://smartcontrol.ro/en/servicii/cloud',
         'provider': { '@type': 'Organization', 'name': 'Smart Control SRL' },
       },
@@ -112,7 +112,7 @@ const jsonLd = {
       'item': {
         '@type': 'Service',
         'name': 'Software & Automation',
-        'description': 'Custom software development & APIs, DevOps / DevSecOps & CI/CD, Application migration & modernisation, AI / LLM automation.',
+        'description': 'Custom software development & APIs, DevOps / DevSecOps & CI/CD, Application migration & modernization, AI / LLM automation.',
         'url': 'https://smartcontrol.ro/en/servicii/software',
         'provider': { '@type': 'Organization', 'name': 'Smart Control SRL' },
       },
@@ -191,12 +191,13 @@ const jsonLd = {
             style="box-shadow:0 4px 18px rgba(14,31,91,0.2)"
           >
             Explore services
+            <ChevronDown class="h-[18px] w-[18px]" stroke-width={1.5} aria-hidden="true" />
           </a>
           <a
             data-email-user="office"
             data-email-domain="smartcontrol.ro"
             data-email-subject="Free assessment"
-            class="inline-flex items-center gap-2 rounded-md bg-bright px-6 py-3 text-[14.5px] font-semibold text-white transition-all hover:bg-royal"
+            class="inline-flex items-center gap-2 rounded-md bg-royal px-6 py-3 text-[14.5px] font-semibold text-white transition-all hover:bg-navy"
             style="box-shadow:0 4px 18px rgba(68,135,220,0.3)"
           >
             {t('cta.assessment')}
@@ -207,7 +208,7 @@ const jsonLd = {
   </header>
 
   {/* ── 4 PILLAR CARDS ────────────────────────────────────────────── */}
-  <section id="pillars" class="bg-surface py-[100px]">
+  <section id="pillars" class="scroll-mt-24 bg-surface py-[72px] sm:py-[110px]">
     <div class="container">
       <div data-reveal class="mb-14">
         <SectionHeading
@@ -215,7 +216,7 @@ const jsonLd = {
           heading="Four enterprise service pillars"
           headingMaxWidth="680px"
         >
-          Smart Control covers the full IT spectrum — from physical hardware and virtualisation to cybersecurity and custom software development. All services are backed by our own team.
+          Smart Control covers the full IT spectrum — from physical hardware and virtualization to cybersecurity and custom software development. All services are backed by our own team.
         </SectionHeading>
       </div>
 
@@ -257,17 +258,21 @@ const jsonLd = {
   </section>
 
   {/* ── PROOF STRIP ───────────────────────────────────────────────── */}
-  <section class="bg-page py-[80px]" data-band>
+  <section class="bg-page py-[72px] sm:py-[100px]" data-band>
     <div class="container">
-      {/* ISO + Compliance badges */}
-      <div data-reveal class="mb-12 flex flex-wrap items-center justify-center gap-3">
-        <MonoPill>ISO 9001</MonoPill>
-        <MonoPill>ISO 27001</MonoPill>
-        <MonoPill>ISO 14001</MonoPill>
-        <MonoPill>ISO 45001</MonoPill>
-        <MonoPill variant="compliance">GDPR</MonoPill>
-        <MonoPill variant="compliance">NIS 2</MonoPill>
-        <MonoPill variant="compliance">DORA</MonoPill>
+      {/* ISO + Compliance badges — ISO roundels grouped distinct from the teal regulatory trio */}
+      <div data-reveal class="mb-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+        <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-3">
+          <MonoPill>ISO 9001</MonoPill>
+          <MonoPill>ISO 27001</MonoPill>
+          <MonoPill>ISO 14001</MonoPill>
+          <MonoPill>ISO 45001</MonoPill>
+        </div>
+        <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-3">
+          <MonoPill variant="compliance">GDPR</MonoPill>
+          <MonoPill variant="compliance">NIS 2</MonoPill>
+          <MonoPill variant="compliance">DORA</MonoPill>
+        </div>
       </div>
 
       {/* Stats */}
@@ -288,7 +293,7 @@ const jsonLd = {
   </section>
 
   {/* ── WHY SMART CONTROL (brief differentiation strip) ───────────── */}
-  <section class="bg-surface py-[80px]">
+  <section class="bg-surface py-[72px] sm:py-[100px]">
     <div class="container">
       <div data-reveal class="mb-12">
         <SectionHeading
@@ -311,7 +316,7 @@ const jsonLd = {
             },
             {
               title: 'Source code included',
-              body: 'Proprietary platforms (SEKNET, S-VPN, monitoring) are delivered with source code — full customisation, no vendor lock-in.',
+              body: 'Proprietary platforms (SEKNET, S-VPN, monitoring) are delivered with source code — full customization, no vendor lock-in.',
             },
             {
               title: 'Active certifications',
@@ -327,7 +332,7 @@ const jsonLd = {
             },
           ].map((item, i) => (
             <div
-              class="rounded-xl border border-border bg-surface p-[28px] shadow-sm transition-all hover:-translate-y-[4px] hover:shadow-lg"
+              class="rounded-xl border border-border bg-surface p-[28px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[4px] hover:border-border-blue hover:shadow-lg"
               data-reveal
               data-reveal-delay={String((i % 3) * 80)}
             >

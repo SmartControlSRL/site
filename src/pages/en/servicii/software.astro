@@ -34,6 +34,11 @@ import {
   Puzzle,
   Users,
   ArrowRight,
+  FileText,
+  MessageSquare,
+  FileChartColumn,
+  Workflow,
+  TriangleAlert,
 } from '@lucide/astro';
 
 const lang = getLangFromUrl(Astro.url);
@@ -99,7 +104,7 @@ const jsonLd = {
 
         <h1
           class="mt-6 font-extrabold leading-[1.1] tracking-[-1.8px] text-midnight"
-          style="font-size:clamp(2.25rem,1.4rem+3.6vw,3.625rem);max-width:880px"
+          style="font-size:clamp(2.25rem, 1.4rem + 3.6vw, 3.625rem);max-width:880px"
         >
           Applications delivered by<br />
           <span class="text-bright">our own team, source code included.</span>
@@ -151,7 +156,7 @@ const jsonLd = {
   <!-- ═══════════════════════════════════════════════════════════
        "WHY SMART CONTROL" — 3 context cards
        ═══════════════════════════════════════════════════════════ -->
-  <section class="bg-surface" style="padding:40px 0 110px">
+  <section class="bg-surface pt-10 pb-[72px] sm:pb-[110px]">
     <div class="container">
       <div data-reveal>
         <SectionHeading
@@ -225,7 +230,7 @@ const jsonLd = {
   <!-- ═══════════════════════════════════════════════════════════
        CAPABILITIES — bento grid (#capabilitati)
        ═══════════════════════════════════════════════════════════ -->
-  <section id="capabilitati" class="bg-page" data-band style="padding:110px 0">
+  <section id="capabilitati" class="bg-page py-[72px] sm:py-[110px]" data-band>
     <div class="container">
       <div data-reveal>
         <SectionHeading
@@ -353,7 +358,7 @@ const jsonLd = {
   <!-- ═══════════════════════════════════════════════════════════
        BLOCKCHAIN — pragmatic detail (light band)
        ═══════════════════════════════════════════════════════════ -->
-  <section class="bg-surface" style="padding:110px 0">
+  <section class="bg-surface py-[72px] sm:py-[110px]">
     <div class="container">
       <div class="grid gap-16 lg:grid-cols-2 lg:items-start">
         <!-- Left: text -->
@@ -367,7 +372,7 @@ const jsonLd = {
             sufficient. Every project starts with a rigorous cost-benefit analysis.
           </SectionHeading>
 
-          <div class="mt-8 space-y-3">
+          <div class="mt-8">
             <p class="text-[14.5px] leading-[1.7] text-cool">
               Our expertise covers both consulting to identify the right use cases and
               end-to-end delivery with a built-in security audit.
@@ -375,7 +380,7 @@ const jsonLd = {
           </div>
 
           <div class="mt-8">
-            <p class="mb-3 font-mono text-[11.5px] uppercase tracking-[2px] text-bright">
+            <p class="mb-3 font-mono text-[11.5px] uppercase tracking-[2px] text-royal">
               Real use cases
             </p>
             <ChevronList
@@ -395,7 +400,7 @@ const jsonLd = {
           <div
             class="rounded-xl border border-border bg-page p-8 shadow-sm"
           >
-            <p class="font-mono text-[11.5px] uppercase tracking-[2px] text-bright">
+            <p class="font-mono text-[11.5px] uppercase tracking-[2px] text-royal">
               Technologies & concepts
             </p>
             <div class="mt-4 flex flex-wrap gap-2">
@@ -416,7 +421,7 @@ const jsonLd = {
             </div>
 
             <div class="mt-8 border-t border-border pt-6">
-              <p class="font-mono text-[11.5px] uppercase tracking-[2px] text-bright">
+              <p class="font-mono text-[11.5px] uppercase tracking-[2px] text-royal">
                 Pragmatic approach
               </p>
               <p class="mt-3 text-[14px] leading-[1.7] text-cool">
@@ -434,7 +439,7 @@ const jsonLd = {
   <!-- ═══════════════════════════════════════════════════════════
        AI / LLM — detail (wash band)
        ═══════════════════════════════════════════════════════════ -->
-  <section class="bg-page" style="padding:110px 0">
+  <section class="bg-page py-[72px] sm:py-[110px]">
     <div class="container">
       <div data-reveal>
         <SectionHeading
@@ -454,31 +459,37 @@ const jsonLd = {
             {
               title: 'Document processing',
               body: 'Automatic classification of invoices, contracts and forms with structured data extraction.',
+              Icon: FileText,
               delay: 0,
             },
             {
               title: 'Internal virtual assistants',
               body: 'Chatbots for IT helpdesk, HR and operations support — complementing the Service Desk offering.',
+              Icon: MessageSquare,
               delay: 80,
             },
             {
               title: 'Automatic reporting',
               body: 'Report generation and summarization of long documents via language models (LLM), with configurable export.',
+              Icon: FileChartColumn,
               delay: 160,
             },
             {
               title: 'AI approval workflows',
               body: 'Automation of approval flows and decisions based on rules combined with AI inference.',
+              Icon: Workflow,
               delay: 0,
             },
             {
               title: 'Anomaly detection',
               body: 'Proactive alerting in operational processes — integrated with the Smart Control monitoring platform.',
+              Icon: TriangleAlert,
               delay: 80,
             },
             {
               title: 'AI agents in DevOps',
               body: 'Integration of AI agents in DevOps pipelines for automated code review, testing and documentation.',
+              Icon: Bot,
               delay: 160,
             },
           ].map((item) => (
@@ -486,8 +497,11 @@ const jsonLd = {
               data-reveal
               data-reveal-delay={item.delay > 0 ? String(item.delay) : undefined}
             >
-              <div class="h-full rounded-xl border border-border bg-surface p-[26px] shadow-sm">
-                <h3 class="text-[16px] font-bold text-navy">{item.title}</h3>
+              <div class="h-full rounded-xl border border-border bg-surface p-[26px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg">
+                <div class="flex h-11 w-11 items-center justify-center rounded-md border border-border-blue bg-blue-wash">
+                  <item.Icon class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+                </div>
+                <h3 class="mt-[18px] text-[16px] font-bold text-navy">{item.title}</h3>
                 <p class="mt-2.5 text-[13.5px] leading-[1.65] text-cool">{item.body}</p>
               </div>
             </div>
@@ -499,7 +513,7 @@ const jsonLd = {
         <div
           class="rounded-xl border border-border-blue bg-blue-wash p-6"
         >
-          <p class="font-mono text-[11.5px] uppercase tracking-[2px] text-bright">
+          <p class="font-mono text-[11.5px] uppercase tracking-[2px] text-royal">
             Measurable results
           </p>
           <p class="mt-2 text-[14.5px] leading-[1.7] text-slate">
@@ -515,7 +529,7 @@ const jsonLd = {
   <!-- ═══════════════════════════════════════════════════════════
        STAFF AUGMENTATION — light band
        ═══════════════════════════════════════════════════════════ -->
-  <section class="bg-surface" style="padding:110px 0">
+  <section class="bg-surface py-[72px] sm:py-[110px]">
     <div class="container">
       <div class="grid gap-16 lg:grid-cols-2 lg:items-center">
         <div data-reveal>
@@ -546,7 +560,7 @@ const jsonLd = {
         </div>
 
         <div data-reveal data-reveal-delay="120" data-drift="0.05">
-          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div class="grid grid-cols-2 gap-4">
             {
               [
                 { value: '50', label: 'In-house specialists' },
@@ -571,14 +585,14 @@ const jsonLd = {
   <!-- ═══════════════════════════════════════════════════════════
        CROSS-SELL — Cloud & Modernization link
        ═══════════════════════════════════════════════════════════ -->
-  <section class="bg-page" style="padding:64px 0">
+  <section class="bg-page py-[48px] sm:py-[64px]">
     <div class="container">
       <div
         class="flex flex-col items-start justify-between gap-6 rounded-xl border border-border bg-surface p-8 shadow-sm sm:flex-row sm:items-center"
         data-reveal
       >
         <div>
-          <p class="font-mono text-[11.5px] uppercase tracking-[2px] text-bright">
+          <p class="font-mono text-[11.5px] uppercase tracking-[2px] text-royal">
             Related service
           </p>
           <p class="mt-1.5 text-[17px] font-bold text-navy">

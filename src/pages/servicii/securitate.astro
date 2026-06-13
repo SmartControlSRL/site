@@ -65,12 +65,12 @@ const jsonLd = {
     </div>
 
     <div class="container relative" data-hero-scrub>
-      <div class="pb-[100px] pt-[120px] md:pt-[190px]">
+      <div class="pb-[72px] pt-[136px] sm:pb-[100px] md:pt-[190px]">
         <Eyebrow variant="hero">Securitate &amp; Conformitate</Eyebrow>
 
         <h1
           class="mt-6 max-w-[860px] font-bold leading-[1.1] tracking-[-1.8px] text-midnight"
-          style="font-size:clamp(2.2rem,1.5rem+2.5vw,4rem)"
+          style="font-size:clamp(2.2rem, 1.5rem + 2.5vw, 4rem)"
         >
           Amenințările nu dorm.
           <br />
@@ -83,13 +83,13 @@ const jsonLd = {
         >
           Într-un peisaj de amenințări în continuă evoluție, conformitatea cu
           <strong class="font-semibold text-navy">GDPR, NIS 2 și DORA</strong> nu mai este
-          opțională — este infrastructura de bază. Smart Control livrează securitate cibernetică
+          opțională — este o condiție de bază. Smart Control livrează securitate cibernetică
           end-to-end: de la prevenirea scurgerilor de date până la operațiuni de securitate
           gestionate, cu {years} ani de experiență și 4 certificări ISO.
         </p>
 
         <div
-          class="mt-[38px] flex flex-wrap items-center gap-4"
+          class="mt-[38px] flex flex-wrap items-center gap-x-6 gap-y-4"
           style="animation:scFadeIn 0.9s ease-out 1.4s both"
         >
           <TextLink href="#capabilities">
@@ -105,12 +105,12 @@ const jsonLd = {
 
   {/* ── CONTEXT INTRO (3 cards) ────────────────────────────────────────────── */}
   <section class="bg-surface" aria-labelledby="context-heading">
-    <div class="container py-[110px]">
+    <div class="container py-[72px] sm:py-[110px]">
       <h2 id="context-heading" class="sr-only">De ce securitate proactivă</h2>
       <div class="grid gap-5 [grid-template-columns:repeat(3,1fr)] max-[1100px]:grid-cols-1 max-[768px]:grid-cols-1" data-skew="4">
         {/* Card 1 */}
         <div data-reveal data-reveal-rotate="-4" data-drift="0.07">
-          <div class="h-full box-border rounded-xl border border-border bg-surface p-[30px_32px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:shadow-lg">
+          <div class="h-full box-border rounded-xl border border-border bg-surface p-[30px_32px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg">
             <IconChip>
               <Eye class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
             </IconChip>
@@ -124,7 +124,7 @@ const jsonLd = {
 
         {/* Card 2 */}
         <div data-reveal data-reveal-delay="100" data-reveal-rotate="4">
-          <div class="h-full box-border rounded-xl border border-border bg-surface p-[30px_32px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:shadow-lg">
+          <div class="h-full box-border rounded-xl border border-border bg-surface p-[30px_32px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg">
             <IconChip>
               <FileCheck class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
             </IconChip>
@@ -138,13 +138,13 @@ const jsonLd = {
 
         {/* Card 3 */}
         <div data-reveal data-reveal-delay="200" data-reveal-rotate="-4" data-drift="-0.07">
-          <div class="h-full box-border rounded-xl border border-border bg-surface p-[30px_32px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:shadow-lg">
+          <div class="h-full box-border rounded-xl border border-border bg-surface p-[30px_32px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg">
             <IconChip>
               <ShieldCheck class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
             </IconChip>
             <h3 class="mt-[18px] text-[17px] font-bold text-navy">Echipa proprie face diferența</h3>
             <p class="mt-[10px] text-[14px] leading-[1.65] text-cool">
-              50 de specialiști interni — nu subcontractori — cu expertiză validată prin ISO 27001
+              50 de specialiști interni — nu subcontractori — cu expertiză validată conform ISO 27001
               și sute de proiecte de securitate livrate în România și internațional.
             </p>
           </div>
@@ -161,7 +161,7 @@ const jsonLd = {
     aria-labelledby="cap-heading"
     style="scroll-margin-top:76px"
   >
-    <div class="container py-[110px]">
+    <div class="container py-[72px] sm:py-[110px]">
       <div data-reveal>
         <SectionHeading
           eyebrow="Capabilități"
@@ -288,7 +288,7 @@ const jsonLd = {
         </div>
 
         {/* Managed Security Operations */}
-        <div data-reveal class="col-span-2 max-[768px]:col-span-1">
+        <div data-reveal class="col-span-2 max-[768px]:col-span-1 rounded-[18px] shadow-[0_0_0_1px_rgba(68,135,220,0.22),0_18px_44px_-24px_rgba(14,31,91,0.35)] transition-shadow duration-[350ms] hover:shadow-[0_0_0_1px_rgba(68,135,220,0.4),0_24px_56px_-22px_rgba(14,31,91,0.45)]">
           <ModuleCard
             title="Operațiuni de Securitate Gestionate"
             index="07"
@@ -317,7 +317,7 @@ const jsonLd = {
     aria-labelledby="compliance-heading"
     style="scroll-margin-top:76px"
   >
-    <div class="container py-[110px]">
+    <div class="container py-[72px] sm:py-[110px]">
       <div data-reveal>
         <SectionHeading
           eyebrow="Certificări & Conformitate"
@@ -332,7 +332,7 @@ const jsonLd = {
 
       {/* ISO badges */}
       <div class="mt-[44px]" data-reveal data-reveal-delay="80">
-        <p class="mb-4 font-mono text-[11px] uppercase tracking-[2px] text-faint">
+        <p class="mb-4 font-mono text-[11px] uppercase tracking-[2px] text-cool">
           Sisteme de management certificate
         </p>
         <div class="flex flex-wrap gap-3">
@@ -345,7 +345,7 @@ const jsonLd = {
 
       {/* Regulatory frameworks */}
       <div class="mt-8" data-reveal data-reveal-delay="160">
-        <p class="mb-4 font-mono text-[11px] uppercase tracking-[2px] text-faint">
+        <p class="mb-4 font-mono text-[11px] uppercase tracking-[2px] text-cool">
           Conformitate cu reglementările europene
         </p>
         <div class="flex flex-wrap gap-3">
@@ -362,7 +362,7 @@ const jsonLd = {
           <p class="mt-3 text-[14px] leading-[1.7] text-cool">
             Smart Control garantează partenerilor săi un nivel maxim de reziliență cibernetică,
             în deplină conformitate cu Directiva UE NIS 2. Măsurile de apărare și management al
-            riscului sunt validate prin certificarea internațională ISO 27001, iar monitorizarea
+            riscului sunt validate conform certificării internaționale ISO 27001, iar monitorizarea
             tehnică continuă protejează direct lanțul de aprovizionare al clienților.
           </p>
         </div>
@@ -381,7 +381,7 @@ const jsonLd = {
       <div class="mt-12 rounded-xl border border-border-blue bg-blue-wash p-[28px_32px]" data-reveal>
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p class="font-mono text-[11px] uppercase tracking-[2px] text-bright">Soluție proprietară</p>
+            <p class="font-mono text-[11px] uppercase tracking-[2px] text-royal">Soluție proprietară</p>
             <h3 class="mt-2 text-[17px] font-bold text-navy">
               SEKNET — platforma integrată de monitorizare &amp; securitate
             </h3>

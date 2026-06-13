@@ -118,6 +118,14 @@ body {
   a {
     color: var(--color-royal);
   }
+  /* Brand keyboard focus ring on all interactive elements (visible on light
+     and dark zones). Pointer users never see it (:focus-visible only). */
+  a:focus-visible,
+  button:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid var(--color-bright);
+    outline-offset: 2px;
+  }
 }
 
 /* Layout container — export-canonical 1180px max + 40px inline padding. */
@@ -138,7 +146,9 @@ body {
   scroll-margin-top: var(--nav-offset);
 }
 
-/* Signature eyebrow: 12px mono, 2.5px tracking, uppercase, bright. */
+/* Signature eyebrow: 12px mono, 2.5px tracking, uppercase. Royal text for AA
+   on white (bright #4487DC fails AA at this size); the 2px bright rule below
+   keeps the brand-blue accent. */
 .eyebrow {
   display: inline-block;
   font-family: var(--font-mono);
@@ -146,7 +156,7 @@ body {
   font-weight: 500;
   letter-spacing: 2.5px;
   text-transform: uppercase;
-  color: var(--color-bright);
+  color: var(--color-royal);
 }
 /* Optional 2px blue-wash rule under the eyebrow. */
 .eyebrow--rule {

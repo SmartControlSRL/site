@@ -117,7 +117,7 @@ const audiences = [
   },
   {
     tag: 'DISTRIBUTED',
-    desc: 'Multiple locații, sute–mii de utilizatori remote, site-to-site 200+.',
+    desc: 'Multiple locații, sute–mii de utilizatori remote, 200+ conexiuni site-to-site.',
   },
 ];
 
@@ -189,7 +189,7 @@ const jsonLd = {
       <p
         class="mt-[26px] max-w-[640px] text-[18px] leading-[1.7] text-[rgba(226,233,245,0.72)] [animation:scFadeIn_0.9s_ease-out_1.15s_both]"
       >
-        Ce la alți furnizori se cumpără și se administrează separat, S-VPN livrează
+        Ceea ce la alți furnizori se cumpără și se administrează separat, S-VPN livrează
         integrat: <strong class="font-semibold text-white"
           >VPN, MFA, WAF, protecție endpoint și consolă de management</strong
         > — la o fracțiune din costul soluțiilor tradiționale, cu toate serviciile
@@ -223,7 +223,7 @@ const jsonLd = {
           ].map((tick) => (
             <li class="font-mono text-[12.5px] text-[rgba(226,233,245,0.55)]">
               <span class="mr-2 text-sky" aria-hidden="true">
-                ▸
+                ›
               </span>
               {tick}
             </li>
@@ -246,7 +246,7 @@ const jsonLd = {
   </section>
 
   <!-- ── Section 3 — MODULE (5 modules, 3+2 layout) ── -->
-  <section id="module" aria-labelledby="module-heading" class="px-6 sm:px-10 py-[110px]">
+  <section id="module" aria-labelledby="module-heading" class="px-6 sm:px-10 pb-[72px] pt-[72px] sm:pb-[110px] sm:pt-[88px]">
     <div class="mx-auto max-w-[1180px]">
       <div data-reveal>
         <SectionHeading
@@ -291,7 +291,7 @@ const jsonLd = {
             body="Cinci metode — alegi varianta potrivită."
             items={[
               'SMS On-Premises — server la client',
-              'SMS Shared — gestionat de SmartControl',
+              'SMS Shared — gestionat de Smart Control',
               'E-mail OTP — fără infrastructură nouă',
               'TOTP — Google / Microsoft Authenticator',
               'Certificate X.509 — nivel maxim de asigurare',
@@ -353,7 +353,7 @@ const jsonLd = {
                 ['Politici VPN, MFA, WAF, Endpoint', 'Monitorizare trafic în timp real', 'Audit log tamper-proof'].map(
                   (item) => (
                     <li class="flex text-[13.5px] leading-snug text-slate">
-                      <span class="mr-2 shrink-0 text-bright" aria-hidden="true">
+                      <span class="mr-2 shrink-0 text-royal" aria-hidden="true">
                         ›
                       </span>
                       <span>{item}</span>
@@ -362,7 +362,7 @@ const jsonLd = {
                 )
               }
               <li class="flex text-[13.5px] leading-snug text-slate">
-                <span class="mr-2 shrink-0 text-bright" aria-hidden="true">›</span>
+                <span class="mr-2 shrink-0 text-royal" aria-hidden="true">›</span>
                 <span>
                   Rapoarte <span class="text-compliance">NIS 2</span>,
                   <span class="text-compliance">ISO 27001</span>,
@@ -372,7 +372,7 @@ const jsonLd = {
               {
                 ['AD / LDAP / RADIUS nativ', 'API REST — OpenAPI / Swagger'].map((item) => (
                   <li class="flex text-[13.5px] leading-snug text-slate">
-                    <span class="mr-2 shrink-0 text-bright" aria-hidden="true">
+                    <span class="mr-2 shrink-0 text-royal" aria-hidden="true">
                       ›
                     </span>
                     <span>{item}</span>
@@ -387,7 +387,7 @@ const jsonLd = {
   </section>
 
   <!-- ── Section 4 — DE CE S-VPN (benefits, wash band) ── -->
-  <section data-band aria-labelledby="benefits-heading" class="bg-page px-6 sm:px-10 py-[110px]">
+  <section data-band aria-labelledby="benefits-heading" class="bg-page px-6 sm:px-10 py-[72px] sm:py-[110px]">
     <div class="mx-auto max-w-[1180px]">
       <div data-reveal>
         <SectionHeading
@@ -402,7 +402,7 @@ const jsonLd = {
         {
           benefits.map((b) => (
             <div data-reveal data-reveal-delay={b.delay} data-drift={b.drift}>
-              <div class="h-full rounded-xl border border-border bg-surface p-[30px] shadow-sm">
+              <div class="h-full rounded-xl border border-border bg-surface p-[30px] shadow-sm transition-all duration-200 hover:-translate-y-[2px] hover:border-border-blue hover:shadow-lg">
                 <div class="font-mono text-[40px] font-semibold leading-none text-navy">
                   {b.num}
                   {b.suffix && <span class="text-bright">{b.suffix}</span>}
@@ -418,7 +418,7 @@ const jsonLd = {
   </section>
 
   <!-- ── Section 5 — SPECIFICAȚII (mono spec table) ── -->
-  <section aria-labelledby="spec-heading" class="px-6 sm:px-10 py-[110px]">
+  <section aria-labelledby="spec-heading" class="px-6 sm:px-10 py-[72px] sm:py-[110px]">
     <div class="mx-auto max-w-[1180px]">
       <div data-reveal>
         <SectionHeading
@@ -438,7 +438,7 @@ const jsonLd = {
   </section>
 
   <!-- ── Section 6 — SERVICII INCLUSE + AUDIENȚĂ (two-column split) ── -->
-  <section aria-labelledby="included-heading" class="px-6 sm:px-10 pb-[110px]">
+  <section aria-labelledby="included-heading" class="px-6 sm:px-10 pb-[72px] sm:pb-[110px]">
     <div class="mx-auto grid max-w-[1180px] grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-16">
       <!-- Left -->
       <div data-reveal>
@@ -458,7 +458,7 @@ const jsonLd = {
           {
             includedItems.map((item) => (
               <li class="flex text-[14px] text-slate">
-                <span class="mr-2 shrink-0 text-bright" aria-hidden="true">
+                <span class="mr-2 shrink-0 text-royal" aria-hidden="true">
                   ✓
                 </span>
                 <span>{item}</span>
@@ -472,8 +472,8 @@ const jsonLd = {
       <div data-reveal data-reveal-delay="100" data-drift="-0.05" class="grid gap-3">
         {
           audiences.map((a) => (
-            <div class="flex items-center gap-4 rounded-lg border border-border bg-surface px-6 py-[18px] shadow-sm">
-              <span class="w-[104px] shrink-0 font-mono text-[11px] tracking-[1px] text-bright">
+            <div class="flex items-center gap-4 rounded-lg border border-border bg-surface px-6 py-[18px] shadow-sm transition-all duration-200 hover:-translate-y-[2px] hover:border-border-blue hover:shadow-lg">
+              <span class="w-[104px] shrink-0 whitespace-nowrap font-mono text-[11px] tracking-[1px] text-royal">
                 {a.tag}
               </span>
               <span class="text-[13.5px] text-slate">{a.desc}</span>
@@ -488,7 +488,7 @@ const jsonLd = {
   <CtaBand
     id="contact"
     eyebrow="Pașii următori"
-    heading="Assessment Inițial gratuit — 2 zile"
+    heading="Assessment inițial gratuit — 2 zile"
     cta={t('cta.assessment')}
     subject={t('subject.assessment')}
   >

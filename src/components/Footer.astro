@@ -29,16 +29,16 @@ const solutions = [
       <!-- Col 1 — brand -->
       <div>
         <a href={p('/')} class="flex items-center gap-[11px]" aria-label="Smart Control — home">
-          <img src="/smartcontrol-mark.png" alt="" width="34" height="34" class="h-[34px] w-[34px]" />
+          <img src="/smartcontrol-mark-96.png" alt="" width="34" height="34" class="h-[34px] w-[34px]" loading="lazy" decoding="async" />
           <span class="text-[17px] font-bold tracking-[-0.3px] text-navy">Smart<span class="text-bright">Control</span></span>
         </a>
         <p class="mt-3.5 text-[13.5px] italic text-cool">{t('footer.tagline')}</p>
-        <p class="mt-4 max-w-xs text-[13px] leading-[1.7] text-faint">{t('footer.blurb')}</p>
+        <p class="mt-4 max-w-xs text-[13px] leading-[1.7] text-cool">{t('footer.blurb')}</p>
       </div>
 
       <!-- Col 2 — Servicii -->
       <div>
-        <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-faint">{t('footer.col.services')}</h2>
+        <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-cool">{t('footer.col.services')}</h2>
         <ul class="mt-4 grid gap-2.5">
           {services.map((l) => (
             <li><a href={l.href} class="text-[13.5px] text-slate transition-colors hover:text-royal">{l.label}</a></li>
@@ -48,7 +48,7 @@ const solutions = [
 
       <!-- Col 3 — Soluții -->
       <div>
-        <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-faint">{t('footer.col.solutions')}</h2>
+        <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-cool">{t('footer.col.solutions')}</h2>
         <ul class="mt-4 grid gap-2.5">
           {solutions.map((l) => (
             <li><a href={l.href} class="text-[13.5px] text-slate transition-colors hover:text-royal">{l.label}</a></li>
@@ -58,7 +58,7 @@ const solutions = [
 
       <!-- Col 4 — Contact -->
       <div>
-        <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-faint">{t('footer.col.contact')}</h2>
+        <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-cool">{t('footer.col.contact')}</h2>
         <div class="mt-4 grid gap-2.5">
           <a data-email-user={EMAIL_USER} data-email-domain={EMAIL_DOMAIN} href="#" class="text-[13.5px] text-slate transition-colors hover:text-royal"></a>
           <span class="text-[13.5px] text-slate">{t('footer.website')}</span>
@@ -71,8 +71,8 @@ const solutions = [
 
     <!-- Bottom bar -->
     <div class="mt-12 flex flex-col items-start gap-4 border-t border-divider pt-6 sm:flex-row sm:items-center sm:justify-between">
-      <span class="text-[12.5px] text-faint">© {year} {t('company.name')}. {t('footer.rights')}</span>
-      <a href={privacyHref} class="text-[12.5px] text-faint transition-colors hover:text-royal">{t('footer.privacy')}</a>
+      <span class="text-[12.5px] text-cool">© {year} {t('company.name')}. {t('footer.rights')}</span>
+      <a href={privacyHref} class="text-[12.5px] text-cool transition-colors hover:text-royal">{t('footer.privacy')}</a>
     </div>
   </div>
 </footer>

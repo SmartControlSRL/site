@@ -17,8 +17,21 @@ import MailtoLink from '../../components/MailtoLink.astro';
 
       <h1>Privacy policy</h1>
 
+      <nav class="toc" aria-label="Table of contents">
+        <p class="toc-title">Contents</p>
+        <ol>
+          <li><a href="#information-collected">What information we collect and how we use it</a></li>
+          <li><a href="#minors">Personal data of minors under 16</a></li>
+          <li><a href="#information-transferred">Information we transfer</a></li>
+          <li><a href="#links">Links to other websites</a></li>
+          <li><a href="#security">Security</a></li>
+          <li><a href="#rights">Your rights regarding personal data</a></li>
+          <li><a href="#updates">Updates to the privacy policy</a></li>
+        </ol>
+      </nav>
+
       <p>
-        This policy ("Privacy policy") describes the practices regarding the personal data we collect
+        This policy (“Privacy policy”) describes the practices regarding the personal data we collect
         through the Site, which is hosted and operated from Romania.
       </p>
 
@@ -46,7 +59,7 @@ import MailtoLink from '../../components/MailtoLink.astro';
         the terms and conditions of this Policy.
       </p>
 
-      <h2>What information we collect and how we use it</h2>
+      <h2 id="information-collected">What information we collect and how we use it</h2>
 
       <p>When using this Site you may provide us with the following personal data:</p>
 
@@ -55,8 +68,8 @@ import MailtoLink from '../../components/MailtoLink.astro';
       <p>The personal data we collect in this context are:</p>
 
       <ul>
-        <li>First name</li>
         <li>Last name</li>
+        <li>First name</li>
         <li>E-mail address</li>
         <li>Any other personal data you choose to send us</li>
       </ul>
@@ -72,7 +85,7 @@ import MailtoLink from '../../components/MailtoLink.astro';
         and how to exercise them can be found in the corresponding section of this privacy policy.
       </p>
 
-      <h2>Personal data of minors under 16</h2>
+      <h2 id="minors">Personal data of minors under 16</h2>
 
       <p>
         Minors under the age of 16 should not submit any personal data on the website without the
@@ -81,7 +94,7 @@ import MailtoLink from '../../components/MailtoLink.astro';
 
       <p>
         Our Site will never knowingly collect personal data from individuals it knows to be minors
-        (under 16), nor use or disclose it to any unauthorised third party without the express consent
+        (under 16), nor use or disclose it to any unauthorized third party without the express consent
         of the legal guardian.
       </p>
 
@@ -91,7 +104,7 @@ import MailtoLink from '../../components/MailtoLink.astro';
         approved consent, and whether the personal data is being submitted by a minor under 16.
       </p>
 
-      <h2>Information we transfer</h2>
+      <h2 id="information-transferred">Information we transfer</h2>
 
       <p>
         We will not transfer your personal data to third parties, with the following exceptions:
@@ -125,7 +138,7 @@ import MailtoLink from '../../components/MailtoLink.astro';
         </li>
       </ul>
 
-      <h2>Links to other websites</h2>
+      <h2 id="links">Links to other websites</h2>
 
       <p>
         Please note that when you use a link to navigate from our Site to another website, this
@@ -135,16 +148,16 @@ import MailtoLink from '../../components/MailtoLink.astro';
         order to understand their procedures for collecting, using and disclosing personal data.
       </p>
 
-      <h2>Security</h2>
+      <h2 id="security">Security</h2>
 
       <p>
         The security of personal data is important to us. We maintain appropriate administrative,
         technical and physical precautions to protect personal data against accidental or unlawful
-        destruction, accidental loss, alteration, disclosure or unauthorised access, use, and all
+        destruction, accidental loss, alteration, disclosure or unauthorized access, use, and all
         other lawful forms of personal data processing in our possession.
       </p>
 
-      <h2>Your rights regarding personal data</h2>
+      <h2 id="rights">Your rights regarding personal data</h2>
 
       <p>
         In accordance with the provisions of EU Regulation no. 679/2016 (GDPR), registered
@@ -161,7 +174,7 @@ import MailtoLink from '../../components/MailtoLink.astro';
         <li>the right to data portability;</li>
         <li>the right not to be subject to an individual automated decision;</li>
         <li>
-          the right to lodge a complaint with the <a href="https://www.dataprotection.ro" rel="noopener" target="_blank">ANSPDCP</a> — the Romanian Supervisory Authority for
+          the right to lodge a complaint with the <a href="https://www.dataprotection.ro" rel="noopener" target="_blank" class="ext-link">ANSPDCP<svg class="ext-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg><span class="sr-only"> (opens in a new tab)</span></a> — the Romanian Supervisory Authority for
           Personal Data Processing.
         </li>
       </ul>
@@ -172,7 +185,7 @@ import MailtoLink from '../../components/MailtoLink.astro';
         .
       </p>
 
-      <h2>Updates to the privacy policy</h2>
+      <h2 id="updates">Updates to the privacy policy</h2>
 
       <p>
         Our institution reserves the right to change, modify or update the privacy policy at any time,
@@ -190,7 +203,7 @@ import MailtoLink from '../../components/MailtoLink.astro';
 
 <style>
   .privacy-content {
-    padding-block: 3.5rem 5rem;
+    padding-block: clamp(3.5rem, 7vw, 5.5rem) clamp(3.5rem, 7vw, 5rem);
     max-width: 780px;
   }
 
@@ -216,6 +229,51 @@ import MailtoLink from '../../components/MailtoLink.astro';
     color: var(--color-navy);
   }
 
+  .toc {
+    background: var(--color-blue-wash);
+    border: 1px solid var(--color-border-blue);
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+    margin-block: 0 2.5rem;
+  }
+
+  .toc-title {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-cool);
+    margin: 0 0 0.75rem;
+  }
+
+  .toc ol {
+    margin: 0;
+    padding-inline-start: 1.25rem;
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .toc li {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--color-slate);
+    margin-block-end: 0;
+  }
+
+  .toc a {
+    color: var(--color-royal);
+    text-decoration: none;
+    text-underline-offset: 3px;
+    transition: color 0.15s ease;
+  }
+
+  .toc a:hover {
+    color: var(--color-navy);
+    text-decoration: underline;
+    text-decoration-color: var(--color-bright);
+  }
+
   article h1 {
     font-size: clamp(2rem, 4vw, 2.5rem);
     font-weight: 700;
@@ -228,9 +286,12 @@ import MailtoLink from '../../components/MailtoLink.astro';
     font-size: clamp(1.125rem, 2.5vw, 1.375rem);
     font-weight: 700;
     color: var(--color-navy);
-    margin-block-start: 2.5rem;
-    margin-block-end: 0.75rem;
+    margin-block-start: 3rem;
+    margin-block-end: 1rem;
+    padding-block-end: 0.5rem;
+    border-bottom: 2px solid var(--color-border-blue);
     line-height: 1.3;
+    scroll-margin-top: 6rem;
   }
 
   article h3 {
@@ -264,5 +325,28 @@ import MailtoLink from '../../components/MailtoLink.astro';
 
   article li > ol {
     margin-block-start: 0.4rem;
+  }
+
+  .ext-link {
+    white-space: nowrap;
+  }
+
+  .ext-icon {
+    display: inline-block;
+    vertical-align: -1px;
+    margin-inline-start: 0.2em;
+    color: var(--color-royal);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 </style>

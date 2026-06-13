@@ -154,7 +154,7 @@ const jsonLd = {
   </header>
 
   {/* ─── 3. MODULE (light deep-dive, 5 modules) ───────────────────────── */}
-  <section id="module" class="bg-surface px-6 py-[110px] sm:px-10">
+  <section id="module" class="bg-surface px-6 py-[72px] sm:px-10 sm:py-[110px]">
     <div class="mx-auto max-w-[1180px]">
       <div data-reveal>
         <SectionHeading
@@ -301,7 +301,7 @@ const jsonLd = {
   </section>
 
   {/* ─── 4. SPEC TABLE (mono, gray-wash band) ─────────────────────────── */}
-  <section data-band class="bg-page px-6 py-[110px] sm:px-10">
+  <section data-band class="bg-page px-6 py-[72px] sm:px-10 sm:py-[110px]">
     <div class="mx-auto max-w-[1180px]">
       <div data-reveal>
         <SectionHeading
@@ -323,7 +323,7 @@ const jsonLd = {
             { num: '10GB', accent: '+', caption: 'Daily ingest, no cap' },
             { num: '∞', accent: '', caption: 'Data retention — zero licensing cost' },
           ].map((cell) => (
-            <div class="bg-surface px-7 py-7">
+            <div class="bg-surface px-7 py-7 transition-colors duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[#F8FAFF]">
               <div class="font-mono text-[34px] font-semibold leading-none text-navy">
                 {cell.num}
                 {cell.accent && <span class="text-bright">{cell.accent}</span>}
@@ -341,7 +341,7 @@ const jsonLd = {
   </section>
 
   {/* ─── 5. SAME FAMILY (cross-sell, light) ───────────────────────────── */}
-  <section class="bg-surface px-6 py-[110px] sm:px-10">
+  <section class="bg-surface px-6 py-[72px] sm:px-10 sm:py-[110px]">
     <div class="mx-auto max-w-[1180px]">
       <div data-reveal>
         <SectionHeading eyebrow="From the same family" heading="Complete the platform" variant="light" />

@@ -17,3 +17,4 @@ dist/
 
 # local QA artifacts (regenerable via scripts/screenshot.mjs)
 shots/
+audit-report.json
