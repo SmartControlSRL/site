@@ -109,9 +109,15 @@ body {
   background: rgba(68, 135, 220, 0.25);
 }
 
-/* Links default to royal (AA-safe, 10.6:1 on white) — never bright-blue text. */
-a {
-  color: var(--color-royal);
+/* Links default to royal (AA-safe, 10.6:1 on white) — never bright-blue text.
+   MUST live in @layer base: an unlayered rule beats Tailwind's `utilities`
+   layer regardless of specificity, which would force EVERY anchor royal —
+   including `text-white` CTA buttons (royal-on-navy ≈ unreadable) and
+   `text-sky` links on dark. In the base layer, the text-* utilities win. */
+@layer base {
+  a {
+    color: var(--color-royal);
+  }
 }
 
 /* Layout container — export-canonical 1180px max + 40px inline padding. */
