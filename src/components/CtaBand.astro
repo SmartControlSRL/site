@@ -1,0 +1,53 @@
+---
+// Closing CTA band: dark midnight full-bleed section with a node-graph canvas,
+// a radial glow overlay, centered eyebrow + word-fill H2 + lead slot, and a
+// single mailto button (NO email input — RESOLUTIONS §15) plus a mono contact
+// line. data-band drives the scale-in. Default subject = assessment ask.
+import SectionHeading from './SectionHeading.astro';
+import NetworkCanvas from './NetworkCanvas.astro';
+import MailtoLink from './MailtoLink.astro';
+import { EMAIL_USER, EMAIL_DOMAIN } from '../i18n/ui';
+
+interface Props {
+  id?: string;
+  eyebrow: string;
+  heading: string;
+  /** mailto button label. */
+  cta: string;
+  /** Email subject appended to the mailto. */
+  subject?: string;
+  class?: string;
+}
+
+const { id, eyebrow, heading, cta, subject, class: extra = '' } = Astro.props;
+---
+
+<section
+  id={id}
+  data-band
+  class:list={['relative overflow-hidden bg-midnight px-10 py-[110px]', extra]}
+>
+  <NetworkCanvas lineAlpha={0.18} dotAlpha={0.45} spread={24000} lineDist={140} opacity={0.5} />
+  <div
+    class="pointer-events-none absolute inset-0"
+    style="background:radial-gradient(ellipse 60% 70% at 50% 40%, rgba(68,135,220,0.16), rgba(4,12,43,0) 70%)"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="relative z-[1] mx-auto max-w-[760px] text-center">
+    <div data-reveal>
+      <SectionHeading eyebrow={eyebrow} heading={heading} variant="dark" size="cta" rule={false} center>
+        <slot />
+      </SectionHeading>
+
+      <div class="mt-9 flex justify-center">
+        <MailtoLink variant="button" dark subject={subject}>{cta}</MailtoLink>
+      </div>
+
+      <p class="mt-6 font-mono text-[13px] text-[rgba(226,233,245,0.55)]">
+        <span data-email-user={EMAIL_USER} data-email-domain={EMAIL_DOMAIN}></span> · www.smartcontrol.ro
+      </p>
+    </div>
+  </div>
+</section>

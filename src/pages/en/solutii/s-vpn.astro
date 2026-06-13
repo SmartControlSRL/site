@@ -1,0 +1,495 @@
+---
+// S-VPN — product detail page (Template A). EN twin of /solutii/s-vpn.
+// Full parity; technical terms stay English; sentence-case headings, no fluff.
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SectionHeading from '../../../components/SectionHeading.astro';
+import Eyebrow from '../../../components/Eyebrow.astro';
+import NetworkCanvas from '../../../components/NetworkCanvas.astro';
+import StatStrip from '../../../components/StatStrip.astro';
+import StatBlock from '../../../components/StatBlock.astro';
+import ModuleCard from '../../../components/ModuleCard.astro';
+import SpecTable from '../../../components/SpecTable.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import MailtoLink from '../../../components/MailtoLink.astro';
+import TextLink from '../../../components/TextLink.astro';
+import { useTranslations, getLangFromUrl } from '../../../i18n/ui';
+import { Network, KeyRound, ShieldAlert, Laptop, SlidersHorizontal } from '@lucide/astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const title = 'S-VPN — Secure remote access, integrated | Smart Control';
+const description =
+  'S-VPN delivers VPN, MFA, WAF, endpoint protection and a management console in one product — 20 Gbps+ Layer 7 inspection, 10,000+ IPSec tunnels, at a fraction of the cost of traditional solutions.';
+
+const benefits = [
+  {
+    drift: '0.06',
+    delay: undefined as string | undefined,
+    num: '−60',
+    suffix: '%',
+    h3: 'Predictable cost',
+    p: 'A full capability set at a fraction of the Cisco / Fortinet cost — no per-user or per-device billing.',
+  },
+  {
+    drift: '-0.05',
+    delay: '80',
+    num: '0',
+    suffix: undefined as string | undefined,
+    h3: 'Hidden costs',
+    p: 'Every license includes installation, configuration, integration, support, maintenance and warranty. No third-party dependencies.',
+  },
+  {
+    drift: '0.06',
+    delay: '160',
+    num: '360',
+    suffix: '°',
+    h3: 'Full visibility',
+    p: 'A complete, real-time view of the attack surface — policies, traffic, vulnerabilities, compliance.',
+  },
+  {
+    drift: '-0.05',
+    delay: '240',
+    num: '<5',
+    suffix: 'min',
+    h3: 'Setup in minutes',
+    p: 'The client installs and connects in under 5 minutes from provisioning — no advanced technical expertise required.',
+  },
+];
+
+const specRows = [
+  {
+    label: 'Performance',
+    value:
+      '> 20 Gbps L7 inspection · > 10,000 IPSec tunnels · > 400 SSL tunnels · > 200 site-to-site · MFA latency < 3s',
+  },
+  {
+    label: 'Encryption',
+    value:
+      'TLS 1.2 / 1.3 (no SSLv3, TLS 1.0) · IPSec AES-256 + SHA-2 + Perfect Forward Secrecy · X.509 v3 with OCSP / CRL · secrets encrypted at rest',
+  },
+  {
+    label: 'Scalability',
+    value:
+      'Unlimited concurrent users — zero license cost · horizontal scaling with no downtime · 5 / 5 MFA methods active simultaneously',
+  },
+  {
+    label: 'Continuity',
+    value:
+      'Rolling updates without dropping sessions · automatic failover < 30s · architecture proven at scale during the pandemic',
+  },
+  {
+    label: 'Integrations',
+    value:
+      'Active Directory · LDAP · RADIUS · REST API (OpenAPI / Swagger) for ITSM, SOAR, NOC · web-only console (Chrome, Firefox, Edge)',
+  },
+  {
+    label: 'Deployment',
+    value:
+      'Standard hardware or cloud (AWS, Azure, GCP) · on-premise, cloud or hybrid · client setup < 5 minutes · onboarding wizard included',
+  },
+];
+
+const includedItems = [
+  'Installation & configuration',
+  'Technical support',
+  'Integration services',
+  'Maintenance & updates',
+  'Equipment support included',
+  'Certified warranty',
+];
+
+const audiences = [
+  {
+    tag: 'ENTERPRISE',
+    desc: 'Complete protection, without the prohibitive budgets of legacy solutions.',
+  },
+  {
+    tag: 'SMB IT TEAM',
+    desc: 'Small-to-medium IT teams without the expertise for complex deployments.',
+  },
+  {
+    tag: 'REGULATED',
+    desc: 'Regulated environments — immutable audit log and certificate-based authentication.',
+  },
+  {
+    tag: 'DISTRIBUTED',
+    desc: 'Multiple sites, hundreds–thousands of remote users, 200+ site-to-site.',
+  },
+];
+
+// JSON-LD: Product (S-VPN). EN description; absolute canonical URLs.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: 'S-VPN',
+  url: 'https://smartcontrol.ro/en/solutii/s-vpn',
+  category: 'Secure remote access platform',
+  description:
+    'Integrated secure remote access suite: VPN (SSL & IPSec), 5-method MFA, WAF / UTM, endpoint protection and a centralized management console — software-first, no proprietary hardware.',
+  brand: { '@type': 'Brand', name: 'Smart Control' },
+  manufacturer: {
+    '@type': 'Organization',
+    name: 'Smart Control SRL',
+    url: 'https://smartcontrol.ro',
+  },
+};
+---
+
+<BaseLayout title={title} description={description}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <!-- ── Section 1 — PRODUCT HERO (dark + network canvas) ── -->
+  <header class="relative overflow-hidden bg-midnight">
+    <NetworkCanvas lineAlpha={0.24} dotAlpha={0.6} spread={18000} lineDist={155} opacity={0.75} />
+    <div
+      class="pointer-events-none absolute inset-0"
+      style="background:radial-gradient(ellipse 75% 65% at 35% 40%, rgba(4,12,43,0) 0%, rgba(4,12,43,0.5) 60%, #040C2B 100%)"
+      aria-hidden="true"
+    >
+    </div>
+
+    <div
+      data-hero-scrub
+      class="relative z-[1] mx-auto max-w-[1180px] px-6 pb-[120px] pt-[150px] sm:px-10 sm:pt-[190px]"
+    >
+      <span
+        class="inline-block border-b-2 border-[rgba(122,180,232,0.3)] pb-2.5 font-mono text-[12.5px] font-medium uppercase tracking-[2.5px] text-sky [animation:scFadeIn_0.8s_ease-out_0.1s_both]"
+      >
+        Proprietary product · Integrated remote access suite
+      </span>
+
+      <h1
+        class="mt-[26px] max-w-[860px] text-[clamp(2.5rem,1.9rem+3vw,3.875rem)] font-extrabold leading-[1.08] tracking-[-2px] text-white"
+      >
+        <span class="inline-block [animation:scWordIn_0.7s_cubic-bezier(0.16,1,0.3,1)_0.25s_both]"
+          >S-VPN.</span
+        >
+        <span class="inline-block text-sky [animation:scWordIn_0.7s_cubic-bezier(0.16,1,0.3,1)_0.45s_both]"
+          >Secure</span
+        >
+        <span class="inline-block text-sky [animation:scWordIn_0.7s_cubic-bezier(0.16,1,0.3,1)_0.57s_both]"
+          >remote</span
+        >
+        <span class="inline-block text-sky [animation:scWordIn_0.7s_cubic-bezier(0.16,1,0.3,1)_0.69s_both]"
+          >access.</span
+        >
+        <br />
+        <span class="inline-block text-sky [animation:scWordIn_0.7s_cubic-bezier(0.16,1,0.3,1)_0.86s_both]"
+          >No</span
+        >
+        <span class="inline-block text-sky [animation:scWordIn_0.7s_cubic-bezier(0.16,1,0.3,1)_0.98s_both]"
+          >compromises.</span
+        >
+      </h1>
+
+      <p
+        class="mt-[26px] max-w-[640px] text-[18px] leading-[1.7] text-[rgba(226,233,245,0.72)] [animation:scFadeIn_0.9s_ease-out_1.15s_both]"
+      >
+        What other vendors sell and administer separately, S-VPN delivers as one:
+        <strong class="font-semibold text-white"
+          >VPN, MFA, WAF, endpoint protection and a management console</strong
+        > — at a fraction of the cost of traditional solutions, with every service
+        included in the license.
+      </p>
+
+      <div
+        class="mt-[38px] flex flex-wrap items-center gap-4 [animation:scFadeIn_0.9s_ease-out_1.35s_both]"
+      >
+        <MailtoLink
+          variant="button"
+          dark
+          subject={t('subject.demo.svpn')}
+          class="!px-[26px] !py-[13px]"
+        >
+          {t('cta.demo.svpn')}
+        </MailtoLink>
+        <TextLink href="#module" dark class="!px-2 !py-[13px]">See the modules</TextLink>
+      </div>
+
+      <ul
+        class="mt-14 flex flex-wrap gap-9 [animation:scFadeIn_0.9s_ease-out_1.55s_both]"
+        aria-label="S-VPN technical highlights"
+      >
+        {
+          [
+            'TLS 1.2 / 1.3 · AES-256 + PFS',
+            '5 MFA methods, active simultaneously',
+            'Zero proprietary hardware',
+            '−60% vs Cisco / Fortinet',
+          ].map((tick) => (
+            <li class="font-mono text-[12.5px] text-[rgba(226,233,245,0.55)]">
+              <span class="mr-2 text-sky" aria-hidden="true">
+                ▸
+              </span>
+              {tick}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </header>
+
+  <!-- ── Section 2 — PERFORMANCE (count-up stat strip) ── -->
+  <section aria-label="Performance" class="px-6 sm:px-10 pt-[72px]">
+    <div class="mx-auto max-w-[1180px]">
+      <StatStrip>
+        <StatBlock value="20" count={20} suffix="Gbps+" caption="Layer 7 traffic inspection" numberSize={48} />
+        <StatBlock value="10" count={10} suffix="K+" caption="Concurrent IPSec tunnels" numberSize={48} />
+        <StatBlock value="400" count={400} suffix="+" caption="Concurrent SSL tunnels" numberSize={48} />
+        <StatBlock value="200" count={200} suffix="+" caption="Site-to-site IPSec locations" numberSize={48} />
+      </StatStrip>
+    </div>
+  </section>
+
+  <!-- ── Section 3 — MODULES (5 modules, 3+2 layout) ── -->
+  <section id="module" aria-labelledby="module-heading" class="px-6 sm:px-10 py-[110px]">
+    <div class="mx-auto max-w-[1180px]">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Modules"
+          heading="Five capabilities, one product"
+          headingId="module-heading"
+          headingMaxWidth="700px"
+        >
+          30 functional and 19 non-functional specifications, documented in the
+          technical sheet. 5 modules · 1 product · 1 license.
+        </SectionHeading>
+      </div>
+
+      <div
+        data-skew="4"
+        class="mt-[52px] grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-6"
+      >
+        <!-- Card 1 — VPN -->
+        <div data-reveal data-reveal-rotate="-4" data-drift="0.07" class="lg:col-span-2">
+          <ModuleCard
+            title="VPN"
+            kicker="S-VPN"
+            body="Secure SSL & IPSec connectivity."
+            items={[
+              'SSL VPN — up to 400 concurrent tunnels',
+              'IPSec — over 10,000 simultaneous tunnels',
+              'Site-to-site — 200+ locations',
+              'Windows, macOS, Linux, iOS, Android',
+              'Split tunneling per user / group',
+            ]}
+            cols={1}
+          >
+            <Network slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        <!-- Card 2 — MFA -->
+        <div data-reveal data-reveal-delay="80" data-reveal-rotate="4" class="lg:col-span-2">
+          <ModuleCard
+            title="MFA"
+            kicker="S-VPN"
+            body="Five methods — pick the right one."
+            items={[
+              'SMS On-Premises — server at the client site',
+              'SMS Shared — managed by SmartControl',
+              'E-mail OTP — no new infrastructure',
+              'TOTP — Google / Microsoft Authenticator',
+              'X.509 certificates — maximum assurance level',
+            ]}
+            cols={1}
+          >
+            <KeyRound slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        <!-- Card 3 — WAF -->
+        <div data-reveal data-reveal-delay="160" data-reveal-rotate="-4" data-drift="-0.07" class="lg:col-span-2">
+          <ModuleCard
+            title="WAF"
+            kicker="S-VPN"
+            body="Web Application Firewall + UTM."
+            items={[
+              'SQL Injection and XSS protection',
+              'HTTP constraints and rate limiting',
+              'OWASP Top 10 signatures, kept current',
+              'Layer 7 DPI at over 20 Gbps',
+              'URL and category filtering at the gateway',
+            ]}
+            cols={1}
+          >
+            <ShieldAlert slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        <!-- Card 4 — Endpoint -->
+        <div data-reveal data-reveal-rotate="4" data-drift="0.07" class="lg:col-span-3">
+          <ModuleCard
+            title="Endpoint"
+            kicker="S-VPN"
+            body="Client-station protection — no non-compliant device enters the network."
+            items={[
+              'Real-time OS vulnerability scanning',
+              'Third-party application CVE detection',
+              'Compliance check at connection time',
+              'Blocking of non-compliant devices',
+            ]}
+            cols={2}
+          >
+            <Laptop slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        <!-- Card 5 — Console -->
+        <div data-reveal data-reveal-delay="80" data-reveal-rotate="-4" data-drift="-0.07" class="lg:col-span-3">
+          <ModuleCard
+            title="Console"
+            kicker="S-VPN"
+            body="Centralized management — everything in one place, through the browser."
+            cols={2}
+          >
+            <SlidersHorizontal slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+            <ul class="mt-4 grid gap-y-2 sm:grid-cols-2 sm:gap-x-5">
+              {
+                ['VPN, MFA, WAF, Endpoint policies', 'Real-time traffic monitoring', 'Tamper-proof audit log'].map(
+                  (item) => (
+                    <li class="flex text-[13.5px] leading-snug text-slate">
+                      <span class="mr-2 shrink-0 text-bright" aria-hidden="true">
+                        ›
+                      </span>
+                      <span>{item}</span>
+                    </li>
+                  )
+                )
+              }
+              <li class="flex text-[13.5px] leading-snug text-slate">
+                <span class="mr-2 shrink-0 text-bright" aria-hidden="true">›</span>
+                <span>
+                  Reporting for <span class="text-compliance">NIS 2</span>,
+                  <span class="text-compliance">ISO 27001</span>,
+                  <span class="text-compliance">GDPR</span>
+                </span>
+              </li>
+              {
+                ['Native AD / LDAP / RADIUS', 'REST API — OpenAPI / Swagger'].map((item) => (
+                  <li class="flex text-[13.5px] leading-snug text-slate">
+                    <span class="mr-2 shrink-0 text-bright" aria-hidden="true">
+                      ›
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </ModuleCard>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Section 4 — WHY S-VPN (benefits, wash band) ── -->
+  <section data-band aria-labelledby="benefits-heading" class="bg-page px-6 sm:px-10 py-[110px]">
+    <div class="mx-auto max-w-[1180px]">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Why S-VPN"
+          heading="Enterprise security, without the big-budget privilege"
+          headingId="benefits-heading"
+          headingMaxWidth="720px"
+        />
+      </div>
+
+      <div data-skew="4" class="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          benefits.map((b) => (
+            <div data-reveal data-reveal-delay={b.delay} data-drift={b.drift}>
+              <div class="h-full rounded-xl border border-border bg-surface p-[30px] shadow-sm">
+                <div class="font-mono text-[40px] font-semibold leading-none text-navy">
+                  {b.num}
+                  {b.suffix && <span class="text-bright">{b.suffix}</span>}
+                </div>
+                <h3 class="mt-4 text-[16px] font-bold text-navy">{b.h3}</h3>
+                <p class="mt-2 text-[13.5px] leading-[1.65] text-cool">{b.p}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Section 5 — SPECIFICATIONS (mono spec table) ── -->
+  <section aria-labelledby="spec-heading" class="px-6 sm:px-10 py-[110px]">
+    <div class="mx-auto max-w-[1180px]">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Specifications · v1.0"
+          heading="Built for enterprise scale"
+          headingId="spec-heading"
+        >
+          A software-first architecture, proven at scale during the pandemic — with no
+          dependency on proprietary equipment.
+        </SectionHeading>
+      </div>
+
+      <div data-reveal data-drift="-0.04" class="mt-11">
+        <SpecTable rows={specRows} />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Section 6 — INCLUDED SERVICES + AUDIENCE (two-column split) ── -->
+  <section aria-labelledby="included-heading" class="px-6 sm:px-10 pb-[110px]">
+    <div class="mx-auto grid max-w-[1180px] grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-16">
+      <!-- Left -->
+      <div data-reveal>
+        <Eyebrow variant="light">Included in the license</Eyebrow>
+        <h2
+          id="included-heading"
+          data-word-fill="light"
+          class="mt-6 text-[30px] font-bold leading-[1.2] tracking-[-0.7px] text-navy"
+        >
+          Everything you need — included
+        </h2>
+        <p class="mt-3.5 text-[15px] text-cool">
+          Operational from day one, with no extra costs and no dependency on
+          third-party partners.
+        </p>
+        <ul class="mt-6 grid grid-cols-1 gap-x-6 gap-y-2.5 sm:grid-cols-2">
+          {
+            includedItems.map((item) => (
+              <li class="flex text-[14px] text-slate">
+                <span class="mr-2 shrink-0 text-bright" aria-hidden="true">
+                  ✓
+                </span>
+                <span>{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Right -->
+      <div data-reveal data-reveal-delay="100" data-drift="-0.05" class="grid gap-3">
+        {
+          audiences.map((a) => (
+            <div class="flex items-center gap-4 rounded-lg border border-border bg-surface px-6 py-[18px] shadow-sm">
+              <span class="w-[104px] shrink-0 font-mono text-[11px] tracking-[1px] text-bright">
+                {a.tag}
+              </span>
+              <span class="text-[13.5px] text-slate">{a.desc}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Section 7 — CTA (dark band, assessment ask) ── -->
+  <CtaBand
+    id="contact"
+    eyebrow="Next steps"
+    heading="Free initial assessment — 2 days"
+    cta={t('cta.assessment')}
+    subject={t('subject.assessment')}
+  >
+    No commitments. Together we identify the priority area of interest and deliver a
+    recommendations report at the end.
+  </CtaBand>
+</BaseLayout>

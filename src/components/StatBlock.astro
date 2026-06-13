@@ -1,0 +1,28 @@
+---
+// One cell of a StatStrip: a giant mono number (optionally count-up via
+// data-count) + accent suffix + caption. Number is navy, suffix bright.
+interface Props {
+  /** The number text shown (no-JS fallback). E.g. "650", "50K", "<1". */
+  value: string;
+  /** Count-up target (int). When set, the number animates via initCounters
+   *  and `value` is overwritten at runtime — only use for plain integers. */
+  count?: number;
+  /** Accent suffix in bright (e.g. "+", "s", "GB+"). */
+  suffix?: string;
+  caption: string;
+  /** Number font size. Home stats use 48px; spec strips use 34px. */
+  numberSize?: number;
+  class?: string;
+}
+
+const { value, count, suffix, caption, numberSize = 48, class: extra = '' } = Astro.props;
+---
+
+<div class:list={['bg-surface px-8 py-[34px]', extra]}>
+  <div class="font-mono font-semibold leading-none text-navy" style={`font-size:${numberSize}px`}>
+    <span data-count={count != null ? String(count) : undefined}>{value}</span>{
+      suffix && <span class="text-bright">{suffix}</span>
+    }
+  </div>
+  <div class="mt-3 text-small text-cool">{caption}</div>
+</div>

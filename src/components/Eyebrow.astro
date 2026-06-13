@@ -1,0 +1,27 @@
+---
+// Signature eyebrow: 12px mono, 2.5px tracking, uppercase, with optional 2px
+// rule. Color by variant: light=bright (#4487DC), dark/hero=sky (#7AB4E8).
+// RESOLUTIONS §20.
+interface Props {
+  /** light = on white (bright + blue-wash rule); dark = on midnight (sky + translucent rule); hero = same as light but used in light heroes. */
+  variant?: 'light' | 'dark' | 'hero';
+  /** Render the 2px underline rule. Default true; CTA-band eyebrows pass false. */
+  rule?: boolean;
+  class?: string;
+}
+
+const { variant = 'light', rule = true, class: extra = '' } = Astro.props;
+const isDark = variant === 'dark';
+---
+
+<span
+  class:list={[
+    'inline-block font-mono text-[12px] font-medium uppercase tracking-[2.5px]',
+    isDark ? 'text-sky' : 'text-bright',
+    rule && 'pb-2.5 border-b-2',
+    rule && (isDark ? 'border-[rgba(122,180,232,0.3)]' : 'border-border-blue'),
+    extra,
+  ]}
+>
+  <slot />
+</span>

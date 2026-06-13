@@ -1,0 +1,32 @@
+---
+// Bullet list with the brand "›" accent glyph (chevron, never • or *). 1 or 2
+// columns. Each string in `items` becomes a row. The chevron is the accent
+// color (bright on light, sky on dark); body text is slate / light-on-dark.
+interface Props {
+  items: string[];
+  cols?: 1 | 2;
+  dark?: boolean;
+  class?: string;
+}
+
+const { items, cols = 1, dark = false, class: extra = '' } = Astro.props;
+---
+
+<ul
+  class:list={[
+    'grid gap-y-2',
+    cols === 2 ? 'sm:grid-cols-2 sm:gap-x-6' : '',
+    extra,
+  ]}
+>
+  {
+    items.map((item) => (
+      <li class:list={['flex text-[13.5px] leading-snug', dark ? 'text-[rgba(226,233,245,0.85)]' : 'text-slate']}>
+        <span class:list={['mr-2 shrink-0', dark ? 'text-sky' : 'text-bright']} aria-hidden="true">
+          ›
+        </span>
+        <span>{item}</span>
+      </li>
+    ))
+  }
+</ul>

@@ -1,0 +1,498 @@
+---
+// S-VPN — product detail page (Template A). RO default.
+// Spec: docs/build-specs/svpn.md · RESOLUTIONS.md binding.
+// Sections: dark hero → count-up stats → module grid → wash benefits band →
+// mono spec table → included-services + audience split → dark CTA (assessment).
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import Eyebrow from '../../components/Eyebrow.astro';
+import NetworkCanvas from '../../components/NetworkCanvas.astro';
+import StatStrip from '../../components/StatStrip.astro';
+import StatBlock from '../../components/StatBlock.astro';
+import ModuleCard from '../../components/ModuleCard.astro';
+import SpecTable from '../../components/SpecTable.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import MailtoLink from '../../components/MailtoLink.astro';
+import TextLink from '../../components/TextLink.astro';
+import { useTranslations, getLangFromUrl } from '../../i18n/ui';
+import { Network, KeyRound, ShieldAlert, Laptop, SlidersHorizontal } from '@lucide/astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const title = 'S-VPN — Acces remote sigur, integrat | Smart Control';
+const description =
+  'S-VPN livrează integrat VPN, MFA, WAF, protecție endpoint și consolă de management — peste 20 Gbps inspecție L7, 10.000+ tuneluri IPSec, la o fracțiune din costul soluțiilor tradiționale.';
+
+// Benefit cards (Section 4) — number fragments split for the accent suffix.
+const benefits = [
+  {
+    drift: '0.06',
+    delay: undefined as string | undefined,
+    num: '−60',
+    suffix: '%',
+    h3: 'Cost predictibil',
+    p: 'Set complet de capabilități la o fracțiune din costul Cisco / Fortinet — fără facturare per utilizator sau dispozitiv.',
+  },
+  {
+    drift: '-0.05',
+    delay: '80',
+    num: '0',
+    suffix: undefined as string | undefined,
+    h3: 'Costuri ascunse',
+    p: 'Toate licențele includ instalare, configurare, integrare, suport, mentenanță și garanție. Fără dependență de terți.',
+  },
+  {
+    drift: '0.06',
+    delay: '160',
+    num: '360',
+    suffix: '°',
+    h3: 'Vizibilitate deplină',
+    p: 'Imagine completă în timp real asupra suprafeței de atac — politici, trafic, vulnerabilități, conformitate.',
+  },
+  {
+    drift: '-0.05',
+    delay: '240',
+    num: '<5',
+    suffix: 'min',
+    h3: 'Setup în minute',
+    p: 'Clientul se instalează și se conectează în mai puțin de 5 minute de la provizionare — fără expertiză tehnică avansată.',
+  },
+];
+
+const specRows = [
+  {
+    label: 'Performanță',
+    value:
+      '> 20 Gbps inspecție L7 · > 10.000 tuneluri IPSec · > 400 tuneluri SSL · > 200 site-to-site · latență MFA < 3s',
+  },
+  {
+    label: 'Criptare',
+    value:
+      'TLS 1.2 / 1.3 (fără SSLv3, TLS 1.0) · IPSec AES-256 + SHA-2 + Perfect Forward Secrecy · X.509 v3 cu OCSP / CRL · secrete criptate la repaus',
+  },
+  {
+    label: 'Scalabilitate',
+    value:
+      'Utilizatori simultani nelimitați — zero cost licență · scalare orizontală fără downtime · 5 / 5 metode MFA active simultan',
+  },
+  {
+    label: 'Continuitate',
+    value:
+      'Rolling updates fără întreruperea sesiunilor · failover automat < 30s · arhitectură testată la scară în perioada pandemiei',
+  },
+  {
+    label: 'Integrări',
+    value:
+      'Active Directory · LDAP · RADIUS · API REST (OpenAPI / Swagger) pentru ITSM, SOAR, NOC · consolă exclusiv web (Chrome, Firefox, Edge)',
+  },
+  {
+    label: 'Deployment',
+    value:
+      'Hardware standard sau cloud (AWS, Azure, GCP) · on-premise, cloud sau hibrid · client < 5 minute setup · wizard onboarding inclus',
+  },
+];
+
+const includedItems = [
+  'Instalare & configurare',
+  'Suport tehnic',
+  'Servicii de integrare',
+  'Mentenanță & actualizări',
+  'Suport echipamente incluse',
+  'Garanție certificată',
+];
+
+const audiences = [
+  {
+    tag: 'ENTERPRISE',
+    desc: 'Protecție completă, fără bugetele prohibitive ale soluțiilor clasice.',
+  },
+  {
+    tag: 'SMB IT TEAM',
+    desc: 'Echipe IT mici-medii, fără expertiză pentru implementări complexe.',
+  },
+  {
+    tag: 'REGULATED',
+    desc: 'Medii reglementate — audit log imutabil și autentificare cu certificate.',
+  },
+  {
+    tag: 'DISTRIBUTED',
+    desc: 'Multiple locații, sute–mii de utilizatori remote, site-to-site 200+.',
+  },
+];
+
+// JSON-LD: Product (S-VPN). Absolute URLs from the canonical origin.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: 'S-VPN',
+  url: 'https://smartcontrol.ro/solutii/s-vpn',
+  category: 'Secure remote access platform',
+  description:
+    'Suită integrată de acces remote: VPN (SSL & IPSec), MFA cu 5 metode, WAF / UTM, protecție endpoint și consolă de management centralizat — software-first, fără hardware proprietar.',
+  brand: { '@type': 'Brand', name: 'Smart Control' },
+  manufacturer: {
+    '@type': 'Organization',
+    name: 'Smart Control SRL',
+    url: 'https://smartcontrol.ro',
+  },
+};
+---
+
+<BaseLayout title={title} description={description}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <!-- ── Section 1 — PRODUCT HERO (dark + network canvas) ── -->
+  <header class="relative overflow-hidden bg-midnight">
+    <NetworkCanvas lineAlpha={0.24} dotAlpha={0.6} spread={18000} lineDist={155} opacity={0.75} />
+    <div
+      class="pointer-events-none absolute inset-0"
+      style="background:radial-gradient(ellipse 75% 65% at 35% 40%, rgba(4,12,43,0) 0%, rgba(4,12,43,0.5) 60%, #040C2B 100%)"
+      aria-hidden="true"
+    >
+    </div>
+
+    <div
+      data-hero-scrub
+      class="relative z-[1] mx-auto max-w-[1180px] px-6 pb-[120px] pt-[150px] sm:px-10 sm:pt-[190px]"
+    >
+      <span
+        class="inline-block border-b-2 border-[rgba(122,180,232,0.3)] pb-2.5 font-mono text-[12.5px] font-medium uppercase tracking-[2.5px] text-sky [animation:scFadeIn_0.8s_ease-out_0.1s_both]"
+      >
+        Produs proprietar · Suită integrată de acces remote
+      </span>
+
+      <h1
+        class="mt-[26px] max-w-[860px] text-[clamp(2.5rem,1.9rem+3vw,3.875rem)] font-extrabold leading-[1.08] tracking-[-2px] text-white"
+      >
+        <span class="inline-block [animation:scWordIn_0.7s_cubic-bezier(0.16,1,0.3,1)_0.25s_both]"
+          >S-VPN.</span
+        >
+        <span class="inline-block text-sky [animation:scWordIn_0.7s_cubic-bezier(0.16,1,0.3,1)_0.45s_both]"
+          >Acces</span
+        >
+        <span class="inline-block text-sky [animation:scWordIn_0.7s_cubic-bezier(0.16,1,0.3,1)_0.57s_both]"
+          >remote</span
+        >
+        <span class="inline-block text-sky [animation:scWordIn_0.7s_cubic-bezier(0.16,1,0.3,1)_0.69s_both]"
+          >sigur.</span
+        >
+        <br />
+        <span class="inline-block text-sky [animation:scWordIn_0.7s_cubic-bezier(0.16,1,0.3,1)_0.86s_both]"
+          >Fără</span
+        >
+        <span class="inline-block text-sky [animation:scWordIn_0.7s_cubic-bezier(0.16,1,0.3,1)_0.98s_both]"
+          >compromisuri.</span
+        >
+      </h1>
+
+      <p
+        class="mt-[26px] max-w-[640px] text-[18px] leading-[1.7] text-[rgba(226,233,245,0.72)] [animation:scFadeIn_0.9s_ease-out_1.15s_both]"
+      >
+        Ce la alți furnizori se cumpără și se administrează separat, S-VPN livrează
+        integrat: <strong class="font-semibold text-white"
+          >VPN, MFA, WAF, protecție endpoint și consolă de management</strong
+        > — la o fracțiune din costul soluțiilor tradiționale, cu toate serviciile
+        incluse în licență.
+      </p>
+
+      <div
+        class="mt-[38px] flex flex-wrap items-center gap-4 [animation:scFadeIn_0.9s_ease-out_1.35s_both]"
+      >
+        <MailtoLink
+          variant="button"
+          dark
+          subject={t('subject.demo.svpn')}
+          class="!px-[26px] !py-[13px]"
+        >
+          {t('cta.demo.svpn')}
+        </MailtoLink>
+        <TextLink href="#module" dark class="!px-2 !py-[13px]">Vezi modulele</TextLink>
+      </div>
+
+      <ul
+        class="mt-14 flex flex-wrap gap-9 [animation:scFadeIn_0.9s_ease-out_1.55s_both]"
+        aria-label="Caracteristici tehnice S-VPN"
+      >
+        {
+          [
+            'TLS 1.2 / 1.3 · AES-256 + PFS',
+            '5 metode MFA, active simultan',
+            'Zero hardware proprietar',
+            '−60% față de Cisco / Fortinet',
+          ].map((tick) => (
+            <li class="font-mono text-[12.5px] text-[rgba(226,233,245,0.55)]">
+              <span class="mr-2 text-sky" aria-hidden="true">
+                ▸
+              </span>
+              {tick}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </header>
+
+  <!-- ── Section 2 — PERFORMANȚĂ (count-up stat strip) ── -->
+  <section aria-label="Performanță" class="px-6 sm:px-10 pt-[72px]">
+    <div class="mx-auto max-w-[1180px]">
+      <StatStrip>
+        <StatBlock value="20" count={20} suffix="Gbps+" caption="Inspecție trafic Layer 7" numberSize={48} />
+        <StatBlock value="10" count={10} suffix="K+" caption="Tuneluri IPSec simultane" numberSize={48} />
+        <StatBlock value="400" count={400} suffix="+" caption="Tuneluri SSL concurente" numberSize={48} />
+        <StatBlock value="200" count={200} suffix="+" caption="Locații site-to-site IPSec" numberSize={48} />
+      </StatStrip>
+    </div>
+  </section>
+
+  <!-- ── Section 3 — MODULE (5 modules, 3+2 layout) ── -->
+  <section id="module" aria-labelledby="module-heading" class="px-6 sm:px-10 py-[110px]">
+    <div class="mx-auto max-w-[1180px]">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Module"
+          heading="Cinci capabilități, un singur produs"
+          headingId="module-heading"
+          headingMaxWidth="700px"
+        >
+          30 de specificații funcționale și 19 non-funcționale, documentate în fișa
+          tehnică. 5 module · 1 produs · 1 licență.
+        </SectionHeading>
+      </div>
+
+      <div
+        data-skew="4"
+        class="mt-[52px] grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-6"
+      >
+        <!-- Card 1 — VPN -->
+        <div data-reveal data-reveal-rotate="-4" data-drift="0.07" class="lg:col-span-2">
+          <ModuleCard
+            title="VPN"
+            kicker="S-VPN"
+            body="Conectivitate securizată SSL & IPSec."
+            items={[
+              'SSL VPN — până la 400 tuneluri concurente',
+              'IPSec — peste 10.000 tuneluri simultane',
+              'Site-to-site — 200+ locații',
+              'Windows, macOS, Linux, iOS, Android',
+              'Split tunneling per utilizator / grup',
+            ]}
+            cols={1}
+          >
+            <Network slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        <!-- Card 2 — MFA -->
+        <div data-reveal data-reveal-delay="80" data-reveal-rotate="4" class="lg:col-span-2">
+          <ModuleCard
+            title="MFA"
+            kicker="S-VPN"
+            body="Cinci metode — alegi varianta potrivită."
+            items={[
+              'SMS On-Premises — server la client',
+              'SMS Shared — gestionat de SmartControl',
+              'E-mail OTP — fără infrastructură nouă',
+              'TOTP — Google / Microsoft Authenticator',
+              'Certificate X.509 — nivel maxim de asigurare',
+            ]}
+            cols={1}
+          >
+            <KeyRound slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        <!-- Card 3 — WAF -->
+        <div data-reveal data-reveal-delay="160" data-reveal-rotate="-4" data-drift="-0.07" class="lg:col-span-2">
+          <ModuleCard
+            title="WAF"
+            kicker="S-VPN"
+            body="Web Application Firewall + UTM."
+            items={[
+              'Protecție SQL Injection și XSS',
+              'HTTP constraints și rate limiting',
+              'Semnături OWASP Top 10, actualizate',
+              'DPI Layer 7 la peste 20 Gbps',
+              'Filtrare URL și categorii la gateway',
+            ]}
+            cols={1}
+          >
+            <ShieldAlert slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        <!-- Card 4 — Endpoint -->
+        <div data-reveal data-reveal-rotate="4" data-drift="0.07" class="lg:col-span-3">
+          <ModuleCard
+            title="Endpoint"
+            kicker="S-VPN"
+            body="Protecția stației client — niciun dispozitiv neconform nu intră în rețea."
+            items={[
+              'Scanare vulnerabilități OS în timp real',
+              'Detecție CVE aplicații terțe',
+              'Verificare conformitate la conectare',
+              'Blocare dispozitive neconforme',
+            ]}
+            cols={2}
+          >
+            <Laptop slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        <!-- Card 5 — Console -->
+        <div data-reveal data-reveal-delay="80" data-reveal-rotate="-4" data-drift="-0.07" class="lg:col-span-3">
+          <ModuleCard
+            title="Console"
+            kicker="S-VPN"
+            body="Management centralizat — totul dintr-un singur loc, prin browser."
+            cols={2}
+          >
+            <SlidersHorizontal slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+            <ul class="mt-4 grid gap-y-2 sm:grid-cols-2 sm:gap-x-5">
+              {
+                ['Politici VPN, MFA, WAF, Endpoint', 'Monitorizare trafic în timp real', 'Audit log tamper-proof'].map(
+                  (item) => (
+                    <li class="flex text-[13.5px] leading-snug text-slate">
+                      <span class="mr-2 shrink-0 text-bright" aria-hidden="true">
+                        ›
+                      </span>
+                      <span>{item}</span>
+                    </li>
+                  )
+                )
+              }
+              <li class="flex text-[13.5px] leading-snug text-slate">
+                <span class="mr-2 shrink-0 text-bright" aria-hidden="true">›</span>
+                <span>
+                  Rapoarte <span class="text-compliance">NIS 2</span>,
+                  <span class="text-compliance">ISO 27001</span>,
+                  <span class="text-compliance">GDPR</span>
+                </span>
+              </li>
+              {
+                ['AD / LDAP / RADIUS nativ', 'API REST — OpenAPI / Swagger'].map((item) => (
+                  <li class="flex text-[13.5px] leading-snug text-slate">
+                    <span class="mr-2 shrink-0 text-bright" aria-hidden="true">
+                      ›
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </ModuleCard>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Section 4 — DE CE S-VPN (benefits, wash band) ── -->
+  <section data-band aria-labelledby="benefits-heading" class="bg-page px-6 sm:px-10 py-[110px]">
+    <div class="mx-auto max-w-[1180px]">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="De ce S-VPN"
+          heading="Securitate enterprise, fără privilegiul bugetelor mari"
+          headingId="benefits-heading"
+          headingMaxWidth="720px"
+        />
+      </div>
+
+      <div data-skew="4" class="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          benefits.map((b) => (
+            <div data-reveal data-reveal-delay={b.delay} data-drift={b.drift}>
+              <div class="h-full rounded-xl border border-border bg-surface p-[30px] shadow-sm">
+                <div class="font-mono text-[40px] font-semibold leading-none text-navy">
+                  {b.num}
+                  {b.suffix && <span class="text-bright">{b.suffix}</span>}
+                </div>
+                <h3 class="mt-4 text-[16px] font-bold text-navy">{b.h3}</h3>
+                <p class="mt-2 text-[13.5px] leading-[1.65] text-cool">{b.p}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Section 5 — SPECIFICAȚII (mono spec table) ── -->
+  <section aria-labelledby="spec-heading" class="px-6 sm:px-10 py-[110px]">
+    <div class="mx-auto max-w-[1180px]">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Specificații · v1.0"
+          heading="Construit pentru scară enterprise"
+          headingId="spec-heading"
+        >
+          Arhitectură software-first, testată la scară în perioada pandemiei — fără
+          dependență de echipamente proprietare.
+        </SectionHeading>
+      </div>
+
+      <div data-reveal data-drift="-0.04" class="mt-11">
+        <SpecTable rows={specRows} />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Section 6 — SERVICII INCLUSE + AUDIENȚĂ (two-column split) ── -->
+  <section aria-labelledby="included-heading" class="px-6 sm:px-10 pb-[110px]">
+    <div class="mx-auto grid max-w-[1180px] grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-16">
+      <!-- Left -->
+      <div data-reveal>
+        <Eyebrow variant="light">Incluse în licență</Eyebrow>
+        <h2
+          id="included-heading"
+          data-word-fill="light"
+          class="mt-6 text-[30px] font-bold leading-[1.2] tracking-[-0.7px] text-navy"
+        >
+          Tot ce trebuie — inclus
+        </h2>
+        <p class="mt-3.5 text-[15px] text-cool">
+          Soluție operațională din prima zi, fără costuri suplimentare sau dependență
+          de parteneri terți.
+        </p>
+        <ul class="mt-6 grid grid-cols-1 gap-x-6 gap-y-2.5 sm:grid-cols-2">
+          {
+            includedItems.map((item) => (
+              <li class="flex text-[14px] text-slate">
+                <span class="mr-2 shrink-0 text-bright" aria-hidden="true">
+                  ✓
+                </span>
+                <span>{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Right -->
+      <div data-reveal data-reveal-delay="100" data-drift="-0.05" class="grid gap-3">
+        {
+          audiences.map((a) => (
+            <div class="flex items-center gap-4 rounded-lg border border-border bg-surface px-6 py-[18px] shadow-sm">
+              <span class="w-[104px] shrink-0 font-mono text-[11px] tracking-[1px] text-bright">
+                {a.tag}
+              </span>
+              <span class="text-[13.5px] text-slate">{a.desc}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Section 7 — CTA (dark band, assessment ask) ── -->
+  <CtaBand
+    id="contact"
+    eyebrow="Pașii următori"
+    heading="Assessment Inițial gratuit — 2 zile"
+    cta={t('cta.assessment')}
+    subject={t('subject.assessment')}
+  >
+    Fără angajamente. Identificăm împreună zona de interes prioritară și livrăm un
+    raport de recomandări la final.
+  </CtaBand>
+</BaseLayout>

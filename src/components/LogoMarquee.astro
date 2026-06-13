@@ -1,0 +1,37 @@
+---
+// Partner marquee: a duplicated track of mono-label wordmarks scrolling left on
+// the scMarquee 50s loop, with edge fade masks. The list is rendered TWICE so
+// translateX(0 → -50%) loops seamlessly. Pauses under reduced-motion (the
+// global reduce block forces animation-duration → 0.01ms, freezing the track).
+interface Props {
+  /** Partner names (text wordmarks — no logo images, per brand rule). */
+  items: string[];
+  class?: string;
+}
+const { items, class: extra = '' } = Astro.props;
+const loop = [...items, ...items];
+---
+
+<div class:list={['relative overflow-hidden', extra]}>
+  <!-- edge fade masks -->
+  <div
+    class="pointer-events-none absolute inset-y-0 left-0 z-[1] w-40"
+    style="background:linear-gradient(90deg,#FFFFFF,rgba(255,255,255,0))"
+  >
+  </div>
+  <div
+    class="pointer-events-none absolute inset-y-0 right-0 z-[1] w-40"
+    style="background:linear-gradient(270deg,#FFFFFF,rgba(255,255,255,0))"
+  >
+  </div>
+
+  <div class="flex w-max gap-16" style="animation:scMarquee 50s linear infinite" aria-hidden="true">
+    {
+      loop.map((name) => (
+        <span class="whitespace-nowrap font-mono text-[14px] uppercase tracking-[2px] text-faint">
+          {name}
+        </span>
+      ))
+    }
+  </div>
+</div>

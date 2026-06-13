@@ -1,0 +1,503 @@
+---
+/**
+ * /servicii/managed — Servicii Gestionate
+ * Template B (lighter service page): light hero → capabilities bento →
+ * SLA/coverage angle → cross-sell → dark CtaBand
+ * JSON-LD: Service
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import Eyebrow from '../../components/Eyebrow.astro';
+import ModuleCard from '../../components/ModuleCard.astro';
+import StatStrip from '../../components/StatStrip.astro';
+import StatBlock from '../../components/StatBlock.astro';
+import ChevronList from '../../components/ChevronList.astro';
+import MonoPill from '../../components/MonoPill.astro';
+import IconChip from '../../components/IconChip.astro';
+import TextLink from '../../components/TextLink.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import {
+  getLangFromUrl,
+  useTranslations,
+  localizedPath,
+  yearsInBusiness,
+} from '../../i18n/ui';
+
+import {
+  Headset,
+  Server,
+  Network,
+  ShieldCheck,
+  Wrench,
+  Cloud,
+  Bot,
+  Clock,
+  CircleCheck,
+  ArrowRight,
+} from '@lucide/astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const p = (path: string) => localizedPath(lang, path);
+const years = yearsInBusiness(new Date().getUTCFullYear());
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Servicii Gestionate — Smart Control',
+  description:
+    'Service desk outsourcing, operare infrastructură gestionată, securitate cibernetică gestionată, suport sisteme externalizat (on-site & remote), suport cloud și automatizare software pentru companii enterprise.',
+  url: 'https://smartcontrol.ro/servicii/managed',
+  provider: {
+    '@type': 'Organization',
+    name: 'Smart Control SRL',
+    url: 'https://smartcontrol.ro',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Intrarea Aviator Teodor Iliescu 37',
+      addressLocality: 'București',
+      postalCode: '011672',
+      addressCountry: 'RO',
+    },
+  },
+  serviceType: 'Managed IT Services',
+  areaServed: {
+    '@type': 'Country',
+    name: 'Romania',
+  },
+};
+
+const capabilities = [
+  {
+    index: '01',
+    title: 'Service Desk Outsourcing',
+    body: 'Preluăm integral funcția de helpdesk — nivel 1, 2 și 3 — cu echipă proprie, SLA definit contractual și raportare lunară. Același echipaj, indiferent de proiect.',
+    items: [
+      'Suport utilizatori L1 / L2 / L3',
+      'Ticketing ITSM (ServiceNow, Jira)',
+      'SLA contractual pentru timp de răspuns și rezolvare',
+      'Rapoarte lunare de performanță',
+    ],
+    icon: Headset,
+    iconClass: 'h-[22px] w-[22px] text-navy',
+  },
+  {
+    index: '02',
+    title: 'Operare Infrastructură Gestionată',
+    body: 'Operăm și menținem infrastructura client — servere, stocare, virtualizare — prin monitorizare proactivă și intervenție înainte ca incidentele să impacteze producția.',
+    items: [
+      'Monitorizare 24/7 sisteme critice',
+      'Patch management și actualizări planificate',
+      'Backup & Recovery verificat periodic',
+      'Capacity planning și optimizare resurse',
+    ],
+    icon: Server,
+    iconClass: 'h-[22px] w-[22px] text-navy',
+  },
+  {
+    index: '03',
+    title: 'Servicii de Rețea Gestionate',
+    body: 'Gestionăm rețeaua ca serviciu: configurare, monitorizare, troubleshooting și optimizare continuă — cu vizibilitate completă asupra traficului și incidentelor.',
+    items: [
+      'Monitorizare trafic și disponibilitate LAN/WAN',
+      'Gestionare echipamente Cisco, Juniper, Fortinet',
+      'Firewall management și politici de acces',
+      'VPN și conectivitate site-to-site',
+    ],
+    icon: Network,
+    iconClass: 'h-[22px] w-[22px] text-navy',
+  },
+  {
+    index: '04',
+    title: 'Securitate Cibernetică Gestionată',
+    body: 'Serviciu SOC externalizat: monitorizare continuă a evenimentelor de securitate, detectare amenințări și răspuns la incidente — susținut de certificarea ISO 27001.',
+    items: [
+      'Monitorizare SIEM și corelație evenimente',
+      'Detectare și răspuns la incidente (IR)',
+      'Rapoarte conformitate NIS 2 / GDPR',
+      'Vulnerability management periodic',
+    ],
+    icon: ShieldCheck,
+    iconClass: 'h-[22px] w-[22px] text-navy',
+  },
+  {
+    index: '05',
+    title: 'Suport Sisteme Externalizat',
+    body: 'Suport tehnic on-site și remote pentru sistemele client — cu ingineri proprii, disponibili la fața locului sau conectați remote, în SLA agreat.',
+    items: [
+      'Intervenție on-site în SLA convenit',
+      'Acces remote securizat prin S-VPN',
+      'Diagnosticare și rezolvare incidente hardware/software',
+      'Documentație actualizată a configurațiilor',
+    ],
+    icon: Wrench,
+    iconClass: 'h-[22px] w-[22px] text-navy',
+  },
+  {
+    index: '06',
+    title: 'Suport Cloud Gestionat',
+    body: 'Operăm mediile cloud ale clientului — AWS, Azure, GCP sau cloud privat — cu monitorizare proactivă, cost governance și optimizare continuă a resurselor.',
+    items: [
+      'Operare și monitorizare AWS / Azure / GCP',
+      'Cost governance și rightsizing resurse',
+      'Securitate cloud și conformitate',
+      'Suport migrare și integrare hibridă',
+    ],
+    icon: Cloud,
+    iconClass: 'h-[22px] w-[22px] text-navy',
+  },
+  {
+    index: '07',
+    title: 'Automatizare Software',
+    body: 'Automatizăm procese repetitive și fluxuri de lucru — de la integrări între sisteme și raportare automată, până la asistenți AI pentru helpdesk și operațiuni.',
+    items: [
+      'Automatizare fluxuri de lucru și integrări',
+      'Chatboți și asistenți virtuali helpdesk',
+      'Raportare automată și procesare documente',
+      'Agenți AI în pipeline-uri DevOps',
+    ],
+    icon: Bot,
+    iconClass: 'h-[22px] w-[22px] text-navy',
+  },
+];
+---
+
+<BaseLayout
+  title="Servicii Gestionate — Smart Control"
+  description="Service desk outsourcing, operare infrastructură gestionată, securitate cibernetică gestionată, suport cloud și automatizare software. Echipă proprie, SLA contractual, 24/7."
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HERO — light wash, gradient top→white
+       ═══════════════════════════════════════════════════════════ -->
+  <header
+    class="relative overflow-hidden"
+    style="background: linear-gradient(180deg, #F3F6FC 0%, #FFFFFF 100%)"
+  >
+    <!-- Decorative drift blob -->
+    <div
+      class="pointer-events-none absolute"
+      style="top:-120px;right:-100px;width:560px;height:560px;border-radius:999px;background:radial-gradient(circle,rgba(122,180,232,0.18),rgba(122,180,232,0) 65%);animation:scDriftA 20s ease-in-out infinite alternate"
+      aria-hidden="true"
+    >
+    </div>
+
+    <div class="container py-[110px] pb-[90px]" data-hero-scrub>
+      <div class="max-w-[860px]">
+        <Eyebrow variant="light">Servicii Gestionate</Eyebrow>
+
+        <h1
+          class="mt-6 font-extrabold leading-[1.1] tracking-[-1.8px] text-midnight"
+          style="font-size:clamp(2.5rem,1.8rem+3vw,3.75rem)"
+        >
+          Infrastructura ta,<br />
+          <span class="text-bright">operată de echipa noastră.</span>
+        </h1>
+
+        <p
+          class="mt-6 max-w-[620px] text-[18px] leading-[1.7] text-cool"
+          style="animation:scFadeIn 0.9s ease-out 0.5s both"
+        >
+          Preluăm operarea, monitorizarea și securizarea infrastructurii tale IT —
+          cu <strong class="text-navy font-semibold">echipă proprie, nu subcontractori</strong>,
+          SLA contractual și {years}+ ani de experiență în livrarea serviciilor enterprise.
+        </p>
+
+        <div
+          class="mt-9 flex flex-wrap items-center gap-4"
+          style="animation:scFadeIn 0.9s ease-out 0.8s both"
+        >
+          <a
+            data-email-user="office"
+            data-email-domain="smartcontrol.ro"
+            data-email-subject="Evaluare gratuită"
+            class="inline-flex items-center justify-center rounded-md bg-bright px-[26px] py-[13px] text-[14.5px] font-semibold text-white transition-all [box-shadow:0_4px_18px_rgba(68,135,220,0.35)] hover:bg-royal hover:[box-shadow:0_6px_24px_rgba(68,135,220,0.45)]"
+          >
+            Solicită assessment
+          </a>
+          <TextLink href="#capabilities">
+            Vezi capabilitățile
+          </TextLink>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       STATS STRIP
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="bg-surface py-[56px]" aria-label="Cifre cheie">
+    <div class="container">
+      <StatStrip>
+        <StatBlock value="650" count={650} suffix="+" caption="Proiecte livrate" numberSize={40} />
+        <StatBlock value="250" count={250} suffix="+" caption="Clienți satisfăcuți" numberSize={40} />
+        <StatBlock value="25" count={25} suffix="+" caption="Clienți internaționali" numberSize={40} />
+        <StatBlock
+          value={String(years)}
+          count={years}
+          suffix="+"
+          caption="Ani de experiență"
+          numberSize={40}
+        />
+      </StatStrip>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SLA / ACOPERIRE — proof angle
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="bg-page py-[90px]" data-band aria-labelledby="sla-heading">
+    <div class="container">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Angajament de calitate"
+          heading="SLA contractual, echipă proprie, raportare transparentă"
+          variant="light"
+          headingMaxWidth="740px"
+          headingId="sla-heading"
+        >
+          Serviciile gestionate Smart Control sunt livrate de 50 de specialiști interni —
+          niciun subcontractor. Fiecare angajament include SLA definit contractual, raportare
+          lunară și escaladare direct la inginerii care operează serviciul.
+        </SectionHeading>
+      </div>
+
+      <div
+        class="mt-[52px] grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+        data-skew="4"
+      >
+        <!-- Proof card: SLA -->
+        <div
+          class="rounded-xl border border-border bg-surface p-[30px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg"
+          data-reveal
+          data-reveal-rotate="-4"
+          data-drift="0.07"
+        >
+          <IconChip>
+            <Clock class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </IconChip>
+          <h3 class="mt-5 text-[17px] font-bold text-navy">SLA contractual definit</h3>
+          <p class="mt-2.5 text-[14px] leading-[1.65] text-cool">
+            Timp de răspuns și rezolvare garantat prin contract, cu penalizări clare — nu promisiuni verbale.
+            Escaladare directă la echipa de ingineri.
+          </p>
+        </div>
+
+        <!-- Proof card: echipă proprie -->
+        <div
+          class="rounded-xl border border-border bg-surface p-[30px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg"
+          data-reveal
+          data-reveal-delay="100"
+          data-reveal-rotate="4"
+        >
+          <IconChip>
+            <CircleCheck class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </IconChip>
+          <h3 class="mt-5 text-[17px] font-bold text-navy">Echipă proprie, nu subcontractori</h3>
+          <p class="mt-2.5 text-[14px] leading-[1.65] text-cool">
+            50 de specialiști interni cu peste 500 de ani de experiență cumulată —
+            disponibili on-site și remote. Același nivel de calitate, indiferent de proiect.
+          </p>
+        </div>
+
+        <!-- Proof card: raportare -->
+        <div
+          class="rounded-xl border border-border bg-surface p-[30px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg"
+          data-reveal
+          data-reveal-delay="200"
+          data-reveal-rotate="-4"
+          data-drift="-0.07"
+        >
+          <IconChip>
+            <ArrowRight class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </IconChip>
+          <h3 class="mt-5 text-[17px] font-bold text-navy">Raportare lunară transparentă</h3>
+          <p class="mt-2.5 text-[14px] leading-[1.65] text-cool">
+            Raport lunar cu metricile de performanță, incidentele tratate, tendințele identificate
+            și recomandările de optimizare — bază pentru decizii informate.
+          </p>
+        </div>
+      </div>
+
+      <!-- Compliance badges -->
+      <div class="mt-8 flex flex-wrap gap-2.5" data-reveal data-reveal-delay="150">
+        <MonoPill>ISO 9001</MonoPill>
+        <MonoPill>ISO 27001</MonoPill>
+        <MonoPill>ISO 14001</MonoPill>
+        <MonoPill>ISO 45001</MonoPill>
+        <MonoPill variant="compliance">GDPR</MonoPill>
+        <MonoPill variant="compliance">NIS 2</MonoPill>
+        <MonoPill variant="compliance">DORA</MonoPill>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       CAPABILITIES BENTO (#capabilities)
+       7 service cards in a responsive grid
+       ═══════════════════════════════════════════════════════════ -->
+  <section
+    id="capabilities"
+    class="bg-surface py-[110px]"
+    aria-labelledby="capabilities-heading"
+  >
+    <div class="container">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Capabilități"
+          heading="Ce acoperă serviciile gestionate Smart Control"
+          variant="light"
+          headingMaxWidth="700px"
+          headingId="capabilities-heading"
+        >
+          Șapte domenii de servicii gestionate, livrate de o echipă proprie cu experiență
+          verificată în sute de proiecte enterprise — de la service desk până la automatizare
+          cu AI.
+        </SectionHeading>
+      </div>
+
+      <div
+        class="mt-[44px] grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+        data-skew="4"
+      >
+        {
+          capabilities.map((cap, i) => {
+            const CapIcon = cap.icon;
+            return (
+              <div
+                data-reveal
+                data-reveal-delay={String(i * 60)}
+                data-reveal-rotate={i % 2 === 0 ? '-4' : '4'}
+              >
+                <ModuleCard
+                  title={cap.title}
+                  index={cap.index}
+                  body={cap.body}
+                  items={cap.items}
+                  cols={1}
+                >
+                  <CapIcon slot="icon" class={cap.iconClass} stroke-width={1.5} />
+                </ModuleCard>
+              </div>
+            );
+          })
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       CROSS-SELL — SEKNET + S-VPN
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="bg-page py-[90px]" aria-labelledby="crosssell-heading">
+    <div class="container">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Soluții proprietare"
+          heading="Serviciile gestionate, amplificate de platformele proprii"
+          variant="light"
+          headingMaxWidth="680px"
+          headingId="crosssell-heading"
+        >
+          Serviciile gestionate Smart Control funcționează și cu infrastructura existentă —
+          dar câștigă o dimensiune suplimentară când sunt combinate cu platformele proprietare
+          SEKNET și S-VPN.
+        </SectionHeading>
+      </div>
+
+      <div class="mt-[44px] grid gap-5 sm:grid-cols-2" data-skew="4">
+        <!-- SEKNET cross-sell -->
+        <div
+          class="rounded-xl border border-border bg-surface p-[34px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg"
+          data-reveal
+          data-reveal-rotate="-4"
+          data-drift="0.07"
+        >
+          <div class="flex items-center gap-3">
+            <IconChip>
+              <ShieldCheck class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+            </IconChip>
+            <div>
+              <div class="font-mono text-[11px] uppercase tracking-[1.5px] text-bright">
+                Soluție proprietară
+              </div>
+              <h3 class="mt-0.5 text-[19px] font-bold tracking-[-0.3px] text-navy">SEKNET</h3>
+            </div>
+          </div>
+          <p class="mt-4 text-[14px] leading-[1.65] text-cool">
+            Platforma proprie de monitorizare și securitate cibernetică — integrată direct
+            în serviciul de securitate gestionată. SIEM, IAM, detectare amenințări și
+            vizibilitate completă asupra infrastructurii tale.
+          </p>
+          <ChevronList
+            items={[
+              'Monitorizare SIEM nativă',
+              'Identity & Access Management',
+              'Detectare și răspuns automat la incidente',
+              '200+ dashboard-uri predefinite',
+            ]}
+            cols={1}
+            class="mt-4"
+          />
+          <div class="mt-6">
+            <TextLink href={p('/solutii/seknet')}>Explorează SEKNET</TextLink>
+          </div>
+        </div>
+
+        <!-- S-VPN cross-sell -->
+        <div
+          class="rounded-xl border border-border bg-surface p-[34px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg"
+          data-reveal
+          data-reveal-delay="100"
+          data-reveal-rotate="4"
+        >
+          <div class="flex items-center gap-3">
+            <IconChip>
+              <Network class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+            </IconChip>
+            <div>
+              <div class="font-mono text-[11px] uppercase tracking-[1.5px] text-bright">
+                Soluție proprietară
+              </div>
+              <h3 class="mt-0.5 text-[19px] font-bold tracking-[-0.3px] text-navy">S-VPN</h3>
+            </div>
+          </div>
+          <p class="mt-4 text-[14px] leading-[1.65] text-cool">
+            Acces remote securizat enterprise — VPN, MFA, WAF și endpoint protection
+            într-o singură soluție proprietară. Baza tehnică pentru suportul remote
+            în SLA, fără dependență de terți.
+          </p>
+          <ChevronList
+            items={[
+              'VPN SSL & IPSec enterprise',
+              'MFA cu 5 metode configurabile',
+              'Web Application Firewall inclus',
+              '10.000+ tuneluri simultane',
+            ]}
+            cols={1}
+            class="mt-4"
+          />
+          <div class="mt-6">
+            <TextLink href={p('/solutii/s-vpn')}>Explorează S-VPN</TextLink>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       CTA BAND — dark
+       ═══════════════════════════════════════════════════════════ -->
+  <CtaBand
+    id="contact"
+    eyebrow="Pașii următori"
+    heading="Assessment Inițial gratuit — 2 zile"
+    cta={t('cta.assessment')}
+    subject={t('subject.assessment')}
+  >
+    Evaluăm gratuit maturitatea operațională a infrastructurii tale și identificăm
+    domeniile unde serviciile gestionate aduc cel mai rapid ROI. Fără angajamente —
+    decizia de a continua îți aparține.
+  </CtaBand>
+</BaseLayout>

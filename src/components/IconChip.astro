@@ -1,0 +1,27 @@
+---
+// 44px blue-wash rounded chip wrapping a lucide icon (passed as the slot).
+// Page coders: <IconChip><Server class="h-[22px] w-[22px] text-navy" stroke-width={1.5} /></IconChip>
+// Dark variant for product/dark zones (translucent bright wash, sky icon).
+interface Props {
+  variant?: 'light' | 'dark';
+  /** Override the 44px box (e.g. 40 for dark dual cards). */
+  size?: number;
+  class?: string;
+}
+
+const { variant = 'light', size = 44, class: extra = '' } = Astro.props;
+const isDark = variant === 'dark';
+---
+
+<span
+  class:list={[
+    'flex shrink-0 items-center justify-center rounded-md',
+    isDark
+      ? 'bg-[rgba(68,135,220,0.12)] border border-[rgba(68,135,220,0.3)]'
+      : 'bg-blue-wash border border-border-blue',
+    extra,
+  ]}
+  style={`width:${size}px;height:${size}px`}
+>
+  <slot />
+</span>

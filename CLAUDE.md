@@ -92,6 +92,12 @@ Read `docs/SMC Web/ds/README.md` in full before building UI. The key constraints
 - No blog/insights, no careers (excluded permanently).
 - No full CMS — content lives in-repo.
 
+## ⚠️ Known-stale facts in source documents — do NOT copy these
+
+- **ISO 27701 is NOT a current certification** (owner-confirmed 2026-06-12). The 2026 services offer (`docs/build-specs/oferta-servicii.txt`, p.1) and **all four Claude Design exports** (`Home/SEKNET/SVPN/Cloud.dc.html`) wrongly list "ISO 27701 — Confidențialitate date" as a 5th certified system. The site shows exactly **4 ISO badges: 9001, 27001, 14001, 45001**. When porting copy from the exports or the offer, strip ISO 27701 everywhere. (Sales has been flagged to correct the offer PDF.)
+- **"Asset Management" is a dropped product** (owner-confirmed 2026-06-12). It still appears in the design exports' footers/cross-sell cards — strip it everywhere; SEKNET cross-sells pair with S-VPN instead. Two products only: SEKNET, S-VPN.
+- **Build rulings for all open design questions live in `docs/build-specs/RESOLUTIONS.md`** — binding; it supersedes both the page specs and older lines in this file where they conflict (e.g. CTA wording is the exports' "Solicită un demo", not "Cere un demo"; export desktop sizing is canonical, not the larger web scale).
+
 ## Trust stats to reuse
 
 650+ projects · 250+ clients · 25+ international · **20+ years (compute from the 2003 founding date — don't hardcode)** · 50 in-house specialists / 500+ cumulative years · **4 ISO certifications (9001 / 27001 / 14001 / 45001)** + GDPR / NIS2 / DORA (these three are regulatory frameworks, not ISO certs — render them distinct from the ISO roundels, in the reserved teal). Product spec headlines — SEKNET: 50k+ events/sec/node, <60s alerting, 99.9% uptime; S-VPN: 20 Gbps+, 10k+ IPSec tunnels, 400+ SSL, 200+ site-to-site.

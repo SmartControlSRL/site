@@ -1,0 +1,587 @@
+
+=== PAGE 1 ===
+Smart Control | office@smartcontrol.ro | www.smartcontrol.ro | Pagina 1
+
+Smart Control
+
+Trusted Service Delivery Partner
+
+Ofertă de Servicii și Soluții 2026
+
+Infrastructură | Cloud | Securitate Cibernetică | Blockchain | Software Development
+
+Fondată în 2003 | 650+ Proiecte livrate | 250+ Clienți | ISO 9001 / 27001 / 14001 / 45001 / 27701
+
+Despre acest document
+
+Smart Control este partenerul tău de încredere pentru infrastructură IT, securitate cibernetică și
+dezvoltare software — cu peste 20 de ani de experiență și 650+ proiecte livrate în România și
+internațional.
+Acest document prezintă portofoliul nostru de servicii și soluții pentru 2026, contextul de piață în
+care operăm și modul concret în care putem sprijini modernizarea infrastructurii și aplicațiilor tale
+IT.
+
+Cine suntem
+
+Smart Control a fost fondată în 2003 de un grup de profesioniști tehnici dedicați, cu obiectivul de
+a deveni un lider pe piața românească în furnizarea de servicii de infrastructură IT, securitate
+cibernetică și dezvoltare software. În peste 20 de ani de activitate, am construit un portofoliu solid
+de clienți și proiecte, devenind un partener de încredere pentru companii din România și din afara
+granițelor.
+Misiunea noastră este să consultăm clienții oferindu-le un portofoliu extins de soluții de top,
+susținute de competențele unei echipe de specialiști înalt calificați, care asigură livrarea de servicii
+profesionale la standarde ridicate de calitate. Procesul continuu de dezvoltare a expertizei tehnice,
+combinat cu efortul de creștere a eficienței, face din Smart Control un partener fiabil pentru
+integrarea și livrarea de soluții IT complexe în spațiul on-premise, cloud și blockchain.
+
+650+
+
+Proiecte livrate
+
+250+
+
+Clienți satisfăcuți
+
+25+
+
+Clienți internaționali
+
+20+
+
+Ani de experiență
+
+=== PAGE 2 ===
+Smart Control | office@smartcontrol.ro | www.smartcontrol.ro | Pagina 2
+
+Certificări și conformitate
+
+Smart Control este angajată să furnizeze produse și servicii care îndeplinesc cerințele contractuale,
+respectă cerințele legale și de reglementare aplicabile și ating obiectivele de calitate și securitate
+stabilite pentru fiecare proiect. Compania a implementat și menține următoarele sisteme de
+management certificate:
+
+ISO 9001
+
+Managementul
+calității
+
+ISO 27001
+
+Securitatea
+informației
+
+ISO 14001
+
+Managementul de
+mediu
+
+ISO 45001
+
+Sănătate & securitate
+
+ISO 27701
+
+Confidențialitate date
+
+GDPR & Protecția datelor
+
+Smart Control menține un Sistem de Management al Datelor cu Caracter Personal conform
+cerințelor Regulamentului General privind Protecția Datelor UE 2016/679 (GDPR). Investim
+continuu în formarea personalului și monitorizarea parametrilor critici pentru atingerea
+obiectivelor de calitate și securitate.
+
+Securitate Proactivă și Conformitate NIS 2
+
+Smart Control garantează partenerilor săi un nivel maxim de reziliență cibernetică, în deplină
+conformitate cu exigențele Directivei UE NIS 2. Măsurile noastre de apărare și management al
+riscului sunt validate prin certificarea internațională ISO 27001. Printr-o monitorizare tehnică
+continuă și o gestionare strictă a vulnerabilităților, asigurăm un mediu de operare sigur și
+protejăm direct lanțul de aprovizionare al clienților noștri.
+
+Reziliență Digitală și Conformitate DORA
+
+Smart Control este un partener tehnologic de încredere pentru sectorul financiar, operând în
+deplină conformitate cu cerințele de reziliență operațională impuse de DORA. Printr-o guvernanță
+IT strictă și politici de securitate ancorate în standardul ISO 27001, garantăm gestionarea
+proactivă a riscurilor ICT și o recuperare rapidă în cazul incidentelor.
+
+De ce Smart Control?
+
+Soluții proprietare, fără dependență
+de vendor
+
+Asset Management și platformă de Monitorizare
+dezvoltate intern, cu acces la cod sursă —
+personalizare totală, fără costuri de licență către
+terți.
+
+Angajament complet față de
+standarde internaționale
+
+5 sisteme de management certificate simultan:
+ISO 9001 (calitate), ISO 27001 (securitate), ISO
+14001 (mediu), ISO 45001 (sănătate) și ISO
+27701 (confidențialitate date).
+
+=== PAGE 3 ===
+Smart Control | office@smartcontrol.ro | www.smartcontrol.ro | Pagina 3
+
+Echipă proprie, nu subcontractori
+
+50 de specialiști interni cu peste 500 de ani de
+experiență cumulată, disponibili on-site și
+remote — același nivel de calitate, indiferent de
+proiect.
+
+Partener, nu furnizor
+
+Relații pe termen lung cu 250+ clienți, abordare
+consultativă și livrare bazată pe date reale — nu
+pe estimări teoretice.
+
+Context de piață 2026
+
+Industria hardware globală traversează o perioadă de presiuni semnificative asupra lanțurilor de
+aprovizionare și implicit asupra bugetelor IT ale companiilor. Înțelegerea acestui context este
+esențială pentru a defini strategia optimă de modernizare a infrastructurii, în acest context
+considerăm că Smart Control face diferența.
+
+Presiuni asupra pieței hardware
+
+• Producătorii de echipamente hardware au crescut prețurile ca urmare a cererii ridicate
+generate de hyperscalers și data centers pentru infrastructură AI
+• Componentele critice — GPU, CPU, RAM, storage — sunt supuse unor cicluri de presiune
+care afectează disponibilitatea și costul
+• Tendința de creștere a prețurilor este probabilă pe termen scurt și mediu, deși piața
+semiconductorilor ramane ciclică
+• Smart Control, prin parteneriatele cu Hitachi, Lenovo, HPE, Fujitsu, IBM, DELL poate
+identifica cele mai bune oferte disponibile pe piață
+
+Impactul asupra bugetelor IT
+
+Bugetele alocate pentru upgrade-uri HW sau refresh complet/parțial au devenit insuficiente,
+forțând companiile să adopte strategii alternative: amânarea refresh-ului, extinderea ciclului de
+viață al echipamentelor și migrarea parțială a CAPEX spre OPEX prin modele cloud sau hybrid.
+
+Oportunitate strategică pentru clienții Smart Control
+
+Re-arhitecturarea și optimizarea aplicațiilor devine alternativa principală la investițiile hardware
+costisitoare. Smart Control, cu expertiza sa dovedită în ultimii 22 de ani cu referințe în Data Center
+Transformation, Virtualizare și Infrastructure Management, este poziționată ideal pentru a susține
+această tranziție.
+
+Cum vă putem ajuta — Portofoliu de servicii
+
+=== PAGE 4 ===
+Smart Control | office@smartcontrol.ro | www.smartcontrol.ro | Pagina 4
+
+Servicii și soluții
+
+Smart Control oferă un portofoliu integrat de servicii IT, acoperind întregul spectru — de la
+infrastructură fizică și virtualizare, până la securitate cibernetică, blockchain și dezvoltare software
+custom. Toate serviciile sunt susținute de o echipă de 50 de profesioniști cu peste 500 de ani de
+experiență cumulată în livrarea de servicii IT.
+
+Infrastructură & Cloud
+
+› Data Center Design & Implementation
+
+› Data Center Consolidation & Virtualizare
+
+› Private Cloud & Hybrid Cloud
+
+› Business Continuity & Disaster Recovery
+
+› Storage & Information Management
+
+› Access & Application Delivery
+
+› Infrastructure Management
+
+Securitate & Conformitate
+
+› Data Leakage Prevention
+
+› Secure Remote Access
+
+› Enterprise SSO / PKI
+
+› Perimeter & End-point Security
+
+› Web Application Firewall
+
+› Cybersecurity & GDPR / NIS2 Compliance
+
+› Managed Security Operations
+
+Software & Automatizare
+
+› Dezvoltare software custom & API
+
+› DevOps / DevSecOps & CI/CD
+
+› Migrare și modernizare aplicații
+
+› Blockchain (Hyperledger, Multichain)
+
+› Automatizare cu AI / LLM
+
+› Consultanță arhitecturală
+
+› Staff Augmentation
+
+Servicii Gestionate
+
+› Service Desk Outsourcing
+
+› Managed Infrastructure Operations
+
+› Network Managed Services
+› Cyber security Managed Services
+› Outsourced Systems Support (on-site & remote)
+
+› Cloud Based System Support
+
+› Software Automation
+
+Abordarea proiectelor de modernizare
+
+Smart Control nu propune doar o actualizare tehnică, ci o re-arhitecturare strategică. Valorificând
+experiență din peste 650 de proiecte livrate, am definit un flux de lucru optimizat care
+minimizează riscurile și maximizează rata de recuperare a investiției (ROI).
+
+Fluxul de Lucru în 5 Etape
+
+01. Propunere de Re-arhitecturare (Fast Track)
+
+Destinată clienților cu care avem deja o relație de lucru stabilă.
+
+=== PAGE 5 ===
+Smart Control | office@smartcontrol.ro | www.smartcontrol.ro | Pagina 5
+• Analiza avantajului: Utilizăm cunoștințele aprofundate despre infrastructură existentă pentru
+a identifica punctele critice și oportunitățile de optimizare.
+• Identificarea oportunităților: Propunem soluții de modernizare bazate pe date reale, nu pe
+estimări teoretice.
+• Obiectiv: Trecerea rapidă către planul de refactorizare, reducând semnificativ timpul de
+pregătire față de un assessment de la zero.
+
+02. Assessment Inițial & Quick Wins (Deep Dive)
+
+Destinată clienților noi sau mediilor fără documentație actualizată.
+• Inventariere automatizată: Utilizarea soluției proprietare de Asset Management pentru
+maparea completă a landscape-ului IT (hardware, software, licențe).
+• Analiză performanței: Colectarea metricilor prin instrumentele noastre de monitorizare
+pentru a detecta blocajele actuale.
+• Identificarea Quick Wins: Detectăm problemele minore care pot fi rezolvate imediat
+(optimizări de configurare, curățarea resurselor neutilizate) pentru a aduce valoare încă din
+primele zile.
+• Conformitate: Evaluarea gap-urilor față de cerințele NIS2 și GDPR.
+
+03. Planul de Refactoring & Business Case (ROI Estimate)
+
+Transformăm analiză tehnică într-o strategie financiară și operațională.
+• Roadmap tehnic: Prioritizarea aplicațiilor pentru containerizare (Kubernetes-ready) și
+definirea jaloanelor de migrare.
+• Estimarea ROI: Înainte de implementare, livrăm o analiză de cost-beneficiu — estimăm
+reducerea cheltuielilor cu hardware-ul, licențele sau consumul energetic.
+• Managementul riscului: Definirea strategiilor de testare în medii de staging și elaborarea
+planurilor de rollback pentru zero-downtime.
+
+04. Implementare Agilă & Transfer de Cunoștințe
+
+Execuția tehnică bazată pe standardele DevSecOps.
+• Modernizare: Containerizare și migrare pe platforme Kubernetes/OpenShift/AKS/GKE.
+• Automatizare: Configurarea pipeline-urilor CI/CD pentru livrare continuă și securizată.
+• Integrare hibridă: Asigurarea interoperabilității între mediul on-premise, cloud și hybrid.
+• Transfer de cunoștințe și autonomie operațională: Workshop-uri tehnice și documentare
+detaliată pentru echipă interna a clientului.
+
+05. Observabilitate Continuă & Optimizare Post-Implementare
+
+Trecerea de la proiect finalizat la evoluție continuă.
+• Monitorizare proactivă: Implementarea soluției proprietare Smart Control pentru vizibilitate
+totală asupra noilor arhitecturi.
+• Validarea ROI: Livrarea unui raport de performanță la 90 de zile, comparând datele reale cu
+estimările din Etapa 3.
+
+=== PAGE 6 ===
+Smart Control | office@smartcontrol.ro | www.smartcontrol.ro | Pagina 6
+• Iterație continuă: Optimizarea resurselor pe baza datelor de telemetrie pentru a menține
+eficiența maximă pe termen lung.
+
+SEKNET — Platformă Integrată de Monitorizare, Securitate şi
+Management al Identităţii
+
+SEKNET este platforma proprietară Smart Control de monitorizare, securitate cibernetică şi
+management al identităţii, proiectată pentru infrastructuri IT de tip enterprise. Platforma unifică
+cinci module specializate — Identity, Shield, Insight, View şi Trap — într-o experienţă operaţională
+coerentă, cu vizibilitate completă, detectare avansată a ameninţărilor şi răspuns automatizat la
+incidente. Arhitectura este cloud-native, bazată pe microservicii containerizate, compatibilă cu
+deployment on-premise, hibrid sau cloud, şi proiectată pentru scalare orizontală fără costuri de
+licenţiere adiţionale.
+
+Modulele platformei
+SEKNET Identity asigură managementul identităţii şi al accesului (IAM): autentificare centralizată
+SSO prin OAuth2, OIDC şi SAML 2.0, MFA rezistent la phishing (WebAuthn/FIDO2, TOTP, SMS,
+certificate X.509) şi provizionare automată a utilizatorilor prin SCIM 2.0, sincronizată cu Active
+Directory, LDAP sau RADIUS.
+
+SEKNET Shield este modulul SIEM şi de securitate cibernetică: colectare şi corelaţie multi-sursă,
+mapping automat pe framework-ul MITRE ATT&CK, File Integrity Monitoring (FIM), detectare
+vulnerabilităţi CVE pe toate sistemele monitorizate şi răspuns activ automatizat (blocare IP, izolare
+endpoint, dezactivare cont) în secunde de la detectare.
+
+SEKNET Insight asigură analiza, căutarea şi stocarea datelor: motor distribuit cu indexare sub 1
+secundă, capacitate de ingestie de peste 10 GB/zi fără restricţii de volum, retenţie nedeterminată
+limitată exclusiv de capacitatea de stocare şi framework ML nativ pentru detectarea anomaliilor
+statistice (spike & drop) şi baseline comportamental per sursă.
+
+SEKNET View este interfata unificată de vizualizare: bibliotecă de 200+ dashboard-uri predefinite,
+hartă topologică interactivă a infrastructurii, rapoarte automate de conformitate pentru GDPR,
+NIS2, ISO 27001, PCI-DSS şi HIPAA — exportabile în format PDF sau CSV.
+
+SEKNET Trap implementează detecţia activă prin decepţie: reţea distribuită de honeypot-uri
+multi-protocol (20+ servicii simulate), capturare sesiuni complete SSH/Telnet/RDP, export
+automat de Indicatori de Compromis (IoC) şi hartă de atac live cu geolocalizarea surselor.
+
+Specificaţii tehnice cheie
+
+Platforma procesează peste 50.000 de evenimente per secundă per nod, cu latenţă de alertare sub
+60 de secunde şi disponibilitate garantată de 99,9%. Scalarea se realizează prin adăugarea de
+noduri fără downtime şi fără costuri adiţionale de licenţiere, suportând monitorizarea simultană a
+mii de surse eterogene. Toate datele sunt criptate în tranzit (TLS 1.2/1.3) şi la repaus (AES-256), cu
+jurnal de audit imutabil pentru toate acţiunile administrative.
+
+Integrare şi interoperabilitate
+
+=== PAGE 7 ===
+Smart Control | office@smartcontrol.ro | www.smartcontrol.ro | Pagina 7
+SEKNET expune API-uri RESTful documentate (OpenAPI/Swagger) pentru toate funcţionalităţile,
+conectori nativi pentru platformele ITSM (ServiceNow, Jira, Zendesk) şi compatibilitate cu
+ecosistemele SOAR (Splunk SOAR, IBM SOAR, TheHive). Platforma se integrează nativ cu mediile
+cloud AWS, Azure şi GCP, asigurând vizibilitate unificată pentru infrastructuri hibride sau multi-
+cloud. Codul sursă este disponibil la solicitare, eliminând dependenţa de vendor şi permţând
+adaptarea completă la cerinţele specifice fiecărui client.
+
+S-VPN — Acces Remote Sigur
+
+S-VPN este soluţia proprietară Smart Control pentru acces remote securizat de nivel enterprise,
+concepută pentru a livra integrat ceea ce la alţi furnizori se cumpără şi se gestionează separat —
+VPN, MFA, Web Application Firewall, protecţie endpoint şi consolă de management — la o
+fracţiune din costul soluţiilor Cisco sau Fortinet. Arhitectura este testată la scară, cu peste 10.000
+de tuneluri simultane şi disponibilitate de 99,9%, fără hardware dedicat sau dependenţă de
+parteneri terţi pentru punerea în funcţiune.
+
+Componente integrate
+VPN SSL & IPSec — suport complet pentru ambele protocoale, compatibil cu OS-uri standard
+(Windows, Linux, macOS, iOS, Android) pentru utilizatori fix şi mobil, inclusiv conexiuni site-to-site
+între locaţii.
+
+Autentificare multi-factor (MFA) — cinci metode configurabile per utilizator sau per grup: SMS
+On-Premises (server în infrastructura clientului), SMS Shared (hosted SmartControl), cod prin e-
+mail, OTP prin aplicaţie de autentificare (Google/Microsoft Authenticator) şi certificate X.509
+pentru medii cu cerinţe ridicate de securitate sau reglementate.
+
+Web Application Firewall (WAF) — profiluri predefinite pentru SQLi, XSS, HTTP constraints şi
+semnături de atac web, aplicate transparent la nivelul gateway-ului.
+
+Protecţie endpoint — detectare în timp real a vulnerabilităţilor sistemului de operare şi ale
+aplicaţiilor terţe pe staţiile client conectate.
+
+Firewall UTM — inspecţie trafic la viteza wire (20 Gbps+) şi aplicare politici per utilizator sau per
+dispozitiv, integrat la nivel de gateway.
+
+Consolă centralizată de management — vizibilitate completă asupra traficului, conformităţii şi
+audit log-ului; politici şi configurări gestionate dintr-un singur loc.
+
+Performanţă
+
+Platforma S-VPN este dimensionată pentru infrastructuri enterprise: inspecţie firewall la 20 Gbps+,
+peste 10.000 de tuneluri IPSec client-server simultane, 400+ tuneluri SSL concurente şi 200+
+conexiuni site-to-site IPSec între locaţii. Arhitectura pentru zero downtime a fost testată la scară în
+condiţii reale de utilizare intensivă.
+
+Servicii incluse în licenţă
+
+Toate licenţele S-VPN includ instalare şi configurare completă (hardware şi software), suport
+tehnic direct din partea echipei Smart Control, servicii de integrare cu infrastructura existentă,
+
+=== PAGE 8 ===
+Smart Control | office@smartcontrol.ro | www.smartcontrol.ro | Pagina 8
+mentenanţă şi actualizări continue, suport hardware şi garanţie certificată pentru întreaga soluţie
+livrată. Nu există costuri ascunse şi nu este necesară dependenţa de terţi pentru niciuna dintre
+fazele de implementare sau operare.
+
+Soluție Asset Management
+
+Smart Control oferă o platformă proprietară de Asset Management dezvoltată intern, disponibilă
+inclusiv cu acces la codul sursă, ceea ce permite adaptarea completă la cerințele specifice fiecărui
+client. Soluția se integrează nativ cu capabilitățile de Application Discovery Management și
+Infrastructure Management din portofoliul Smart Control.
+Soluția acoperă întregul ciclu de viață al activelor IT — de la achiziție și inventariere, până la
+planificarea înlocuirii și raportarea conformității ISO 27001 și NIS2.
+
+Avantaj cheie
+
+Cod sursă inclus — personalizare totală, fără dependență de vendor extern. Soluție achiziționată și
+disponibilă pentru livrare imediată.
+
+Funcționalități principale
+
+• Inventariere automată a activelor hardware și software din rețea (agent-based și agentless)
+• Catalogarea și clasificarea echipamentelor: servere, stații de lucru, echipamente de rețea,
+licențe software
+• Urmărirea ciclului de viață — achiziție, alocare, service, depreciere, casare
+• Dashboard-uri de management cu vizibilitate în timp real asupra stării flotei IT
+• Alerte automate pentru echipamente care se apropie de end-of-life sau end-of-support
+• Rapoarte de conformitate NIS2, GDPR și pregătire audit pentru certificări ISO 27001
+• Integrare nativă cu soluția de monitorizare Smart Control și cu sisteme ITSM existente
+
+Model de licențiere flexibil
+
+Licențierea este adaptată situației fiecărui client — per active gestionate, per site sau licență perpetuă
+cu acces la surse. Soluția poate fi livrată on-premise, în cloud privat sau ca serviciu gestionat de Smart
+Control.
+
+Soluții Custom, Consultanță și Resurse
+
+Smart Control oferă capacitate completă de dezvoltare software custom și consultanță
+specializată, acoperind întregul ciclu de viață al produsului software: Plan & Design, Code & Build,
+Test & Release, Deploy, Operate & Monitor și DevOps — exact serviciile definite în portofoliul de
+Software Development Outsourcing al companiei, susținut de o echipă cu experiență verificată în
+sute de proiecte.
+
+=== PAGE 9 ===
+Smart Control | office@smartcontrol.ro | www.smartcontrol.ro | Pagina 9
+
+Dezvoltare software custom
+
+• Proiectare și implementare aplicații web, API-uri RESTful și microservicii scalabile
+• Integrare între sisteme eterogene, platforme cloud, surse de date legacy
+• Migrare și modernizare aplicații existente (refactoring, re-platforming, re-architecting)
+• Automatizare procese interne — fluxuri de lucru, raportare, sincronizare date
+• Pipeline-uri DevOps și practici DevSecOps pentru livrare continuă și sigură
+
+Consultanță arhitecturală și tehnică
+
+• Evaluare arhitecturi existente și propuneri de îmbunătățire bazate pe best practices din
+industrie
+• Consultanță pentru adoptarea tehnologiilor cloud și strategii de migrare
+• Suport pentru conformitate NIS2 și GDPR — domenii pentru care Smart Control este
+certificat ISO 27001 și ISO 27701
+• Definire strategii DevSecOps și implementarea culturii de continuous delivery
+
+Resurse tehnice dedicate (Staff Augmentation)
+
+• Punerea la dispoziție de ingineri și arhitecți IT pe bază de contract de servicii — timp parțial
+sau dedicat
+• Extinderea echipelor interne ale clientului cu specialiști cu experiență din partea echipei
+Smart Control
+• Onboarding rapid datorită proceselor standardizate și experienței în livrarea de proiecte
+complexe
+
+Soluții Blockchain
+
+Smart Control oferă capacitate de proiectare și implementare a soluțiilor blockchain enterprise —
+de la arhitectura rețelei și dezvoltarea de smart contracts, până la integrarea cu fluxurile
+operaționale existente. Expertiză acoperă atât consultanță pentru identificarea cazurilor de
+utilizare potrivite, cât și livrarea end-to-end cu audit de securitate inclus.
+
+Tehnologii și concepte
+
+Smart Contracts · ERC-721 (NFT) · ERC-20 Tokens · Access Control On-chain · Decentralized
+Applications (dApps) · Privacy-Preserving Computation
+
+Cazuri de utilizare principale
+
+=== PAGE 10 ===
+Smart Control | office@smartcontrol.ro | www.smartcontrol.ro | Pagina 10
+• Tokenizare active digitale — Reprezentarea activelor ca token-uri on-chain (fungibile sau
+non-fungibile), cu transfer de proprietate și control al drepturilor de utilizare automatizat
+prin smart contracts.
+• Controlul accesului prin token-uri — Gestionarea permisiunilor de acces la resurse digitale
+prin token-uri on-chain, auditabile și revocabile fără intervenție centralizată.
+• Aplicații descentralizate (dApps) — Dezvoltare end-to-end cu interfețe utilizator integrate,
+conectate la logica de business implementată on-chain.
+• Audit și remediere contracte inteligente — Analiză statică și dinamică, identificarea
+vulnerabilităților și remedierea înainte de deployment în producție.
+
+Abordare pragmatică
+
+Smart Control nu propune blockchain acolo unde o bază de date relațională tradițională este
+suficientă. Fiecare proiect începe cu o analiză cost-beneficiu riguroasă — dar acolo unde trasabilitatea,
+imutabilitatea sau automatizarea contractuală aduc valoare reală, livrăm soluții testate, integrate și
+auditate.
+
+Automatizare Fluxuri de Lucru cu Inteligență Artificială
+
+Smart Control extinde capabilitățile sale de Software Development și Infrastructure Management
+cu soluții de automatizare inteligentă a proceselor, prin integrarea modelelor de inteligență
+artificială în operațiunile de zi cu zi ale organizației. Aceasta reprezintă convergență naturală
+dintre competențele tehnice existente ale Smart Control și tendințele actuale din piața IT,
+complementare cu serviciilor de Software Automation.
+
+Tipuri de automatizare disponibile
+
+• Procesare și clasificare automată a documentelor (facturi, contracte, formulare) cu extragere
+structurată de date
+• Chatboti și asistenți virtuali pentru suport intern IT helpdesk, HR, operațiuni —
+complementar serviciului de Service Desk Outsourcing al Smart Control
+• Automatizare fluxuri de aprobare și decizii bazate pe reguli combinate cu inferențe AI
+• Generare automată de rapoarte și sumarizare documente lungi prin modele de limbaj (LLM)
+• Detectare anomalii și alertare proactivă în procese operaționale — integrată cu platformă
+de monitorizare Smart Control
+• Integrare agenți AI în pipeline-uri DevOps pentru code review automat, testare și
+documentare
+
+Rezultate măsurabile
+
+=== PAGE 11 ===
+Smart Control | office@smartcontrol.ro | www.smartcontrol.ro | Pagina 11
+
+Proiectele de automatizare cu AI livrate de Smart Control urmăresc metrici clare: reducerea
+timpului de procesare, scăderea ratei de eroare și eliberarea capacității umane pentru activități cu
+valoare adăugată ridicată.
+
+Parteneri tehnologici
+
+Smart Control colaborează cu cei mai importanți producători și furnizori de soluții IT din lume,
+asigurând clienților acces la cele mai bune soluții disponibile pe piață. Aceste parteneriate permit
+echipei Smart Control să ofere soluții testate, cu suport garantat și roadmap de dezvoltare clar —
+un avantaj direct pentru bugetele de achiziție ale clienților.
+
+Hitachi Vantara Commvault Fortinet Cisco Juniper
+
+Lenovo VMware Fujitsu Oracle Microsoft
+
+Palo Alto Hanasis IBM HP DELL
+
+Pașii următori
+
+Cum continuăm?
+
+Oferim gratuit un Assessment Inițial de 2 zile
+pentru infrastructură ta IT — fără
+angajamente, cu un raport de recomandări la
+final.
+
+1. Identificăm împreună zona de interes
+prioritară
+
+2. Programăm Assessment-ul Initial — gratuit,
+2 zile, cu raport de recomandări
+
+3. Livrăm o propunere tehnică și financiară
+personalizată
+
+4. Implementăm și monitorizăm împreună
+rezultatele
+
+Contact Smart Control
+
+office@smartcontrol.ro
+
+www.smartcontrol.ro
+
+Intrarea Aviator Teodor Iliescu 37, 011672
+București

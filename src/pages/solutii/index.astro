@@ -1,0 +1,319 @@
+---
+// /solutii — Products index (light landing page)
+// Two products: SEKNET + S-VPN. Template B-light.
+// RESOLUTIONS: no ISO 27701, no Asset Management, computed years, export CTA wording.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Eyebrow from '../../components/Eyebrow.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import ChevronList from '../../components/ChevronList.astro';
+import TextLink from '../../components/TextLink.astro';
+import MailtoLink from '../../components/MailtoLink.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { getLangFromUrl, useTranslations, localizedPath } from '../../i18n/ui';
+import { Monitor, Lock, Code, ArrowLeftRight } from '@lucide/astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const p = (path: string) => localizedPath(lang, path);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Soluții proprietare SmartControl',
+  description: 'Platforme software proprietare de securitate cibernetică și acces remote securizat.',
+  url: 'https://smartcontrol.ro/solutii',
+  numberOfItems: 2,
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      item: {
+        '@type': 'Product',
+        name: 'SEKNET',
+        description:
+          'Platformă enterprise de monitorizare, securitate cibernetică și management al identității — 5 module specializate, arhitectură cloud-native.',
+        url: 'https://smartcontrol.ro/solutii/seknet',
+        brand: { '@type': 'Brand', name: 'Smart Control SRL' },
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      item: {
+        '@type': 'Product',
+        name: 'S-VPN',
+        description:
+          'Suită integrată de acces remote securizat — VPN, MFA, WAF, protecție endpoint și consolă de management.',
+        url: 'https://smartcontrol.ro/solutii/s-vpn',
+        brand: { '@type': 'Brand', name: 'Smart Control SRL' },
+      },
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title="Soluții proprietare — SEKNET & S-VPN | Smart Control"
+  description="Platforme software proprietare pentru securitate cibernetică și acces remote securizat. Cod sursă inclus, fără vendor lock-in. SEKNET și S-VPN."
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <!-- ═══════════════════════════════════════════════════════
+       HERO — light, word-fill H2, eyebrow, positioning copy
+       ═══════════════════════════════════════════════════════ -->
+  <section class="relative overflow-hidden bg-page py-[110px] px-6 sm:px-10">
+    <div class="mx-auto max-w-[1180px]">
+      <div data-hero-scrub>
+        <div data-reveal>
+          <Eyebrow variant="light">SOLUȚII PROPRIETARE</Eyebrow>
+          <h1
+            data-word-fill="light"
+            class="mt-6 text-display font-extrabold leading-[1.08] tracking-[-2px] text-navy max-w-[860px]"
+          >
+            Software propriu. Zero vendor lock-in.
+          </h1>
+          <p class="mt-6 text-[18px] leading-[1.7] text-cool max-w-[620px]">
+            Ambele platforme sunt livrate cu <strong class="text-navy font-semibold">cod sursă inclus</strong>
+            — fără licențe terțe recurente, fără dependență de un furnizor extern.
+            Proiectate, dezvoltate și suportate integral de echipa Smart Control.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-4">
+            <span class="inline-flex items-center gap-2 rounded-md border border-border-blue bg-blue-wash px-4 py-2 font-mono text-[12px] font-medium uppercase tracking-[2px] text-navy">
+              Cod sursă inclus
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-md border border-border-blue bg-blue-wash px-4 py-2 font-mono text-[12px] font-medium uppercase tracking-[2px] text-navy">
+              Fără licențe terțe
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-md border border-border-blue bg-blue-wash px-4 py-2 font-mono text-[12px] font-medium uppercase tracking-[2px] text-navy">
+              Suport local inclus
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PRODUCT CARDS — 2 side-by-side (SEKNET + S-VPN)
+       ═══════════════════════════════════════════════════════ -->
+  <section class="bg-surface py-[110px] px-6 sm:px-10">
+    <div class="mx-auto max-w-[1180px]">
+      <div data-reveal class="mb-14 text-center">
+        <Eyebrow variant="light">Platformele noastre</Eyebrow>
+        <h2
+          data-word-fill="light"
+          class="mt-6 text-h2 font-bold leading-[1.15] tracking-[-1px] text-navy mx-auto max-w-[700px]"
+        >
+          Două produse, un ecosistem integrat
+        </h2>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-2" data-skew="4">
+
+        <!-- SEKNET Card -->
+        <div data-reveal data-reveal-rotate="-4" data-drift="0.07">
+          <article class="flex h-full flex-col rounded-xl border border-border bg-surface p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-border-blue hover:shadow-lg">
+            <!-- Card header -->
+            <div class="flex items-center gap-4">
+              <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-md border border-border-blue bg-blue-wash">
+                <Monitor class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+              </div>
+              <div>
+                <span class="block font-mono text-[11px] font-medium uppercase tracking-[1.5px] text-bright">Produs proprietar</span>
+                <h3 class="mt-0.5 text-[21px] font-bold leading-tight tracking-[-0.3px] text-navy">SEKNET</h3>
+              </div>
+            </div>
+
+            <!-- Positioning line -->
+            <p class="mt-5 text-[15px] leading-[1.65] text-cool">
+              Platformă enterprise integrată de <strong class="font-semibold text-slate">monitorizare, securitate cibernetică și management al identității</strong>
+              — cinci module specializate, arhitectură cloud-native pe microservicii.
+            </p>
+
+            <!-- Module list -->
+            <div class="mt-6">
+              <p class="mb-3 font-mono text-[11px] font-medium uppercase tracking-[1.5px] text-bright">5 module specializate</p>
+              <ChevronList
+                items={[
+                  'Identity — IAM, SSO, MFA, RBAC, SCIM 2.0',
+                  'Shield — SIEM, IDS, threat intel, răspuns activ',
+                  'Insight — căutare distribuită, ML nativ, API REST',
+                  'View — 200+ dashboards, hartă topologică, RBAC avansat',
+                  'Trap — honeypot, detecție laterală, zero fals pozitive',
+                ]}
+                cols={1}
+              />
+            </div>
+
+            <!-- Headline specs -->
+            <div class="mt-6 grid grid-cols-3 gap-3">
+              <div class="rounded-md border border-border bg-page px-3 py-2.5 text-center">
+                <span class="block font-mono text-[15px] font-semibold text-navy">50K<span class="text-bright">+</span></span>
+                <span class="block mt-1 text-[11px] leading-snug text-cool">EPS / nod</span>
+              </div>
+              <div class="rounded-md border border-border bg-page px-3 py-2.5 text-center">
+                <span class="block font-mono text-[15px] font-semibold text-navy">&lt;60<span class="text-bright">s</span></span>
+                <span class="block mt-1 text-[11px] leading-snug text-cool">alertare</span>
+              </div>
+              <div class="rounded-md border border-border bg-page px-3 py-2.5 text-center">
+                <span class="block font-mono text-[15px] font-semibold text-navy">99.9<span class="text-bright">%</span></span>
+                <span class="block mt-1 text-[11px] leading-snug text-cool">uptime SLA</span>
+              </div>
+            </div>
+
+            <!-- CTAs -->
+            <div class="mt-8 flex flex-wrap items-center gap-5">
+              <TextLink href={p('/solutii/seknet')}>Explorează SEKNET</TextLink>
+              <MailtoLink variant="link" subject={t('subject.demo.seknet')}>Solicită un demo</MailtoLink>
+            </div>
+          </article>
+        </div>
+
+        <!-- S-VPN Card -->
+        <div data-reveal data-reveal-delay="100" data-reveal-rotate="4" data-drift="-0.07">
+          <article class="flex h-full flex-col rounded-xl border border-border bg-surface p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-border-blue hover:shadow-lg">
+            <!-- Card header -->
+            <div class="flex items-center gap-4">
+              <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-md border border-border-blue bg-blue-wash">
+                <Lock class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+              </div>
+              <div>
+                <span class="block font-mono text-[11px] font-medium uppercase tracking-[1.5px] text-bright">Produs proprietar</span>
+                <h3 class="mt-0.5 text-[21px] font-bold leading-tight tracking-[-0.3px] text-navy">S-VPN</h3>
+              </div>
+            </div>
+
+            <!-- Positioning line -->
+            <p class="mt-5 text-[15px] leading-[1.65] text-cool">
+              Suită integrată de <strong class="font-semibold text-slate">acces remote securizat</strong>
+              — VPN, MFA, WAF, protecție endpoint și consolă de management, la o fracțiune din costul soluțiilor tradiționale.
+            </p>
+
+            <!-- Capability list -->
+            <div class="mt-6">
+              <p class="mb-3 font-mono text-[11px] font-medium uppercase tracking-[1.5px] text-bright">Capabilități integrate</p>
+              <ChevronList
+                items={[
+                  'VPN — SSL & IPSec, 400+ tuneluri concurente',
+                  'MFA — 5 metode active simultan',
+                  'WAF + UTM — inspecție Layer 7, OWASP Top 10',
+                  'Endpoint — scanare vulnerabilități în timp real',
+                  'Console — management centralizat, exclusiv web',
+                ]}
+                cols={1}
+              />
+            </div>
+
+            <!-- Headline specs -->
+            <div class="mt-6 grid grid-cols-3 gap-3">
+              <div class="rounded-md border border-border bg-page px-3 py-2.5 text-center">
+                <span class="block font-mono text-[15px] font-semibold text-navy">20<span class="text-bright">Gbps+</span></span>
+                <span class="block mt-1 text-[11px] leading-snug text-cool">inspecție L7</span>
+              </div>
+              <div class="rounded-md border border-border bg-page px-3 py-2.5 text-center">
+                <span class="block font-mono text-[15px] font-semibold text-navy">10K<span class="text-bright">+</span></span>
+                <span class="block mt-1 text-[11px] leading-snug text-cool">tuneluri IPSec</span>
+              </div>
+              <div class="rounded-md border border-border bg-page px-3 py-2.5 text-center">
+                <span class="block font-mono text-[15px] font-semibold text-navy">&#8722;60<span class="text-bright">%</span></span>
+                <span class="block mt-1 text-[11px] leading-snug text-cool">față de Cisco</span>
+              </div>
+            </div>
+
+            <!-- CTAs -->
+            <div class="mt-8 flex flex-wrap items-center gap-5">
+              <TextLink href={p('/solutii/s-vpn')}>Explorează S-VPN</TextLink>
+              <MailtoLink variant="link" subject={t('subject.demo.svpn')}>Solicită un demo</MailtoLink>
+            </div>
+          </article>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       DE CE SOLUȚII PROPRII — 4-point chevron strip
+       ═══════════════════════════════════════════════════════ -->
+  <section data-band class="bg-page py-[110px] px-6 sm:px-10">
+    <div class="mx-auto max-w-[1180px]">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="De ce soluții proprii"
+          heading="Avantajele unui produs construit în casă"
+          variant="light"
+          headingMaxWidth="680px"
+        >
+          Controlul complet al stivei tehnologice elimină dependențele externe și
+          permite adaptarea rapidă la cerințele specifice ale fiecărui client.
+        </SectionHeading>
+      </div>
+
+      <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" data-skew="4">
+
+        <div data-reveal data-drift="0.06">
+          <div class="h-full rounded-xl border border-border bg-surface p-7 shadow-sm">
+            <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-md border border-border-blue bg-blue-wash">
+              <Code class="h-[20px] w-[20px] text-bright" stroke-width={1.5} />
+            </div>
+            <h3 class="text-[16px] font-bold text-navy">Cod sursă inclus</h3>
+            <p class="mt-2 text-[13.5px] leading-[1.65] text-cool">
+              Livrăm codul sursă complet — inspectat, auditat, modificat de echipa ta sau de noi oricând.
+            </p>
+          </div>
+        </div>
+
+        <div data-reveal data-reveal-delay="80" data-drift="-0.05">
+          <div class="h-full rounded-xl border border-border bg-surface p-7 shadow-sm">
+            <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-md border border-border-blue bg-blue-wash">
+              <span class="font-mono text-[18px] font-bold text-bright">0</span>
+            </div>
+            <h3 class="text-[16px] font-bold text-navy">Fără licențe terțe</h3>
+            <p class="mt-2 text-[13.5px] leading-[1.65] text-cool">
+              Nicio taxă recurentă de licențiere per utilizator sau per modul — costul total de deținere rămâne previzibil.
+            </p>
+          </div>
+        </div>
+
+        <div data-reveal data-reveal-delay="160" data-drift="0.06">
+          <div class="h-full rounded-xl border border-border bg-surface p-7 shadow-sm">
+            <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-md border border-border-blue bg-blue-wash">
+              <ArrowLeftRight class="h-[20px] w-[20px] text-bright" stroke-width={1.5} />
+            </div>
+            <h3 class="text-[16px] font-bold text-navy">Integrare nativă</h3>
+            <p class="mt-2 text-[13.5px] leading-[1.65] text-cool">
+              API REST (OpenAPI / Swagger), conectori AD / LDAP / RADIUS, ITSM și SOAR — integrare în ecosistemul existent fără fricțiuni.
+            </p>
+          </div>
+        </div>
+
+        <div data-reveal data-reveal-delay="240" data-drift="-0.05">
+          <div class="h-full rounded-xl border border-border bg-surface p-7 shadow-sm">
+            <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-md border border-border-blue bg-blue-wash">
+              <span class="font-mono text-[18px] font-bold text-bright">RO</span>
+            </div>
+            <h3 class="text-[16px] font-bold text-navy">Suport local inclus</h3>
+            <p class="mt-2 text-[13.5px] leading-[1.65] text-cool">
+              Echipă proprie în România — instalare, configurare, mentenanță și suport incluse în licență, fără dependență de parteneri terți.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       DARK CTA BAND — assessment ask
+       ═══════════════════════════════════════════════════════ -->
+  <CtaBand
+    id="contact"
+    eyebrow="Pașii următori"
+    heading="Assessment Inițial gratuit — 2 zile"
+    cta={t('cta.assessment')}
+    subject={t('subject.assessment')}
+  >
+    Fără angajamente. Identificăm împreună zona de interes prioritară și livrăm
+    un raport de recomandări la final.
+  </CtaBand>
+</BaseLayout>

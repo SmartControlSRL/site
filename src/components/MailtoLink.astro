@@ -1,0 +1,56 @@
+---
+// Obfuscated mailto. Renders an <a> with data-email-user/-domain/-subject;
+// initEmails (wired in BaseLayout) joins them into a mailto: href + appends
+// ?subject= at runtime so no raw address sits in the static HTML (anti-scraper,
+// RESOLUTIONS §14). The visible text comes from the slot; leave the slot empty
+// to have initEmails fill the address itself.
+import { EMAIL_USER, EMAIL_DOMAIN } from '../i18n/ui';
+
+interface Props {
+  /** Email subject, appended URL-encoded (e.g. "Evaluare gratuită"). */
+  subject?: string;
+  /** Visual treatment. button = filled CTA; link = inline text link. */
+  variant?: 'button' | 'link' | 'plain';
+  /** On a dark zone? Switches link/button colors to the dark palette. */
+  dark?: boolean;
+  /** Extra classes appended to the computed ones. */
+  class?: string;
+  user?: string;
+  domain?: string;
+}
+
+const {
+  subject,
+  variant = 'link',
+  dark = false,
+  class: extra = '',
+  user = EMAIL_USER,
+  domain = EMAIL_DOMAIN,
+} = Astro.props;
+
+const base =
+  variant === 'button'
+    ? 'inline-flex items-center justify-center rounded-md px-[22px] py-[11px] text-[14.5px] font-semibold text-white transition-all'
+    : variant === 'link'
+      ? 'font-semibold transition-colors'
+      : 'transition-colors';
+
+const tone =
+  variant === 'button'
+    ? dark
+      ? 'bg-bright [box-shadow:0_0_28px_rgba(68,135,220,0.45)] hover:bg-mid-blue hover:[box-shadow:0_0_40px_rgba(68,135,220,0.65)]'
+      : 'bg-navy hover:bg-midnight hover:[box-shadow:0_4px_16px_rgba(14,31,91,0.25)]'
+    : dark
+      ? 'text-sky hover:text-white'
+      : 'text-royal hover:text-navy';
+---
+
+<a
+  href="#"
+  data-email-user={user}
+  data-email-domain={domain}
+  data-email-subject={subject}
+  class:list={[base, tone, extra]}
+>
+  <slot />
+</a>

@@ -1,0 +1,24 @@
+---
+// Chevron-suffixed inline text link. AA rule (RESOLUTIONS §22): royal on light,
+// sky on dark. The "›" glyph is appended automatically (set chevron={false} to
+// omit). Pass href; for mailto use <MailtoLink> instead.
+interface Props {
+  href: string;
+  dark?: boolean;
+  chevron?: boolean;
+  class?: string;
+}
+
+const { href, dark = false, chevron = true, class: extra = '' } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={[
+    'inline-flex items-center gap-2 text-[14.5px] font-semibold transition-colors',
+    dark ? 'text-sky hover:text-white' : 'text-royal hover:text-navy',
+    extra,
+  ]}
+>
+  <slot />{chevron && <span aria-hidden="true">›</span>}
+</a>

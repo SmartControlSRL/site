@@ -1,60 +1,175 @@
 ---
-// Nav is ALWAYS light on every page (logo on white) — a locked brand rule.
-// No "Login" entry: the SEKNET / S-VPN consoles are on-prem and out of scope.
-import { getLangFromUrl, useTranslations, CTA_ASSESSMENT } from '../i18n/ui';
+// Export nav (RESOLUTIONS §16): fixed top, ALWAYS light (logo on white), logo +
+// links + assessment CTA (obfuscated mailto) + RO/EN switch. Active-page
+// underline by pathname. initNavShrink (wired in BaseLayout) tightens padding +
+// adds a hairline/shadow past 24px scroll — it targets [data-nav-shrink].
+// Mobile (<768px): hamburger toggles a light slide-down panel (aria-expanded,
+// ESC closes, body scroll-lock while open).
+import { getLangFromUrl, useTranslations, localizedPath, altLocalePath } from '../i18n/ui';
+import MailtoLink from './MailtoLink.astro';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-
-// Locale-aware path helper (RO at /, EN under /en/).
-const p = (path: string) => (lang === 'en' ? `/en${path === '/' ? '' : path}` : path);
+const p = (path: string) => localizedPath(lang, path);
 
 const links = [
   { href: p('/servicii'), label: t('nav.services') },
   { href: p('/servicii/cloud'), label: t('nav.cloud') },
-  { href: p('/solutii'), label: t('nav.products') },
+  { href: p('/solutii/seknet'), label: t('nav.seknet') },
+  { href: p('/solutii/s-vpn'), label: t('nav.svpn') },
   { href: p('/#contact'), label: t('nav.contact') },
 ];
 
-// Language switch target = the alternate-locale version of this page.
+// Active-page underline: compare against the current pathname (ignore anchors).
+const here = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (href: string) => {
+  const clean = href.split('#')[0].replace(/\/$/, '') || '/';
+  return clean !== '/' && clean !== p('/') && here === clean;
+};
+
+// Language switch → the alternate-locale version of this page.
 const path = Astro.url.pathname;
-const altHref = lang === 'en' ? path.replace(/^\/en(\/|$)/, '/') : `/en${path === '/' ? '' : path}`;
-const altLabel = lang === 'en' ? 'RO' : 'EN';
+const altHref = altLocalePath(path);
 ---
 
-<header class="sticky top-0 z-50 border-b border-border bg-surface/90 backdrop-blur-sm">
-  <nav class="container flex h-16 items-center justify-between gap-6" aria-label="Primary">
-    <a href={p('/')} class="flex items-center gap-2.5 shrink-0" aria-label="Smart Control — home">
-      <img src="/smartcontrol-mark.png" alt="" width="32" height="32" class="h-8 w-8" />
-      <span class="text-lg font-bold tracking-tight">
-        <span class="text-navy">Smart</span><span class="text-bright">Control</span>
-      </span>
-    </a>
-
-    <ul class="hidden items-center gap-7 md:flex">
-      {links.map((l) => (
-        <li>
-          <a href={l.href} class="text-small font-medium text-slate transition-colors hover:text-navy">
-            {l.label}
-          </a>
-        </li>
-      ))}
-    </ul>
-
-    <div class="flex items-center gap-3">
-      <a
-        href={altHref}
-        class="text-small font-semibold text-cool transition-colors hover:text-navy"
-        aria-label={`Switch language to ${altLabel}`}
-      >
-        {altLabel}
+<header class="fixed inset-x-0 top-0 z-50">
+  <nav
+    data-nav-shrink
+    aria-label="Primary"
+    class="border-b border-transparent bg-surface px-10 py-[18px] transition-[padding,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+  >
+    <div class="mx-auto flex max-w-[1180px] items-center justify-between gap-8">
+      <!-- Logo -->
+      <a href={p('/')} class="flex shrink-0 items-center gap-[11px]" aria-label="Smart Control — home">
+        <img src="/smartcontrol-mark.png" alt="" width="34" height="34" class="h-[34px] w-[34px]" />
+        <span class="text-[17px] font-bold tracking-[-0.3px] text-navy">Smart<span class="text-bright">Control</span></span>
       </a>
-      <a
-        href={CTA_ASSESSMENT}
-        class="hidden rounded-md bg-navy px-4 py-2 text-small font-semibold text-white transition-colors hover:bg-midnight sm:inline-block"
-      >
-        {t('cta.assessment.short')}
-      </a>
+
+      <!-- Desktop links -->
+      <ul class="hidden items-center gap-7 md:flex">
+        {
+          links.map((l) => (
+            <li>
+              <a
+                href={l.href}
+                aria-current={isActive(l.href) ? 'page' : undefined}
+                class:list={[
+                  'border-b-2 pb-[3px] text-[13.5px] no-underline transition-colors hover:border-bright hover:text-navy',
+                  isActive(l.href)
+                    ? 'border-bright font-semibold text-navy'
+                    : 'border-transparent font-medium text-slate',
+                ]}
+              >
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <!-- Right cluster -->
+      <div class="flex items-center gap-3">
+        <a
+          href={altHref}
+          class="text-[13.5px] font-semibold text-cool transition-colors hover:text-navy"
+          aria-label={t('lang.switch.aria')}
+        >
+          {t('lang.switch')}
+        </a>
+        <MailtoLink
+          variant="button"
+          subject={t('subject.assessment')}
+          class="hidden !px-[18px] !py-[9px] !text-[13.5px] sm:inline-flex"
+        >
+          {t('cta.assessment')}
+        </MailtoLink>
+
+        <!-- Mobile hamburger -->
+        <button
+          type="button"
+          data-nav-toggle
+          aria-expanded="false"
+          aria-controls="nav-mobile-panel"
+          aria-label={t('nav.menu.open')}
+          class="flex h-10 w-10 items-center justify-center rounded-md text-navy transition-colors hover:bg-blue-wash md:hidden"
+        >
+          <svg data-nav-icon-open width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+          <svg data-nav-icon-close width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" class="hidden" aria-hidden="true">
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+          </svg>
+        </button>
+      </div>
     </div>
   </nav>
+
+  <!-- Mobile slide-down panel -->
+  <div
+    id="nav-mobile-panel"
+    data-nav-panel
+    hidden
+    class="border-b border-border bg-surface shadow-md md:hidden"
+  >
+    <ul class="mx-auto flex max-w-[1180px] flex-col gap-1 px-6 py-4">
+      {
+        links.map((l) => (
+          <li>
+            <a
+              href={l.href}
+              aria-current={isActive(l.href) ? 'page' : undefined}
+              class:list={[
+                'block rounded-md px-3 py-3 text-[15px] transition-colors hover:bg-blue-wash',
+                isActive(l.href) ? 'font-semibold text-navy' : 'font-medium text-slate',
+              ]}
+            >
+              {l.label}
+            </a>
+          </li>
+        ))
+      }
+      <li class="mt-2 px-3">
+        <MailtoLink variant="button" dark subject={t('subject.assessment')} class="w-full">
+          {t('cta.assessment')}
+        </MailtoLink>
+      </li>
+    </ul>
+  </div>
 </header>
+
+<script>
+  // Mobile menu: toggle the slide-down panel, swap icon, lock body scroll, ESC
+  // closes. Re-bound on every View Transition page load. Idempotent via a flag.
+  function wireMobileNav() {
+    const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+    const panel = document.querySelector<HTMLElement>('[data-nav-panel]');
+    if (!toggle || !panel) return;
+    const iconOpen = toggle.querySelector<SVGElement>('[data-nav-icon-open]');
+    const iconClose = toggle.querySelector<SVGElement>('[data-nav-icon-close]');
+
+    let open = false;
+    const set = (next: boolean) => {
+      open = next;
+      toggle.setAttribute('aria-expanded', String(open));
+      panel.hidden = !open;
+      iconOpen?.classList.toggle('hidden', open);
+      iconClose?.classList.toggle('hidden', !open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    };
+    set(false);
+
+    toggle.addEventListener('click', () => set(!open));
+    panel.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => set(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && open) {
+        set(false);
+        toggle.focus();
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', wireMobileNav);
+</script>

@@ -1,0 +1,611 @@
+---
+/**
+ * /en/servicii/software — Software & Automation (EN twin)
+ * Template B (lighter service page). Full parity with the RO version.
+ * Capabilities: custom dev & APIs, DevOps/DevSecOps & CI/CD, migration &
+ * modernization, blockchain (Hyperledger, Multichain), AI/LLM automation,
+ * architecture consulting, staff augmentation.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Eyebrow from '../../../components/Eyebrow.astro';
+import SectionHeading from '../../../components/SectionHeading.astro';
+import ModuleCard from '../../../components/ModuleCard.astro';
+import StatStrip from '../../../components/StatStrip.astro';
+import StatBlock from '../../../components/StatBlock.astro';
+import ChevronList from '../../../components/ChevronList.astro';
+import MonoPill from '../../../components/MonoPill.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import TextLink from '../../../components/TextLink.astro';
+import MailtoLink from '../../../components/MailtoLink.astro';
+
+import {
+  getLangFromUrl,
+  useTranslations,
+  localizedPath,
+  yearsInBusiness,
+} from '../../../i18n/ui';
+
+import {
+  Code,
+  GitBranch,
+  Layers,
+  Link2,
+  Bot,
+  Puzzle,
+  Users,
+  ArrowRight,
+} from '@lucide/astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const p = (path: string) => localizedPath(lang, path);
+const years = yearsInBusiness(new Date().getUTCFullYear());
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Software & Automation',
+  description:
+    'Custom software development, DevOps/DevSecOps, application migration and modernization, enterprise blockchain solutions, AI/LLM automation, architecture consulting and staff augmentation.',
+  provider: {
+    '@type': 'Organization',
+    name: 'Smart Control SRL',
+    url: 'https://smartcontrol.ro',
+  },
+  url: 'https://smartcontrol.ro/en/servicii/software',
+  areaServed: ['RO', 'EU'],
+  serviceType: [
+    'Custom Software Development',
+    'DevOps',
+    'DevSecOps',
+    'Application Migration',
+    'Blockchain Development',
+    'AI Automation',
+    'Architecture Consulting',
+    'Staff Augmentation',
+  ],
+};
+---
+
+<BaseLayout
+  title="Software & Automation — Smart Control"
+  description="Custom software development, DevOps/DevSecOps & CI/CD, application migration and modernization, enterprise blockchain and AI/LLM automation. Own team, source code included."
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HERO — light gradient
+       ═══════════════════════════════════════════════════════════ -->
+  <header
+    class="relative overflow-hidden"
+    style="background:linear-gradient(180deg,#F3F6FC 0%,#FFFFFF 100%)"
+  >
+    <!-- decorative parallax blob -->
+    <div
+      class="pointer-events-none absolute"
+      style="inset:0"
+      aria-hidden="true"
+      data-parallax="0.3"
+    >
+      <div
+        style="width:640px;height:640px;border-radius:999px;background:radial-gradient(circle,rgba(122,180,232,0.18),rgba(122,180,232,0) 65%);position:absolute;top:-140px;right:-120px;animation:scDriftA 20s ease-in-out infinite alternate"
+      >
+      </div>
+    </div>
+
+    <div class="container" style="padding-top:190px;padding-bottom:100px">
+      <div data-hero-scrub>
+        <Eyebrow variant="hero">Software &amp; Automation</Eyebrow>
+
+        <h1
+          class="mt-6 font-extrabold leading-[1.1] tracking-[-1.8px] text-midnight"
+          style="font-size:clamp(2.25rem,1.4rem+3.6vw,3.625rem);max-width:880px"
+        >
+          Applications delivered by<br />
+          <span class="text-bright">our own team, source code included.</span>
+        </h1>
+
+        <p
+          class="mt-6 text-cool"
+          style="font-size:18px;line-height:1.7;max-width:640px;animation:scFadeIn 0.9s ease-out 1.2s both"
+        >
+          From initial architecture to production deployment — custom dev, DevSecOps,
+          migrations, enterprise blockchain and AI automation.
+          <strong class="text-navy font-semibold">Consultative approach, no subcontractors.</strong>
+        </p>
+
+        <div
+          class="mt-9 flex flex-wrap items-center gap-4"
+          style="animation:scFadeIn 0.9s ease-out 1.4s both"
+        >
+          <MailtoLink variant="button" subject={t('subject.assessment')}>
+            {t('cta.assessment')}
+          </MailtoLink>
+          <TextLink href="#capabilitati">
+            View capabilities
+          </TextLink>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       STAT STRIP
+       ═══════════════════════════════════════════════════════════ -->
+  <section aria-label="Statistics" class="bg-surface">
+    <div class="container py-0">
+      <StatStrip>
+        <StatBlock value="650" count={650} suffix="+" caption="Projects delivered" />
+        <StatBlock value="250" count={250} suffix="+" caption="Satisfied clients" />
+        <StatBlock value="25" count={25} suffix="+" caption="International clients" />
+        <StatBlock
+          value={String(years)}
+          count={years}
+          suffix="+"
+          caption="Years of experience"
+        />
+      </StatStrip>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       "WHY SMART CONTROL" — 3 context cards
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="bg-surface" style="padding:40px 0 110px">
+    <div class="container">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Approach"
+          heading="Software delivered as an integrated service, not classic outsourcing"
+          headingMaxWidth="700px"
+        >
+          50 in-house specialists replace the classic subcontracting model: a single point of
+          contact, end-to-end accountability, and source code available at delivery.
+        </SectionHeading>
+      </div>
+
+      <div class="mt-11 grid gap-5 md:grid-cols-3" data-skew="4">
+        <!-- Card 1 -->
+        <div data-reveal data-reveal-rotate="-4" data-drift="0.07">
+          <div
+            class="h-full rounded-xl border border-border bg-surface p-[30px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg"
+          >
+            <div
+              class="flex h-11 w-11 items-center justify-center rounded-md border border-border-blue bg-blue-wash"
+            >
+              <Code class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+            </div>
+            <h3 class="mt-[18px] text-[17px] font-bold text-navy">Source code included</h3>
+            <p class="mt-[10px] text-[14px] leading-[1.65] text-cool">
+              We deliver full source code at the end of every project — no vendor lock-in, full
+              adaptability to your specific requirements, with integrated documentation.
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div data-reveal data-reveal-delay="100" data-reveal-rotate="4">
+          <div
+            class="h-full rounded-xl border border-border bg-surface p-[30px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg"
+          >
+            <div
+              class="flex h-11 w-11 items-center justify-center rounded-md border border-border-blue bg-blue-wash"
+            >
+              <Puzzle class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+            </div>
+            <h3 class="mt-[18px] text-[17px] font-bold text-navy">Own team</h3>
+            <p class="mt-[10px] text-[14px] leading-[1.65] text-cool">
+              In-house engineers and architects — not subcontractors. Accumulated knowledge stays
+              in the project from design through post-launch.
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div data-reveal data-reveal-delay="200" data-reveal-rotate="-4" data-drift="-0.07">
+          <div
+            class="h-full rounded-xl border border-border bg-surface p-[30px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg"
+          >
+            <div
+              class="flex h-11 w-11 items-center justify-center rounded-md border border-border-blue bg-blue-wash"
+            >
+              <ArrowRight class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+            </div>
+            <h3 class="mt-[18px] text-[17px] font-bold text-navy">Consultative approach</h3>
+            <p class="mt-[10px] text-[14px] leading-[1.65] text-cool">
+              Every project starts from an analysis of real requirements and expected ROI — not
+              from a standard solution rewritten for a new context.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       CAPABILITIES — bento grid (#capabilitati)
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="capabilitati" class="bg-page" data-band style="padding:110px 0">
+    <div class="container">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Capabilities"
+          heading="What we deliver"
+          headingMaxWidth="680px"
+        >
+          Six delivery domains, covered by the Smart Control in-house team — from
+          architectural design to production and continuous operations.
+        </SectionHeading>
+      </div>
+
+      <div class="mt-11 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" data-skew="4">
+        <!-- 1. Custom dev & APIs -->
+        <div data-reveal data-reveal-rotate="-4">
+          <ModuleCard
+            title="Custom software & API development"
+            index="01"
+            body="Web applications, RESTful APIs and scalable microservices, integration between heterogeneous systems, cloud platforms and legacy data sources."
+            items={[
+              'Web applications & scalable microservices',
+              'Documented RESTful APIs (OpenAPI)',
+              'Heterogeneous systems & cloud integration',
+              'Internal process automation',
+            ]}
+            cols={1}
+          >
+            <Code slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        <!-- 2. DevOps / DevSecOps & CI/CD -->
+        <div data-reveal data-reveal-delay="80" data-reveal-rotate="4">
+          <ModuleCard
+            title="DevOps / DevSecOps & CI/CD"
+            index="02"
+            body="CI/CD pipelines with security gates, DevSecOps practices for continuous and secure delivery, Infrastructure-as-Code and automated testing in staging."
+            items={[
+              'CI/CD pipelines with security gates',
+              'Infrastructure-as-Code',
+              'Automated staging testing',
+              'End-to-end DevSecOps strategy',
+            ]}
+            cols={1}
+          >
+            <GitBranch slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        <!-- 3. Migration & modernization -->
+        <div data-reveal data-reveal-delay="160" data-reveal-rotate="-4">
+          <ModuleCard
+            title="Application migration & modernization"
+            index="03"
+            body="Refactoring, re-platforming and re-architecting of existing applications — Kubernetes-ready containerization with zero-downtime and planned rollback."
+            items={[
+              'Refactoring, re-platforming, re-architecting',
+              'Containerization & Kubernetes-ready',
+              'Zero-downtime migration',
+              'Planned rollback & staging',
+            ]}
+            cols={1}
+          >
+            <Layers slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        <!-- 4. Blockchain -->
+        <div data-reveal>
+          <ModuleCard
+            title="Enterprise blockchain"
+            index="04"
+            body="Design and implementation of blockchain solutions — smart contracts, digital asset tokenization, on-chain access control — where traceability and immutability deliver real value."
+            items={[
+              'Hyperledger & Multichain',
+              'Smart contracts & security audit',
+              'Digital asset tokenization (ERC-20 / ERC-721)',
+              'Decentralized applications (dApps)',
+            ]}
+            cols={1}
+          >
+            <Link2 slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        <!-- 5. AI / LLM automation -->
+        <div data-reveal data-reveal-delay="80">
+          <ModuleCard
+            title="AI / LLM automation"
+            index="05"
+            body="Integrating language models and AI into organizational operations — document processing, internal assistants, anomaly detection, and agents in DevOps pipelines."
+            items={[
+              'Automated document processing & classification',
+              'Virtual assistants for helpdesk / HR',
+              'LLM report generation & summarization',
+              'AI agents in DevOps pipelines',
+            ]}
+            cols={1}
+          >
+            <Bot slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        <!-- 6. Architecture consulting + Staff aug -->
+        <div data-reveal data-reveal-delay="160">
+          <ModuleCard
+            title="Consulting & Staff Augmentation"
+            index="06"
+            body="Assessment of existing architectures, cloud adoption strategies, DevSecOps definition — plus dedicated engineers and architects for your team."
+            items={[
+              'Architecture assessment & best practices',
+              'Cloud adoption & migration strategy',
+              'Dedicated engineers (part-time or full)',
+              'Fast onboarding, standardized processes',
+            ]}
+            cols={1}
+          >
+            <Users slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       BLOCKCHAIN — pragmatic detail (light band)
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="bg-surface" style="padding:110px 0">
+    <div class="container">
+      <div class="grid gap-16 lg:grid-cols-2 lg:items-start">
+        <!-- Left: text -->
+        <div data-reveal>
+          <SectionHeading
+            eyebrow="Enterprise blockchain"
+            heading="Where blockchain makes sense — and where it doesn't"
+            headingMaxWidth="520px"
+          >
+            Smart Control does not propose blockchain where a traditional relational database is
+            sufficient. Every project starts with a rigorous cost-benefit analysis.
+          </SectionHeading>
+
+          <div class="mt-8 space-y-3">
+            <p class="text-[14.5px] leading-[1.7] text-cool">
+              Our expertise covers both consulting to identify the right use cases and
+              end-to-end delivery with a built-in security audit.
+            </p>
+          </div>
+
+          <div class="mt-8">
+            <p class="mb-3 font-mono text-[11.5px] uppercase tracking-[2px] text-bright">
+              Real use cases
+            </p>
+            <ChevronList
+              items={[
+                'Digital asset tokenization — automated ownership transfer via smart contracts',
+                'On-chain token access control — auditable and revocable without centralized intervention',
+                'Decentralized applications (dApps) — business logic implemented on-chain',
+                'Smart contract audit and remediation — static and dynamic analysis before production',
+              ]}
+              cols={1}
+            />
+          </div>
+        </div>
+
+        <!-- Right: tech pills + approach -->
+        <div data-reveal data-reveal-delay="120" data-drift="0.05">
+          <div
+            class="rounded-xl border border-border bg-page p-8 shadow-sm"
+          >
+            <p class="font-mono text-[11.5px] uppercase tracking-[2px] text-bright">
+              Technologies & concepts
+            </p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              {
+                [
+                  'Hyperledger Fabric',
+                  'Multichain',
+                  'Smart Contracts',
+                  'ERC-721 (NFT)',
+                  'ERC-20 Tokens',
+                  'Access Control On-chain',
+                  'dApps',
+                  'Privacy-Preserving Computation',
+                ].map((tag) => (
+                  <MonoPill>{tag}</MonoPill>
+                ))
+              }
+            </div>
+
+            <div class="mt-8 border-t border-border pt-6">
+              <p class="font-mono text-[11.5px] uppercase tracking-[2px] text-bright">
+                Pragmatic approach
+              </p>
+              <p class="mt-3 text-[14px] leading-[1.7] text-cool">
+                Blockchain delivers real value where traceability, immutability or contractual
+                automation are genuine requirements — not where a relational database is
+                sufficient. We deliver tested, integrated and audited solutions.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       AI / LLM — detail (wash band)
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="bg-page" style="padding:110px 0">
+    <div class="container">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Intelligent automation"
+          heading="AI integrated into organizational operations"
+          headingMaxWidth="640px"
+        >
+          Smart Control extends Software Development capabilities with intelligent process
+          automation — integrating AI models into existing operational workflows, with clear
+          delivery metrics.
+        </SectionHeading>
+      </div>
+
+      <div class="mt-11 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          [
+            {
+              title: 'Document processing',
+              body: 'Automatic classification of invoices, contracts and forms with structured data extraction.',
+              delay: 0,
+            },
+            {
+              title: 'Internal virtual assistants',
+              body: 'Chatbots for IT helpdesk, HR and operations support — complementing the Service Desk offering.',
+              delay: 80,
+            },
+            {
+              title: 'Automatic reporting',
+              body: 'Report generation and summarization of long documents via language models (LLM), with configurable export.',
+              delay: 160,
+            },
+            {
+              title: 'AI approval workflows',
+              body: 'Automation of approval flows and decisions based on rules combined with AI inference.',
+              delay: 0,
+            },
+            {
+              title: 'Anomaly detection',
+              body: 'Proactive alerting in operational processes — integrated with the Smart Control monitoring platform.',
+              delay: 80,
+            },
+            {
+              title: 'AI agents in DevOps',
+              body: 'Integration of AI agents in DevOps pipelines for automated code review, testing and documentation.',
+              delay: 160,
+            },
+          ].map((item) => (
+            <div
+              data-reveal
+              data-reveal-delay={item.delay > 0 ? String(item.delay) : undefined}
+            >
+              <div class="h-full rounded-xl border border-border bg-surface p-[26px] shadow-sm">
+                <h3 class="text-[16px] font-bold text-navy">{item.title}</h3>
+                <p class="mt-2.5 text-[13.5px] leading-[1.65] text-cool">{item.body}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="mt-10" data-reveal>
+        <div
+          class="rounded-xl border border-border-blue bg-blue-wash p-6"
+        >
+          <p class="font-mono text-[11.5px] uppercase tracking-[2px] text-bright">
+            Measurable results
+          </p>
+          <p class="mt-2 text-[14.5px] leading-[1.7] text-slate">
+            AI automation projects delivered by Smart Control track clear metrics: reduction in
+            processing time, lower error rates, and freeing up human capacity for
+            high-value-added activities.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       STAFF AUGMENTATION — light band
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="bg-surface" style="padding:110px 0">
+    <div class="container">
+      <div class="grid gap-16 lg:grid-cols-2 lg:items-center">
+        <div data-reveal>
+          <SectionHeading
+            eyebrow="Dedicated technical resources"
+            heading="Staff Augmentation — in-house specialists at your disposal"
+            headingMaxWidth="540px"
+          >
+            We provide engineers and IT architects on a service contract basis — part-time or
+            dedicated — to extend clients' internal teams.
+          </SectionHeading>
+          <div class="mt-8">
+            <ChevronList
+              items={[
+                'Engineers and architects with verified experience across hundreds of projects',
+                'Fast onboarding thanks to Smart Control standardized processes',
+                'Part-time or dedicated — flexible to project needs',
+                'Guaranteed continuity — in-house team, not a freelancer network',
+              ]}
+              cols={1}
+            />
+          </div>
+          <div class="mt-8">
+            <MailtoLink variant="button" subject={t('subject.assessment')}>
+              {t('cta.assessment')}
+            </MailtoLink>
+          </div>
+        </div>
+
+        <div data-reveal data-reveal-delay="120" data-drift="0.05">
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {
+              [
+                { value: '50', label: 'In-house specialists' },
+                { value: '500+', label: 'Cumulative years of experience' },
+                { value: '650+', label: 'Projects delivered' },
+                { value: String(years) + '+', label: 'Years in market' },
+              ].map((stat) => (
+                <div class="rounded-xl border border-border bg-page p-6 text-center shadow-sm">
+                  <div class="font-mono text-[32px] font-bold leading-none text-navy">
+                    {stat.value}
+                  </div>
+                  <div class="mt-2 text-[13px] text-cool">{stat.label}</div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       CROSS-SELL — Cloud & Modernization link
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="bg-page" style="padding:64px 0">
+    <div class="container">
+      <div
+        class="flex flex-col items-start justify-between gap-6 rounded-xl border border-border bg-surface p-8 shadow-sm sm:flex-row sm:items-center"
+        data-reveal
+      >
+        <div>
+          <p class="font-mono text-[11.5px] uppercase tracking-[2px] text-bright">
+            Related service
+          </p>
+          <p class="mt-1.5 text-[17px] font-bold text-navy">
+            Cloud & Modernization — the 5-stage methodology
+          </p>
+          <p class="mt-1 text-[14px] text-cool">
+            Containerization, DevSecOps and hybrid migration, backed by a 90-day ROI report.
+          </p>
+        </div>
+        <TextLink href={p('/servicii/cloud')} class="shrink-0">
+          Explore Cloud &amp; Modernization
+        </TextLink>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       CTA BAND — dark, assessment
+       ═══════════════════════════════════════════════════════════ -->
+  <CtaBand
+    id="contact"
+    eyebrow="Next steps"
+    heading="Free initial assessment — 2 days"
+    cta={t('cta.assessment')}
+    subject={t('subject.assessment')}
+  >
+    We identify the priority area of interest together and deliver a recommendations report at
+    the end. No commitments — the decision to continue is yours.
+  </CtaBand>
+</BaseLayout>

@@ -1,0 +1,320 @@
+---
+// /en/servicii/cloud — Cloud & Modernization (EN twin). Faithful translation of
+// the RO page per the brand voice: technical terms stay English, sentence-case
+// headings, no fluff, chevron bullets, no emoji. Motion contract identical to RO
+// (same data-attributes; BaseLayout auto-wires).
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Eyebrow from '../../../components/Eyebrow.astro';
+import SectionHeading from '../../../components/SectionHeading.astro';
+import IconChip from '../../../components/IconChip.astro';
+import ChevronList from '../../../components/ChevronList.astro';
+import TextLink from '../../../components/TextLink.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import { getLangFromUrl, useTranslations } from '../../../i18n/ui';
+import {
+  TrendingUp,
+  Recycle,
+  Rocket,
+  Container,
+  GitBranch,
+  Cloud,
+  Gauge,
+} from '@lucide/astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const pageTitle = 'Cloud & Modernization — Application re-architecture and optimization | Smart Control';
+const pageDescription =
+  'Hardware is getting more expensive; your applications shouldn’t be. Re-architecture, containerization and selective cloud migration through a workflow validated across 650+ projects — CAPEX→OPEX, a 90-day ROI report.';
+
+// SECTION 3 — "Why now" reasons.
+const reasons = [
+  {
+    Icon: TrendingUp,
+    title: 'Rising hardware costs',
+    body: 'Demand for AI infrastructure is straining the supply chain — memory, storage and GPUs at record prices, with unpredictable lead times.',
+    reveal: { 'data-reveal': true, 'data-reveal-rotate': '-4', 'data-drift': '0.07' },
+  },
+  {
+    Icon: Recycle,
+    title: 'The classic refresh no longer pays off',
+    body: 'The “every 5 years” server replacement is increasingly hard to justify in a business case — existing capacity is often used below 40%.',
+    reveal: { 'data-reveal': true, 'data-reveal-delay': '100', 'data-reveal-rotate': '4' },
+  },
+  {
+    Icon: Rocket,
+    title: 'Re-architecture wins',
+    body: 'Containerization, application tuning and selective cloud migration extract performance from what you already have — with predictable costs, CAPEX→OPEX.',
+    reveal: { 'data-reveal': true, 'data-reveal-delay': '200', 'data-reveal-rotate': '-4', 'data-drift': '-0.07' },
+  },
+];
+
+// SECTION 4 — #flux 5-stage methodology.
+const steps = [
+  {
+    title: 'Re-architecture proposal',
+    pill: 'Fast Track',
+    body: 'For clients we already have an established relationship with: we leverage what we know about the existing infrastructure to identify the critical points and propose modernizations based on real data, not theoretical estimates.',
+  },
+  {
+    title: 'Initial assessment & quick wins',
+    pill: '2 days · free',
+    body: 'Automated infrastructure inventory with our own tooling, performance analysis through our monitoring platform, an NIS 2 / GDPR gap assessment — and resolving minor issues within the first days.',
+  },
+  {
+    title: 'Refactoring plan & business case',
+    pill: 'estimated ROI',
+    body: 'A technical roadmap that prioritizes applications for containerization (Kubernetes-ready), a cost-benefit analysis before implementation, and staging test strategies with rollback plans for zero-downtime.',
+  },
+  {
+    title: 'Agile implementation & knowledge transfer',
+    pill: 'DevSecOps',
+    body: 'Containerization and migration onto Kubernetes / OpenShift / AKS / GKE, CI/CD pipelines, hybrid on-premise–cloud integration — plus technical workshops and documentation for your team’s autonomy.',
+  },
+  {
+    title: 'Continuous observability & optimization',
+    pill: '90-day ROI report',
+    body: 'Proactive monitoring with the proprietary Smart Control solution, ROI validation through a 90-day performance report, and continuous iteration based on telemetry data.',
+  },
+];
+
+// SECTION 5 — Capabilities bento.
+const capabilities = [
+  {
+    Icon: Container,
+    title: 'Containerization & orchestration',
+    items: [
+      'Kubernetes · OpenShift · AKS · GKE',
+      'Prioritizing Kubernetes-ready applications',
+      'Zero-downtime migration, planned rollback',
+    ],
+    reveal: { 'data-reveal': true },
+  },
+  {
+    Icon: GitBranch,
+    title: 'DevSecOps & CI/CD',
+    items: [
+      'CI/CD pipelines with security gates',
+      'Automated testing in staging',
+      'Infrastructure-as-Code',
+    ],
+    reveal: { 'data-reveal': true, 'data-reveal-delay': '80' },
+  },
+  {
+    Icon: Cloud,
+    title: 'Hybrid integration',
+    items: [
+      'On-premise ↔ cloud, no lock-in',
+      'Selective migration — only what makes economic sense',
+      'CAPEX→OPEX with predictable costs',
+    ],
+    reveal: { 'data-reveal': true },
+  },
+  {
+    Icon: Gauge,
+    title: 'Observability & ROI',
+    items: [
+      'Proactive monitoring with SEKNET',
+      '90-day performance report',
+      'Continuous iteration on telemetry data',
+    ],
+    reveal: { 'data-reveal': true, 'data-reveal-delay': '80' },
+  },
+];
+
+// JSON-LD: Service (Cloud & Modernization, provider Smart Control).
+const SITE = 'https://smartcontrol.ro';
+const serviceLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Cloud & Modernization',
+  serviceType: 'Cloud modernization & application re-architecture',
+  url: `${SITE}/en/servicii/cloud`,
+  description:
+    'Application re-architecture and optimization, containerization, DevSecOps and selective cloud migration — a 5-stage validated workflow that extracts performance from existing infrastructure, with predictable CAPEX→OPEX costs.',
+  provider: {
+    '@type': 'Organization',
+    name: 'Smart Control SRL',
+    url: SITE,
+  },
+  areaServed: ['RO', 'EU'],
+  availableLanguage: ['ro', 'en'],
+};
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(serviceLd)} />
+
+  {/* ============ SECTION 2 — HERO (light) ============ */}
+  <header
+    class="relative overflow-hidden"
+    style="background:linear-gradient(180deg,#F3F6FC 0%,#FFFFFF 100%)"
+  >
+    {/* Decorative parallax blob — drifts + parallaxes, inert to pointer. */}
+    <div class="pointer-events-none absolute inset-0" data-parallax="0.3" aria-hidden="true">
+      <div
+        class="absolute h-[680px] w-[680px] rounded-full"
+        style="top:-160px;right:-140px;background:radial-gradient(circle,rgba(122,180,232,0.2),rgba(122,180,232,0) 65%);animation:scDriftA 18s ease-in-out infinite alternate"
+      >
+      </div>
+    </div>
+
+    <div class="container relative pb-[100px] pt-[120px] md:pt-[190px]" data-hero-scrub>
+      <Eyebrow variant="light">Cloud &amp; Modernization</Eyebrow>
+
+      <h1
+        class="mt-6 max-w-[860px] text-[clamp(2.25rem,1.6rem+2.8vw,3.625rem)] font-extrabold leading-[1.1] tracking-[-1.8px] text-midnight"
+      >
+        Hardware is getting more expensive.<br /><span class="text-bright">Your applications shouldn’t be.</span>
+      </h1>
+
+      <p class="mt-6 max-w-[640px] text-[18px] leading-[1.7] text-slate">
+        Prices for critical components are climbing under the pressure of demand
+        for AI infrastructure, and refresh budgets no longer stretch far enough.
+        <span class="font-semibold text-navy">Re-architecting and optimizing applications</span>
+        becomes the primary strategy — you extract more performance from your
+        existing infrastructure before buying new hardware.
+      </p>
+
+      <div class="mt-[38px] flex flex-wrap items-center gap-4">
+        <a
+          data-email-user="office"
+          data-email-domain="smartcontrol.ro"
+          data-email-subject="Free assessment"
+          class="inline-flex items-center justify-center rounded-md bg-bright px-[26px] py-[13px] text-[14.5px] font-semibold text-white transition-all [box-shadow:0_4px_18px_rgba(68,135,220,0.35)] hover:bg-royal hover:[box-shadow:0_6px_24px_rgba(68,135,220,0.45)]"
+        >
+          Schedule the free assessment
+        </a>
+        <TextLink href="#flux">See the 5-stage workflow</TextLink>
+      </div>
+    </div>
+  </header>
+
+  {/* ============ SECTION 3 — "WHY NOW" (3 reason cards, light) ============ */}
+  <section aria-labelledby="why-now" class="bg-surface">
+    <div class="container pb-[110px] pt-10">
+      <h2 id="why-now" class="sr-only">Why now</h2>
+      <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3" data-skew="4">
+        {
+          reasons.map(({ Icon, title, body, reveal }) => (
+            <div {...reveal}>
+              <article class="box-border flex h-full flex-col rounded-xl border border-border bg-surface px-8 py-[30px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:shadow-lg">
+                <IconChip>
+                  <Icon class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+                </IconChip>
+                <h3 class="mt-[18px] text-[17px] font-bold text-navy">{title}</h3>
+                <p class="mt-2.5 text-[14px] leading-[1.65] text-cool">{body}</p>
+              </article>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ============ SECTION 4 — 5-STAGE WORKFLOW (#flux, scroll stepper, wash band) ============ */}
+  <section id="flux" data-band class="bg-page">
+    <div class="container py-[110px]">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Approach"
+          heading="The 5-stage workflow"
+          headingMaxWidth="700px"
+        >
+          We don’t just propose a technical upgrade, but a strategic
+          re-architecture — a workflow validated across 650+ projects that
+          minimizes risk and maximizes ROI.
+        </SectionHeading>
+      </div>
+
+      {/* Page-local stepper composite — matches the initStepper data-contract
+          (data-stepper / data-stepper-fill / data-step / -dot / -body) so
+          BaseLayout auto-wires it. Spec dot = 52px, rail at 25px, with a mono
+          pill the shared <Stepper> can't render yet (see sharedChangeRequests). */}
+      <div class="relative mt-[52px]" data-stepper>
+        <div class="absolute left-[25px] top-7 bottom-7 w-[2px] bg-border-blue" aria-hidden="true">
+          <div
+            data-stepper-fill
+            class="absolute left-0 top-0 w-full"
+            style="height:0;background:linear-gradient(180deg,#4487DC,#7AB4E8);box-shadow:0 0 12px rgba(68,135,220,0.5)"
+          >
+          </div>
+        </div>
+
+        <ol class="relative">
+          {
+            steps.map((s, i) => (
+              <li
+                data-step
+                class="relative grid grid-cols-[52px_1fr] gap-8 py-[26px]"
+              >
+                <span
+                  data-step-dot
+                  class="flex h-[52px] w-[52px] items-center justify-center rounded-[12px] border border-border-blue bg-surface font-mono text-[15px] font-semibold text-faint transition-[border-color,color,box-shadow,background] duration-[400ms]"
+                >
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <div
+                  data-step-body
+                  class="max-w-[760px] transition-opacity duration-[400ms]"
+                  style="opacity:0.45"
+                >
+                  <div class="flex flex-wrap items-baseline gap-3.5">
+                    <h3 class="text-[20px] font-bold tracking-[-0.3px] text-navy">{s.title}</h3>
+                    <span class="rounded-full border border-border-blue bg-surface px-2.5 py-[3px] font-mono text-[11px] uppercase tracking-[1px] text-bright">
+                      {s.pill}
+                    </span>
+                  </div>
+                  <p class="mt-2.5 text-[14.5px] leading-[1.7] text-cool">{s.body}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ SECTION 5 — STACK / WHAT WE DELIVER (light) ============ */}
+  <section aria-labelledby="what-we-deliver" class="bg-surface">
+    <div class="container py-[110px]">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Capabilities"
+          heading="What we deliver, concretely"
+          headingMaxWidth="700px"
+          headingId="what-we-deliver"
+        />
+      </div>
+
+      <div class="mt-11 grid gap-5 md:grid-cols-2" data-skew="4">
+        {
+          capabilities.map(({ Icon, title, items, reveal }) => (
+            <div {...reveal}>
+              <article class="box-border h-full rounded-xl border border-border bg-surface px-[34px] py-[30px] shadow-sm">
+                <div class="flex items-center gap-3">
+                  <Icon class="h-5 w-5 text-bright" stroke-width={1.5} />
+                  <h3 class="text-[17px] font-bold text-navy">{title}</h3>
+                </div>
+                <ChevronList items={items} cols={1} class="mt-4 gap-y-[9px]" />
+              </article>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ============ SECTION 6 — CTA (#contact, dark band) ============ */}
+  <CtaBand
+    id="contact"
+    eyebrow="Stage 1 · free"
+    heading="Initial assessment — 2 days, no commitment"
+    cta="Request the assessment"
+    subject={t('subject.assessment')}
+  >
+    Together we identify the priority area of interest and deliver a report of
+    recommendations at the end. The decision to continue is yours.
+  </CtaBand>
+</BaseLayout>

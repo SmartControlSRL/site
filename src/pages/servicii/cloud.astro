@@ -1,0 +1,320 @@
+---
+// /servicii/cloud — Cloud & Modernization (RO). Template B flagship: light hero
+// → "De ce acum" 3-card reasons grid → #flux 5-stage scroll stepper (wash band)
+// → "Ce livrăm" capabilities bento → dark CtaBand (#contact). Copy verbatim from
+// docs/build-specs/cloud.md; motion via data-attributes auto-wired by BaseLayout.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Eyebrow from '../../components/Eyebrow.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import IconChip from '../../components/IconChip.astro';
+import ChevronList from '../../components/ChevronList.astro';
+import TextLink from '../../components/TextLink.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/ui';
+import {
+  TrendingUp,
+  Recycle,
+  Rocket,
+  Container,
+  GitBranch,
+  Cloud,
+  Gauge,
+} from '@lucide/astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const pageTitle = 'Cloud & Modernizare — Re-arhitecturare și optimizare aplicații | Smart Control';
+const pageDescription =
+  'Hardware-ul se scumpește; aplicațiile tale nu trebuie. Re-arhitecturare, containerizare și migrare selectivă în cloud printr-un flux validat în 650+ proiecte — CAPEX→OPEX, raport ROI la 90 de zile.';
+
+// SECTION 3 — "De ce acum" reasons (icon / title / body, verbatim).
+const reasons = [
+  {
+    Icon: TrendingUp,
+    title: 'Costuri hardware în creștere',
+    body: 'Cererea pentru infrastructură AI pune presiune pe lanțul de aprovizionare — memorie, stocare și GPU-uri la prețuri record, cu termene de livrare imprevizibile.',
+    reveal: { 'data-reveal': true, 'data-reveal-rotate': '-4', 'data-drift': '0.07' },
+  },
+  {
+    Icon: Recycle,
+    title: 'Refresh-ul clasic nu mai e rentabil',
+    body: 'Înlocuirea „la 5 ani" a serverelor devine tot mai greu de justificat în business case — capacitatea existentă e adesea folosită sub 40%.',
+    reveal: { 'data-reveal': true, 'data-reveal-delay': '100', 'data-reveal-rotate': '4' },
+  },
+  {
+    Icon: Rocket,
+    title: 'Re-arhitecturarea câștigă',
+    body: 'Containerizare, tuning aplicativ și migrare selectivă în cloud extrag performanță din ce ai deja — cu costuri predictibile, CAPEX→OPEX.',
+    reveal: { 'data-reveal': true, 'data-reveal-delay': '200', 'data-reveal-rotate': '-4', 'data-drift': '-0.07' },
+  },
+];
+
+// SECTION 4 — #flux 5-stage methodology (number / title / pill / body, verbatim).
+const steps = [
+  {
+    title: 'Propunere de re-arhitecturare',
+    pill: 'Fast Track',
+    body: 'Pentru clienții cu care avem deja o relație stabilă: valorificăm cunoștințele despre infrastructura existentă pentru a identifica punctele critice și propunem modernizări bazate pe date reale, nu pe estimări teoretice.',
+  },
+  {
+    title: 'Assessment inițial & Quick Wins',
+    pill: '2 zile · gratuit',
+    body: 'Inventariere automatizată a infrastructurii cu instrumentele noastre proprii, analiză de performanță prin platforma de monitorizare, evaluarea gap-urilor NIS 2 / GDPR — și rezolvarea problemelor minore încă din primele zile.',
+  },
+  {
+    title: 'Planul de refactoring & business case',
+    pill: 'ROI estimat',
+    body: 'Roadmap tehnic cu prioritizarea aplicațiilor pentru containerizare (Kubernetes-ready), analiză cost-beneficiu înainte de implementare și strategii de testare în staging cu planuri de rollback pentru zero-downtime.',
+  },
+  {
+    title: 'Implementare agilă & transfer de cunoștințe',
+    pill: 'DevSecOps',
+    body: 'Containerizare și migrare pe Kubernetes / OpenShift / AKS / GKE, pipeline-uri CI/CD, integrare hibridă on-premise–cloud — plus workshop-uri tehnice și documentație pentru autonomia echipei tale.',
+  },
+  {
+    title: 'Observabilitate continuă & optimizare',
+    pill: 'Raport ROI la 90 de zile',
+    body: 'Monitorizare proactivă cu soluția proprietară Smart Control, validarea ROI printr-un raport de performanță la 90 de zile și iterație continuă pe baza datelor de telemetrie.',
+  },
+];
+
+// SECTION 5 — Capabilities bento (icon / title / 3 bullets, verbatim).
+const capabilities = [
+  {
+    Icon: Container,
+    title: 'Containerizare & orchestrare',
+    items: [
+      'Kubernetes · OpenShift · AKS · GKE',
+      'Prioritizarea aplicațiilor Kubernetes-ready',
+      'Migrare cu zero-downtime, rollback planificat',
+    ],
+    reveal: { 'data-reveal': true },
+  },
+  {
+    Icon: GitBranch,
+    title: 'DevSecOps & CI/CD',
+    items: [
+      'Pipeline-uri CI/CD cu security gates',
+      'Testare automată în staging',
+      'Infrastructure-as-Code',
+    ],
+    reveal: { 'data-reveal': true, 'data-reveal-delay': '80' },
+  },
+  {
+    Icon: Cloud,
+    title: 'Integrare hibridă',
+    items: [
+      'On-premise ↔ cloud, fără lock-in',
+      'Migrare selectivă — doar ce are sens economic',
+      'CAPEX→OPEX cu costuri predictibile',
+    ],
+    reveal: { 'data-reveal': true },
+  },
+  {
+    Icon: Gauge,
+    title: 'Observabilitate & ROI',
+    items: [
+      'Monitorizare proactivă cu SEKNET',
+      'Raport de performanță la 90 de zile',
+      'Iterație continuă pe date de telemetrie',
+    ],
+    reveal: { 'data-reveal': true, 'data-reveal-delay': '80' },
+  },
+];
+
+// JSON-LD: Service (Cloud & Modernization, provider Smart Control).
+const SITE = 'https://smartcontrol.ro';
+const serviceLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Cloud & Modernizare',
+  serviceType: 'Cloud modernization & application re-architecture',
+  url: `${SITE}/servicii/cloud`,
+  description:
+    'Re-arhitecturare și optimizare a aplicațiilor, containerizare, DevSecOps și migrare selectivă în cloud — un flux validat în 5 etape care extrage performanță din infrastructura existentă, cu costuri predictibile CAPEX→OPEX.',
+  provider: {
+    '@type': 'Organization',
+    name: 'Smart Control SRL',
+    url: SITE,
+  },
+  areaServed: ['RO', 'EU'],
+  availableLanguage: ['ro', 'en'],
+};
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(serviceLd)} />
+
+  {/* ============ SECTION 2 — HERO (light) ============ */}
+  <header
+    class="relative overflow-hidden"
+    style="background:linear-gradient(180deg,#F3F6FC 0%,#FFFFFF 100%)"
+  >
+    {/* Decorative parallax blob — drifts + parallaxes, inert to pointer. */}
+    <div class="pointer-events-none absolute inset-0" data-parallax="0.3" aria-hidden="true">
+      <div
+        class="absolute h-[680px] w-[680px] rounded-full"
+        style="top:-160px;right:-140px;background:radial-gradient(circle,rgba(122,180,232,0.2),rgba(122,180,232,0) 65%);animation:scDriftA 18s ease-in-out infinite alternate"
+      >
+      </div>
+    </div>
+
+    <div class="container relative pb-[100px] pt-[120px] md:pt-[190px]" data-hero-scrub>
+      <Eyebrow variant="light">Cloud &amp; Modernization</Eyebrow>
+
+      <h1
+        class="mt-6 max-w-[860px] text-[clamp(2.25rem,1.6rem+2.8vw,3.625rem)] font-extrabold leading-[1.1] tracking-[-1.8px] text-midnight"
+      >
+        Hardware-ul se scumpește.<br /><span class="text-bright">Aplicațiile tale nu trebuie.</span>
+      </h1>
+
+      <p class="mt-6 max-w-[640px] text-[18px] leading-[1.7] text-slate">
+        Prețurile componentelor critice cresc sub presiunea cererii pentru
+        infrastructură AI, iar bugetele de refresh nu mai ajung.
+        <span class="font-semibold text-navy">Re-arhitecturarea și optimizarea aplicațiilor</span>
+        devine strategia principală — extragi mai multă performanță din
+        infrastructura existentă, înainte să cumperi una nouă.
+      </p>
+
+      <div class="mt-[38px] flex flex-wrap items-center gap-4">
+        <a
+          data-email-user="office"
+          data-email-domain="smartcontrol.ro"
+          data-email-subject="Evaluare gratuită"
+          class="inline-flex items-center justify-center rounded-md bg-bright px-[26px] py-[13px] text-[14.5px] font-semibold text-white transition-all [box-shadow:0_4px_18px_rgba(68,135,220,0.35)] hover:bg-royal hover:[box-shadow:0_6px_24px_rgba(68,135,220,0.45)]"
+        >
+          Programează assessment-ul gratuit
+        </a>
+        <TextLink href="#flux">Vezi fluxul în 5 etape</TextLink>
+      </div>
+    </div>
+  </header>
+
+  {/* ============ SECTION 3 — "DE CE ACUM" (3 reason cards, light) ============ */}
+  <section aria-labelledby="de-ce-acum" class="bg-surface">
+    <div class="container pb-[110px] pt-10">
+      <h2 id="de-ce-acum" class="sr-only">De ce acum</h2>
+      <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3" data-skew="4">
+        {
+          reasons.map(({ Icon, title, body, reveal }) => (
+            <div {...reveal}>
+              <article class="box-border flex h-full flex-col rounded-xl border border-border bg-surface px-8 py-[30px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:shadow-lg">
+                <IconChip>
+                  <Icon class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+                </IconChip>
+                <h3 class="mt-[18px] text-[17px] font-bold text-navy">{title}</h3>
+                <p class="mt-2.5 text-[14px] leading-[1.65] text-cool">{body}</p>
+              </article>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ============ SECTION 4 — FLUX 5 ETAPE (#flux, scroll stepper, wash band) ============ */}
+  <section id="flux" data-band class="bg-page">
+    <div class="container py-[110px]">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Abordare"
+          heading="Fluxul de lucru în 5 etape"
+          headingMaxWidth="700px"
+        >
+          Nu propunem doar o actualizare tehnică, ci o re-arhitecturare strategică
+          — un flux validat în 650+ proiecte, care minimizează riscurile și
+          maximizează ROI.
+        </SectionHeading>
+      </div>
+
+      {/* Page-local stepper composite — matches the initStepper data-contract
+          (data-stepper / data-stepper-fill / data-step / -dot / -body) so
+          BaseLayout auto-wires it. Spec dot = 52px, rail at 25px, with a mono
+          pill the shared <Stepper> can't render yet (see sharedChangeRequests). */}
+      <div class="relative mt-[52px]" data-stepper>
+        <div class="absolute left-[25px] top-7 bottom-7 w-[2px] bg-border-blue" aria-hidden="true">
+          <div
+            data-stepper-fill
+            class="absolute left-0 top-0 w-full"
+            style="height:0;background:linear-gradient(180deg,#4487DC,#7AB4E8);box-shadow:0 0 12px rgba(68,135,220,0.5)"
+          >
+          </div>
+        </div>
+
+        <ol class="relative">
+          {
+            steps.map((s, i) => (
+              <li
+                data-step
+                class="relative grid grid-cols-[52px_1fr] gap-8 py-[26px]"
+              >
+                <span
+                  data-step-dot
+                  class="flex h-[52px] w-[52px] items-center justify-center rounded-[12px] border border-border-blue bg-surface font-mono text-[15px] font-semibold text-faint transition-[border-color,color,box-shadow,background] duration-[400ms]"
+                >
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <div
+                  data-step-body
+                  class="max-w-[760px] transition-opacity duration-[400ms]"
+                  style="opacity:0.45"
+                >
+                  <div class="flex flex-wrap items-baseline gap-3.5">
+                    <h3 class="text-[20px] font-bold tracking-[-0.3px] text-navy">{s.title}</h3>
+                    <span class="rounded-full border border-border-blue bg-surface px-2.5 py-[3px] font-mono text-[11px] uppercase tracking-[1px] text-bright">
+                      {s.pill}
+                    </span>
+                  </div>
+                  <p class="mt-2.5 text-[14.5px] leading-[1.7] text-cool">{s.body}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ SECTION 5 — STACK / CE LIVRĂM (light) ============ */}
+  <section aria-labelledby="ce-livram" class="bg-surface">
+    <div class="container py-[110px]">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Capabilități"
+          heading="Ce livrăm concret"
+          headingMaxWidth="700px"
+          headingId="ce-livram"
+        />
+      </div>
+
+      <div class="mt-11 grid gap-5 md:grid-cols-2" data-skew="4">
+        {
+          capabilities.map(({ Icon, title, items, reveal }) => (
+            <div {...reveal}>
+              <article class="box-border h-full rounded-xl border border-border bg-surface px-[34px] py-[30px] shadow-sm">
+                <div class="flex items-center gap-3">
+                  <Icon class="h-5 w-5 text-bright" stroke-width={1.5} />
+                  <h3 class="text-[17px] font-bold text-navy">{title}</h3>
+                </div>
+                <ChevronList items={items} cols={1} class="mt-4 gap-y-[9px]" />
+              </article>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ============ SECTION 6 — CTA (#contact, dark band) ============ */}
+  <CtaBand
+    id="contact"
+    eyebrow="Etapa 1 · gratuită"
+    heading="Assessment Inițial — 2 zile, fără angajamente"
+    cta="Solicită assessment-ul"
+    subject={t('subject.assessment')}
+  >
+    Identificăm împreună zona de interes prioritară și livrăm un raport de
+    recomandări la final. Decizia de a continua îți aparține.
+  </CtaBand>
+</BaseLayout>

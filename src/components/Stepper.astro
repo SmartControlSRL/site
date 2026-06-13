@@ -1,0 +1,58 @@
+---
+// Scroll-driven vertical stepper (Cloud's 5-stage methodology). BaseLayout
+// finds each [data-stepper], locates its [data-stepper-fill], and runs
+// initStepper(container, fill, { dark: hasAttr('data-stepper-dark') }). The fill
+// element grows down the rail; each [data-step] row exposes a [data-step-dot]
+// (number medallion) and [data-step-body] that motion.js lights up as the
+// scroll focus passes its midpoint.
+//
+// Pass steps as an array; each renders a numbered dot + title + body. The dot's
+// active/inactive colors are driven entirely by motion.js (inline styles), so
+// the markup just needs the data hooks + a sensible static resting state.
+interface Step {
+  title: string;
+  body: string;
+}
+interface Props {
+  steps: Step[];
+  dark?: boolean;
+  class?: string;
+}
+const { steps, dark = false, class: extra = '' } = Astro.props;
+
+const dotResting = dark
+  ? 'border-[rgba(122,180,232,0.25)] bg-midnight text-[rgba(226,233,245,0.45)]'
+  : 'border-border-blue bg-surface text-faint';
+const railBg = dark ? 'bg-[rgba(122,180,232,0.15)]' : 'bg-border-blue';
+---
+
+<div class:list={['relative', extra]} data-stepper data-stepper-dark={dark ? '' : undefined}>
+  <!-- rail (full height) + fill (grows via initStepper). dot center ≈ 22px. -->
+  <div class:list={['absolute left-[22px] top-0 bottom-0 w-[2px]', railBg]} aria-hidden="true">
+    <div data-stepper-fill class="absolute left-0 top-0 w-full bg-bright" style="height:0"></div>
+  </div>
+
+  <ol class="relative grid gap-10">
+    {
+      steps.map((step, i) => (
+        <li data-step class="grid grid-cols-[44px_1fr] items-start gap-5">
+          <span
+            data-step-dot
+            class:list={[
+              'flex h-11 w-11 items-center justify-center rounded-full border-2 font-mono text-[15px] font-semibold transition-all duration-300',
+              dotResting,
+            ]}
+          >
+            {String(i + 1).padStart(2, '0')}
+          </span>
+          <div data-step-body class="pt-1 transition-opacity duration-300" style="opacity:0.45">
+            <h3 class:list={['text-h3 font-bold', dark ? 'text-white' : 'text-navy']}>{step.title}</h3>
+            <p class:list={['mt-2 text-[14.5px]', dark ? 'text-[rgba(226,233,245,0.7)]' : 'text-cool']}>
+              {step.body}
+            </p>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</div>

@@ -4,9 +4,10 @@
    SMART CONTROL — WEB THEME
    Brand tokens ported from docs/SMC Web/ds/colors_and_type.css.
    Palette / shadow / radius / voice are kept verbatim from the
-   design system; the TYPE SCALE is rederived web-native (larger,
-   fluid) — the deck tokens (14px body / 44px display) are too
-   small for the web. See /CLAUDE.md.
+   design system. The TYPE SCALE is fluid clamp() whose MAX matches
+   the Claude Design export's desktop px (canonical per RESOLUTIONS
+   §1: 16px base, 1180px container, 38/40/64px headings). See
+   /CLAUDE.md + docs/build-specs/RESOLUTIONS.md.
    ============================================================ */
 @theme {
   /* — Core blue ladder (the brand spine) — */
@@ -32,6 +33,9 @@
   --color-faint: #9ca3af;
   --color-divider: #f1f5f9;
 
+  /* — Dark-zone light ink (text on midnight/navy) — */
+  --color-on-dark: rgba(226, 233, 245, 0.7);
+
   /* — Compliance teal (RESERVED: NIS2 / DORA / GDPR / ISO only) — */
   --color-compliance: #1a7a6e;
   --color-compliance-tint: #e6f2f0;
@@ -40,25 +44,25 @@
   --font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono Variable", ui-monospace, "Courier New", monospace;
 
-  /* — Web-native fluid type scale — */
-  --text-display: clamp(2.75rem, 1.9rem + 3.6vw, 4.5rem);
-  --text-display--line-height: 1.05;
-  --text-h1: clamp(2rem, 1.55rem + 1.9vw, 3rem);
+  /* — Fluid type scale. clamp() MAX = export desktop px (canonical). — */
+  --text-display: clamp(2.5rem, 1.6rem + 3.9vw, 4rem);   /* hero H1 → 64px */
+  --text-display--line-height: 1.08;
+  --text-h1: clamp(2rem, 1.5rem + 2.2vw, 2.875rem);       /* product hero → 46px */
   --text-h1--line-height: 1.12;
-  --text-h2: clamp(1.5rem, 1.25rem + 1vw, 2rem);
-  --text-h2--line-height: 1.25;
-  --text-h3: clamp(1.125rem, 1.02rem + 0.45vw, 1.375rem);
+  --text-h2: clamp(1.75rem, 1.45rem + 1.3vw, 2.375rem);   /* section H2 → 38px */
+  --text-h2--line-height: 1.15;
+  --text-h3: clamp(1.125rem, 1.02rem + 0.45vw, 1.3125rem);/* card H3 → 21px */
   --text-h3--line-height: 1.4;
-  --text-body: 1.0625rem; /* 17px */
+  --text-body: 1rem; /* 16px — export base (canonical, RESOLUTIONS §1) */
   --text-body--line-height: 1.65;
   --text-small: 0.875rem;
-  --text-label: 0.75rem;
+  --text-label: 0.75rem; /* 12px mono eyebrow */
 
   /* — Navy-tinted shadow ladder (never neutral black) — */
   --shadow-xs: 0 1px 2px rgba(14, 31, 91, 0.06);
-  --shadow-sm: 0 2px 8px rgba(14, 31, 91, 0.06);
-  --shadow-md: 0 2px 12px rgba(14, 31, 91, 0.08);
-  --shadow-lg: 0 12px 32px rgba(14, 31, 91, 0.14);
+  --shadow-sm: 0 2px 12px rgba(14, 31, 91, 0.06);  /* resting card (export) */
+  --shadow-md: 0 2px 12px rgba(14, 31, 91, 0.08);  /* shrunk nav */
+  --shadow-lg: 0 12px 32px rgba(14, 31, 91, 0.14); /* card hover */
   --shadow-xl: 0 24px 56px rgba(4, 12, 43, 0.22);
 
   /* — Tight, technical radii — */
@@ -77,6 +81,8 @@
     #3470c0 75%, #4487dc 92%, #7ab4e8 100%
   );
   --sc-gradient-footer: linear-gradient(135deg, #040c2b 0%, #0e1f5b 100%);
+  /* Offset for the fixed nav: anchors land below it. */
+  --nav-offset: 76px;
 }
 
 /* ============================================================
@@ -87,36 +93,92 @@ html {
 }
 
 body {
-  background: var(--color-page);
+  background: var(--color-surface);
   color: var(--color-slate);
   font-family: var(--font-sans);
   font-size: var(--text-body);
   line-height: 1.65;
+  overflow-x: hidden;
+  /* Clear the fixed nav (initial pad 18+18 + ~38 logo height ≈ 74px). */
+  padding-top: var(--nav-offset);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Links are royal (AA-safe, 10.6:1 on white) — never bright-blue text. */
+::selection {
+  background: rgba(68, 135, 220, 0.25);
+}
+
+/* Links default to royal (AA-safe, 10.6:1 on white) — never bright-blue text. */
 a {
   color: var(--color-royal);
 }
 
-/* Layout container — wider than the deck's 1100px reading measure. */
+/* Layout container — export-canonical 1180px max + 40px inline padding. */
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1180px;
   margin-inline: auto;
-  padding-inline: 1.5rem;
+  padding-inline: 40px;
+}
+@media (max-width: 768px) {
+  .container {
+    padding-inline: 24px;
+  }
 }
 
-/* Signature eyebrow: uppercase, wide tracking, 2px blue-wash rule. */
+/* Sections with anchor ids clear the fixed nav on jump. */
+:where(section, header)[id] {
+  scroll-margin-top: var(--nav-offset);
+}
+
+/* Signature eyebrow: 12px mono, 2.5px tracking, uppercase, bright. */
 .eyebrow {
+  display: inline-block;
   font-family: var(--font-mono);
-  font-size: var(--text-label);
-  font-weight: 600;
-  letter-spacing: 0.16em;
+  font-size: var(--text-label); /* 12px */
+  font-weight: 500;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
   color: var(--color-bright);
+}
+/* Optional 2px blue-wash rule under the eyebrow. */
+.eyebrow--rule {
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--color-border-blue);
+}
+
+/* ============================================================
+   EXPORT KEYFRAMES (from the Claude Design exports' <helmet>).
+   Gated by prefers-reduced-motion below.
+   ============================================================ */
+@keyframes scWordIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+@keyframes scFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes scMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes scDriftA {
+  from { transform: translate(0, 0); }
+  to { transform: translate(60px, 40px); }
+}
+@keyframes scDriftB {
+  from { transform: translate(0, 0); }
+  to { transform: translate(-50px, -30px); }
 }
 
 /* Reduced-motion is non-negotiable: kill non-essential motion. */

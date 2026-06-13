@@ -6,9 +6,10 @@ import '@fontsource-variable/inter';
 import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
 
+import { ClientRouter } from 'astro:transitions';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import { getLangFromUrl } from '../i18n/ui';
+import { getLangFromUrl, hreflangPair } from '../i18n/ui';
 
 interface Props {
   title: string;
@@ -18,11 +19,12 @@ interface Props {
 const { title, description } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 
-// hreflang alternates: toggle the /en prefix for the same page.
+// hreflang alternates: per-locale slugs via hreflangPair (handles
+// /confidentialitate ↔ /en/privacy, not just the /en prefix).
 const path = Astro.url.pathname;
-const roPath = path.replace(/^\/en(\/|$)/, '/');
-const enPath = path.startsWith('/en') ? path : `/en${path === '/' ? '' : path}`;
+const { ro: roPath, en: enPath } = hreflangPair(path);
 const canonical = new URL(path, Astro.site).href;
+const ogImage = new URL('og.png', Astro.site).href;
 ---
 
 <!doctype html>
@@ -43,8 +45,11 @@ const canonical = new URL(path, Astro.site).href;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
     <meta name="generator" content={Astro.generator} />
+    <ClientRouter />
   </head>
   <body>
     <a href="#main" class="sr-only focus:not-sr-only">Skip to content</a>
@@ -53,5 +58,83 @@ const canonical = new URL(path, Astro.site).href;
       <slot />
     </main>
     <Footer />
+
+    <script>
+      // Single bundled motion wiring. Imports the vanilla motion.js utilities
+      // and runs them on every View-Transitions page load, collecting cleanups
+      // and tearing them down on the next swap. Everything honors
+      // prefers-reduced-motion inside motion.js (static fallbacks).
+      import {
+        initEmails,
+        initNavShrink,
+        initReveals,
+        initWordFill,
+        initCounters,
+        initParallax,
+        initDrift,
+        initBandScale,
+        initHeroScrub,
+        initStepper,
+        initNetwork,
+      } from '../scripts/motion.js';
+
+      type Cleanup = () => void;
+      let cleanups: Cleanup[] = [];
+
+      const num = (el: Element, attr: string) => {
+        const v = el.getAttribute(attr);
+        return v == null ? undefined : parseFloat(v);
+      };
+      const int = (el: Element, attr: string) => {
+        const v = el.getAttribute(attr);
+        return v == null ? undefined : parseInt(v, 10);
+      };
+
+      function wire() {
+        const doc = document;
+
+        // Emails first (also fills the obfuscated text), then chrome + scene.
+        initEmails(doc);
+
+        const nav = doc.querySelector<HTMLElement>('[data-nav-shrink]');
+        if (nav) cleanups.push(initNavShrink(nav));
+
+        cleanups.push(initReveals(doc));
+        cleanups.push(initWordFill(doc));
+        cleanups.push(initCounters(doc));
+        cleanups.push(initParallax(doc));
+        cleanups.push(initDrift(doc));
+        cleanups.push(initBandScale(doc));
+        cleanups.push(initHeroScrub(doc));
+
+        // Steppers: one per [data-stepper] container, with its own fill element.
+        doc.querySelectorAll<HTMLElement>('[data-stepper]').forEach((container) => {
+          const fill = container.querySelector<HTMLElement>('[data-stepper-fill]');
+          if (fill) cleanups.push(initStepper(container, fill, { dark: container.hasAttribute('data-stepper-dark') }));
+        });
+
+        // Network canvases: opts read from data-* (omit when absent → defaults).
+        doc.querySelectorAll<HTMLCanvasElement>('canvas[data-network]').forEach((canvas) => {
+          const opts: Record<string, number> = {};
+          const la = num(canvas, 'data-line-alpha'); if (la != null) opts.lineAlpha = la;
+          const da = num(canvas, 'data-dot-alpha'); if (da != null) opts.dotAlpha = da;
+          const sp = int(canvas, 'data-spread'); if (sp != null) opts.spread = sp;
+          const ld = int(canvas, 'data-line-dist'); if (ld != null) opts.lineDist = ld;
+          const sd = num(canvas, 'data-speed'); if (sd != null) opts.speed = sd;
+          const mn = int(canvas, 'data-max-nodes'); if (mn != null) opts.maxNodes = mn;
+          cleanups.push(initNetwork(canvas, opts));
+        });
+      }
+
+      function teardown() {
+        cleanups.forEach((fn) => {
+          try { fn(); } catch { /* noop */ }
+        });
+        cleanups = [];
+      }
+
+      document.addEventListener('astro:page-load', wire);
+      document.addEventListener('astro:before-swap', teardown);
+    </script>
   </body>
 </html>

@@ -1,0 +1,19 @@
+---
+// 4-up hairline-divided stat grid: 16px-radius rounded card, 1px gap on a
+// border-colored bg renders as hairline dividers between cells. Slot in
+// StatBlock children. Stacks 2-up on mobile, 4-up at tablet+.
+interface Props {
+  class?: string;
+}
+const { class: extra = '' } = Astro.props;
+---
+
+<div
+  class:list={[
+    'grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-border bg-border shadow-sm md:grid-cols-4',
+    extra,
+  ]}
+  data-reveal
+>
+  <slot />
+</div>

@@ -1,0 +1,69 @@
+---
+// Eyebrow + word-fill H2 (+ optional sub-paragraph). The H2 carries
+// data-word-fill so initWordFill plays the dictation sweep — its text MUST be
+// plain (the script splits textContent into chars), so the heading is a string
+// prop, not a slot. 38px/700/-1px, navy on light / white on dark. CTA bands use
+// size="cta" (40px). The optional sub-paragraph is the default slot.
+import Eyebrow from './Eyebrow.astro';
+
+interface Props {
+  eyebrow: string;
+  /** Plain-text H2 (no markup — consumed char-by-char by initWordFill). */
+  heading: string;
+  variant?: 'light' | 'dark';
+  /** cta = ~40px headline (dark CTA bands). */
+  size?: 'section' | 'cta';
+  rule?: boolean;
+  /** Center the block (CTA bands). */
+  center?: boolean;
+  /** Max width on the H2 (e.g. "700px"). */
+  headingMaxWidth?: string;
+  class?: string;
+  headingId?: string;
+}
+
+const {
+  eyebrow,
+  heading,
+  variant = 'light',
+  size = 'section',
+  rule = size !== 'cta',
+  center = false,
+  headingMaxWidth,
+  class: extra = '',
+  headingId,
+} = Astro.props;
+
+const isDark = variant === 'dark';
+---
+
+<div class:list={[center && 'text-center', extra]}>
+  <Eyebrow variant={isDark ? 'dark' : 'light'} rule={rule}>{eyebrow}</Eyebrow>
+  <h2
+    id={headingId}
+    data-word-fill={isDark ? 'dark' : 'light'}
+    class:list={[
+      'mt-6 font-bold leading-[1.15] tracking-[-1px]',
+      size === 'cta' ? 'text-[clamp(1.75rem,1.5rem+1.1vw,2.5rem)]' : 'text-h2',
+      isDark ? 'text-white' : 'text-navy',
+      center && 'mx-auto',
+    ]}
+    style={headingMaxWidth ? `max-width:${headingMaxWidth}` : undefined}
+  >
+    {heading}
+  </h2>
+  {
+    Astro.slots.has('default') && (
+      <p
+        class:list={[
+          'mt-4 text-[16.5px]',
+          isDark ? 'text-[rgba(226,233,245,0.7)]' : 'text-cool',
+          center && 'mx-auto',
+        ]}
+        style={center ? 'max-width:560px' : 'max-width:620px'}
+      >
+        <slot />
+      </p>
+    )
+  }
+</div>

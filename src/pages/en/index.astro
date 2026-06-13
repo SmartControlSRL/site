@@ -1,48 +1,560 @@
 ---
+// Home (EN) — /en/
+// Faithful EN translation of the RO Home (src/pages/index.astro), same structure
+// and motion wiring. RESOLUTIONS rulings applied identically: ISO 27701 stripped,
+// GDPR/NIS2/DORA in compliance teal, Asset Management stripped (SEKNET ↔ S-VPN),
+// years computed, no email inputs, AA link colors, data-skew inert.
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { CTA_ASSESSMENT, yearsInBusiness } from '../../i18n/ui';
+import Eyebrow from '../../components/Eyebrow.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import NetworkCanvas from '../../components/NetworkCanvas.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import ModuleCard from '../../components/ModuleCard.astro';
+import StatStrip from '../../components/StatStrip.astro';
+import StatBlock from '../../components/StatBlock.astro';
+import MonoPill from '../../components/MonoPill.astro';
+import IconChip from '../../components/IconChip.astro';
+import LogoMarquee from '../../components/LogoMarquee.astro';
+import TextLink from '../../components/TextLink.astro';
+import MailtoLink from '../../components/MailtoLink.astro';
+import {
+  getLangFromUrl,
+  useTranslations,
+  localizedPath,
+  EMAIL_USER,
+  EMAIL_DOMAIN,
+  yearsInBusiness,
+} from '../../i18n/ui';
+import {
+  Server,
+  ShieldCheck,
+  Code,
+  LifeBuoy,
+  FingerprintPattern,
+  Shield,
+  Activity,
+  LayoutDashboard,
+  Radar,
+  Lock,
+} from '@lucide/astro';
 
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const p = (path: string) => localizedPath(lang, path);
 const years = yearsInBusiness(new Date().getUTCFullYear());
-const stats = [
-  { value: '650+', label: 'projects delivered' },
-  { value: '250+', label: 'clients' },
-  { value: '25+', label: 'international clients' },
-  { value: `${Math.floor(years / 10) * 10}+`, label: 'years of experience' },
+
+const title = 'Smart Control — Trusted Service Delivery Partner';
+const description =
+  'Enterprise infrastructure, security and software, delivered by our own team. ' +
+  'Over 650 projects, 250+ clients, 4 ISO certifications and GDPR · NIS 2 · DORA compliance.';
+
+// — JSON-LD: Organization (EN description) —
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Smart Control SRL',
+  url: 'https://smartcontrol.ro',
+  logo: 'https://smartcontrol.ro/smartcontrol-mark.png',
+  email: 'office@smartcontrol.ro',
+  foundingDate: '2003',
+  description:
+    'Romanian enterprise IT services and cybersecurity company — infrastructure, security and software delivered by an in-house team.',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Intrarea Aviator Teodor Iliescu 37',
+    postalCode: '011672',
+    addressLocality: 'București',
+    addressCountry: 'RO',
+  },
+};
+
+// Hero headline, per word — line 2 in bright blue.
+const heroLine1 = [
+  { word: 'Infrastructure.', delay: '0.25s' },
+  { word: 'Security.', delay: '0.40s' },
+  { word: 'Software.', delay: '0.55s' },
+];
+const heroLine2 = [
+  { word: 'Delivered', delay: '0.75s' },
+  { word: 'by', delay: '0.87s' },
+  { word: 'our', delay: '0.99s' },
+  { word: 'own', delay: '1.11s' },
+  { word: 'team.', delay: '1.23s' },
+];
+
+const isoBadges = ['ISO 9001', 'ISO 27001', 'ISO 14001', 'ISO 45001'];
+const frameworks = ['GDPR', 'NIS 2', 'DORA'];
+
+const partners = [
+  'Hitachi Vantara',
+  'Commvault',
+  'Fortinet',
+  'Cisco',
+  'Juniper',
+  'Lenovo',
+  'VMware',
+  'Fujitsu',
+  'Oracle',
+  'Microsoft',
+  'Palo Alto',
+  'Hanasis',
+  'IBM',
+  'HP',
+  'DELL',
+];
+
+const produseModules = [
+  { Icon: FingerprintPattern, title: 'Identity', sub: 'SSO · MFA FIDO2 · SCIM 2.0' },
+  { Icon: Shield, title: 'Shield', sub: 'SIEM · IDS · MITRE ATT&CK' },
+  { Icon: Activity, title: 'Insight', sub: 'ML · anomaly detection' },
+  { Icon: LayoutDashboard, title: 'View', sub: 'Dashboards · topology · reports' },
+];
+
+const cloudRows = [
+  {
+    tag: 'CAPEX→OPEX',
+    body: 'Shifting hardware spend toward cloud or hybrid models, with predictable costs.',
+  },
+  {
+    tag: 'K8S-READY',
+    body: 'Containerization and migration to Kubernetes / OpenShift / AKS / GKE, with zero downtime.',
+  },
+  {
+    tag: 'ROI 90 DAYS',
+    body: 'Validating the investment through a 90-day performance report — real data, not estimates.',
+  },
 ];
 ---
 
-<BaseLayout
-  title="Smart Control — Trusted Service Delivery Partner"
-  description="Enterprise IT, security and cloud services. Our own team, not subcontractors. 20+ years, 650+ projects, 4 ISO certifications, GDPR · NIS 2 · DORA."
->
-  <section class="container py-24 md:py-32">
-    <p class="eyebrow pb-2.5 inline-block border-b-2 border-border-blue">
-      Trusted Service Delivery Partner
-    </p>
-    <h1 class="mt-6 max-w-3xl text-display font-extrabold tracking-tight text-midnight">
-      Infrastructure, security and cloud — delivered by our own team.
-    </h1>
-    <p class="mt-6 max-w-2xl text-lg text-slate">
-      A consultative partner for enterprise organisations: infrastructure, cloud,
-      cybersecurity, software and managed services. Our own team, not
-      subcontractors — a long-term relationship, 90-day ROI.
-    </p>
-    <div class="mt-9">
-      <a
-        href={CTA_ASSESSMENT}
-        class="inline-block rounded-md bg-bright px-6 py-3 font-semibold text-white shadow-sm transition-colors hover:bg-royal"
+<BaseLayout title={title} description={description}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(org)} />
+
+  {/* ── Hero (light) ── */}
+  <header
+    class="relative overflow-hidden"
+    style="background:linear-gradient(180deg,#F3F6FC 0%,#FFFFFF 100%)"
+  >
+    <div data-parallax="0.35" class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <div
+        class="absolute h-[640px] w-[640px] rounded-full"
+        style="top:-180px;left:-120px;background:radial-gradient(circle,rgba(122,180,232,0.22),rgba(122,180,232,0) 65%);animation:scDriftA 16s ease-in-out infinite alternate"
       >
-        Book the free 2-day assessment
-      </a>
+      </div>
+    </div>
+    <div data-parallax="0.2" class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <div
+        class="absolute h-[720px] w-[720px] rounded-full"
+        style="top:60px;right:-200px;background:radial-gradient(circle,rgba(68,135,220,0.14),rgba(68,135,220,0) 65%);animation:scDriftB 20s ease-in-out infinite alternate"
+      >
+      </div>
+    </div>
+    <NetworkCanvas lineAlpha={0.1} dotAlpha={0.3} spread={26000} lineDist={140} speed={0.12} />
+
+    <div
+      data-hero-scrub
+      class="relative z-[1] mx-auto max-w-[1180px] px-6 pb-[110px] pt-[150px] md:px-10 md:pt-[190px]"
+    >
+      <Eyebrow class="opacity-0 [animation:scFadeIn_0.8s_ease-out_0.1s_forwards]">
+        Trusted Service Delivery Partner
+      </Eyebrow>
+
+      <h1
+        class="mt-7 max-w-[860px] text-[clamp(2.4rem,1.6rem+3.6vw,4rem)] font-extrabold leading-[1.08] tracking-[-2px] text-midnight"
+      >
+        {
+          heroLine1.map(({ word, delay }) => (
+            <span
+              class="mr-[0.28em] inline-block opacity-0"
+              style={`animation:scWordIn 0.7s cubic-bezier(0.16,1,0.3,1) ${delay} forwards`}
+            >
+              {word}
+            </span>
+          ))
+        }
+        <br />
+        {
+          heroLine2.map(({ word, delay }) => (
+            <span
+              class="mr-[0.28em] inline-block text-bright opacity-0"
+              style={`animation:scWordIn 0.7s cubic-bezier(0.16,1,0.3,1) ${delay} forwards`}
+            >
+              {word}
+            </span>
+          ))
+        }
+      </h1>
+
+      <p
+        class="mt-7 max-w-[600px] text-[18px] leading-[1.7] text-slate opacity-0 [animation:scFadeIn_0.9s_ease-out_1.3s_forwards]"
+      >
+        For {years} years, Smart Control has designed, operated and secured IT infrastructure for
+        companies in Romania and abroad —{' '}
+        <strong class="font-semibold text-navy">our own team, not subcontractors</strong>, a
+        consultative approach and delivery grounded in real data.
+      </p>
+
+      <div
+        class="mt-9 flex flex-wrap items-center gap-[18px] opacity-0 [animation:scFadeIn_0.9s_ease-out_1.5s_forwards]"
+      >
+        <MailtoLink
+          variant="button"
+          subject={t('subject.assessment')}
+          class="[box-shadow:0_4px_18px_rgba(68,135,220,0.35)] !bg-bright hover:!bg-royal hover:[box-shadow:0_6px_24px_rgba(68,135,220,0.45)]"
+        >
+          Book a free assessment
+        </MailtoLink>
+        <TextLink href="#servicii">View services</TextLink>
+      </div>
+
+      <div
+        class="mt-[52px] flex flex-wrap gap-2.5 opacity-0 [animation:scFadeIn_0.9s_ease-out_1.7s_forwards]"
+      >
+        {isoBadges.map((b) => <MonoPill>{b}</MonoPill>)}
+        {frameworks.map((f) => <MonoPill variant="compliance">{f}</MonoPill>)}
+      </div>
+    </div>
+  </header>
+
+  {/* ── Stats (count-up) ── */}
+  <section class="px-6 pt-[72px] md:px-10">
+    <div class="mx-auto max-w-[1180px]">
+      <div data-drift="-0.05">
+        <StatStrip>
+          <StatBlock value="650" count={650} suffix="+" caption="Projects delivered" />
+          <StatBlock value="250" count={250} suffix="+" caption="Satisfied clients" />
+          <StatBlock value="25" count={25} suffix="+" caption="International clients" />
+          <StatBlock
+            value={String(years)}
+            count={years}
+            suffix="+"
+            caption="Years of experience"
+          />
+        </StatStrip>
+      </div>
+    </div>
+  </section>
+
+  {/* ── Services (bento, light) ── */}
+  <section id="servicii" class="px-6 py-[110px] md:px-10">
+    <div class="mx-auto max-w-[1180px]">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Services"
+          heading="An integrated portfolio, from physical infrastructure to code"
+          headingMaxWidth="700px"
+        >
+          Four service pillars, backed by 50 in-house specialists with over 500 cumulative years of
+          experience — on-site and remote, the same level of quality.
+        </SectionHeading>
+      </div>
+
+      <div data-skew="4" class="mt-[52px] grid grid-cols-1 gap-5 md:grid-cols-12">
+        {/* Card 01 — span 7 */}
+        <div
+          data-reveal
+          data-reveal-rotate="-4"
+          data-drift="0.07"
+          class="md:col-span-12 lg:col-span-7"
+        >
+          <ModuleCard
+            title="Infrastructure & Cloud"
+            index="01"
+            body="We design and consolidate data centers, virtualize and operate private, hybrid and cloud environments."
+            items={[
+              'Data Center Design & Implementation',
+              'Consolidation & Virtualization',
+              'Private & Hybrid Cloud',
+              'Business Continuity & DR',
+              'Storage & Information Management',
+              'Infrastructure Management',
+            ]}
+            cols={2}
+          >
+            <Server slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        {/* Card 02 — span 5 */}
+        <div
+          data-reveal
+          data-reveal-delay="100"
+          data-reveal-rotate="4"
+          data-drift="-0.07"
+          class="md:col-span-12 lg:col-span-5"
+        >
+          <ModuleCard
+            title="Security & Compliance"
+            index="02"
+            body="Perimeter and endpoint defense, identity and managed security operations."
+            items={[
+              'Perimeter & End-point Security',
+              'Enterprise SSO / PKI',
+              'Data Leakage Prevention · WAF',
+              'GDPR / NIS 2 compliance',
+              'Managed Security Operations',
+            ]}
+            cols={1}
+          >
+            <ShieldCheck slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        {/* Card 03 — span 5 */}
+        <div
+          data-reveal
+          data-reveal-rotate="4"
+          data-drift="0.07"
+          class="md:col-span-12 lg:col-span-5"
+        >
+          <ModuleCard
+            title="Software & Automation"
+            index="03"
+            body="Custom development, application modernization and AI automation — DevSecOps delivery."
+            items={[
+              'Custom software development & APIs',
+              'DevOps / DevSecOps & CI/CD',
+              'Application migration and modernization',
+              'Blockchain (Hyperledger, Multichain)',
+              'AI / LLM automation',
+            ]}
+            cols={1}
+          >
+            <Code slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        {/* Card 04 — span 7 */}
+        <div
+          data-reveal
+          data-reveal-delay="100"
+          data-reveal-rotate="-4"
+          data-drift="-0.07"
+          class="md:col-span-12 lg:col-span-7"
+        >
+          <ModuleCard
+            title="Managed Services"
+            index="04"
+            body="We operate your infrastructure, network and security — service desk and support, on-site & remote."
+            items={[
+              'Service Desk Outsourcing',
+              'Managed Infrastructure Operations',
+              'Network Managed Services',
+              'Cyber Security Managed Services',
+              'Outsourced Systems Support',
+              'Cloud Based System Support',
+            ]}
+            cols={2}
+          >
+            <LifeBuoy slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── Products (DARK band) ── */}
+  <section
+    id="produse"
+    data-band
+    class="relative overflow-hidden bg-midnight px-6 py-[110px] md:px-10"
+  >
+    <NetworkCanvas
+      lineAlpha={0.22}
+      dotAlpha={0.55}
+      spread={20000}
+      lineDist={150}
+      opacity={0.65}
+    />
+    <div
+      class="pointer-events-none absolute inset-0"
+      style="background:radial-gradient(ellipse 70% 60% at 70% 30%, rgba(68,135,220,0.14), rgba(4,12,43,0) 70%)"
+      aria-hidden="true"
+    >
     </div>
 
-    <dl class="mt-20 grid grid-cols-2 gap-8 sm:grid-cols-4">
-      {stats.map((s) => (
-        <div>
-          <dt class="font-mono text-3xl font-bold text-navy md:text-4xl">{s.value}</dt>
-          <dd class="mt-1 text-small text-cool">{s.label}</dd>
+    <div class="relative z-[1] mx-auto max-w-[1180px]">
+      <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
+        <div data-reveal>
+          <SectionHeading
+            eyebrow="Proprietary products"
+            heading="SEKNET — monitoring and security from a single console"
+            variant="dark"
+          >
+            An integrated enterprise platform: full visibility, advanced threat detection and
+            granular identity management. Five specialized modules, a single source of truth — now
+            with Seknet Trap, the active deception module.
+          </SectionHeading>
+          <div class="mt-7 flex flex-wrap items-center gap-5">
+            <a
+              href={p('/solutii/seknet')}
+              class="inline-flex items-center gap-2 rounded-md bg-bright px-6 py-3 text-[14.5px] font-semibold text-white transition-all [box-shadow:0_0_28px_rgba(68,135,220,0.4)] hover:bg-mid-blue hover:[box-shadow:0_0_40px_rgba(68,135,220,0.6)]"
+            >
+              Explore SEKNET <span aria-hidden="true">›</span>
+            </a>
+            <TextLink href={p('/solutii/s-vpn')} dark>Explore S-VPN</TextLink>
+          </div>
         </div>
-      ))}
-    </dl>
+
+        <div data-reveal data-reveal-delay="120" data-drift="-0.05">
+          <div class="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
+            {
+              produseModules.map(({ Icon, title: mTitle, sub }) => (
+                <div class="rounded-lg border border-[rgba(122,180,232,0.18)] bg-[rgba(255,255,255,0.03)] p-[22px] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-[rgba(68,135,220,0.55)] hover:[box-shadow:0_0_28px_rgba(68,135,220,0.18)]">
+                  <Icon class="h-5 w-5 text-sky" stroke-width={1.5} />
+                  <div class="mt-3 text-[15.5px] font-bold text-white">{mTitle}</div>
+                  <div class="mt-1.5 text-[12.5px] leading-[1.55] text-[rgba(226,233,245,0.6)]">
+                    {sub}
+                  </div>
+                </div>
+              ))
+            }
+            <div
+              class="flex items-center gap-3.5 rounded-lg border border-[rgba(68,135,220,0.4)] bg-[rgba(68,135,220,0.1)] px-[22px] py-[18px] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-[rgba(122,180,232,0.7)] hover:[box-shadow:0_0_28px_rgba(68,135,220,0.2)] sm:col-span-2"
+            >
+              <Radar class="h-5 w-5 shrink-0 text-sky" stroke-width={1.5} />
+              <div class="flex flex-wrap items-baseline gap-2.5">
+                <span class="text-[15.5px] font-bold text-white">Trap</span>
+                <MonoPill variant="dark" class="!text-[10px] !tracking-[1px]">New</MonoPill>
+                <span class="text-[12.5px] text-[rgba(226,233,245,0.6)]">
+                  Active deception — honeypots for 20+ protocols, network IDS, live attack map
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom dual cards — SEKNET ↔ S-VPN (Asset Management stripped) */}
+      <div data-reveal class="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2">
+        <a
+          href={p('/solutii/seknet')}
+          class="flex items-start gap-[18px] rounded-lg border border-[rgba(122,180,232,0.18)] bg-[rgba(255,255,255,0.03)] px-7 py-6 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-[rgba(68,135,220,0.55)] hover:[box-shadow:0_0_28px_rgba(68,135,220,0.18)]"
+        >
+          <IconChip variant="dark" size={40} class="shrink-0">
+            <Shield class="h-5 w-5 text-sky" stroke-width={1.5} />
+          </IconChip>
+          <div>
+            <div class="text-[15.5px] font-bold text-white">SEKNET</div>
+            <p class="mt-1.5 text-[13.5px] leading-[1.6] text-[rgba(226,233,245,0.6)]">
+              A proprietary monitoring and security platform — SIEM, ML-based detection, identity
+              and active deception, in a single console. Source code included.
+            </p>
+            <span class="mt-2.5 inline-block text-[13px] font-semibold text-sky"
+              >Explore SEKNET ›</span
+            >
+          </div>
+        </a>
+
+        <a
+          href={p('/solutii/s-vpn')}
+          class="flex items-start gap-[18px] rounded-lg border border-[rgba(122,180,232,0.18)] bg-[rgba(255,255,255,0.03)] px-7 py-6 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-[rgba(68,135,220,0.55)] hover:[box-shadow:0_0_28px_rgba(68,135,220,0.18)]"
+        >
+          <IconChip variant="dark" size={40} class="shrink-0">
+            <Lock class="h-5 w-5 text-sky" stroke-width={1.5} />
+          </IconChip>
+          <div>
+            <div class="text-[15.5px] font-bold text-white">S-VPN</div>
+            <p class="mt-1.5 text-[13.5px] leading-[1.6] text-[rgba(226,233,245,0.6)]">
+              An integrated secure remote-access suite — VPN, MFA, WAF, Endpoint and Console, at
+              −60% versus traditional solutions.
+            </p>
+            <span class="mt-2.5 inline-block text-[13px] font-semibold text-sky"
+              >Explore S-VPN ›</span
+            >
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* ── Cloud teaser (light wash) ── */}
+  <section data-band class="bg-page px-6 py-[110px] md:px-10">
+    <div class="mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Cloud & Modernization"
+          heading="The alternative to ever-pricier hardware: re-architecture"
+        >
+          Prices for critical components are rising under demand for AI infrastructure, and refresh
+          budgets no longer stretch far enough. Re-architecting and optimizing applications becomes
+          the primary strategy — and we deliver it through a 5-stage workflow, validated across
+          650+ projects.
+        </SectionHeading>
+        <div class="mt-7">
+          <a
+            href={p('/servicii/cloud')}
+            class="inline-flex items-center gap-2 rounded-md bg-navy px-6 py-3 text-[14.5px] font-semibold text-white transition-all hover:bg-midnight hover:[box-shadow:0_6px_20px_rgba(14,31,91,0.25)]"
+          >
+            Explore Cloud & Modernization <span aria-hidden="true">›</span>
+          </a>
+        </div>
+      </div>
+
+      <div data-reveal data-reveal-delay="120" data-drift="-0.05" class="grid gap-3.5">
+        {
+          cloudRows.map(({ tag, body }) => (
+            <div class="flex flex-col gap-2 rounded-lg border border-border bg-surface px-6 py-5 shadow-sm sm:flex-row sm:items-center sm:gap-4">
+              <span class="shrink-0 font-mono text-[12px] tracking-[1px] text-bright sm:w-[88px]">
+                {tag}
+              </span>
+              <span class="text-[14px] text-slate">{body}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ── Partners (light marquee) ── */}
+  <section id="parteneri" class="overflow-hidden bg-surface py-24">
+    <div class="mx-auto max-w-[1180px] px-6 md:px-10">
+      <div data-reveal class="text-center">
+        <Eyebrow>Technology partners</Eyebrow>
+        <p class="mx-auto mt-5 max-w-[540px] text-[15.5px] text-cool">
+          Partnerships with the world's leading manufacturers — proven solutions, guaranteed
+          support, a clear roadmap.
+        </p>
+      </div>
+    </div>
+    <div data-skew="8" class="mt-11 [will-change:transform]">
+      <LogoMarquee items={partners} />
+    </div>
+  </section>
+
+  {/* ── CTA / Contact (DARK band) ── */}
+  <CtaBand
+    id="contact"
+    eyebrow="Next steps"
+    heading="Free initial assessment — 2 days"
+    cta="Request the assessment"
+    subject={t('subject.assessment')}
+  >
+    No commitments. Together we identify the priority area of interest and deliver a recommendations
+    report at the end.
+  </CtaBand>
+
+  {/* Contact details (email + address, NO map) */}
+  <section aria-label="Contact details" class="bg-surface px-6 py-16 md:px-10">
+    <div class="mx-auto grid max-w-[1180px] grid-cols-1 gap-8 sm:grid-cols-2">
+      <div>
+        <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-faint">
+          Contact
+        </h2>
+        <div class="mt-4 grid gap-2.5 text-[13.5px]">
+          <MailtoLink variant="link" subject={t('subject.assessment')}>
+            <span data-email-user={EMAIL_USER} data-email-domain={EMAIL_DOMAIN}></span>
+          </MailtoLink>
+          <span class="text-slate">www.smartcontrol.ro</span>
+        </div>
+      </div>
+      <div>
+        <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-faint">
+          Address
+        </h2>
+        <address class="mt-4 text-[13.5px] not-italic leading-[1.6] text-cool">
+          Intrarea Aviator Teodor Iliescu 37,<br />011672 București
+        </address>
+      </div>
+    </div>
   </section>
 </BaseLayout>

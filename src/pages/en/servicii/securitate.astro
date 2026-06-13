@@ -1,0 +1,414 @@
+---
+// /en/servicii/securitate — Security & Compliance (EN mirror)
+// Template B (lighter): light hero → context intro → capabilities bento →
+// compliance proof → dark CtaBand. JSON-LD: Service.
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Eyebrow from '../../../components/Eyebrow.astro';
+import SectionHeading from '../../../components/SectionHeading.astro';
+import IconChip from '../../../components/IconChip.astro';
+import ModuleCard from '../../../components/ModuleCard.astro';
+import MonoPill from '../../../components/MonoPill.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import TextLink from '../../../components/TextLink.astro';
+import { Shield, Lock, Globe, Server, FileCheck, ShieldCheck, ScanFace, Eye, Layers } from '@lucide/astro';
+import { useTranslations, getLangFromUrl, localizedPath, yearsInBusiness } from '../../../i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const p = (path: string) => localizedPath(lang, path);
+const years = yearsInBusiness(new Date().getUTCFullYear());
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Security & Compliance — Smart Control',
+  description:
+    'Enterprise cybersecurity and compliance services: DLP, secure remote access, SSO/PKI, perimeter & endpoint security, WAF, GDPR/NIS2/DORA compliance, and managed security operations.',
+  provider: {
+    '@type': 'Organization',
+    name: 'Smart Control SRL',
+    url: 'https://smartcontrol.ro',
+  },
+  serviceType: 'Cybersecurity & Compliance',
+  areaServed: {
+    '@type': 'Country',
+    name: 'Romania',
+  },
+  url: 'https://smartcontrol.ro/en/servicii/securitate',
+};
+---
+
+<BaseLayout
+  title="Security & Compliance — Smart Control"
+  description="Enterprise cybersecurity and compliance: DLP, secure remote access, SSO/PKI, WAF, GDPR/NIS2/DORA. Own team, 4 ISO certifications."
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  {/* ── HERO ───────────────────────────────────────────────────────────────── */}
+  <header
+    class="relative overflow-hidden"
+    style="background:linear-gradient(180deg,#F3F6FC 0%,#FFFFFF 100%)"
+  >
+    {/* Decorative drift blob */}
+    <div
+      class="pointer-events-none absolute"
+      data-parallax="0.3"
+      aria-hidden="true"
+      style="inset:0"
+    >
+      <div
+        class="absolute"
+        style="width:600px;height:600px;top:-120px;right:-120px;border-radius:999px;background:radial-gradient(circle,rgba(122,180,232,0.18),rgba(122,180,232,0) 65%);animation:scDriftA 18s ease-in-out infinite alternate"
+        aria-hidden="true"
+      >
+      </div>
+    </div>
+
+    <div class="container relative" data-hero-scrub>
+      <div class="pb-[100px] pt-[120px] md:pt-[190px]">
+        <Eyebrow variant="hero">Security &amp; Compliance</Eyebrow>
+
+        <h1
+          class="mt-6 max-w-[860px] font-bold leading-[1.1] tracking-[-1.8px] text-midnight"
+          style="font-size:clamp(2.2rem,1.5rem+2.5vw,4rem)"
+        >
+          Threats never sleep.
+          <br />
+          <span class="text-bright">Neither can your defences.</span>
+        </h1>
+
+        <p
+          class="mt-6 max-w-[640px] text-[18px] leading-[1.7] text-slate"
+          style="animation:scFadeIn 0.9s ease-out 1.2s both"
+        >
+          In a continuously evolving threat landscape, compliance with
+          <strong class="font-semibold text-navy">GDPR, NIS 2, and DORA</strong> is no longer
+          optional — it is foundational infrastructure. Smart Control delivers end-to-end
+          cybersecurity: from data loss prevention to managed security operations, backed by{' '}
+          {years} years of experience and 4 ISO certifications.
+        </p>
+
+        <div
+          class="mt-[38px] flex flex-wrap items-center gap-4"
+          style="animation:scFadeIn 0.9s ease-out 1.4s both"
+        >
+          <TextLink href="#capabilities">
+            Explore capabilities
+          </TextLink>
+          <TextLink href="#compliance">
+            Compliance &amp; certifications
+          </TextLink>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {/* ── CONTEXT INTRO (3 cards) ────────────────────────────────────────────── */}
+  <section class="bg-surface" aria-labelledby="context-heading">
+    <div class="container py-[110px]">
+      <h2 id="context-heading" class="sr-only">Why proactive security</h2>
+      <div class="grid gap-5 [grid-template-columns:repeat(3,1fr)] max-[1100px]:grid-cols-1 max-[768px]:grid-cols-1" data-skew="4">
+        {/* Card 1 */}
+        <div data-reveal data-reveal-rotate="-4" data-drift="0.07">
+          <div class="h-full box-border rounded-xl border border-border bg-surface p-[30px_32px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:shadow-lg">
+            <IconChip>
+              <Eye class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+            </IconChip>
+            <h3 class="mt-[18px] text-[17px] font-bold text-navy">The attack surface is expanding</h3>
+            <p class="mt-[10px] text-[14px] leading-[1.65] text-cool">
+              Hybrid work, SaaS proliferation, and IoT ecosystems multiply attack vectors.
+              A single misconfiguration can expose critical data or halt operations entirely.
+            </p>
+          </div>
+        </div>
+
+        {/* Card 2 */}
+        <div data-reveal data-reveal-delay="100" data-reveal-rotate="4">
+          <div class="h-full box-border rounded-xl border border-border bg-surface p-[30px_32px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:shadow-lg">
+            <IconChip>
+              <FileCheck class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+            </IconChip>
+            <h3 class="mt-[18px] text-[17px] font-bold text-navy">Regulations are tightening</h3>
+            <p class="mt-[10px] text-[14px] leading-[1.65] text-cool">
+              NIS 2 and DORA mandate concrete technical measures with firm deadlines.
+              Non-compliance means significant fines and direct executive liability.
+            </p>
+          </div>
+        </div>
+
+        {/* Card 3 */}
+        <div data-reveal data-reveal-delay="200" data-reveal-rotate="-4" data-drift="-0.07">
+          <div class="h-full box-border rounded-xl border border-border bg-surface p-[30px_32px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:shadow-lg">
+            <IconChip>
+              <ShieldCheck class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+            </IconChip>
+            <h3 class="mt-[18px] text-[17px] font-bold text-navy">An own team makes the difference</h3>
+            <p class="mt-[10px] text-[14px] leading-[1.65] text-cool">
+              50 in-house specialists — no subcontractors — with expertise validated by ISO 27001
+              and hundreds of security projects delivered in Romania and internationally.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── CAPABILITIES BENTO ─────────────────────────────────────────────────── */}
+  <section
+    id="capabilities"
+    class="bg-page"
+    data-band
+    aria-labelledby="cap-heading"
+    style="scroll-margin-top:76px"
+  >
+    <div class="container py-[110px]">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Capabilities"
+          heading="End-to-end security, from perimeter to compliance"
+          headingId="cap-heading"
+          headingMaxWidth="700px"
+        >
+          Seven areas of expertise, delivered by a certified in-house team — from data loss
+          prevention to 24/7 managed security operations.
+        </SectionHeading>
+      </div>
+
+      <div
+        class="mt-[44px] grid grid-cols-2 gap-5 max-[768px]:grid-cols-1"
+        data-skew="4"
+        id="cap-heading-grid"
+      >
+        {/* DLP */}
+        <div data-reveal>
+          <ModuleCard
+            title="Data Leakage Prevention"
+            index="01"
+            body="Automatic classification of sensitive data, exfiltration prevention policies, and real-time monitoring of data flows — whether on-premise, cloud, or endpoint."
+            items={[
+              'Automatic classification and labelling',
+              'Block exfiltration via email, web, USB',
+              'Immutable audit log for investigations',
+              'GDPR-ready compliance reports',
+            ]}
+            cols={2}
+          >
+            <Lock slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        {/* Secure Remote Access */}
+        <div data-reveal data-reveal-delay="80">
+          <ModuleCard
+            title="Secure Remote Access"
+            index="02"
+            body="Zero-trust access for mobile users and site-to-site connections, with multi-method MFA, traffic inspection, and integrated endpoint protection — delivered via the proprietary S-VPN solution."
+            items={[
+              'SSL & IPSec VPN, 10,000+ simultaneous tunnels',
+              'MFA: TOTP, SMS, X.509 certificates',
+              'UTM firewall inspection at 20 Gbps+',
+              'Centralised management console',
+            ]}
+            cols={2}
+          >
+            <Shield slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        {/* SSO/PKI */}
+        <div data-reveal>
+          <ModuleCard
+            title="Enterprise SSO / PKI"
+            index="03"
+            body="Centralised authentication and identity management for enterprise organisations: SSO, phishing-resistant MFA, automated provisioning, and PKI integrated with existing infrastructure."
+            items={[
+              'SSO — OAuth2, OIDC, SAML 2.0',
+              'MFA — TOTP, WebAuthn/FIDO2',
+              'SCIM 2.0 provisioning + AD/LDAP/RADIUS',
+              'X.509 certificates, enterprise PKI',
+            ]}
+            cols={2}
+          >
+            <ScanFace slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        {/* Perimeter & Endpoint */}
+        <div data-reveal data-reveal-delay="80">
+          <ModuleCard
+            title="Perimeter & Endpoint Security"
+            index="04"
+            body="Defence-in-depth architecture: UTM firewall, IDS/IPS, network segmentation, and endpoint protection with real-time CVE detection — all correlated through a single dashboard."
+            items={[
+              'UTM firewall, IDS/IPS, network segmentation',
+              'Real-time CVE vulnerability detection',
+              'Automatic MITRE ATT&CK mapping',
+              'Active automated response (IP block, isolation)',
+            ]}
+            cols={2}
+          >
+            <Layers slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        {/* WAF */}
+        <div data-reveal>
+          <ModuleCard
+            title="Web Application Firewall"
+            index="05"
+            body="Application-layer protection against OWASP Top 10 attacks: SQLi, XSS, HTTP constraints, and updated attack signatures — applied transparently at the gateway level."
+            items={[
+              'Predefined OWASP Top 10 profiles',
+              'SQLi, XSS, HTTP constraints, DDoS',
+              'Custom rules per application',
+              'Native integration with S-VPN gateway',
+            ]}
+            cols={2}
+          >
+            <Globe slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        {/* GDPR/NIS2 Compliance */}
+        <div data-reveal data-reveal-delay="80">
+          <ModuleCard
+            title="GDPR / NIS 2 / DORA Compliance"
+            index="06"
+            body="Gap assessment, implementation of technical and organisational measures, and audit-ready reports for GDPR, NIS 2, and DORA — backed by ISO 27001 certification."
+            items={[
+              'GDPR / NIS 2 / DORA gap assessment',
+              'Security policies and procedures',
+              'Audit reports exportable as PDF / CSV',
+              'Continuous compliance monitoring',
+            ]}
+            cols={2}
+          >
+            <FileCheck slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        {/* Managed Security Operations */}
+        <div data-reveal class="col-span-2 max-[768px]:col-span-1">
+          <ModuleCard
+            title="Managed Security Operations"
+            index="07"
+            body="Smart Control-managed SOC: 24/7 continuous monitoring, incident detection and response, proactive threat hunting, and periodic reporting — without the overhead of an in-house SOC."
+            items={[
+              '24/7 SIEM monitoring with SEKNET',
+              'Incident detection and response (MDR)',
+              'Threat hunting and IoC analysis',
+              'Guaranteed SLA, monthly reporting',
+              'Multi-source correlation, 50,000+ EPS/node',
+              'Guided escalation and remediation',
+            ]}
+            cols={2}
+          >
+            <Server slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── COMPLIANCE PROOF ───────────────────────────────────────────────────── */}
+  <section
+    id="compliance"
+    class="bg-surface"
+    aria-labelledby="compliance-heading"
+    style="scroll-margin-top:76px"
+  >
+    <div class="container py-[110px]">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Certifications & Compliance"
+          heading="Commitment to international standards"
+          headingId="compliance-heading"
+          headingMaxWidth="680px"
+        >
+          Smart Control operates under four simultaneously certified management systems and
+          maintains compliance with the key European regulations — GDPR, NIS 2, and DORA.
+        </SectionHeading>
+      </div>
+
+      {/* ISO badges */}
+      <div class="mt-[44px]" data-reveal data-reveal-delay="80">
+        <p class="mb-4 font-mono text-[11px] uppercase tracking-[2px] text-faint">
+          Certified management systems
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <MonoPill>ISO 9001</MonoPill>
+          <MonoPill>ISO 27001</MonoPill>
+          <MonoPill>ISO 14001</MonoPill>
+          <MonoPill>ISO 45001</MonoPill>
+        </div>
+      </div>
+
+      {/* Regulatory frameworks */}
+      <div class="mt-8" data-reveal data-reveal-delay="160">
+        <p class="mb-4 font-mono text-[11px] uppercase tracking-[2px] text-faint">
+          European regulatory compliance
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <MonoPill variant="compliance">GDPR</MonoPill>
+          <MonoPill variant="compliance">NIS 2</MonoPill>
+          <MonoPill variant="compliance">DORA</MonoPill>
+        </div>
+      </div>
+
+      {/* Two-col description cards */}
+      <div class="mt-12 grid grid-cols-2 gap-5 max-[768px]:grid-cols-1" data-skew="4">
+        <div data-reveal class="rounded-xl border border-border bg-page p-[28px_32px]">
+          <h3 class="text-[16px] font-bold text-navy">Proactive security &amp; NIS 2</h3>
+          <p class="mt-3 text-[14px] leading-[1.7] text-cool">
+            Smart Control guarantees its partners maximum cyber resilience, in full compliance
+            with the EU NIS 2 Directive. Defence measures and risk management are validated
+            by ISO 27001 certification, and continuous technical monitoring directly protects
+            clients' supply chains.
+          </p>
+        </div>
+        <div data-reveal data-reveal-delay="80" class="rounded-xl border border-border bg-page p-[28px_32px]">
+          <h3 class="text-[16px] font-bold text-navy">Digital resilience &amp; DORA</h3>
+          <p class="mt-3 text-[14px] leading-[1.7] text-cool">
+            Smart Control is a trusted technology partner for the financial sector, operating
+            in full compliance with the operational resilience requirements of DORA. Strict
+            IT governance and security policies anchored in ISO 27001 guarantee proactive ICT
+            risk management and rapid recovery from incidents.
+          </p>
+        </div>
+      </div>
+
+      {/* Cross-sell to SEKNET */}
+      <div class="mt-12 rounded-xl border border-border-blue bg-blue-wash p-[28px_32px]" data-reveal>
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p class="font-mono text-[11px] uppercase tracking-[2px] text-bright">Proprietary solution</p>
+            <h3 class="mt-2 text-[17px] font-bold text-navy">
+              SEKNET — integrated monitoring &amp; security platform
+            </h3>
+            <p class="mt-2 max-w-[560px] text-[14px] leading-[1.65] text-cool">
+              SIEM, Identity, WAF, honeypot, and compliance dashboards — all in one proprietary
+              platform. 50,000+ EPS/node, alerting under 60s, 99.9% availability.
+            </p>
+          </div>
+          <div class="shrink-0">
+            <TextLink href={p('/solutii/seknet')}>
+              Discover SEKNET
+            </TextLink>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── CTA BAND (dark) ────────────────────────────────────────────────────── */}
+  <CtaBand
+    id="contact"
+    eyebrow="Next steps"
+    heading="Free security assessment — 2 days"
+    cta={t('cta.assessment')}
+    subject={t('subject.assessment')}
+  >
+    We identify your security and compliance gaps together and deliver a prioritised
+    recommendations report. No commitments — the decision to proceed is entirely yours.
+  </CtaBand>
+</BaseLayout>

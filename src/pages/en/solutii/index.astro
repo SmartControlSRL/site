@@ -1,0 +1,319 @@
+---
+// /en/solutii — Products index (EN twin, full parity)
+// Two products: SEKNET + S-VPN. Technical terms stay English.
+// RESOLUTIONS: no ISO 27701, no Asset Management, computed years, export CTA wording.
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Eyebrow from '../../../components/Eyebrow.astro';
+import SectionHeading from '../../../components/SectionHeading.astro';
+import ChevronList from '../../../components/ChevronList.astro';
+import TextLink from '../../../components/TextLink.astro';
+import MailtoLink from '../../../components/MailtoLink.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import { getLangFromUrl, useTranslations, localizedPath } from '../../../i18n/ui';
+import { Monitor, Lock, Code, ArrowLeftRight } from '@lucide/astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const p = (path: string) => localizedPath(lang, path);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'SmartControl proprietary software solutions',
+  description: 'Proprietary cybersecurity and secure remote access platforms.',
+  url: 'https://smartcontrol.ro/en/solutii',
+  numberOfItems: 2,
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      item: {
+        '@type': 'Product',
+        name: 'SEKNET',
+        description:
+          'Enterprise platform for monitoring, cybersecurity and identity management — 5 specialised modules, cloud-native microservices architecture.',
+        url: 'https://smartcontrol.ro/en/solutii/seknet',
+        brand: { '@type': 'Brand', name: 'Smart Control SRL' },
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      item: {
+        '@type': 'Product',
+        name: 'S-VPN',
+        description:
+          'Integrated secure remote access suite — VPN, MFA, WAF, endpoint protection and management console.',
+        url: 'https://smartcontrol.ro/en/solutii/s-vpn',
+        brand: { '@type': 'Brand', name: 'Smart Control SRL' },
+      },
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title="Proprietary solutions — SEKNET & S-VPN | Smart Control"
+  description="Proprietary software platforms for cybersecurity and secure remote access. Source code included, no vendor lock-in. SEKNET and S-VPN."
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <!-- ═══════════════════════════════════════════════════════
+       HERO — light, word-fill H2, eyebrow, positioning copy
+       ═══════════════════════════════════════════════════════ -->
+  <section class="relative overflow-hidden bg-page py-[110px] px-6 sm:px-10">
+    <div class="mx-auto max-w-[1180px]">
+      <div data-hero-scrub>
+        <div data-reveal>
+          <Eyebrow variant="light">PROPRIETARY SOLUTIONS</Eyebrow>
+          <h1
+            data-word-fill="light"
+            class="mt-6 text-display font-extrabold leading-[1.08] tracking-[-2px] text-navy max-w-[860px]"
+          >
+            Our software. Zero vendor lock-in.
+          </h1>
+          <p class="mt-6 text-[18px] leading-[1.7] text-cool max-w-[620px]">
+            Both platforms are delivered with <strong class="text-navy font-semibold">source code included</strong>
+            — no recurring third-party licensing fees, no dependency on an external vendor.
+            Designed, developed and supported entirely by the Smart Control team.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-4">
+            <span class="inline-flex items-center gap-2 rounded-md border border-border-blue bg-blue-wash px-4 py-2 font-mono text-[12px] font-medium uppercase tracking-[2px] text-navy">
+              Source code included
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-md border border-border-blue bg-blue-wash px-4 py-2 font-mono text-[12px] font-medium uppercase tracking-[2px] text-navy">
+              No third-party licenses
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-md border border-border-blue bg-blue-wash px-4 py-2 font-mono text-[12px] font-medium uppercase tracking-[2px] text-navy">
+              Local support included
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PRODUCT CARDS — 2 side-by-side (SEKNET + S-VPN)
+       ═══════════════════════════════════════════════════════ -->
+  <section class="bg-surface py-[110px] px-6 sm:px-10">
+    <div class="mx-auto max-w-[1180px]">
+      <div data-reveal class="mb-14 text-center">
+        <Eyebrow variant="light">Our platforms</Eyebrow>
+        <h2
+          data-word-fill="light"
+          class="mt-6 text-h2 font-bold leading-[1.15] tracking-[-1px] text-navy mx-auto max-w-[700px]"
+        >
+          Two products, one integrated ecosystem
+        </h2>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-2" data-skew="4">
+
+        <!-- SEKNET Card -->
+        <div data-reveal data-reveal-rotate="-4" data-drift="0.07">
+          <article class="flex h-full flex-col rounded-xl border border-border bg-surface p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-border-blue hover:shadow-lg">
+            <!-- Card header -->
+            <div class="flex items-center gap-4">
+              <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-md border border-border-blue bg-blue-wash">
+                <Monitor class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+              </div>
+              <div>
+                <span class="block font-mono text-[11px] font-medium uppercase tracking-[1.5px] text-bright">Proprietary product</span>
+                <h3 class="mt-0.5 text-[21px] font-bold leading-tight tracking-[-0.3px] text-navy">SEKNET</h3>
+              </div>
+            </div>
+
+            <!-- Positioning line -->
+            <p class="mt-5 text-[15px] leading-[1.65] text-cool">
+              Integrated enterprise platform for <strong class="font-semibold text-slate">monitoring, cybersecurity and identity management</strong>
+              — five specialised modules, cloud-native microservices architecture.
+            </p>
+
+            <!-- Module list -->
+            <div class="mt-6">
+              <p class="mb-3 font-mono text-[11px] font-medium uppercase tracking-[1.5px] text-bright">5 specialised modules</p>
+              <ChevronList
+                items={[
+                  'Identity — IAM, SSO, MFA, RBAC, SCIM 2.0',
+                  'Shield — SIEM, IDS, threat intel, active response',
+                  'Insight — distributed search, native ML, REST API',
+                  'View — 200+ dashboards, topology map, advanced RBAC',
+                  'Trap — honeypot, lateral movement detection, zero false positives',
+                ]}
+                cols={1}
+              />
+            </div>
+
+            <!-- Headline specs -->
+            <div class="mt-6 grid grid-cols-3 gap-3">
+              <div class="rounded-md border border-border bg-page px-3 py-2.5 text-center">
+                <span class="block font-mono text-[15px] font-semibold text-navy">50K<span class="text-bright">+</span></span>
+                <span class="block mt-1 text-[11px] leading-snug text-cool">EPS / node</span>
+              </div>
+              <div class="rounded-md border border-border bg-page px-3 py-2.5 text-center">
+                <span class="block font-mono text-[15px] font-semibold text-navy">&lt;60<span class="text-bright">s</span></span>
+                <span class="block mt-1 text-[11px] leading-snug text-cool">alerting</span>
+              </div>
+              <div class="rounded-md border border-border bg-page px-3 py-2.5 text-center">
+                <span class="block font-mono text-[15px] font-semibold text-navy">99.9<span class="text-bright">%</span></span>
+                <span class="block mt-1 text-[11px] leading-snug text-cool">uptime SLA</span>
+              </div>
+            </div>
+
+            <!-- CTAs -->
+            <div class="mt-8 flex flex-wrap items-center gap-5">
+              <TextLink href={p('/solutii/seknet')}>Explore SEKNET</TextLink>
+              <MailtoLink variant="link" subject={t('subject.demo.seknet')}>Request a demo</MailtoLink>
+            </div>
+          </article>
+        </div>
+
+        <!-- S-VPN Card -->
+        <div data-reveal data-reveal-delay="100" data-reveal-rotate="4" data-drift="-0.07">
+          <article class="flex h-full flex-col rounded-xl border border-border bg-surface p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-border-blue hover:shadow-lg">
+            <!-- Card header -->
+            <div class="flex items-center gap-4">
+              <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-md border border-border-blue bg-blue-wash">
+                <Lock class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+              </div>
+              <div>
+                <span class="block font-mono text-[11px] font-medium uppercase tracking-[1.5px] text-bright">Proprietary product</span>
+                <h3 class="mt-0.5 text-[21px] font-bold leading-tight tracking-[-0.3px] text-navy">S-VPN</h3>
+              </div>
+            </div>
+
+            <!-- Positioning line -->
+            <p class="mt-5 text-[15px] leading-[1.65] text-cool">
+              Integrated <strong class="font-semibold text-slate">secure remote access suite</strong>
+              — VPN, MFA, WAF, endpoint protection and management console, at a fraction of the cost of traditional solutions.
+            </p>
+
+            <!-- Capability list -->
+            <div class="mt-6">
+              <p class="mb-3 font-mono text-[11px] font-medium uppercase tracking-[1.5px] text-bright">Integrated capabilities</p>
+              <ChevronList
+                items={[
+                  'VPN — SSL & IPSec, 400+ concurrent tunnels',
+                  'MFA — 5 methods active simultaneously',
+                  'WAF + UTM — Layer 7 inspection, OWASP Top 10',
+                  'Endpoint — real-time vulnerability scanning',
+                  'Console — centralised management, browser-only',
+                ]}
+                cols={1}
+              />
+            </div>
+
+            <!-- Headline specs -->
+            <div class="mt-6 grid grid-cols-3 gap-3">
+              <div class="rounded-md border border-border bg-page px-3 py-2.5 text-center">
+                <span class="block font-mono text-[15px] font-semibold text-navy">20<span class="text-bright">Gbps+</span></span>
+                <span class="block mt-1 text-[11px] leading-snug text-cool">L7 inspection</span>
+              </div>
+              <div class="rounded-md border border-border bg-page px-3 py-2.5 text-center">
+                <span class="block font-mono text-[15px] font-semibold text-navy">10K<span class="text-bright">+</span></span>
+                <span class="block mt-1 text-[11px] leading-snug text-cool">IPSec tunnels</span>
+              </div>
+              <div class="rounded-md border border-border bg-page px-3 py-2.5 text-center">
+                <span class="block font-mono text-[15px] font-semibold text-navy">&#8722;60<span class="text-bright">%</span></span>
+                <span class="block mt-1 text-[11px] leading-snug text-cool">vs Cisco</span>
+              </div>
+            </div>
+
+            <!-- CTAs -->
+            <div class="mt-8 flex flex-wrap items-center gap-5">
+              <TextLink href={p('/solutii/s-vpn')}>Explore S-VPN</TextLink>
+              <MailtoLink variant="link" subject={t('subject.demo.svpn')}>Request a demo</MailtoLink>
+            </div>
+          </article>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       WHY PROPRIETARY SOLUTIONS — 4-point strip
+       ═══════════════════════════════════════════════════════ -->
+  <section data-band class="bg-page py-[110px] px-6 sm:px-10">
+    <div class="mx-auto max-w-[1180px]">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Why proprietary software"
+          heading="Advantages of an in-house product"
+          variant="light"
+          headingMaxWidth="680px"
+        >
+          Complete control of the technology stack eliminates external dependencies
+          and enables rapid adaptation to each client's specific requirements.
+        </SectionHeading>
+      </div>
+
+      <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" data-skew="4">
+
+        <div data-reveal data-drift="0.06">
+          <div class="h-full rounded-xl border border-border bg-surface p-7 shadow-sm">
+            <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-md border border-border-blue bg-blue-wash">
+              <Code class="h-[20px] w-[20px] text-bright" stroke-width={1.5} />
+            </div>
+            <h3 class="text-[16px] font-bold text-navy">Source code included</h3>
+            <p class="mt-2 text-[13.5px] leading-[1.65] text-cool">
+              We deliver the complete source code — inspected, audited and modified by your team or ours at any time.
+            </p>
+          </div>
+        </div>
+
+        <div data-reveal data-reveal-delay="80" data-drift="-0.05">
+          <div class="h-full rounded-xl border border-border bg-surface p-7 shadow-sm">
+            <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-md border border-border-blue bg-blue-wash">
+              <span class="font-mono text-[18px] font-bold text-bright">0</span>
+            </div>
+            <h3 class="text-[16px] font-bold text-navy">No third-party licenses</h3>
+            <p class="mt-2 text-[13.5px] leading-[1.65] text-cool">
+              No recurring per-user or per-module licensing fees — total cost of ownership stays predictable.
+            </p>
+          </div>
+        </div>
+
+        <div data-reveal data-reveal-delay="160" data-drift="0.06">
+          <div class="h-full rounded-xl border border-border bg-surface p-7 shadow-sm">
+            <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-md border border-border-blue bg-blue-wash">
+              <ArrowLeftRight class="h-[20px] w-[20px] text-bright" stroke-width={1.5} />
+            </div>
+            <h3 class="text-[16px] font-bold text-navy">Native integration</h3>
+            <p class="mt-2 text-[13.5px] leading-[1.65] text-cool">
+              REST API (OpenAPI / Swagger), AD / LDAP / RADIUS connectors, ITSM and SOAR — integrates into your existing ecosystem without friction.
+            </p>
+          </div>
+        </div>
+
+        <div data-reveal data-reveal-delay="240" data-drift="-0.05">
+          <div class="h-full rounded-xl border border-border bg-surface p-7 shadow-sm">
+            <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-md border border-border-blue bg-blue-wash">
+              <span class="font-mono text-[18px] font-bold text-bright">RO</span>
+            </div>
+            <h3 class="text-[16px] font-bold text-navy">Local support included</h3>
+            <p class="mt-2 text-[13.5px] leading-[1.65] text-cool">
+              Our own team based in Romania — installation, configuration, maintenance and support included in the licence, no dependency on third-party partners.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       DARK CTA BAND — assessment ask
+       ═══════════════════════════════════════════════════════ -->
+  <CtaBand
+    id="contact"
+    eyebrow="Next steps"
+    heading="Free initial assessment — 2 days"
+    cta={t('cta.assessment')}
+    subject={t('subject.assessment')}
+  >
+    No commitment. We identify the priority area of interest together and deliver
+    a recommendations report at the end.
+  </CtaBand>
+</BaseLayout>

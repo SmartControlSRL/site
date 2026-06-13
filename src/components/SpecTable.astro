@@ -1,0 +1,29 @@
+---
+// Rounded mono spec table. Rows are label|value (200px / 1fr at desktop,
+// stacked on mobile), mono throughout. Label cell sits on the hover-tint wash
+// with a bright uppercase label; value is slate, "·"-delimited free text.
+// Rows divided by a hairline; last row has none.
+interface Props {
+  rows: { label: string; value: string }[];
+  class?: string;
+}
+const { rows, class: extra = '' } = Astro.props;
+---
+
+<div class:list={['overflow-hidden rounded-xl border border-border bg-surface shadow-sm', extra]}>
+  {
+    rows.map((row, i) => (
+      <div
+        class:list={[
+          'grid grid-cols-1 sm:grid-cols-[200px_1fr]',
+          i < rows.length - 1 && 'border-b border-divider',
+        ]}
+      >
+        <div class="bg-hover-tint px-7 py-[18px] font-mono text-[11.5px] uppercase tracking-[1.5px] text-bright">
+          {row.label}
+        </div>
+        <div class="px-7 py-[18px] font-mono text-[13px] leading-[1.7] text-slate">{row.value}</div>
+      </div>
+    ))
+  }
+</div>

@@ -1,0 +1,96 @@
+---
+// Service / module card.
+//   light (default) — white, 16px radius, 1px border, navy-tinted shadow;
+//     icon chip + optional mono kicker + optional index + h3 + body + chevron
+//     bullet list; lifts on hover. (Home services bento, SEKNET modules 1–4.)
+//   dark — navy bg, royal border, sky icon chip, optional "Nou" badge; white
+//     h3, sky chevrons. (SEKNET Trap featured card.)
+// Icon goes in the `icon` slot (a lucide component); bullets via `items`.
+import IconChip from './IconChip.astro';
+import ChevronList from './ChevronList.astro';
+import MonoPill from './MonoPill.astro';
+
+interface Props {
+  variant?: 'light' | 'dark';
+  title: string;
+  /** Small mono uppercase kicker above the title (e.g. "Seknet"). */
+  kicker?: string;
+  /** Mono index shown top-right (e.g. "01"). */
+  index?: string;
+  body?: string;
+  items?: string[];
+  /** 1 or 2-column bullet layout. */
+  cols?: 1 | 2;
+  /** Badge text shown top-right (dark featured card, e.g. "Nou în v2.3"). */
+  badge?: string;
+  class?: string;
+}
+
+const {
+  variant = 'light',
+  title,
+  kicker,
+  index,
+  body,
+  items,
+  cols = 1,
+  badge,
+  class: extra = '',
+} = Astro.props;
+const isDark = variant === 'dark';
+
+const shell = isDark
+  ? 'h-full box-border bg-navy border border-royal rounded-xl p-[30px] [box-shadow:0_2px_12px_rgba(14,31,91,0.2)] transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-mid-blue hover:[box-shadow:0_12px_36px_rgba(14,31,91,0.35)]'
+  : 'h-full box-border bg-surface border border-border rounded-xl p-[34px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg';
+---
+
+<div class:list={[shell, extra]}>
+  <div class="flex items-center justify-between gap-3.5">
+    <div class="flex items-center gap-3.5">
+      {
+        Astro.slots.has('icon') && (
+          <IconChip variant={isDark ? 'dark' : 'light'}>
+            <slot name="icon" />
+          </IconChip>
+        )
+      }
+      <div>
+        {
+          kicker && (
+            <div
+              class:list={[
+                'font-mono text-[11px] uppercase tracking-[1.5px]',
+                isDark ? 'text-sky' : 'text-bright',
+              ]}
+            >
+              {kicker}
+            </div>
+          )
+        }
+        <h3
+          class:list={[
+            'text-[19px] font-bold tracking-[-0.3px]',
+            kicker ? 'mt-0.5' : '',
+            isDark ? 'text-white' : 'text-navy',
+          ]}
+        >
+          {title}
+        </h3>
+      </div>
+    </div>
+    {index && <span class="font-mono text-[12px] tracking-[2px] text-faint">{index}</span>}
+    {badge && <MonoPill variant="dark" class="text-[10.5px] tracking-[1px]">{badge}</MonoPill>}
+  </div>
+
+  {
+    body && (
+      <p class:list={['mt-4 text-[13.5px]', isDark ? 'text-[rgba(226,233,245,0.7)]' : 'text-cool']}>
+        {body}
+      </p>
+    )
+  }
+
+  {items && items.length > 0 && <ChevronList items={items} cols={cols} dark={isDark} class="mt-4" />}
+
+  <slot />
+</div>

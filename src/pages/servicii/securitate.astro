@@ -1,0 +1,414 @@
+---
+// /servicii/securitate — Securitate & Conformitate
+// Template B (lighter): light hero → context intro → capabilities bento →
+// compliance proof → dark CtaBand. JSON-LD: Service.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Eyebrow from '../../components/Eyebrow.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import IconChip from '../../components/IconChip.astro';
+import ModuleCard from '../../components/ModuleCard.astro';
+import MonoPill from '../../components/MonoPill.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import TextLink from '../../components/TextLink.astro';
+import { Shield, Lock, Globe, Server, FileCheck, ShieldCheck, ScanFace, Eye, Layers } from '@lucide/astro';
+import { useTranslations, getLangFromUrl, localizedPath, yearsInBusiness } from '../../i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const p = (path: string) => localizedPath(lang, path);
+const years = yearsInBusiness(new Date().getUTCFullYear());
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Securitate & Conformitate — Smart Control',
+  description:
+    'Servicii enterprise de securitate cibernetică și conformitate: DLP, acces remote securizat, SSO/PKI, securitate perimetrală & endpoint, WAF, conformitate GDPR/NIS2/DORA și operațiuni de securitate gestionate.',
+  provider: {
+    '@type': 'Organization',
+    name: 'Smart Control SRL',
+    url: 'https://smartcontrol.ro',
+  },
+  serviceType: 'Cybersecurity & Compliance',
+  areaServed: {
+    '@type': 'Country',
+    name: 'Romania',
+  },
+  url: 'https://smartcontrol.ro/servicii/securitate',
+};
+---
+
+<BaseLayout
+  title="Securitate & Conformitate — Smart Control"
+  description="Servicii enterprise de securitate cibernetică și conformitate: DLP, acces remote securizat, SSO/PKI, WAF, GDPR/NIS2/DORA. Echipă proprie, 4 certificări ISO."
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  {/* ── HERO ───────────────────────────────────────────────────────────────── */}
+  <header
+    class="relative overflow-hidden"
+    style="background:linear-gradient(180deg,#F3F6FC 0%,#FFFFFF 100%)"
+  >
+    {/* Decorative drift blob */}
+    <div
+      class="pointer-events-none absolute"
+      data-parallax="0.3"
+      aria-hidden="true"
+      style="inset:0"
+    >
+      <div
+        class="absolute"
+        style="width:600px;height:600px;top:-120px;right:-120px;border-radius:999px;background:radial-gradient(circle,rgba(122,180,232,0.18),rgba(122,180,232,0) 65%);animation:scDriftA 18s ease-in-out infinite alternate"
+        aria-hidden="true"
+      >
+      </div>
+    </div>
+
+    <div class="container relative" data-hero-scrub>
+      <div class="pb-[100px] pt-[120px] md:pt-[190px]">
+        <Eyebrow variant="hero">Securitate &amp; Conformitate</Eyebrow>
+
+        <h1
+          class="mt-6 max-w-[860px] font-bold leading-[1.1] tracking-[-1.8px] text-midnight"
+          style="font-size:clamp(2.2rem,1.5rem+2.5vw,4rem)"
+        >
+          Amenințările nu dorm.
+          <br />
+          <span class="text-bright">Nici noi nu ne permitem.</span>
+        </h1>
+
+        <p
+          class="mt-6 max-w-[640px] text-[18px] leading-[1.7] text-slate"
+          style="animation:scFadeIn 0.9s ease-out 1.2s both"
+        >
+          Într-un peisaj de amenințări în continuă evoluție, conformitatea cu
+          <strong class="font-semibold text-navy">GDPR, NIS 2 și DORA</strong> nu mai este
+          opțională — este infrastructura de bază. Smart Control livrează securitate cibernetică
+          end-to-end: de la prevenirea scurgerilor de date până la operațiuni de securitate
+          gestionate, cu {years} ani de experiență și 4 certificări ISO.
+        </p>
+
+        <div
+          class="mt-[38px] flex flex-wrap items-center gap-4"
+          style="animation:scFadeIn 0.9s ease-out 1.4s both"
+        >
+          <TextLink href="#capabilities">
+            Explorează capabilitățile
+          </TextLink>
+          <TextLink href="#compliance">
+            Conformitate &amp; certificări
+          </TextLink>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {/* ── CONTEXT INTRO (3 cards) ────────────────────────────────────────────── */}
+  <section class="bg-surface" aria-labelledby="context-heading">
+    <div class="container py-[110px]">
+      <h2 id="context-heading" class="sr-only">De ce securitate proactivă</h2>
+      <div class="grid gap-5 [grid-template-columns:repeat(3,1fr)] max-[1100px]:grid-cols-1 max-[768px]:grid-cols-1" data-skew="4">
+        {/* Card 1 */}
+        <div data-reveal data-reveal-rotate="-4" data-drift="0.07">
+          <div class="h-full box-border rounded-xl border border-border bg-surface p-[30px_32px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:shadow-lg">
+            <IconChip>
+              <Eye class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+            </IconChip>
+            <h3 class="mt-[18px] text-[17px] font-bold text-navy">Suprafața de atac se extinde</h3>
+            <p class="mt-[10px] text-[14px] leading-[1.65] text-cool">
+              Munca hibridă, proliferarea SaaS și ecosistemele IoT multiplică vectorii de atac.
+              O singură configurație greșită poate expune date critice sau bloca operațiunile.
+            </p>
+          </div>
+        </div>
+
+        {/* Card 2 */}
+        <div data-reveal data-reveal-delay="100" data-reveal-rotate="4">
+          <div class="h-full box-border rounded-xl border border-border bg-surface p-[30px_32px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:shadow-lg">
+            <IconChip>
+              <FileCheck class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+            </IconChip>
+            <h3 class="mt-[18px] text-[17px] font-bold text-navy">Reglementările se înăspresc</h3>
+            <p class="mt-[10px] text-[14px] leading-[1.65] text-cool">
+              NIS 2 și DORA impun măsuri tehnice concrete cu termene ferme. Neconformitatea
+              înseamnă amenzi semnificative și răspundere directă a conducerii executive.
+            </p>
+          </div>
+        </div>
+
+        {/* Card 3 */}
+        <div data-reveal data-reveal-delay="200" data-reveal-rotate="-4" data-drift="-0.07">
+          <div class="h-full box-border rounded-xl border border-border bg-surface p-[30px_32px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:shadow-lg">
+            <IconChip>
+              <ShieldCheck class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+            </IconChip>
+            <h3 class="mt-[18px] text-[17px] font-bold text-navy">Echipa proprie face diferența</h3>
+            <p class="mt-[10px] text-[14px] leading-[1.65] text-cool">
+              50 de specialiști interni — nu subcontractori — cu expertiză validată prin ISO 27001
+              și sute de proiecte de securitate livrate în România și internațional.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── CAPABILITIES BENTO ─────────────────────────────────────────────────── */}
+  <section
+    id="capabilities"
+    class="bg-page"
+    data-band
+    aria-labelledby="cap-heading"
+    style="scroll-margin-top:76px"
+  >
+    <div class="container py-[110px]">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Capabilități"
+          heading="Securitate end-to-end, de la perimetru la conformitate"
+          headingId="cap-heading"
+          headingMaxWidth="700px"
+        >
+          Șapte domenii de competență, livrate de o echipă proprie certificată — de la prevenirea
+          scurgerilor de date până la operațiuni de securitate gestionate 24/7.
+        </SectionHeading>
+      </div>
+
+      <div
+        class="mt-[44px] grid grid-cols-2 gap-5 max-[768px]:grid-cols-1"
+        data-skew="4"
+        id="cap-heading-grid"
+      >
+        {/* DLP */}
+        <div data-reveal>
+          <ModuleCard
+            title="Data Leakage Prevention"
+            index="01"
+            body="Clasificare automată a datelor sensibile, politici de prevenire a exfiltrării și monitorizare în timp real a fluxurilor de date — indiferent dacă sunt on-premise, în cloud sau endpoint."
+            items={[
+              'Clasificare și etichetare automată',
+              'Blocare exfiltrare email, web, USB',
+              'Audit log imutabil pentru investigații',
+              'Rapoarte de conformitate GDPR-ready',
+            ]}
+            cols={2}
+          >
+            <Lock slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        {/* Secure Remote Access */}
+        <div data-reveal data-reveal-delay="80">
+          <ModuleCard
+            title="Acces Remote Securizat"
+            index="02"
+            body="Acces zero-trust pentru utilizatori mobili și site-to-site, cu MFA multi-metodă, inspecție trafic și protecție endpoint integrată — livrat prin soluția proprietară S-VPN."
+            items={[
+              'VPN SSL & IPSec, 10.000+ tuneluri simultane',
+              'MFA: TOTP, SMS, certificate X.509',
+              'Inspecție firewall UTM la 20 Gbps+',
+              'Consolă centralizată de management',
+            ]}
+            cols={2}
+          >
+            <Shield slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        {/* SSO/PKI */}
+        <div data-reveal>
+          <ModuleCard
+            title="Enterprise SSO / PKI"
+            index="03"
+            body="Autentificare centralizată și management al identității pentru organizații enterprise: SSO, MFA rezistent la phishing, provizionare automată și PKI intern sau integrat cu infra existentă."
+            items={[
+              'SSO — OAuth2, OIDC, SAML 2.0',
+              'MFA — TOTP, WebAuthn/FIDO2',
+              'Provizionare SCIM 2.0 + AD/LDAP/RADIUS',
+              'Certificate X.509, PKI enterprise',
+            ]}
+            cols={2}
+          >
+            <ScanFace slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        {/* Perimeter & Endpoint */}
+        <div data-reveal data-reveal-delay="80">
+          <ModuleCard
+            title="Securitate Perimetrală & Endpoint"
+            index="04"
+            body="Arhitectură de apărare în profunzime: firewall UTM, IDS/IPS, segmentare rețea și protecție endpoint cu detectare în timp real a vulnerabilităților — toate corelate printr-un singur dashboard."
+            items={[
+              'Firewall UTM, IDS/IPS, segmentare rețea',
+              'Detectare vulnerabilități CVE în timp real',
+              'MITRE ATT&CK mapping automat',
+              'Răspuns activ automatizat (blocare IP, izolare)',
+            ]}
+            cols={2}
+          >
+            <Layers slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        {/* WAF */}
+        <div data-reveal>
+          <ModuleCard
+            title="Web Application Firewall"
+            index="05"
+            body="Protecție la nivel de aplicație împotriva atacurilor OWASP Top 10: SQLi, XSS, HTTP constraints și semnături de atac actualizate — aplicată transparent la nivelul gateway-ului."
+            items={[
+              'Profiluri predefinite OWASP Top 10',
+              'SQLi, XSS, HTTP constraints, DDoS',
+              'Reguli custom per aplicație',
+              'Integrare nativă cu S-VPN gateway',
+            ]}
+            cols={2}
+          >
+            <Globe slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        {/* GDPR/NIS2 Compliance */}
+        <div data-reveal data-reveal-delay="80">
+          <ModuleCard
+            title="Conformitate GDPR / NIS 2 / DORA"
+            index="06"
+            body="Evaluare gap, implementare măsuri tehnice și organizatorice, rapoarte de audit ready-to-submit pentru GDPR, NIS 2 și DORA — susținute de certificarea ISO 27001."
+            items={[
+              'Assessment gap GDPR / NIS 2 / DORA',
+              'Politici și proceduri de securitate',
+              'Rapoarte audit exportabile PDF / CSV',
+              'Monitorizare continuă conformitate',
+            ]}
+            cols={2}
+          >
+            <FileCheck slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+
+        {/* Managed Security Operations */}
+        <div data-reveal class="col-span-2 max-[768px]:col-span-1">
+          <ModuleCard
+            title="Operațiuni de Securitate Gestionate"
+            index="07"
+            body="SOC gestionat de Smart Control: monitorizare continuă 24/7, detecție și răspuns la incidente, threat hunting proactiv și raportare periodică — fără overhead-ul unui SOC intern."
+            items={[
+              'Monitorizare SIEM 24/7 cu SEKNET',
+              'Detecție și răspuns la incidente (MDR)',
+              'Threat hunting și analiză IoC',
+              'SLA garantat, raportare lunară',
+              'Corelație multi-sursă, 50.000+ EPS/nod',
+              'Escaladare și remediere ghidată',
+            ]}
+            cols={2}
+          >
+            <Server slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+          </ModuleCard>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── COMPLIANCE PROOF ───────────────────────────────────────────────────── */}
+  <section
+    id="compliance"
+    class="bg-surface"
+    aria-labelledby="compliance-heading"
+    style="scroll-margin-top:76px"
+  >
+    <div class="container py-[110px]">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Certificări & Conformitate"
+          heading="Angajament față de standardele internaționale"
+          headingId="compliance-heading"
+          headingMaxWidth="680px"
+        >
+          Smart Control operează sub patru sisteme de management certificate simultan și menține
+          conformitatea cu reglementările europene de referință — GDPR, NIS 2 și DORA.
+        </SectionHeading>
+      </div>
+
+      {/* ISO badges */}
+      <div class="mt-[44px]" data-reveal data-reveal-delay="80">
+        <p class="mb-4 font-mono text-[11px] uppercase tracking-[2px] text-faint">
+          Sisteme de management certificate
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <MonoPill>ISO 9001</MonoPill>
+          <MonoPill>ISO 27001</MonoPill>
+          <MonoPill>ISO 14001</MonoPill>
+          <MonoPill>ISO 45001</MonoPill>
+        </div>
+      </div>
+
+      {/* Regulatory frameworks */}
+      <div class="mt-8" data-reveal data-reveal-delay="160">
+        <p class="mb-4 font-mono text-[11px] uppercase tracking-[2px] text-faint">
+          Conformitate cu reglementările europene
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <MonoPill variant="compliance">GDPR</MonoPill>
+          <MonoPill variant="compliance">NIS 2</MonoPill>
+          <MonoPill variant="compliance">DORA</MonoPill>
+        </div>
+      </div>
+
+      {/* Two-col description cards */}
+      <div class="mt-12 grid grid-cols-2 gap-5 max-[768px]:grid-cols-1" data-skew="4">
+        <div data-reveal class="rounded-xl border border-border bg-page p-[28px_32px]">
+          <h3 class="text-[16px] font-bold text-navy">Securitate proactivă &amp; NIS 2</h3>
+          <p class="mt-3 text-[14px] leading-[1.7] text-cool">
+            Smart Control garantează partenerilor săi un nivel maxim de reziliență cibernetică,
+            în deplină conformitate cu Directiva UE NIS 2. Măsurile de apărare și management al
+            riscului sunt validate prin certificarea internațională ISO 27001, iar monitorizarea
+            tehnică continuă protejează direct lanțul de aprovizionare al clienților.
+          </p>
+        </div>
+        <div data-reveal data-reveal-delay="80" class="rounded-xl border border-border bg-page p-[28px_32px]">
+          <h3 class="text-[16px] font-bold text-navy">Reziliență digitală &amp; DORA</h3>
+          <p class="mt-3 text-[14px] leading-[1.7] text-cool">
+            Smart Control este partener tehnologic de încredere pentru sectorul financiar, operând
+            în deplină conformitate cu cerințele de reziliență operațională impuse de DORA.
+            Guvernanța IT strictă și politicile de securitate ancorate în ISO 27001 garantează
+            gestionarea proactivă a riscurilor ICT și o recuperare rapidă în cazul incidentelor.
+          </p>
+        </div>
+      </div>
+
+      {/* Cross-sell to SEKNET */}
+      <div class="mt-12 rounded-xl border border-border-blue bg-blue-wash p-[28px_32px]" data-reveal>
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p class="font-mono text-[11px] uppercase tracking-[2px] text-bright">Soluție proprietară</p>
+            <h3 class="mt-2 text-[17px] font-bold text-navy">
+              SEKNET — platforma integrată de monitorizare &amp; securitate
+            </h3>
+            <p class="mt-2 max-w-[560px] text-[14px] leading-[1.65] text-cool">
+              SIEM, Identity, WAF, honeypot și dashboarduri de conformitate — toate într-o
+              singură platformă proprietară. 50.000+ EPS/nod, alertare sub 60s, disponibilitate 99,9%.
+            </p>
+          </div>
+          <div class="shrink-0">
+            <TextLink href={p('/solutii/seknet')}>
+              Descoperă SEKNET
+            </TextLink>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── CTA BAND (dark) ────────────────────────────────────────────────────── */}
+  <CtaBand
+    id="contact"
+    eyebrow="Pașii următori"
+    heading="Assessment de securitate gratuit — 2 zile"
+    cta={t('cta.assessment')}
+    subject={t('subject.assessment')}
+  >
+    Identificăm împreună gap-urile de securitate și conformitate și livrăm un raport de
+    recomandări prioritizat. Fără angajamente — decizia de a continua îți aparține.
+  </CtaBand>
+</BaseLayout>

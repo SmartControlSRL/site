@@ -1,0 +1,32 @@
+---
+// Absolutely-positioned <canvas> for the 2D node-graph background. BaseLayout
+// finds every canvas[data-network] and runs initNetwork, reading opts from the
+// data-* attributes below (only emitted when set). Decorative → aria-hidden.
+interface Props {
+  /** initNetwork opts → data attributes. Omitted attrs fall back to motion.js defaults. */
+  lineAlpha?: number;
+  dotAlpha?: number;
+  spread?: number;
+  lineDist?: number;
+  speed?: number;
+  maxNodes?: number;
+  /** Canvas element opacity (export uses 0.5–0.75 on dark zones). */
+  opacity?: number;
+  class?: string;
+}
+
+const { lineAlpha, dotAlpha, spread, lineDist, speed, maxNodes, opacity, class: extra = '' } =
+  Astro.props;
+---
+
+<canvas
+  data-network
+  aria-hidden="true"
+  data-line-alpha={lineAlpha != null ? String(lineAlpha) : undefined}
+  data-dot-alpha={dotAlpha != null ? String(dotAlpha) : undefined}
+  data-spread={spread != null ? String(spread) : undefined}
+  data-line-dist={lineDist != null ? String(lineDist) : undefined}
+  data-speed={speed != null ? String(speed) : undefined}
+  data-max-nodes={maxNodes != null ? String(maxNodes) : undefined}
+  class:list={['pointer-events-none absolute inset-0 h-full w-full', extra]}
+  style={opacity != null ? `opacity:${opacity}` : undefined}></canvas>
