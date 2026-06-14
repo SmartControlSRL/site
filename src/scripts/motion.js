@@ -278,12 +278,15 @@ export function initParallax(root) {
   function update() {
     raf = 0;
     const vh = window.innerHeight;
+    // Desktop-only: vertical parallax/drift collide with stacked layouts below
+    // the lg breakpoint, so zero the transform there (re-evaluated on resize).
+    const narrow = window.innerWidth < 1024;
     els.forEach((el) => {
       const f = parseFloat(el.getAttribute('data-parallax')) || 0.15;
       const host = el.parentElement;
       if (!host) return;
       const r = host.getBoundingClientRect();
-      const off = (r.top + r.height / 2 - vh / 2) * f;
+      const off = narrow ? 0 : (r.top + r.height / 2 - vh / 2) * f;
       el.style.transform = 'translate3d(0,' + off.toFixed(1) + 'px,0)';
     });
   }
@@ -315,11 +318,14 @@ export function initDrift(root) {
   let raf = 0, stopped = false;
   function measure() {
     const vh = window.innerHeight;
+    // Desktop-only: drift's ±44px vertical translate overlaps stacked cards
+    // below the lg breakpoint, so target 0 there (re-evaluated on resize).
+    const narrow = window.innerWidth < 1024;
     items.forEach((it) => {
       if (!it.anchor) return;
       const r = it.anchor.getBoundingClientRect();
       const off = (r.top + r.height / 2 - vh / 2) * it.f;
-      it.tgt = Math.max(-44, Math.min(44, off));
+      it.tgt = narrow ? 0 : Math.max(-44, Math.min(44, off));
     });
   }
   function loop() {

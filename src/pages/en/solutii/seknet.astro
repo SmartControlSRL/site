@@ -324,7 +324,7 @@ const jsonLd = {
             { num: '∞', accent: '', caption: 'Data retention — zero licensing cost' },
           ].map((cell) => (
             <div class="bg-surface px-7 py-7 transition-colors duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[#F8FAFF]">
-              <div class="font-mono text-[34px] font-semibold leading-none text-navy">
+              <div class="whitespace-nowrap font-mono text-[clamp(28px,7.5vw,34px)] font-semibold leading-none text-navy">
                 {cell.num}
                 {cell.accent && <span class="text-bright">{cell.accent}</span>}
               </div>
@@ -334,7 +334,7 @@ const jsonLd = {
         }
       </div>
 
-      <div class="mt-5" data-reveal data-drift="-0.04">
+      <div class="mt-12" data-reveal data-drift="-0.04">
         <SpecTable rows={specRows} />
       </div>
     </div>
