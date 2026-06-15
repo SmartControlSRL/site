@@ -382,9 +382,12 @@ export function initHeroScrub(root) {
   function update() {
     raf = 0;
     const y = window.scrollY;
-    const p = Math.max(0, Math.min(1, y / (window.innerHeight * 0.85)));
+    const p = Math.max(0, Math.min(1, y / (window.innerHeight * 1.35)));
+    // ease-in so it stays near-full opacity through the first stretch of scroll,
+    // then fades — and never goes fully invisible while the hero is still on screen.
+    const e = p * p;
     el.style.translate = '0 ' + (y * 0.3).toFixed(1) + 'px';
-    el.style.opacity = (1 - 0.92 * p).toFixed(3);
+    el.style.opacity = (1 - 0.7 * e).toFixed(3);
   }
   function onScroll() { if (!raf) raf = requestAnimationFrame(update); }
   window.addEventListener('scroll', onScroll, { passive: true });
