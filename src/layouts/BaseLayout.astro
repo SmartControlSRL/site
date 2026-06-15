@@ -20,10 +20,16 @@ const { title, description } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 
 // hreflang alternates: per-locale slugs via hreflangPair (handles
-// /confidentialitate ↔ /en/privacy, not just the /en prefix).
-const path = Astro.url.pathname;
+// /confidentialitate ↔ /en/privacy, not just the /en prefix). The static
+// build emits directory-format URLs (…/cloud/index.html), so canonical,
+// sitemap and alternates must all carry a trailing slash — normalize the
+// hreflangPair output (which strips it) to match the canonical convention.
+const withSlash = (p: string) => (p === '/' || p.endsWith('/') ? p : `${p}/`);
+const path = withSlash(Astro.url.pathname);
 const { ro: roPath, en: enPath } = hreflangPair(path);
 const canonical = new URL(path, Astro.site).href;
+const roHref = new URL(withSlash(roPath), Astro.site).href;
+const enHref = new URL(withSlash(enPath), Astro.site).href;
 const ogImage = new URL('og.png', Astro.site).href;
 ---
 
@@ -38,9 +44,9 @@ const ogImage = new URL('og.png', Astro.site).href;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="ro" href={new URL(roPath, Astro.site).href} />
-    <link rel="alternate" hreflang="en" href={new URL(enPath, Astro.site).href} />
-    <link rel="alternate" hreflang="x-default" href={new URL(roPath, Astro.site).href} />
+    <link rel="alternate" hreflang="ro" href={roHref} />
+    <link rel="alternate" hreflang="en" href={enHref} />
+    <link rel="alternate" hreflang="x-default" href={roHref} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
