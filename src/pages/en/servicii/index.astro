@@ -11,7 +11,7 @@ import MonoPill from '../../../components/MonoPill.astro';
 import CtaBand from '../../../components/CtaBand.astro';
 import TextLink from '../../../components/TextLink.astro';
 import Eyebrow from '../../../components/Eyebrow.astro';
-import { Server, ShieldCheck, Code, Settings2, ChevronDown } from '@lucide/astro';
+import { Server, ShieldCheck, Code, Settings2 } from '@lucide/astro';
 import { useTranslations, getLangFromUrl, localizedPath, yearsInBusiness, FOUNDED } from '../../../i18n/ui';
 
 const lang = getLangFromUrl(Astro.url);
@@ -184,25 +184,6 @@ const jsonLd = {
           Four service pillars, backed by <strong class="text-navy font-semibold">50 in-house specialists</strong> — our own team, no subcontractors. A consultative approach, source code included, ROI report at 90 days.
         </p>
 
-        <div class="mt-10 flex flex-wrap gap-4" data-reveal data-reveal-delay="350">
-          <a
-            href="#pillars"
-            class="inline-flex items-center gap-2 rounded-md bg-navy px-6 py-3 text-[14.5px] font-semibold text-white transition-all hover:bg-midnight"
-            style="box-shadow:0 4px 18px rgba(14,31,91,0.2)"
-          >
-            Explore services
-            <ChevronDown class="h-[18px] w-[18px]" stroke-width={1.5} aria-hidden="true" />
-          </a>
-          <a
-            data-email-user="office"
-            data-email-domain="smartcontrol.ro"
-            data-email-subject="Free assessment"
-            class="inline-flex items-center gap-2 rounded-md bg-royal px-6 py-3 text-[14.5px] font-semibold text-white transition-all hover:bg-navy"
-            style="box-shadow:0 4px 18px rgba(68,135,220,0.3)"
-          >
-            {t('cta.assessment')}
-          </a>
-        </div>
       </div>
     </div>
   </header>
