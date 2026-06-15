@@ -10,7 +10,6 @@ import SectionHeading from '../../components/SectionHeading.astro';
 import ModuleCard from '../../components/ModuleCard.astro';
 import SpecTable from '../../components/SpecTable.astro';
 import CtaBand from '../../components/CtaBand.astro';
-import MailtoLink from '../../components/MailtoLink.astro';
 import { getLangFromUrl, useTranslations, localizedPath } from '../../i18n/ui';
 import {
   FingerprintPattern,
@@ -127,18 +126,6 @@ const jsonLd = {
           class="font-semibold text-white">fără costuri de licențiere adiționale</strong
         >.
       </p>
-
-      <div class="sc-hero-cta mt-[38px] flex flex-wrap items-center gap-4">
-        <MailtoLink variant="button" dark subject={t('subject.demo.seknet')}>
-          {t('cta.demo.seknet')}
-        </MailtoLink>
-        <a
-          href="#module"
-          class="px-2 py-[13px] text-[14.5px] font-semibold text-sky transition-colors hover:text-white"
-        >
-          Vezi modulele <span aria-hidden="true">›</span>
-        </a>
-      </div>
 
       <ul class="sc-hero-stats mt-[56px] flex flex-wrap gap-x-5 gap-y-3 sm:gap-x-9">
         {

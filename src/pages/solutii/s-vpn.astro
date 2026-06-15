@@ -12,8 +12,6 @@ import StatBlock from '../../components/StatBlock.astro';
 import ModuleCard from '../../components/ModuleCard.astro';
 import SpecTable from '../../components/SpecTable.astro';
 import CtaBand from '../../components/CtaBand.astro';
-import MailtoLink from '../../components/MailtoLink.astro';
-import TextLink from '../../components/TextLink.astro';
 import { useTranslations, getLangFromUrl } from '../../i18n/ui';
 import { Network, KeyRound, ShieldAlert, Laptop, SlidersHorizontal } from '@lucide/astro';
 
@@ -195,20 +193,6 @@ const jsonLd = {
         > — la o fracțiune din costul soluțiilor tradiționale, cu toate serviciile
         incluse în licență.
       </p>
-
-      <div
-        class="mt-[38px] flex flex-wrap items-center gap-4 [animation:scFadeIn_0.9s_ease-out_1.35s_both]"
-      >
-        <MailtoLink
-          variant="button"
-          dark
-          subject={t('subject.demo.svpn')}
-          class="!px-[26px] !py-[13px]"
-        >
-          {t('cta.demo.svpn')}
-        </MailtoLink>
-        <TextLink href="#module" dark class="!px-2 !py-[13px]">Vezi modulele</TextLink>
-      </div>
 
       <ul
         class="mt-14 flex flex-wrap gap-9 [animation:scFadeIn_0.9s_ease-out_1.55s_both]"
