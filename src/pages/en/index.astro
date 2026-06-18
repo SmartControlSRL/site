@@ -45,7 +45,7 @@ const years = yearsInBusiness(new Date().getUTCFullYear());
 
 const title = 'Smart Control — Trusted Service Delivery Partner';
 const description =
-  'Enterprise infrastructure, security and software, delivered by our own team. ' +
+  'Enterprise infrastructure, security and software, 100% in-house execution. ' +
   'Over 650 projects, 250+ clients, 4 ISO certifications and GDPR · NIS 2 · DORA compliance.';
 
 // — JSON-LD: Organization (EN description) —
@@ -75,11 +75,9 @@ const heroLine1 = [
   { word: 'Software.', delay: '0.55s' },
 ];
 const heroLine2 = [
-  { word: 'Delivered', delay: '0.75s' },
-  { word: 'by', delay: '0.87s' },
-  { word: 'our', delay: '0.99s' },
-  { word: 'own', delay: '1.11s' },
-  { word: 'team.', delay: '1.23s' },
+  { word: 'Execution', delay: '0.75s' },
+  { word: '100%', delay: '0.93s' },
+  { word: 'in-house.', delay: '1.11s' },
 ];
 
 const isoBadges = ['ISO 9001', 'ISO 27001', 'ISO 14001', 'ISO 45001'];
@@ -99,7 +97,7 @@ const partners = [
   'Palo Alto',
   'Hanasis',
   'IBM',
-  'HP',
+  'HPE',
   'DELL',
 ];
 
@@ -187,10 +185,11 @@ const cloudRows = [
       <p
         class="mt-7 max-w-[600px] text-[18px] leading-[1.7] text-slate opacity-0 [animation:scFadeIn_0.9s_ease-out_1.3s_forwards]"
       >
-        For {years} years, Smart Control has designed, operated and secured IT infrastructure for
-        companies in Romania and abroad —{' '}
-        <strong class="font-semibold text-navy">our own team, not subcontractors</strong>, a
-        consultative approach and delivery grounded in real data.
+        For over {years} years, Smart Control has developed, operated and protected complex IT
+        infrastructure, serving an extensive portfolio of local and international clients. We guarantee
+        business continuity and quality through the exclusive use of an{' '}
+        <strong class="font-semibold text-navy">in-house team of experts</strong>, a consultative
+        methodology and an organizational culture grounded in real data.
       </p>
 
       <div
@@ -227,7 +226,7 @@ const cloudRows = [
       <div data-reveal>
         <SectionHeading
           eyebrow="Services"
-          heading="An integrated portfolio, from physical infrastructure to code"
+          heading="An integrated portfolio, from hardware architecture to application level"
           headingMaxWidth="700px"
         >
           Four service pillars, backed by 50 in-house specialists with over 500 cumulative years of
@@ -272,7 +271,7 @@ const cloudRows = [
           <ModuleCard
             title="Security & Compliance"
             index="02"
-            body="Perimeter and endpoint defense, identity and managed security operations."
+            body="Perimeter and endpoint security, identity and managed security operations."
             items={[
               'Perimeter & End-point Security',
               'Enterprise SSO / PKI',
@@ -321,7 +320,7 @@ const cloudRows = [
           <ModuleCard
             title="Managed Services"
             index="04"
-            body="We operate your infrastructure, network and security — service desk and support, on-site & remote."
+            body="We operate your infrastructure, network and cybersecurity — service desk and support, on-site & remote."
             items={[
               'Service Desk Outsourcing',
               'Managed Infrastructure Operations',
@@ -460,7 +459,7 @@ const cloudRows = [
       <div data-reveal>
         <SectionHeading
           eyebrow="Cloud & Modernization"
-          heading="The alternative to ever-pricier hardware: re-architecture"
+          heading="From heavy hardware investment to efficiency through smart re-architecture"
         >
           Prices for critical components are rising under demand for AI infrastructure, and refresh
           budgets no longer stretch far enough. Re-architecting and optimizing applications becomes
@@ -516,7 +515,7 @@ const cloudRows = [
     cta="Request the assessment"
     subject={t('subject.assessment')}
   >
-    No commitments. Together we identify the priority area of interest and deliver a recommendations
+    No contractual obligations. Together we identify the priority area of interest and deliver a recommendations
     report at the end.
   </CtaBand>
 
