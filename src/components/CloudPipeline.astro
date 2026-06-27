@@ -1,0 +1,56 @@
+---
+// Cloud & Modernization 5-step pipeline — the Cloud teaser's signature element
+// (ported from the "Smart Control Homepage" Claude Design import, adapted to brand
+// tokens). A horizontal rail of numbered nodes with a connecting gradient line at
+// desktop; stacks on narrow viewports. Static by design (the deep /servicii/cloud
+// page keeps the scroll-driven vertical Stepper). The first node renders active.
+interface Step {
+  title: string;
+  /** mono sub-caption, e.g. "assessment 2 zile" */
+  sub: string;
+}
+interface Props {
+  steps: Step[];
+  /** index of the highlighted node (default first) */
+  active?: number;
+  class?: string;
+}
+const { steps, active = 0, class: extra = '' } = Astro.props;
+---
+
+<div
+  class:list={[
+    'relative overflow-hidden rounded-lg border border-border bg-surface',
+    extra,
+  ]}
+>
+  {/* connecting rail (desktop only — node center ≈ 28px pad + 17px radius) */}
+  <div
+    class="absolute left-[10%] right-[10%] top-[45px] hidden h-px bg-gradient-to-r from-bright to-border-blue lg:block"
+    aria-hidden="true"
+  >
+  </div>
+
+  <ol class="grid list-none grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
+    {
+      steps.map((step, i) => (
+        <li
+          class="relative border-b border-border px-[18px] py-7 text-center last:border-b-0 lg:border-b-0 lg:border-r lg:last:border-r-0"
+        >
+          <span
+            class:list={[
+              'relative z-[1] mx-auto mb-3.5 flex h-[34px] w-[34px] items-center justify-center rounded-full font-mono text-[13px]',
+              i === active
+                ? 'bg-bright font-medium text-white [box-shadow:0_0_0_4px_rgba(68,135,220,0.14)]'
+                : 'border-[1.5px] border-border-blue bg-surface text-cool',
+            ]}
+          >
+            {String(i + 1).padStart(2, '0')}
+          </span>
+          <div class="font-sans text-[14.5px] font-semibold text-navy">{step.title}</div>
+          <div class="mt-1 font-mono text-[12px] text-faint">{step.sub}</div>
+        </li>
+      ))
+    }
+  </ol>
+</div>

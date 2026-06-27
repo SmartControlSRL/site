@@ -1,0 +1,101 @@
+---
+// SEKNET live console — the dark Produse band's signature widget (ported from the
+// "Smart Control Homepage" Claude Design import, adapted to brand tokens). Renders
+// a console card: status header, an attack-map <canvas>, a 3-metric strip and a
+// scrolling log feed. motion.js → initConsole animates the canvas, ticks the
+// metrics and rotates the log; everything degrades to a static frame under
+// prefers-reduced-motion. Brand-blue throughout (no status green on marketing
+// surfaces, per CLAUDE.md). Labels are props so RO/EN pass localized copy.
+interface LogLine {
+  /** mono timestamp shown in the no-JS / reduced-motion fallback */
+  time: string;
+  msg: string;
+  /** blocked → bright-blue ■, allowed → sky ▸ */
+  blocked?: boolean;
+}
+interface Metric {
+  label: string;
+  /** numeric base (ticked by initConsole) or a static string like "20+" */
+  value: string;
+  base?: number;
+  accent?: boolean;
+}
+interface Props {
+  title: string;
+  /** exactly three metrics fill the strip */
+  metrics: Metric[];
+  log: LogLine[];
+  class?: string;
+}
+const { title, metrics, log, class: extra = '' } = Astro.props;
+---
+
+<div
+  data-console
+  class:list={[
+    'overflow-hidden rounded-xl border border-[rgba(122,180,232,0.16)] bg-[#070f29] [box-shadow:0_40px_90px_-40px_rgba(0,0,0,0.7)]',
+    extra,
+  ]}
+>
+  {/* status header */}
+  <div
+    class="flex items-center justify-between border-b border-[rgba(122,180,232,0.12)] bg-[rgba(255,255,255,0.02)] px-[18px] py-3"
+  >
+    <div class="flex items-center gap-2 font-mono text-[11.5px] tracking-[1.5px] text-[rgba(226,233,245,0.6)]">
+      <span
+        class="h-[7px] w-[7px] rounded-full bg-bright [animation:scBlink_1.8s_ease-in-out_infinite]"
+        aria-hidden="true"></span>
+      {title}
+    </div>
+    <div class="flex gap-1.5" aria-hidden="true">
+      <span class="h-[9px] w-[9px] rounded-full bg-[rgba(122,180,232,0.25)]"></span>
+      <span class="h-[9px] w-[9px] rounded-full bg-[rgba(122,180,232,0.25)]"></span>
+      <span class="h-[9px] w-[9px] rounded-full bg-[rgba(122,180,232,0.25)]"></span>
+    </div>
+  </div>
+
+  {/* attack-map canvas */}
+  <div class="relative h-[240px]">
+    <canvas data-console-canvas class="absolute inset-0 h-full w-full" aria-hidden="true"></canvas>
+  </div>
+
+  {/* metric strip */}
+  <div
+    class="grid grid-cols-3 border-y border-[rgba(122,180,232,0.12)] font-mono"
+  >
+    {
+      metrics.map((m, i) => (
+        <div class:list={['px-4 py-3', i < 2 && 'border-r border-[rgba(122,180,232,0.12)]']}>
+          <div class="mb-1 text-[10px] uppercase tracking-[1px] text-[rgba(226,233,245,0.45)]">
+            {m.label}
+          </div>
+          <div
+            data-console-metric={m.base != null ? '' : undefined}
+            data-base={m.base != null ? String(m.base) : undefined}
+            class:list={['text-[17px] font-medium', m.accent ? 'text-bright' : 'text-white']}
+          >
+            {m.value}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  {/* scrolling log feed */}
+  <ul
+    data-console-log
+    class="m-0 flex h-[132px] list-none flex-col gap-[5px] overflow-hidden p-[14px_16px] font-mono text-[11.5px] leading-[1.5]"
+  >
+    {
+      log.map((l) => (
+        <li data-msg={l.msg} data-kind={l.blocked === false ? 'allow' : 'block'} class="flex items-center gap-2.5">
+          <span class="text-sky">{l.time}</span>
+          <span style={`color:${l.blocked === false ? '#7AB4E8' : '#4487DC'}`}>
+            {l.blocked === false ? '▸' : '■'}
+          </span>
+          <span class="min-w-0 flex-1 truncate text-[rgba(226,233,245,0.72)]">{l.msg}</span>
+        </li>
+      ))
+    }
+  </ul>
+</div>
