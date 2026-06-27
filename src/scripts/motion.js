@@ -473,6 +473,138 @@ export function initEmails(root) {
   });
 }
 
+/* SEKNET live console: animated attack-map canvas + scrolling log feed + ticking
+   metrics. Operates on a [data-console] container holding a [data-console-canvas],
+   a [data-console-log] <ul> of seed <li data-msg data-kind>, and [data-console-metric]
+   numbers (data-base). All brand-blue (no status green on marketing surfaces).
+   Reduced motion: paints one static radar frame and leaves the seed log/metrics. */
+export function initConsole(container) {
+  if (!container) return () => {};
+  const rm = reducedMotion();
+  const cleanups = [];
+  const ACCENT = '68,135,220';   // #4487DC
+  const SKY = '122,180,232';     // #7AB4E8
+
+  // — attack-map canvas —
+  const canvas = container.querySelector('[data-console-canvas]');
+  if (canvas && canvas.getContext) {
+    const ctx = canvas.getContext('2d');
+    let w = 0, h = 0, raf = 0, visible = true, destroyed = false, pings = [], t = 0;
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = canvas.clientWidth; h = canvas.clientHeight;
+      canvas.width = Math.max(1, w * dpr); canvas.height = Math.max(1, h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function spawn() {
+      const edge = Math.floor(Math.random() * 4);
+      let x, y;
+      if (edge === 0) { x = Math.random() * w; y = -6; }
+      else if (edge === 1) { x = w + 6; y = Math.random() * h; }
+      else if (edge === 2) { x = Math.random() * w; y = h + 6; }
+      else { x = -6; y = Math.random() * h; }
+      pings.push({ x, y, p: 0, sp: 0.006 + Math.random() * 0.007, blocked: Math.random() < 0.78 });
+    }
+    function rings(cx, cy) {
+      const rmax = Math.min(w, h) / 2;
+      for (let i = 1; i <= 3; i++) {
+        ctx.strokeStyle = 'rgba(' + SKY + ',0.10)';
+        ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(cx, cy, rmax * (i / 3.4), 0, Math.PI * 2); ctx.stroke();
+      }
+      ctx.fillStyle = 'rgba(' + ACCENT + ',0.9)'; ctx.beginPath(); ctx.arc(cx, cy, 3.2, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = 'rgba(' + ACCENT + ',0.35)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(cx, cy, 7, 0, Math.PI * 2); ctx.stroke();
+    }
+    function draw() {
+      raf = 0; if (destroyed || !visible || document.hidden) return;
+      t++;
+      ctx.clearRect(0, 0, w, h);
+      const cx = w / 2, cy = h / 2;
+      rings(cx, cy);
+      // expanding sweep pulse
+      const pr = (t % 150) / 150;
+      ctx.strokeStyle = 'rgba(' + ACCENT + ',' + ((1 - pr) * 0.22).toFixed(3) + ')';
+      ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(cx, cy, pr * (Math.min(w, h) / 2), 0, Math.PI * 2); ctx.stroke();
+      // inbound pings homing on the core
+      for (const g of pings) {
+        g.p += g.sp;
+        const x = g.x + (cx - g.x) * g.p, y = g.y + (cy - g.y) * g.p;
+        ctx.strokeStyle = 'rgba(' + SKY + ',0.12)';
+        ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(g.x, g.y); ctx.lineTo(x, y); ctx.stroke();
+        ctx.fillStyle = g.blocked ? 'rgba(' + ACCENT + ',0.95)' : 'rgba(' + SKY + ',0.95)';
+        ctx.beginPath(); ctx.arc(x, y, 2, 0, Math.PI * 2); ctx.fill();
+      }
+      pings = pings.filter((g) => g.p < 1);
+      if (Math.random() < 0.05 && pings.length < 14) spawn();
+      raf = requestAnimationFrame(draw);
+    }
+    function kick() { if (!raf && !destroyed && !rm) raf = requestAnimationFrame(draw); }
+    resize();
+    if (rm) {
+      rings(w / 2, h / 2);
+    } else {
+      for (let i = 0; i < 6; i++) spawn();
+      const onResize = () => { resize(); kick(); };
+      const onVis = () => kick();
+      const io = new IntersectionObserver((es) => { for (const e of es) visible = e.isIntersecting; kick(); }, { threshold: 0 });
+      io.observe(canvas);
+      window.addEventListener('resize', onResize);
+      document.addEventListener('visibilitychange', onVis);
+      kick();
+      cleanups.push(() => { destroyed = true; if (raf) cancelAnimationFrame(raf); io.disconnect(); window.removeEventListener('resize', onResize); document.removeEventListener('visibilitychange', onVis); });
+    }
+  }
+
+  // — scrolling log feed —
+  const logEl = container.querySelector('[data-console-log]');
+  if (logEl && !rm) {
+    const seeds = Array.prototype.slice.call(logEl.querySelectorAll('li')).map((li) => ({
+      msg: li.getAttribute('data-msg') || li.textContent.trim(),
+      blocked: li.getAttribute('data-kind') !== 'allow',
+    }));
+    if (seeds.length) {
+      const max = 6;
+      const pad = (x) => String(x).padStart(2, '0');
+      const stamp = () => { const d = new Date(); return pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()); };
+      const line = (s) => {
+        const li = document.createElement('li');
+        li.className = 'flex items-center gap-2.5';
+        li.innerHTML =
+          '<span style="color:#7AB4E8">' + stamp() + '</span>' +
+          '<span style="color:' + (s.blocked ? '#4487DC' : '#7AB4E8') + '">' + (s.blocked ? '■' : '▸') + '</span>' +
+          '<span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:rgba(226,233,245,0.72)">' + s.msg + '</span>';
+        return li;
+      };
+      // re-render seeds with live timestamps for a consistent look
+      logEl.innerHTML = '';
+      for (let k = 0; k < Math.min(max, seeds.length); k++) logEl.appendChild(line(seeds[k]));
+      let i = 0;
+      const id = setInterval(() => {
+        const li = line(seeds[i % seeds.length]); i++;
+        li.style.opacity = '0'; li.style.transition = 'opacity .4s ease';
+        logEl.insertBefore(li, logEl.firstChild);
+        requestAnimationFrame(() => { li.style.opacity = '1'; });
+        while (logEl.children.length > max) logEl.removeChild(logEl.lastChild);
+      }, 1900);
+      cleanups.push(() => clearInterval(id));
+    }
+  }
+
+  // — ticking metrics —
+  const metrics = Array.prototype.slice.call(container.querySelectorAll('[data-console-metric]'));
+  if (metrics.length && !rm) {
+    const fmt = (x) => String(Math.round(x)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    const id = setInterval(() => {
+      metrics.forEach((el) => {
+        const base = parseFloat(el.getAttribute('data-base')) || 0;
+        el.textContent = fmt(base + (Math.random() * 2 - 1) * base * 0.04);
+      });
+    }, 2100);
+    cleanups.push(() => clearInterval(id));
+  }
+
+  return () => cleanups.forEach((fn) => { try { fn(); } catch { /* noop */ } });
+}
+
 /* Lucide icon hydration with retry (script loads async in helmet). */
 export function hydrateIcons(attempt = 0) {
   if (window.lucide && window.lucide.createIcons) {

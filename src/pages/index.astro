@@ -20,6 +20,8 @@ import IconChip from '../components/IconChip.astro';
 import LogoMarquee from '../components/LogoMarquee.astro';
 import TextLink from '../components/TextLink.astro';
 import MailtoLink from '../components/MailtoLink.astro';
+import SeknetConsole from '../components/SeknetConsole.astro';
+import CloudPipeline from '../components/CloudPipeline.astro';
 import {
   getLangFromUrl,
   useTranslations,
@@ -28,18 +30,7 @@ import {
   EMAIL_DOMAIN,
   yearsInBusiness,
 } from '../i18n/ui';
-import {
-  Server,
-  ShieldCheck,
-  Code,
-  LifeBuoy,
-  FingerprintPattern,
-  Shield,
-  Activity,
-  LayoutDashboard,
-  Radar,
-  Lock,
-} from '@lucide/astro';
+import { Server, ShieldCheck, Code, LifeBuoy, Shield, Lock } from '@lucide/astro';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -102,12 +93,36 @@ const partners = [
   'DELL',
 ];
 
-// Produse dark module mini-grid (4 standard + Trap full-width).
-const produseModules = [
-  { Icon: FingerprintPattern, title: 'Identity', sub: 'SSO · MFA FIDO2 · SCIM 2.0' },
-  { Icon: Shield, title: 'Shield', sub: 'SIEM · IDS · MITRE ATT&CK' },
-  { Icon: Activity, title: 'Insight', sub: 'ML · detecție anomalii' },
-  { Icon: LayoutDashboard, title: 'View', sub: 'Dashboards · topologie · rapoarte' },
+// SEKNET module chips (4 standard + Trap, the active-deception module).
+const seknetChips = [
+  { title: 'Identity', sub: 'SSO · FIDO2 · SCIM' },
+  { title: 'Shield', sub: 'SIEM · IDS · MITRE' },
+  { title: 'Insight', sub: 'ML · anomalii' },
+  { title: 'View', sub: 'topologie · rapoarte' },
+];
+
+// SEKNET live console — attack-map metrics + seed log feed.
+const consoleMetrics = [
+  { label: 'Evenimente/s', value: '1 240', base: 1240 },
+  { label: 'Blocate', value: '1 240', base: 1240, accent: true },
+  { label: 'Honeypot-uri', value: '20+' },
+];
+const consoleLog = [
+  { time: '08:14:02', msg: 'IDS · scanare porturi blocată — 203.0.113.7' },
+  { time: '08:14:05', msg: 'Trap · honeypot SSH atins — credențiale capturate' },
+  { time: '08:14:09', msg: 'Identity · MFA FIDO2 validat — sesiune autorizată', blocked: false },
+  { time: '08:14:11', msg: 'Shield · regulă MITRE T1110 declanșată — brute-force' },
+  { time: '08:14:15', msg: 'Insight · anomalie trafic — host izolat' },
+  { time: '08:14:18', msg: 'View · topologie actualizată — 142 noduri', blocked: false },
+];
+
+// Cloud & Modernization — 5-stage methodology, teaser pipeline.
+const cloudSteps = [
+  { title: 'Evaluare', sub: 'assessment 2 zile' },
+  { title: 'Re-arhitecturare', sub: 'design țintă' },
+  { title: 'Containerizare', sub: 'K8s / OpenShift' },
+  { title: 'Migrare', sub: 'zero-downtime' },
+  { title: 'Validare ROI', sub: 'raport 90 zile' },
 ];
 
 const cloudRows = [
@@ -368,8 +383,8 @@ const cloudRows = [
 
     <div class="relative z-[1] mx-auto max-w-[1180px]">
       {/* Top split grid */}
-      <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
-        {/* Left column */}
+      <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+        {/* Left column — heading, CTAs, module chips */}
         <div data-reveal>
           <SectionHeading
             eyebrow="Produse proprietare"
@@ -389,36 +404,31 @@ const cloudRows = [
             </a>
             <TextLink href={p('/solutii/s-vpn')} dark>Explorează S-VPN</TextLink>
           </div>
-        </div>
 
-        {/* Right column — module mini-grid */}
-        <div data-reveal data-reveal-delay="120" data-drift="-0.05">
-          <div class="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
+          {/* module chips (4 standard + Trap) */}
+          <div class="mt-8 flex flex-wrap gap-2">
             {
-              produseModules.map(({ Icon, title: mTitle, sub }) => (
-                <div class="rounded-lg border border-[rgba(122,180,232,0.18)] bg-[rgba(255,255,255,0.03)] p-[22px] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-[rgba(68,135,220,0.55)] hover:[box-shadow:0_0_28px_rgba(68,135,220,0.18)]">
-                  <Icon class="h-5 w-5 text-sky" stroke-width={1.5} />
-                  <div class="mt-3 text-[15.5px] font-bold text-white">{mTitle}</div>
-                  <div class="mt-1.5 text-[12.5px] leading-[1.55] text-[rgba(226,233,245,0.6)]">
-                    {sub}
-                  </div>
+              seknetChips.map(({ title: cTitle, sub }) => (
+                <div class="flex items-center gap-2 rounded-md border border-[rgba(122,180,232,0.18)] bg-[rgba(255,255,255,0.03)] px-3 py-2">
+                  <span class="text-[13.5px] font-bold text-white">{cTitle}</span>
+                  <span class="font-mono text-[10.5px] text-[rgba(226,233,245,0.5)]">{sub}</span>
                 </div>
               ))
             }
-            {/* Trap card (full width) */}
-            <div
-              class="flex items-center gap-3.5 rounded-lg border border-[rgba(68,135,220,0.4)] bg-[rgba(68,135,220,0.1)] px-[22px] py-[18px] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-[rgba(122,180,232,0.7)] hover:[box-shadow:0_0_28px_rgba(68,135,220,0.2)] sm:col-span-2"
-            >
-              <Radar class="h-5 w-5 shrink-0 text-sky" stroke-width={1.5} />
-              <div class="flex flex-wrap items-baseline gap-2.5">
-                <span class="text-[15.5px] font-bold text-white">Trap</span>
-                <MonoPill variant="dark" class="!text-[10px] !tracking-[1px]">Nou</MonoPill>
-                <span class="text-[12.5px] text-[rgba(226,233,245,0.6)]">
-                  Decepție activă — honeypot-uri 20+ protocoale, IDS rețea, hartă de atac live
-                </span>
-              </div>
+            <div class="flex items-center gap-2 rounded-md border border-[rgba(68,135,220,0.45)] bg-[rgba(68,135,220,0.12)] px-3 py-2">
+              <span class="text-[13.5px] font-bold text-white">Trap</span>
+              <MonoPill variant="dark" class="!text-[10px] !tracking-[1px]">Nou</MonoPill>
             </div>
           </div>
+        </div>
+
+        {/* Right column — live attack-map console */}
+        <div data-reveal data-reveal-delay="120" data-drift="-0.05">
+          <SeknetConsole
+            title="SEKNET TRAP · HARTĂ DE ATAC LIVE"
+            metrics={consoleMetrics}
+            log={consoleLog}
+          />
         </div>
       </div>
 
@@ -469,37 +479,43 @@ const cloudRows = [
 
   {/* ── SECTION 6 — Cloud teaser (light wash) ── */}
   <section data-band class="bg-page px-6 py-[72px] sm:py-[110px] md:px-10">
-    <div class="mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
-      {/* Left column */}
-      <div data-reveal>
+    <div class="mx-auto max-w-[1180px]">
+      {/* Header split — heading left, context + CTA right */}
+      <div data-reveal class="grid grid-cols-1 items-end gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">
         <SectionHeading
           eyebrow="Cloud & Modernization"
           heading="De la investiții masive în hardware, la eficiență prin re-arhitecturare inteligentă"
-        >
-          Prețurile componentelor critice cresc sub presiunea cererii pentru infrastructură AI, iar
-          bugetele de refresh nu mai ajung. Re-arhitecturarea și optimizarea aplicațiilor devine
-          strategia principală — iar noi o livrăm printr-un flux de lucru în 5 etape, validat în
-          650+ proiecte.
-        </SectionHeading>
-        <div class="mt-7">
+        />
+        <div>
+          <p class="text-[16px] leading-[1.6] text-cool">
+            Prețurile componentelor critice cresc sub presiunea cererii pentru infrastructură AI, iar
+            bugetele de refresh nu mai ajung. Re-arhitecturarea devine strategia principală — livrată
+            printr-un flux în <strong class="font-semibold text-navy">5 etape</strong>, validat în
+            650+ proiecte.
+          </p>
           <a
             href={p('/servicii/cloud')}
-            class="inline-flex items-center gap-2 rounded-md bg-navy px-6 py-3 text-[14.5px] font-semibold text-white transition-all hover:bg-midnight hover:[box-shadow:0_6px_20px_rgba(14,31,91,0.25)]"
+            class="mt-5 inline-flex items-center gap-2 rounded-md bg-navy px-6 py-3 text-[14.5px] font-semibold text-white transition-all hover:bg-midnight hover:[box-shadow:0_6px_20px_rgba(14,31,91,0.25)]"
           >
             Explorează Cloud & Modernization <span aria-hidden="true">›</span>
           </a>
         </div>
       </div>
 
-      {/* Right column — 3 stacked rows */}
-      <div data-reveal data-reveal-delay="120" data-drift="-0.05" class="grid gap-3.5">
+      {/* 5-stage methodology pipeline */}
+      <div data-reveal class="mt-12">
+        <CloudPipeline steps={cloudSteps} />
+      </div>
+
+      {/* Capability cards */}
+      <div data-reveal data-reveal-delay="120" class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
         {
           cloudRows.map(({ tag, body }) => (
-            <div class="flex flex-col gap-2 rounded-xl border border-border bg-surface px-6 py-5 shadow-sm transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[2px] hover:border-border-blue hover:shadow-lg sm:flex-row sm:items-center sm:gap-4">
-              <span class="shrink-0 font-mono text-[12px] tracking-[1px] text-royal sm:w-[88px]">
+            <div class="rounded-lg border border-border bg-surface p-[26px] shadow-sm transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[2px] hover:border-border-blue hover:shadow-lg">
+              <span class="mb-3.5 inline-block rounded-sm bg-blue-wash px-2.5 py-1 font-mono text-[11.5px] tracking-[0.5px] text-royal">
                 {tag}
               </span>
-              <span class="text-[14px] text-slate">{body}</span>
+              <p class="text-[14.5px] leading-[1.55] text-slate">{body}</p>
             </div>
           ))
         }

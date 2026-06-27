@@ -196,6 +196,11 @@ body {
   from { transform: translate(0, 0); }
   to { transform: translate(-50px, -30px); }
 }
+/* Live-status pulse for the SEKNET console indicator dot. */
+@keyframes scBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
 
 /* Reduced-motion is non-negotiable: kill non-essential motion. */
 @media (prefers-reduced-motion: reduce) {

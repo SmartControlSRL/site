@@ -82,6 +82,7 @@ const ogImage = new URL('og.png', Astro.site).href;
         initHeroScrub,
         initStepper,
         initNetwork,
+        initConsole,
       } from '../scripts/motion.js';
 
       type Cleanup = () => void;
@@ -129,6 +130,11 @@ const ogImage = new URL('og.png', Astro.site).href;
           const sd = num(canvas, 'data-speed'); if (sd != null) opts.speed = sd;
           const mn = int(canvas, 'data-max-nodes'); if (mn != null) opts.maxNodes = mn;
           cleanups.push(initNetwork(canvas, opts));
+        });
+
+        // Live consoles: one per [data-console] (SEKNET attack-map widget).
+        doc.querySelectorAll<HTMLElement>('[data-console]').forEach((el) => {
+          cleanups.push(initConsole(el));
         });
       }
 
