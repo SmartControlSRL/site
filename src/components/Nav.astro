@@ -12,19 +12,44 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const p = (path: string) => localizedPath(lang, path);
 
-const links = [
-  { href: p('/servicii'), label: t('nav.services') },
-  { href: p('/servicii/cloud'), label: t('nav.cloud') },
-  { href: p('/solutii/seknet'), label: t('nav.seknet') },
-  { href: p('/solutii/s-vpn'), label: t('nav.svpn') },
+// Two dropdown groups (parent links to the hub/index, panel lists the child
+// pages) + a plain Contact anchor. This surfaces every service/solution page
+// one hover/tap deep and gives /servicii + /solutii their entry points.
+const navItems = [
+  {
+    href: p('/servicii'),
+    label: t('nav.services'),
+    children: [
+      { href: p('/servicii/cloud'), label: t('nav.cloud') },
+      { href: p('/servicii/securitate'), label: t('footer.service.security') },
+      { href: p('/servicii/software'), label: t('footer.service.software') },
+      { href: p('/servicii/managed'), label: t('footer.service.managed') },
+    ],
+  },
+  {
+    href: p('/solutii'),
+    label: t('nav.products'),
+    children: [
+      { href: p('/solutii/seknet'), label: t('nav.seknet') },
+      { href: p('/solutii/s-vpn'), label: t('nav.svpn') },
+    ],
+  },
   { href: p('/#contact'), label: t('nav.contact') },
 ];
 
 // Active-page underline: compare against the current pathname (ignore anchors).
 const here = Astro.url.pathname.replace(/\/$/, '') || '/';
+const cleanPath = (href: string) => href.split('#')[0].replace(/\/$/, '') || '/';
+// Exact match — for leaf links (children, Contact).
 const isActive = (href: string) => {
-  const clean = href.split('#')[0].replace(/\/$/, '') || '/';
+  const clean = cleanPath(href);
   return clean !== '/' && clean !== p('/') && here === clean;
+};
+// Tree match — a parent is active on its hub page or any descendant page.
+const inTree = (href: string) => {
+  const clean = cleanPath(href);
+  if (clean === '/' || clean === p('/')) return false;
+  return here === clean || here.startsWith(clean + '/');
 };
 
 // Language switch → the alternate-locale version of this page.
@@ -48,22 +73,72 @@ const altHref = altLocalePath(path);
       <!-- Desktop links -->
       <ul class="hidden items-center gap-7 md:flex">
         {
-          links.map((l) => (
-            <li>
-              <a
-                href={l.href}
-                aria-current={isActive(l.href) ? 'page' : undefined}
-                class:list={[
-                  'border-b-2 pb-[3px] text-[13.5px] no-underline transition-colors hover:border-bright hover:text-navy',
-                  isActive(l.href)
-                    ? 'border-bright font-semibold text-navy'
-                    : 'border-transparent font-medium text-slate',
-                ]}
-              >
-                {l.label}
-              </a>
-            </li>
-          ))
+          navItems.map((item) =>
+            item.children ? (
+              <li class="group relative">
+                <a
+                  href={item.href}
+                  aria-current={inTree(item.href) ? 'page' : undefined}
+                  class:list={[
+                    'inline-flex items-center gap-[5px] border-b-2 pb-[3px] text-[13.5px] no-underline transition-colors hover:border-bright hover:text-navy',
+                    inTree(item.href)
+                      ? 'border-bright font-semibold text-navy'
+                      : 'border-transparent font-medium text-slate',
+                  ]}
+                >
+                  {item.label}
+                  <svg
+                    width="13"
+                    height="13"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    class="transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180"
+                  >
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </a>
+                {/* Dropdown panel — pt-3 is a hover bridge over the gap to the trigger */}
+                <div class="invisible absolute left-1/2 top-full z-10 -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+                  <ul class="min-w-[232px] rounded-xl border border-border bg-surface p-2 [box-shadow:0_12px_32px_rgba(14,31,91,0.16)]">
+                    {item.children.map((c) => (
+                      <li>
+                        <a
+                          href={c.href}
+                          aria-current={isActive(c.href) ? 'page' : undefined}
+                          class:list={[
+                            'block rounded-md px-3 py-2.5 text-[13.5px] no-underline transition-colors hover:bg-blue-wash hover:text-navy',
+                            isActive(c.href) ? 'font-semibold text-navy' : 'font-medium text-slate',
+                          ]}
+                        >
+                          {c.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </li>
+            ) : (
+              <li>
+                <a
+                  href={item.href}
+                  aria-current={isActive(item.href) ? 'page' : undefined}
+                  class:list={[
+                    'border-b-2 pb-[3px] text-[13.5px] no-underline transition-colors hover:border-bright hover:text-navy',
+                    isActive(item.href)
+                      ? 'border-bright font-semibold text-navy'
+                      : 'border-transparent font-medium text-slate',
+                  ]}
+                >
+                  {item.label}
+                </a>
+              </li>
+            )
+          )
         }
       </ul>
 
@@ -118,20 +193,51 @@ const altHref = altLocalePath(path);
   >
     <ul class="mx-auto flex max-w-[1180px] flex-col gap-1 px-6 py-4">
       {
-        links.map((l) => (
-          <li>
-            <a
-              href={l.href}
-              aria-current={isActive(l.href) ? 'page' : undefined}
-              class:list={[
-                'block rounded-md px-3 py-3 text-[15px] transition-colors hover:bg-blue-wash',
-                isActive(l.href) ? 'font-semibold text-navy' : 'font-medium text-slate',
-              ]}
-            >
-              {l.label}
-            </a>
-          </li>
-        ))
+        navItems.map((item) =>
+          item.children ? (
+            <li>
+              <a
+                href={item.href}
+                aria-current={inTree(item.href) ? 'page' : undefined}
+                class:list={[
+                  'block rounded-md px-3 py-3 text-[15px] transition-colors hover:bg-blue-wash',
+                  inTree(item.href) ? 'font-semibold text-navy' : 'font-medium text-slate',
+                ]}
+              >
+                {item.label}
+              </a>
+              <ul class="mb-1 ml-3 flex flex-col gap-0.5 border-l border-divider pl-3">
+                {item.children.map((c) => (
+                  <li>
+                    <a
+                      href={c.href}
+                      aria-current={isActive(c.href) ? 'page' : undefined}
+                      class:list={[
+                        'block rounded-md px-3 py-2.5 text-[14px] transition-colors hover:bg-blue-wash hover:text-navy',
+                        isActive(c.href) ? 'font-semibold text-navy' : 'font-medium text-cool',
+                      ]}
+                    >
+                      {c.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ) : (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+                class:list={[
+                  'block rounded-md px-3 py-3 text-[15px] transition-colors hover:bg-blue-wash',
+                  isActive(item.href) ? 'font-semibold text-navy' : 'font-medium text-slate',
+                ]}
+              >
+                {item.label}
+              </a>
+            </li>
+          )
+        )
       }
       <li class="mt-2 px-3">
         <MailtoLink variant="button" dark subject={t('subject.assessment')} class="w-full">

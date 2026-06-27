@@ -16,6 +16,7 @@ export const ui = {
   ro: {
     // — Nav —
     'nav.services': 'Servicii',
+    'nav.products': 'Soluții',
     'nav.cloud': 'Cloud & Modernizare',
     'nav.seknet': 'SEKNET',
     'nav.svpn': 'S-VPN',
@@ -54,6 +55,7 @@ export const ui = {
   en: {
     // — Nav —
     'nav.services': 'Services',
+    'nav.products': 'Solutions',
     'nav.cloud': 'Cloud & Modernization',
     'nav.seknet': 'SEKNET',
     'nav.svpn': 'S-VPN',
