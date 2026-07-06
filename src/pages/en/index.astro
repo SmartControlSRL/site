@@ -19,6 +19,7 @@ import TextLink from '../../components/TextLink.astro';
 import MailtoLink from '../../components/MailtoLink.astro';
 import SeknetConsole from '../../components/SeknetConsole.astro';
 import CloudPipeline from '../../components/CloudPipeline.astro';
+import StackTeardown from '../../components/StackTeardown.astro';
 import {
   getLangFromUrl,
   useTranslations,
@@ -113,6 +114,47 @@ const consoleLog = [
   { time: '08:14:11', msg: 'Shield · MITRE T1110 rule fired — brute-force' },
   { time: '08:14:15', msg: 'Insight · traffic anomaly — host isolated' },
   { time: '08:14:18', msg: 'View · topology updated — 142 nodes', blocked: false },
+];
+
+// Stack Teardown — 4 operational layers, top of the stack (L4) first.
+// EN mirror of the RO copy from the "Design originality recommendations" handoff.
+const stackLayers = [
+  {
+    code: 'L4',
+    name: 'Applications & Automation',
+    desc: 'Custom software, APIs and AI / LLM automation.',
+    chips: ['Custom dev & API', 'App modernization', 'AI / LLM automation', 'CI/CD & DevSecOps'],
+    href: p('/servicii/software'),
+    linkLabel: 'Software & Automation',
+    aria: 'Layer L4 — Applications and Automation',
+  },
+  {
+    code: 'L3',
+    name: 'Platforms & Data',
+    desc: 'Virtualization, private / hybrid cloud, containers and storage.',
+    chips: ['VMware · K8s / OpenShift', 'Private / Hybrid Cloud', 'Storage & backup', 'Disaster Recovery'],
+    href: p('/servicii/cloud'),
+    linkLabel: 'Infrastructure & Cloud',
+    aria: 'Layer L3 — Platforms and Data',
+  },
+  {
+    code: 'L2',
+    name: 'Network & Connectivity',
+    desc: 'Core networking, SD-WAN and secure remote access.',
+    chips: ['LAN / WAN core', 'SD-WAN', 'S-VPN', 'Load balancing'],
+    href: p('/servicii/managed'),
+    linkLabel: 'Network Managed Services',
+    aria: 'Layer L2 — Network and Connectivity',
+  },
+  {
+    code: 'L1',
+    name: 'Physical infrastructure',
+    desc: 'Data center, compute, power and structured cabling.',
+    chips: ['DC design & build', 'Compute & storage', 'Power & cooling', 'Structured cabling'],
+    href: p('/servicii/cloud'),
+    linkLabel: 'Infrastructure & Cloud',
+    aria: 'Layer L1 — Physical infrastructure',
+  },
 ];
 
 // Cloud & Modernization — 5-stage methodology, teaser pipeline.
@@ -353,6 +395,20 @@ const cloudRows = [
       </div>
     </div>
   </section>
+
+  {/* ── Stack Teardown (light wash) ── */}
+  <StackTeardown
+    eyebrow="Stack Teardown"
+    heading="One partner, accountable from the physical layer to the application"
+    layers={stackLayers}
+    legendSecurity="Cross-layer security · SEKNET"
+    legendOps="Managed operations 24/7"
+    note="One end-to-end SLA — zero hand-offs of responsibility between vendors."
+  >
+    We break the stack down into its operational layers — infrastructure, network, platforms,
+    software — with security and operations running across all of them, under{' '}
+    <strong class="font-semibold text-navy">a single SLA</strong>. Tap a layer for details.
+  </StackTeardown>
 
   {/* ── Products (DARK band) ── */}
   <section

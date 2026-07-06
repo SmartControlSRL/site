@@ -22,6 +22,7 @@ import TextLink from '../components/TextLink.astro';
 import MailtoLink from '../components/MailtoLink.astro';
 import SeknetConsole from '../components/SeknetConsole.astro';
 import CloudPipeline from '../components/CloudPipeline.astro';
+import StackTeardown from '../components/StackTeardown.astro';
 import {
   getLangFromUrl,
   useTranslations,
@@ -114,6 +115,47 @@ const consoleLog = [
   { time: '08:14:11', msg: 'Shield · regulă MITRE T1110 declanșată — brute-force' },
   { time: '08:14:15', msg: 'Insight · anomalie trafic — host izolat' },
   { time: '08:14:18', msg: 'View · topologie actualizată — 142 noduri', blocked: false },
+];
+
+// Stack Teardown — 4 operational layers, top of the stack (L4) first.
+// Copy verbatim from the "Design originality recommendations" handoff.
+const stackLayers = [
+  {
+    code: 'L4',
+    name: 'Aplicații & Automatizare',
+    desc: 'Software custom, API-uri și automatizare cu AI / LLM.',
+    chips: ['Custom dev & API', 'Modernizare aplicații', 'Automatizare AI / LLM', 'CI/CD & DevSecOps'],
+    href: p('/servicii/software'),
+    linkLabel: 'Software & Automatizare',
+    aria: 'Nivel L4 — Aplicații și Automatizare',
+  },
+  {
+    code: 'L3',
+    name: 'Platforme & Date',
+    desc: 'Virtualizare, cloud privat / hibrid, containere și storage.',
+    chips: ['VMware · K8s / OpenShift', 'Private / Hybrid Cloud', 'Storage & backup', 'Disaster Recovery'],
+    href: p('/servicii/cloud'),
+    linkLabel: 'Infrastructură & Cloud',
+    aria: 'Nivel L3 — Platforme și Date',
+  },
+  {
+    code: 'L2',
+    name: 'Rețea & Conectivitate',
+    desc: 'Core networking, SD-WAN și acces remote securizat.',
+    chips: ['LAN / WAN core', 'SD-WAN', 'S-VPN', 'Load balancing'],
+    href: p('/servicii/managed'),
+    linkLabel: 'Network Managed Services',
+    aria: 'Nivel L2 — Rețea și Conectivitate',
+  },
+  {
+    code: 'L1',
+    name: 'Infrastructură fizică',
+    desc: 'Data center, compute, energie și cablare structurată.',
+    chips: ['DC design & build', 'Compute & storage', 'Energie & cooling', 'Cablare structurată'],
+    href: p('/servicii/cloud'),
+    linkLabel: 'Infrastructură & Cloud',
+    aria: 'Nivel L1 — Infrastructură fizică',
+  },
 ];
 
 // Cloud & Modernization — 5-stage methodology, teaser pipeline.
@@ -360,6 +402,21 @@ const cloudRows = [
       </div>
     </div>
   </section>
+
+  {/* ── SECTION 4b — Stack Teardown (light wash) ── */}
+  <StackTeardown
+    eyebrow="Stack Teardown"
+    heading="Un singur partener, responsabil de la stratul fizic până la aplicație"
+    layers={stackLayers}
+    legendSecurity="Securitate transversală · SEKNET"
+    legendOps="Operațiuni gestionate 24/7"
+    note="Un singur SLA, end-to-end — zero pasare de responsabilitate între furnizori."
+  >
+    Deconstruim stack-ul în nivelurile lui operaționale — infrastructură, rețea, platforme,
+    software — cu securitate și operațiuni transversale, sub{' '}
+    <strong class="font-semibold text-navy">un singur SLA</strong>. Atinge un nivel pentru
+    detalii.
+  </StackTeardown>
 
   {/* ── SECTION 5 — Produse (DARK band) ── */}
   <section
