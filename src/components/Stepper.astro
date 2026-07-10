@@ -9,6 +9,8 @@
 // Pass steps as an array; each renders a numbered dot + title + body. The dot's
 // active/inactive colors are driven entirely by motion.js (inline styles), so
 // the markup just needs the data hooks + a sensible static resting state.
+// Bodies ship at full opacity (no-JS/AA baseline); initStepper's first onScroll
+// dims the not-yet-active ones to 0.45 as soon as it wires up.
 interface Step {
   title: string;
   body: string;
@@ -45,7 +47,7 @@ const railBg = dark ? 'bg-[rgba(122,180,232,0.15)]' : 'bg-border-blue';
           >
             {String(i + 1).padStart(2, '0')}
           </span>
-          <div data-step-body class="pt-1 transition-opacity duration-300" style="opacity:0.45">
+          <div data-step-body class="pt-1 transition-opacity duration-300">
             <h3 class:list={['text-h3 font-bold', dark ? 'text-white' : 'text-navy']}>{step.title}</h3>
             <p class:list={['mt-2 text-[14.5px]', dark ? 'text-[rgba(226,233,245,0.7)]' : 'text-cool']}>
               {step.body}

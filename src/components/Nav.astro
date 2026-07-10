@@ -5,6 +5,7 @@
 // adds a hairline/shadow past 24px scroll — it targets [data-nav-shrink].
 // Mobile (<768px): hamburger toggles a light slide-down panel (aria-expanded,
 // ESC closes, body scroll-lock while open).
+import { ChevronDown, Menu, X } from '@lucide/astro';
 import { getLangFromUrl, useTranslations, localizedPath, altLocalePath } from '../i18n/ui';
 import MailtoLink from './MailtoLink.astro';
 
@@ -60,12 +61,12 @@ const altHref = altLocalePath(path);
 <header class="fixed inset-x-0 top-0 z-50">
   <nav
     data-nav-shrink
-    aria-label="Primary"
+    aria-label={t('a11y.nav')}
     class="border-b border-transparent bg-surface px-10 py-[18px] transition-[padding,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
   >
     <div class="mx-auto flex max-w-[1180px] items-center justify-between gap-8">
       <!-- Logo -->
-      <a href={p('/')} class="flex shrink-0 items-center gap-[11px]" aria-label="Smart Control — home">
+      <a href={p('/')} class="flex shrink-0 items-center gap-[11px]" aria-label={t('a11y.home')}>
         <img src="/smartcontrol-mark-96.png" alt="" width="34" height="34" class="h-[34px] w-[34px]" decoding="async" />
         <span class="text-[17px] font-bold tracking-[-0.3px] text-navy">Smart<span class="text-bright">Control</span></span>
       </a>
@@ -87,23 +88,17 @@ const altHref = altLocalePath(path);
                   ]}
                 >
                   {item.label}
-                  <svg
-                    width="13"
-                    height="13"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                  <ChevronDown
+                    class="h-[13px] w-[13px] transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180"
+                    stroke-width={1.5}
                     aria-hidden="true"
-                    class="transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180"
-                  >
-                    <polyline points="6 9 12 15 18 9" />
-                  </svg>
+                  />
                 </a>
                 {/* Dropdown panel — pt-3 is a hover bridge over the gap to the trigger */}
-                <div class="invisible absolute left-1/2 top-full z-10 -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+                <div
+                  data-nav-dropdown
+                  class="invisible absolute left-1/2 top-full z-10 -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100"
+                >
                   <ul class="min-w-[232px] rounded-xl border border-border bg-surface p-2 [box-shadow:0_12px_32px_rgba(14,31,91,0.16)]">
                     {item.children.map((c) => (
                       <li>
@@ -170,15 +165,8 @@ const altHref = altLocalePath(path);
           data-label-close={t('nav.menu.close')}
           class="flex h-10 w-10 items-center justify-center rounded-md text-navy transition-colors hover:bg-blue-wash md:hidden"
         >
-          <svg data-nav-icon-open width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
-          <svg data-nav-icon-close width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" class="hidden" aria-hidden="true">
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-          </svg>
+          <Menu data-nav-icon-open class="h-[22px] w-[22px]" stroke-width={1.5} aria-hidden="true" />
+          <X data-nav-icon-close class="hidden h-[22px] w-[22px]" stroke-width={1.5} aria-hidden="true" />
         </button>
       </div>
     </div>
@@ -189,7 +177,7 @@ const altHref = altLocalePath(path);
     id="nav-mobile-panel"
     data-nav-panel
     hidden
-    class="border-b border-border bg-surface shadow-md md:hidden"
+    class="max-h-[calc(100dvh_-_var(--nav-offset))] overflow-y-auto border-b border-border bg-surface shadow-md md:hidden"
   >
     <ul class="mx-auto flex max-w-[1180px] flex-col gap-1 px-6 py-4">
       {
@@ -250,11 +238,17 @@ const altHref = altLocalePath(path);
 
 <script>
   // Mobile menu: toggle the slide-down panel, swap icon, lock body scroll, ESC
-  // closes. Re-bound on every View Transition page load. Idempotent via a flag.
+  // closes. Re-bound on every View Transition page load. Idempotent: each run
+  // aborts the previous run's listeners (incl. the document keydown) via an
+  // AbortController before re-wiring against the fresh DOM.
+  let mobileNavAborter: AbortController | undefined;
   function wireMobileNav() {
+    mobileNavAborter?.abort();
     const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
     const panel = document.querySelector<HTMLElement>('[data-nav-panel]');
     if (!toggle || !panel) return;
+    mobileNavAborter = new AbortController();
+    const { signal } = mobileNavAborter;
     const iconOpen = toggle.querySelector<SVGElement>('[data-nav-icon-open]');
     const iconClose = toggle.querySelector<SVGElement>('[data-nav-icon-close]');
 
@@ -271,15 +265,47 @@ const altHref = altLocalePath(path);
     };
     set(false);
 
-    toggle.addEventListener('click', () => set(!open));
-    panel.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => set(false)));
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && open) {
-        set(false);
-        toggle.focus();
-      }
-    });
+    toggle.addEventListener('click', () => set(!open), { signal });
+    panel
+      .querySelectorAll('a')
+      .forEach((a) => a.addEventListener('click', () => set(false), { signal }));
+    document.addEventListener(
+      'keydown',
+      (e) => {
+        if (e.key === 'Escape' && open) {
+          set(false);
+          toggle.focus();
+        }
+      },
+      { signal }
+    );
   }
 
   document.addEventListener('astro:page-load', wireMobileNav);
+
+  // Desktop dropdowns: Escape dismisses an open panel (WCAG 1.4.13). Focus case
+  // → blur collapses :focus-within; hover case → inline-hide the panel until
+  // the pointer leaves the trigger group. Registered ONCE at module scope with
+  // event-time element resolution, so it survives View Transition swaps.
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    document.querySelectorAll<HTMLElement>('[data-nav-dropdown]').forEach((panel) => {
+      const group = panel.closest<HTMLElement>('li');
+      if (!group) return;
+      const focused = document.activeElement instanceof HTMLElement && group.contains(document.activeElement);
+      if (focused) (document.activeElement as HTMLElement).blur();
+      if (group.matches(':hover')) {
+        panel.style.visibility = 'hidden';
+        panel.style.opacity = '0';
+        group.addEventListener(
+          'mouseleave',
+          () => {
+            panel.style.visibility = '';
+            panel.style.opacity = '';
+          },
+          { once: true }
+        );
+      }
+    });
+  });
 </script>

@@ -33,7 +33,7 @@ const { title, metrics, log, class: extra = '' } = Astro.props;
 <div
   data-console
   class:list={[
-    'overflow-hidden rounded-xl border border-[rgba(122,180,232,0.16)] bg-[#070f29] [box-shadow:0_40px_90px_-40px_rgba(0,0,0,0.7)]',
+    'overflow-hidden rounded-xl border border-[rgba(122,180,232,0.16)] bg-console [box-shadow:0_40px_90px_-40px_rgba(4,12,43,0.85)]',
     extra,
   ]}
 >
@@ -66,7 +66,7 @@ const { title, metrics, log, class: extra = '' } = Astro.props;
     {
       metrics.map((m, i) => (
         <div class:list={['px-4 py-3', i < 2 && 'border-r border-[rgba(122,180,232,0.12)]']}>
-          <div class="mb-1 text-[10px] uppercase tracking-[1px] text-[rgba(226,233,245,0.45)]">
+          <div class="mb-1 text-[10px] uppercase tracking-[1px] text-[rgba(226,233,245,0.55)]">
             {m.label}
           </div>
           <div

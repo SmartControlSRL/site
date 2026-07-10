@@ -2,7 +2,7 @@
 // S-VPN — product detail page (Template A). RO default.
 // Spec: docs/build-specs/svpn.md · RESOLUTIONS.md binding.
 // Sections: dark hero → count-up stats → module grid → wash benefits band →
-// mono spec table → included-services + audience split → dark CTA (assessment).
+// mono spec table → included-services + audience split → dark CTA (demo).
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
 import Eyebrow from '../../components/Eyebrow.astro';
@@ -26,35 +26,31 @@ const description =
 const benefits = [
   {
     drift: '0.06',
-    delay: undefined as string | undefined,
     num: '−60',
     suffix: '%',
     h3: 'Cost predictibil',
-    p: 'Set complet de capabilități la o fracțiune din costul Cisco / Fortinet — fără facturare per utilizator sau dispozitiv.',
+    p: 'Set complet de capabilități la o fracțiune din costul Cisco / Fortinet, fără facturare per utilizator sau dispozitiv.',
   },
   {
     drift: '-0.05',
-    delay: '80',
-    num: '0',
-    suffix: undefined as string | undefined,
-    h3: 'Costuri ascunse',
-    p: 'Toate licențele includ instalare, configurare, integrare, suport, mentenanță și garanție. Fără dependență de terți.',
+    num: '20',
+    suffix: 'Gbps+',
+    h3: 'Debit susținut',
+    p: 'Inspecție Layer 7 la peste 20 Gbps, fără echipament suplimentar la vârf de trafic.',
   },
   {
     drift: '0.06',
-    delay: '160',
-    num: '360',
-    suffix: '°',
-    h3: 'Vizibilitate deplină',
-    p: 'Imagine completă în timp real asupra suprafeței de atac — politici, trafic, vulnerabilități, conformitate.',
+    num: '10',
+    suffix: 'K+',
+    h3: 'Tuneluri IPSec',
+    p: 'Conexiuni simultane, testate la scară în perioada pandemiei.',
   },
   {
     drift: '-0.05',
-    delay: '240',
     num: '<5',
     suffix: 'min',
     h3: 'Setup în minute',
-    p: 'Clientul se instalează și se conectează în mai puțin de 5 minute de la provizionare — fără expertiză tehnică avansată.',
+    p: 'Clientul se instalează și se conectează în mai puțin de 5 minute de la provizionare, fără expertiză tehnică avansată.',
   },
 ];
 
@@ -240,14 +236,11 @@ const jsonLd = {
           headingMaxWidth="700px"
         >
           30 de specificații funcționale și 19 non-funcționale, documentate în fișa
-          tehnică. 5 module · 1 produs · 1 licență.
+          tehnică. Cinci module, un singur produs, o singură licență.
         </SectionHeading>
       </div>
 
-      <div
-        data-skew="4"
-        class="mt-[52px] grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-6"
-      >
+      <div class="mt-[52px] grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-6">
         <!-- Card 1 — VPN -->
         <div data-reveal data-reveal-rotate="-4" data-drift="0.07" class="lg:col-span-2">
           <ModuleCard
@@ -310,7 +303,7 @@ const jsonLd = {
           <ModuleCard
             title="Endpoint"
             kicker="S-VPN"
-            body="Protecția stației client — niciun dispozitiv neconform nu intră în rețea."
+            body="Protecție la nivelul stației client, blocând orice dispozitiv neconform."
             items={[
               'Scanare vulnerabilități OS în timp real',
               'Detecție CVE aplicații terțe',
@@ -328,33 +321,20 @@ const jsonLd = {
           <ModuleCard
             title="Console"
             kicker="S-VPN"
-            body="Management centralizat — totul dintr-un singur loc, prin browser."
+            body="Management centralizat, direct din browser."
             cols={2}
           >
             <SlidersHorizontal slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
             <ul class="mt-4 grid gap-y-2 sm:grid-cols-2 sm:gap-x-5">
               {
-                ['Politici VPN, MFA, WAF, Endpoint', 'Monitorizare trafic în timp real', 'Audit log tamper-proof'].map(
-                  (item) => (
-                    <li class="flex text-[13.5px] leading-snug text-slate">
-                      <span class="mr-2 shrink-0 text-royal" aria-hidden="true">
-                        ›
-                      </span>
-                      <span>{item}</span>
-                    </li>
-                  )
-                )
-              }
-              <li class="flex text-[13.5px] leading-snug text-slate">
-                <span class="mr-2 shrink-0 text-royal" aria-hidden="true">›</span>
-                <span>
-                  Rapoarte <span class="text-compliance">NIS 2</span>,
-                  <span class="text-compliance">ISO 27001</span>,
-                  <span class="text-compliance">GDPR</span>
-                </span>
-              </li>
-              {
-                ['AD / LDAP / RADIUS nativ', 'API REST — OpenAPI / Swagger'].map((item) => (
+                [
+                  'Politici VPN, MFA, WAF, Endpoint',
+                  'Monitorizare trafic în timp real',
+                  'Audit log tamper-proof',
+                  'Rapoarte NIS 2, ISO 27001, GDPR',
+                  'AD / LDAP / RADIUS nativ',
+                  'API REST — OpenAPI / Swagger',
+                ].map((item) => (
                   <li class="flex text-[13.5px] leading-snug text-slate">
                     <span class="mr-2 shrink-0 text-royal" aria-hidden="true">
                       ›
@@ -371,21 +351,20 @@ const jsonLd = {
   </section>
 
   <!-- ── Section 4 — DE CE S-VPN (benefits, wash band) ── -->
-  <section data-band aria-labelledby="benefits-heading" class="bg-page px-6 sm:px-10 py-[72px] sm:py-[110px]">
+  <section data-band aria-labelledby="benefits-heading" class="bg-page px-6 sm:px-10 py-[56px] sm:py-[84px]">
     <div class="mx-auto max-w-[1180px]">
       <div data-reveal>
         <SectionHeading
-          eyebrow="De ce S-VPN"
           heading="Securitate enterprise, fără privilegiul bugetelor mari"
           headingId="benefits-heading"
           headingMaxWidth="720px"
         />
       </div>
 
-      <div data-skew="4" class="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {
           benefits.map((b) => (
-            <div data-reveal data-reveal-delay={b.delay} data-drift={b.drift}>
+            <div data-reveal data-drift={b.drift}>
               <div class="h-full rounded-xl border border-border bg-surface p-[30px] shadow-sm transition-all duration-200 hover:-translate-y-[2px] hover:border-border-blue hover:shadow-lg">
                 <div class="font-mono text-[40px] font-semibold leading-none text-navy">
                   {b.num}
@@ -402,7 +381,7 @@ const jsonLd = {
   </section>
 
   <!-- ── Section 5 — SPECIFICAȚII (mono spec table) ── -->
-  <section aria-labelledby="spec-heading" class="px-6 sm:px-10 py-[72px] sm:py-[110px]">
+  <section aria-labelledby="spec-heading" class="px-6 sm:px-10 py-[56px] sm:py-[84px]">
     <div class="mx-auto max-w-[1180px]">
       <div data-reveal>
         <SectionHeading
@@ -410,7 +389,7 @@ const jsonLd = {
           heading="Construit pentru scară enterprise"
           headingId="spec-heading"
         >
-          Arhitectură software-first, testată la scară în perioada pandemiei — fără
+          Arhitectură software-first, testată la scară în perioada pandemiei, fără
           dependență de echipamente proprietare.
         </SectionHeading>
       </div>
@@ -453,7 +432,7 @@ const jsonLd = {
       </div>
 
       <!-- Right -->
-      <div data-reveal data-reveal-delay="100" data-drift="-0.05" class="grid gap-3">
+      <div data-reveal data-drift="-0.05" class="grid gap-3">
         {
           audiences.map((a) => (
             <div class="flex items-center gap-4 rounded-lg border border-border bg-surface px-6 py-[18px] shadow-sm transition-all duration-200 hover:-translate-y-[2px] hover:border-border-blue hover:shadow-lg">
@@ -468,15 +447,15 @@ const jsonLd = {
     </div>
   </section>
 
-  <!-- ── Section 7 — CTA (dark band, assessment ask) ── -->
+  <!-- ── Section 7 — CTA (dark band, demo ask) ── -->
   <CtaBand
     id="contact"
-    eyebrow="Pașii următori"
-    heading="Assessment inițial gratuit — 2 zile"
-    cta={t('cta.assessment')}
-    subject={t('subject.assessment')}
+    heading="Un pilot pe infrastructura ta reală"
+    cta={t('cta.demo.svpn')}
+    subject={t('subject.demo.svpn')}
   >
-    Fără obligații contractuale. Identificăm împreună zona de interes prioritară și livrăm un
-    raport de recomandări la final.
+    Instalăm S-VPN pe un segment din rețeaua ta, cu politicile și utilizatorii existenți, la
+    până la 60% sub costul licenței Cisco sau Fortinet pe care o plătești acum. Dacă vii de pe
+    o soluție VPN existentă, preluăm tunelurile și politicile fără întrerupere de serviciu.
   </CtaBand>
 </BaseLayout>

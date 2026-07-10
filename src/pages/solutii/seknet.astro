@@ -143,21 +143,20 @@ const jsonLd = {
   </header>
 
   {/* ─── 3. MODULE (light deep-dive, 5 modules) ───────────────────────── */}
-  <section id="module" class="bg-surface px-6 py-[72px] sm:px-10 sm:py-[110px]">
+  <section id="module" class="bg-surface px-6 py-[88px] sm:px-10 sm:py-[128px]">
     <div class="mx-auto max-w-[1180px]">
       <div data-reveal>
         <SectionHeading
-          eyebrow="Module"
-          heading="Cinci module specializate, o singură sursă de adevăr"
+          heading="Cinci module specializate, o consolă unică pentru evenimente, identități și topologie"
           variant="light"
           headingMaxWidth="700px"
         >
-          50 de specificații funcționale și 30 non-funcționale, documentate în fișa tehnică v2.3 —
-          fiecare capabilitate aparține unui modul, totul operat dintr-o singură interfață.
+          50 de specificații funcționale și 30 non-funcționale, documentate în fișa tehnică v2.3.
+          Fiecare capabilitate aparține unui modul, dar toate rulează din același ecran.
         </SectionHeading>
       </div>
 
-      <div data-skew="4" class="mt-[52px] grid grid-cols-1 gap-5 md:grid-cols-6">
+      <div class="mt-[52px] grid grid-cols-1 gap-5 md:grid-cols-6">
         {/* Card 1 — Identity (span 2) */}
         <div
           class="md:col-span-3 lg:col-span-2"
@@ -183,12 +182,7 @@ const jsonLd = {
         </div>
 
         {/* Card 2 — Shield (span 2) */}
-        <div
-          class="md:col-span-3 lg:col-span-2"
-          data-reveal
-          data-reveal-delay="80"
-          data-reveal-rotate="4"
-        >
+        <div class="md:col-span-3 lg:col-span-2" data-reveal data-reveal-rotate="4">
           <ModuleCard
             kicker="Seknet"
             title="Shield"
@@ -210,14 +204,13 @@ const jsonLd = {
         <div
           class="md:col-span-6 lg:col-span-2"
           data-reveal
-          data-reveal-delay="160"
           data-reveal-rotate="-4"
           data-drift="-0.07"
         >
           <ModuleCard
             kicker="Seknet"
             title="Insight"
-            body="Analiză, căutare și stocare date."
+            body="Analiză și căutare distribuită pe volume mari de date, cu indexare în timp real și stocare istorică nelimitată."
             items={[
               'Căutare distribuită, indexare în timp real',
               'Query DSL, Lucene sau SQL',
@@ -251,13 +244,7 @@ const jsonLd = {
         </div>
 
         {/* Card 5 — Trap (span 3, DARK featured) */}
-        <div
-          class="md:col-span-3"
-          data-reveal
-          data-reveal-delay="80"
-          data-reveal-rotate="-4"
-          data-drift="-0.07"
-        >
+        <div class="md:col-span-3" data-reveal data-reveal-rotate="-4" data-drift="-0.07">
           <ModuleCard
             variant="dark"
             kicker="Seknet"
@@ -267,18 +254,18 @@ const jsonLd = {
           >
             <Radar slot="icon" class="h-[22px] w-[22px] text-sky" stroke-width={1.5} />
             <p class="mt-4 text-[13.5px] text-[rgba(226,233,245,0.7)]">
-              Detecție activă prin decepție și honeypot — orice interacțiune e prin definiție
-              malițioasă: <strong class="text-white">zero fals-pozitive</strong>.
+              Detecție activă prin decepție și honeypot: orice interacțiune este prin definiție
+              malițioasă, cu <strong class="text-white">zero fals pozitive</strong>.
             </p>
             <ul class="mt-4 grid gap-y-2 sm:grid-cols-2 sm:gap-x-6">
               {
                 [
                   'Honeypot-uri — 20+ protocoale',
-                  'Detecție mișcare laterală',
+                  'Detecție mișcare laterală în rețea',
                   'Capturare sesiuni + export IoC',
                   'IDS rețea — scan, exploit, C2',
                   'Hartă de atac live cu geolocație',
-                  'Honeypot-uri LLM — servicii simulate',
+                  'Honeypot-uri LLM',
                 ].map((item) => (
                   <li class="flex text-[13.5px] leading-snug text-[rgba(226,233,245,0.85)]">
                     <span class="mr-2 shrink-0 text-sky" aria-hidden="true">
@@ -318,7 +305,7 @@ const jsonLd = {
             { num: '10GB', accent: '+', caption: 'Ingestie zilnică, fără plafon' },
             { num: '∞', accent: '', caption: 'Retenție date — zero cost licență' },
           ].map((cell) => (
-            <div class="bg-surface px-7 py-7 transition-colors duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[#F8FAFF]">
+            <div class="bg-surface px-7 py-7 transition-colors duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-hover-tint">
               <div class="whitespace-nowrap font-mono text-[clamp(28px,7.5vw,34px)] font-semibold leading-none text-navy">
                 {cell.num}
                 {cell.accent && <span class="text-bright">{cell.accent}</span>}
@@ -336,15 +323,15 @@ const jsonLd = {
   </section>
 
   {/* ─── 5. ALTE PRODUSE ("Din aceeași familie", light) ───────────────── */}
-  <section class="bg-surface px-6 py-[72px] sm:px-10 sm:py-[110px]">
+  <section class="bg-surface px-6 py-[56px] sm:px-10 sm:py-[84px]">
     <div class="mx-auto max-w-[1180px]">
-      <div data-reveal>
+      <div>
         <SectionHeading eyebrow="Din aceeași familie" heading="Completează platforma" variant="light" />
       </div>
 
       <div class="mt-11 grid grid-cols-1 gap-5 md:grid-cols-2">
         {/* Card A — S-VPN (clickable link card) */}
-        <div data-reveal data-drift="0.06">
+        <div>
           <a
             href={p('/solutii/s-vpn')}
             class="group flex h-full items-start gap-5 rounded-xl border border-border bg-surface p-[30px] no-underline shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bright sm:px-[34px]"
@@ -369,7 +356,7 @@ const jsonLd = {
 
         {/* Card B — Cloud & Modernizare cross-sell (Asset Management BANNED, RESOLUTIONS §9;
             Cloud chosen over a second S-VPN card to avoid duplicate targets) */}
-        <div data-reveal data-reveal-delay="100" data-drift="-0.06">
+        <div>
           <a
             href={p('/servicii/cloud')}
             class="group flex h-full items-start gap-5 rounded-xl border border-border bg-surface p-[30px] no-underline shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bright sm:px-[34px]"
@@ -398,8 +385,7 @@ const jsonLd = {
   {/* ─── 6. CTA (dark band + network) ─────────────────────────────────── */}
   <CtaBand
     id="contact"
-    eyebrow="Demo live"
-    heading="Vezi SEKNET pe infrastructura ta"
+    heading="Pornim un pilot SEKNET pe infrastructura ta"
     cta={t('cta.demo.seknet')}
     subject={t('subject.demo.seknet')}
   >

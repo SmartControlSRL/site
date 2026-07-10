@@ -218,13 +218,18 @@ export function initWordFill(root) {
     const dark = el.getAttribute('data-word-fill') === 'dark';
     const finalInk = dark ? '#FFFFFF' : '#0E1F5B';
     const g0 = [68, 135, 220], g1 = [122, 180, 232]; // accent sweep: #4487DC → #7AB4E8
-    const words = (el.textContent || '').split(/\s+/).filter(Boolean);
+    const original = (el.textContent || '').trim();
+    const words = original.split(/\s+/).filter(Boolean);
     const total = words.join('').length;
+    // Screen readers get one coherent heading name; the per-char spans below
+    // are hidden so the split never reads letter-by-letter.
+    el.setAttribute('aria-label', original);
     el.textContent = '';
     const chars = [];
     let ci = 0;
     words.forEach((w, wi) => {
       const wrap = document.createElement('span');
+      wrap.setAttribute('aria-hidden', 'true');
       wrap.style.whiteSpace = 'nowrap';
       for (const ch of w) {
         const s = document.createElement('span');

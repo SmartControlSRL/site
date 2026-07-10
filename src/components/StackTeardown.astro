@@ -87,6 +87,7 @@ const TOPS = [118, 202, 286, 370];
           style={`--top:${TOPS[0]}px;z-index:10`}
           role="button"
           tabindex="0"
+          aria-expanded="false"
           aria-label={layers[0].aria}
         >
           <span class="sctd-inner"></span>
@@ -117,6 +118,7 @@ const TOPS = [118, 202, 286, 370];
           style={`--top:${TOPS[1]}px;z-index:9`}
           role="button"
           tabindex="0"
+          aria-expanded="false"
           aria-label={layers[1].aria}
         >
           <span class="sctd-inner"></span>
@@ -159,6 +161,7 @@ const TOPS = [118, 202, 286, 370];
           style={`--top:${TOPS[2]}px;z-index:8`}
           role="button"
           tabindex="0"
+          aria-expanded="false"
           aria-label={layers[2].aria}
         >
           <span class="sctd-inner"></span>
@@ -194,6 +197,7 @@ const TOPS = [118, 202, 286, 370];
           style={`--top:${TOPS[3]}px;z-index:7`}
           role="button"
           tabindex="0"
+          aria-expanded="false"
           aria-label={layers[3].aria}
         >
           <span class="sctd-inner"></span>
@@ -238,7 +242,7 @@ const TOPS = [118, 202, 286, 370];
       <div class="sctd-rows">
         {
           layers.map((layer, i) => (
-            <div class="sctd-row" data-layer={i} role="button" tabindex="0">
+            <div class="sctd-row" data-layer={i} role="button" tabindex="0" aria-expanded="false">
               <div class="sctd-rowhead">
                 <span class="sctd-code">{layer.code}</span>
                 <div>
@@ -246,7 +250,9 @@ const TOPS = [118, 202, 286, 370];
                   <div class="sctd-desc">{layer.desc}</div>
                 </div>
               </div>
-              <div class="sctd-more">
+              {/* ships inert — collapsed content must not be tabbable (WCAG
+                  2.4.7); apply() lifts it on the active row */}
+              <div class="sctd-more" inert>
                 <div>
                   <div class="sctd-chips">
                     {layer.chips.map((chip) => (
@@ -565,8 +571,14 @@ const TOPS = [118, 202, 286, 370];
       const apply = () => {
         els.forEach((el) => {
           const i = Number(el.dataset.layer);
-          el.classList.toggle('is-active', i === active);
+          const isActive = i === active;
+          el.classList.toggle('is-active', isActive);
           el.classList.toggle('is-above', i < active);
+          // role="button" plates + rows expose expanded state to AT; collapsed
+          // row content leaves the tab order via inert (WCAG 2.4.7).
+          if (el.getAttribute('role') === 'button') el.setAttribute('aria-expanded', String(isActive));
+          const more = el.querySelector('.sctd-more');
+          if (more) more.toggleAttribute('inert', !isActive);
         });
       };
       const set = (i: number, byUser: boolean) => {

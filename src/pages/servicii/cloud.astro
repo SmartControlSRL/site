@@ -9,6 +9,8 @@ import SectionHeading from '../../components/SectionHeading.astro';
 import IconChip from '../../components/IconChip.astro';
 import ChevronList from '../../components/ChevronList.astro';
 import CtaBand from '../../components/CtaBand.astro';
+import MailtoLink from '../../components/MailtoLink.astro';
+import TextLink from '../../components/TextLink.astro';
 import { getLangFromUrl, useTranslations } from '../../i18n/ui';
 import {
   TrendingUp,
@@ -32,19 +34,19 @@ const reasons = [
   {
     Icon: TrendingUp,
     title: 'Costuri hardware în creștere',
-    body: 'Cererea pentru infrastructură AI pune presiune pe lanțul de aprovizionare — memorie, stocare și GPU-uri la prețuri record, cu termene de livrare imprevizibile.',
+    body: 'Cererea pentru infrastructură AI a împins memoria, stocarea și GPU-urile la prețuri record, cu termene de livrare imprevizibile.',
     reveal: { 'data-reveal': true, 'data-reveal-rotate': '-4', 'data-drift': '0.07' },
   },
   {
     Icon: Recycle,
     title: 'Refresh-ul clasic nu mai e rentabil',
-    body: 'Înlocuirea „la 5 ani” a serverelor devine tot mai greu de justificat în business case — capacitatea existentă e adesea folosită sub 40%.',
+    body: 'Înlocuirea „la 5 ani” a serverelor e tot mai greu de justificat într-un business case. Capacitatea existentă e adesea folosită sub 40%.',
     reveal: { 'data-reveal': true, 'data-reveal-delay': '100', 'data-reveal-rotate': '4' },
   },
   {
     Icon: Rocket,
     title: 'Re-arhitecturarea câștigă',
-    body: 'Containerizare, tuning aplicativ și migrare selectivă în cloud extrag performanță din ce ai deja — cu costuri predictibile, CAPEX→OPEX.',
+    body: '650+ proiecte arată ce funcționează: containerizare, tuning aplicativ și migrare selectivă în cloud extrag performanță din infrastructura existentă, cu costuri predictibile, CAPEX→OPEX.',
     reveal: { 'data-reveal': true, 'data-reveal-delay': '200', 'data-reveal-rotate': '-4', 'data-drift': '-0.07' },
   },
 ];
@@ -98,7 +100,7 @@ const capabilities = [
       'Testare automată în staging',
       'Infrastructure-as-Code',
     ],
-    reveal: { 'data-reveal': true, 'data-reveal-delay': '80' },
+    reveal: { 'data-reveal': true },
   },
   {
     Icon: Cloud,
@@ -118,7 +120,7 @@ const capabilities = [
       'Raport de performanță la 90 de zile',
       'Iterație continuă pe date de telemetrie',
     ],
-    reveal: { 'data-reveal': true, 'data-reveal-delay': '80' },
+    reveal: { 'data-reveal': true },
   },
 ];
 
@@ -148,7 +150,7 @@ const serviceLd = {
   {/* ============ SECTION 2 — HERO (light) ============ */}
   <header
     class="relative overflow-hidden"
-    style="background:linear-gradient(180deg,#F3F6FC 0%,#FFFFFF 100%)"
+    style="background:var(--sc-gradient-hero-light)"
   >
     {/* Decorative parallax blob — drifts + parallaxes, inert to pointer. */}
     <div class="pointer-events-none absolute inset-0" data-parallax="0.3" aria-hidden="true">
@@ -172,9 +174,16 @@ const serviceLd = {
         Prețurile componentelor critice cresc sub presiunea cererii pentru
         infrastructură AI, iar bugetele de refresh nu mai ajung.
         <span class="font-semibold text-navy">Re-arhitecturarea și optimizarea aplicațiilor</span>
-        devine strategia principală — extragi mai multă performanță din
+        devin strategia principală — extragi mai multă performanță din
         infrastructura existentă, înainte să cumperi una nouă.
       </p>
+
+      <div class="mt-[38px] flex flex-wrap items-center gap-4">
+        <MailtoLink variant="button" subject={t('subject.assessment')}>
+          Programează assessment-ul gratuit
+        </MailtoLink>
+        <TextLink href="#flux">Vezi fluxul în 5 etape</TextLink>
+      </div>
 
     </div>
   </header>
@@ -183,7 +192,7 @@ const serviceLd = {
   <section aria-labelledby="de-ce-acum" class="bg-surface">
     <div class="container pb-[72px] pt-[72px] sm:pb-[110px] sm:pt-20">
       <h2 id="de-ce-acum" class="sr-only">De ce acum</h2>
-      <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3" data-skew="4">
+      <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {
           reasons.map(({ Icon, title, body, reveal }) => (
             <div {...reveal}>
@@ -203,16 +212,15 @@ const serviceLd = {
 
   {/* ============ SECTION 4 — FLUX 5 ETAPE (#flux, scroll stepper, wash band) ============ */}
   <section id="flux" data-band class="bg-page">
-    <div class="container py-[72px] sm:py-[110px]">
+    <div class="container py-[88px] sm:py-[128px]">
       <div data-reveal>
         <SectionHeading
           eyebrow="Abordare"
           heading="Fluxul de lucru în 5 etape"
           headingMaxWidth="700px"
         >
-          Nu propunem doar o actualizare tehnică, ci o re-arhitecturare strategică
-          — un flux validat în 650+ proiecte, care minimizează riscurile și
-          maximizează ROI.
+          Fluxul e o re-arhitecturare strategică a aplicațiilor tale, validată
+          în 650+ proiecte, care minimizează riscurile și maximizează ROI.
         </SectionHeading>
       </div>
 
@@ -266,17 +274,16 @@ const serviceLd = {
 
   {/* ============ SECTION 5 — STACK / CE LIVRĂM (light) ============ */}
   <section aria-labelledby="ce-livram" class="bg-surface">
-    <div class="container py-[72px] sm:py-[110px]">
+    <div class="container py-[56px] sm:py-[84px]">
       <div data-reveal>
         <SectionHeading
-          eyebrow="Capabilități"
           heading="Ce livrăm concret"
           headingMaxWidth="700px"
           headingId="ce-livram"
         />
       </div>
 
-      <div class="mt-11 grid gap-5 md:grid-cols-2" data-skew="4">
+      <div class="mt-11 grid gap-5 md:grid-cols-2">
         {
           capabilities.map(({ Icon, title, items, reveal }) => (
             <div {...reveal}>
@@ -297,12 +304,12 @@ const serviceLd = {
   {/* ============ SECTION 6 — CTA (#contact, dark band) ============ */}
   <CtaBand
     id="contact"
-    eyebrow="Etapa 1 · gratuită"
-    heading="Assessment inițial — 2 zile, fără obligații contractuale"
+    heading="Cât te costă infrastructura actuală — și cât ai putea economisi"
     cta={t('cta.assessment')}
     subject={t('subject.assessment')}
   >
-    Identificăm împreună zona de interes prioritară și livrăm un raport de
-    recomandări la final. Decizia de a continua îți aparține.
+    Assessment-ul gratuit de 2 zile cartografiază ce ai acum și estimează
+    economia unei re-arhitecturări. Dacă alegi să continui, primești un
+    raport ROI la 90 de zile care confirmă cifrele în producție.
   </CtaBand>
 </BaseLayout>

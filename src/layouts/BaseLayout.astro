@@ -9,15 +9,18 @@ import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import { getLangFromUrl, hreflangPair } from '../i18n/ui';
+import { getLangFromUrl, hreflangPair, useTranslations } from '../i18n/ui';
 
 interface Props {
   title: string;
   description: string;
+  /** Emit <meta name="robots" content="noindex"> (error pages only). */
+  noindex?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, noindex = false } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 // hreflang alternates: per-locale slugs via hreflangPair (handles
 // /confidentialitate ↔ /en/privacy, not just the /en prefix). The static
@@ -31,6 +34,12 @@ const canonical = new URL(path, Astro.site).href;
 const roHref = new URL(withSlash(roPath), Astro.site).href;
 const enHref = new URL(withSlash(enPath), Astro.site).href;
 const ogImage = new URL('og.png', Astro.site).href;
+
+// Browser-chrome tint: --sc-deep-navy (theme tokens can't be var()'d in meta).
+const themeColor = '#0e1f5b';
+// og.png in /public is 1200×630 (verified) — the standard OG card size.
+const ogLocale = lang === 'en' ? 'en_US' : 'ro_RO';
+const ogLocaleAlt = lang === 'en' ? 'ro_RO' : 'en_US';
 ---
 
 <!doctype html>
@@ -43,22 +52,32 @@ const ogImage = new URL('og.png', Astro.site).href;
     <link rel="apple-touch-icon" href="/favicon-192.png" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content={themeColor} />
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang="ro" href={roHref} />
     <link rel="alternate" hreflang="en" href={enHref} />
     <link rel="alternate" hreflang="x-default" href={roHref} />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Smart Control" />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:locale:alternate" content={ogLocaleAlt} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Smart Control — Trusted Service Delivery Partner" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     <meta name="generator" content={Astro.generator} />
     <ClientRouter />
   </head>
   <body>
-    <a href="#main" class="sr-only focus:not-sr-only">Skip to content</a>
+    <a href="#main" class="sr-only focus:not-sr-only">{t('a11y.skip')}</a>
     <Nav />
     <main id="main">
       <slot />

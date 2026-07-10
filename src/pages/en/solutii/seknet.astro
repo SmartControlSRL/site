@@ -141,21 +141,20 @@ const jsonLd = {
   </header>
 
   {/* ─── 3. MODULE (light deep-dive, 5 modules) ───────────────────────── */}
-  <section id="module" class="bg-surface px-6 py-[72px] sm:px-10 sm:py-[110px]">
+  <section id="module" class="bg-surface px-6 py-[88px] sm:px-10 sm:py-[128px]">
     <div class="mx-auto max-w-[1180px]">
       <div data-reveal>
         <SectionHeading
-          eyebrow="Modules"
-          heading="Five specialized modules, a single source of truth"
+          heading="Five specialized modules, one console for events, identities and topology"
           variant="light"
           headingMaxWidth="720px"
         >
           50 functional and 30 non-functional specifications, documented in the v2.3 technical
-          sheet — every capability belongs to a module, all operated from a single interface.
+          sheet. Every capability belongs to a module, but all of them run from the same screen.
         </SectionHeading>
       </div>
 
-      <div data-skew="4" class="mt-[52px] grid grid-cols-1 gap-5 md:grid-cols-6">
+      <div class="mt-[52px] grid grid-cols-1 gap-5 md:grid-cols-6">
         {/* Card 1 — Identity (span 2) */}
         <div
           class="md:col-span-3 lg:col-span-2"
@@ -181,12 +180,7 @@ const jsonLd = {
         </div>
 
         {/* Card 2 — Shield (span 2) */}
-        <div
-          class="md:col-span-3 lg:col-span-2"
-          data-reveal
-          data-reveal-delay="80"
-          data-reveal-rotate="4"
-        >
+        <div class="md:col-span-3 lg:col-span-2" data-reveal data-reveal-rotate="4">
           <ModuleCard
             kicker="Seknet"
             title="Shield"
@@ -208,14 +202,13 @@ const jsonLd = {
         <div
           class="md:col-span-6 lg:col-span-2"
           data-reveal
-          data-reveal-delay="160"
           data-reveal-rotate="-4"
           data-drift="-0.07"
         >
           <ModuleCard
             kicker="Seknet"
             title="Insight"
-            body="Data analysis, search and storage."
+            body="Distributed search and analysis across large data volumes, with real-time indexing and unlimited historical storage."
             items={[
               'Distributed search, real-time indexing',
               'Query DSL, Lucene or SQL',
@@ -249,28 +242,22 @@ const jsonLd = {
         </div>
 
         {/* Card 5 — Trap (span 3, DARK featured) */}
-        <div
-          class="md:col-span-3"
-          data-reveal
-          data-reveal-delay="80"
-          data-reveal-rotate="-4"
-          data-drift="-0.07"
-        >
+        <div class="md:col-span-3" data-reveal data-reveal-rotate="-4" data-drift="-0.07">
           <ModuleCard variant="dark" kicker="Seknet" title="Trap" badge="New in v2.3" cols={2}>
             <Radar slot="icon" class="h-[22px] w-[22px] text-sky" stroke-width={1.5} />
             <p class="mt-4 text-[13.5px] text-[rgba(226,233,245,0.7)]">
-              Active detection through deception and honeypots — any interaction is malicious by
-              definition: <strong class="text-white">zero false positives</strong>.
+              Active detection through deception and honeypots: any interaction is malicious by
+              definition, with <strong class="text-white">zero false positives</strong>.
             </p>
             <ul class="mt-4 grid gap-y-2 sm:grid-cols-2 sm:gap-x-6">
               {
                 [
                   'Honeypots — 20+ protocols',
-                  'Lateral movement detection',
+                  'Lateral movement detection across the network',
                   'Session capture + IoC export',
                   'Network IDS — scan, exploit, C2',
                   'Live attack map with geolocation',
-                  'LLM honeypots — simulated services',
+                  'LLM honeypots',
                 ].map((item) => (
                   <li class="flex text-[13.5px] leading-snug text-[rgba(226,233,245,0.85)]">
                     <span class="mr-2 shrink-0 text-sky" aria-hidden="true">
@@ -310,7 +297,7 @@ const jsonLd = {
             { num: '10GB', accent: '+', caption: 'Daily ingest, no cap' },
             { num: '∞', accent: '', caption: 'Data retention — zero licensing cost' },
           ].map((cell) => (
-            <div class="bg-surface px-7 py-7 transition-colors duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[#F8FAFF]">
+            <div class="bg-surface px-7 py-7 transition-colors duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-hover-tint">
               <div class="whitespace-nowrap font-mono text-[clamp(28px,7.5vw,34px)] font-semibold leading-none text-navy">
                 {cell.num}
                 {cell.accent && <span class="text-bright">{cell.accent}</span>}
@@ -328,15 +315,15 @@ const jsonLd = {
   </section>
 
   {/* ─── 5. SAME FAMILY (cross-sell, light) ───────────────────────────── */}
-  <section class="bg-surface px-6 py-[72px] sm:px-10 sm:py-[110px]">
+  <section class="bg-surface px-6 py-[56px] sm:px-10 sm:py-[84px]">
     <div class="mx-auto max-w-[1180px]">
-      <div data-reveal>
+      <div>
         <SectionHeading eyebrow="From the same family" heading="Complete the platform" variant="light" />
       </div>
 
       <div class="mt-11 grid grid-cols-1 gap-5 md:grid-cols-2">
         {/* Card A — S-VPN (clickable link card) */}
-        <div data-reveal data-drift="0.06">
+        <div>
           <a
             href={p('/solutii/s-vpn')}
             class="group flex h-full items-start gap-5 rounded-xl border border-border bg-surface p-[30px] no-underline shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bright sm:px-[34px]"
@@ -361,7 +348,7 @@ const jsonLd = {
 
         {/* Card B — Cloud & Modernization cross-sell (Asset Management BANNED, RESOLUTIONS §9;
             Cloud chosen over a second S-VPN card to avoid duplicate targets) */}
-        <div data-reveal data-reveal-delay="100" data-drift="-0.06">
+        <div>
           <a
             href={p('/servicii/cloud')}
             class="group flex h-full items-start gap-5 rounded-xl border border-border bg-surface p-[30px] no-underline shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bright sm:px-[34px]"
@@ -390,8 +377,7 @@ const jsonLd = {
   {/* ─── 6. CTA (dark band + network) ─────────────────────────────────── */}
   <CtaBand
     id="contact"
-    eyebrow="Live demo"
-    heading="See SEKNET on your own infrastructure"
+    heading="We stand up a SEKNET pilot on your infrastructure"
     cta={t('cta.demo.seknet')}
     subject={t('subject.demo.seknet')}
   >

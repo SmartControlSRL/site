@@ -23,6 +23,10 @@ export const ui = {
     'nav.contact': 'Contact',
     'nav.menu.open': 'Deschide meniul',
     'nav.menu.close': 'Închide meniul',
+    // — A11y chrome (skip link, landmark labels) —
+    'a11y.skip': 'Sari la conținut',
+    'a11y.nav': 'Principal',
+    'a11y.home': 'Smart Control — acasă',
     // — CTAs (export wording, RESOLUTIONS §11) —
     'cta.assessment': 'Solicită assessment',
     'cta.demo.seknet': 'Solicită un demo',
@@ -34,7 +38,7 @@ export const ui = {
     // — Footer —
     'footer.tagline': 'Trusted Service Delivery Partner',
     'footer.blurb':
-      'Proiectăm, operăm și securizăm infrastructuri IT pentru companii din România și internațional — echipă proprie, abordare consultativă.',
+      'Servicii IT enterprise și securitate cibernetică pentru companii din România și internațional, livrate integral de echipa noastră din 2003.',
     'footer.col.services': 'Servicii',
     'footer.col.solutions': 'Soluții',
     'footer.col.contact': 'Contact',
@@ -62,15 +66,21 @@ export const ui = {
     'nav.contact': 'Contact',
     'nav.menu.open': 'Open menu',
     'nav.menu.close': 'Close menu',
-    'cta.assessment': 'Request assessment',
+    'a11y.skip': 'Skip to content',
+    'a11y.nav': 'Primary',
+    'a11y.home': 'Smart Control — home',
+    'cta.assessment': 'Request an assessment',
     'cta.demo.seknet': 'Request a demo',
     'cta.demo.svpn': 'Request a demo',
-    'subject.assessment': 'Free assessment',
+    // Stays Romanian on EN pages too: the subject is a self-routing inbox
+    // token (RESOLUTIONS §13), same pattern as 'Demo SEKNET' / 'Demo S-VPN'
+    // being identical across locales.
+    'subject.assessment': 'Evaluare gratuită',
     'subject.demo.seknet': 'Demo SEKNET',
     'subject.demo.svpn': 'Demo S-VPN',
     'footer.tagline': 'Trusted Service Delivery Partner',
     'footer.blurb':
-      'We design, operate and secure IT infrastructure for companies in Romania and abroad — our own team, a consultative approach.',
+      'Enterprise IT services and cybersecurity for companies in Romania and abroad, delivered entirely by our own team since 2003.',
     'footer.col.services': 'Services',
     'footer.col.solutions': 'Solutions',
     'footer.col.contact': 'Contact',
@@ -105,10 +115,14 @@ export function getLangFromUrl(url: URL): Lang {
   return 'ro';
 }
 
-/** Locale-aware path helper (RO at /, EN under /en/). */
+/** Locale-aware path helper (RO at /, EN under /en/). Emits trailing-slash
+ *  URLs so internal links match the build's canonical directory-format form
+ *  (…/cloud/ — no redirect hop); hash fragments are kept after the slash. */
 export function localizedPath(lang: Lang, path: string): string {
-  if (lang === 'en') return `/en${path === '/' ? '' : path}`;
-  return path;
+  const [bare, hash] = path.split('#');
+  const prefixed = lang === 'en' ? `/en${bare === '/' ? '' : bare}` : bare;
+  const slashed = prefixed.endsWith('/') ? prefixed : `${prefixed}/`;
+  return hash ? `${slashed}#${hash}` : slashed;
 }
 
 // Routes whose EN slug differs from the mechanical /en prefix.
@@ -120,7 +134,7 @@ const ROUTE_MAP: Record<string, string> = {
 /** The same page in the other locale, honoring per-locale slugs. */
 export function altLocalePath(pathname: string): string {
   const clean = pathname.replace(/\/$/, '') || '/';
-  if (clean.startsWith('/en')) {
+  if (/^\/en(\/|$)/.test(clean)) {
     const ro = Object.entries(ROUTE_MAP).find(([, en]) => en === clean)?.[0];
     if (ro) return ro;
     return clean.replace(/^\/en(\/|$)/, '/') || '/';
@@ -132,7 +146,7 @@ export function altLocalePath(pathname: string): string {
 /** RO + EN paths for the current page (for hreflang alternates). */
 export function hreflangPair(pathname: string): { ro: string; en: string } {
   const clean = pathname.replace(/\/$/, '') || '/';
-  if (clean.startsWith('/en')) return { ro: altLocalePath(clean), en: clean };
+  if (/^\/en(\/|$)/.test(clean)) return { ro: altLocalePath(clean), en: clean };
   return { ro: clean, en: altLocalePath(clean) };
 }
 
@@ -146,3 +160,7 @@ export const EMAIL = `${EMAIL_USER}@${EMAIL_DOMAIN}`;
 // Company founded in 2003 — compute years so the figure never goes stale.
 export const FOUNDED = 2003;
 export const yearsInBusiness = (now: number) => now - FOUNDED;
+// Stat-block decade floor (RESOLUTIONS §10): the "20+" figure stays the
+// computed floor — 2026 → 20, 2033 → 30.
+export const yearsDecadeFloor = (now: number) =>
+  Math.floor((now - FOUNDED) / 10) * 10;

@@ -5,19 +5,16 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SectionHeading from '../../../components/SectionHeading.astro';
 import ModuleCard from '../../../components/ModuleCard.astro';
-import StatStrip from '../../../components/StatStrip.astro';
-import StatBlock from '../../../components/StatBlock.astro';
 import MonoPill from '../../../components/MonoPill.astro';
 import CtaBand from '../../../components/CtaBand.astro';
 import TextLink from '../../../components/TextLink.astro';
 import Eyebrow from '../../../components/Eyebrow.astro';
 import { Server, ShieldCheck, Code, Settings2 } from '@lucide/astro';
-import { useTranslations, getLangFromUrl, localizedPath, yearsInBusiness, FOUNDED } from '../../../i18n/ui';
+import { useTranslations, getLangFromUrl, localizedPath, FOUNDED } from '../../../i18n/ui';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const p = (path: string) => localizedPath(lang, path);
-const years = yearsInBusiness(new Date().getUTCFullYear());
 
 // 4 pillar cards — EN canonical names per CLAUDE.md / ui.ts
 const pillars = [
@@ -26,7 +23,7 @@ const pillars = [
     title: 'Infrastructure & Cloud',
     href: p('/servicii/cloud'),
     icon: Server,
-    body: 'We design and consolidate data centers, hybrid infrastructures and cloud solutions — from physical hardware to Kubernetes orchestration.',
+    body: 'We design and consolidate data centers, hybrid infrastructures and cloud solutions, with end-to-end Kubernetes orchestration.',
     items: [
       'Data Center Design & Implementation',
       'Consolidation & Virtualization',
@@ -39,7 +36,7 @@ const pillars = [
     title: 'Security & Compliance',
     href: p('/servicii/securitate'),
     icon: ShieldCheck,
-    body: 'We protect enterprise infrastructures with a full cybersecurity stack — from perimeter to identity — validated against ISO 27001 and compliant with NIS 2 and DORA.',
+    body: 'We protect enterprise infrastructures with a full cybersecurity stack, covering both perimeter and identity, validated against ISO 27001 and aligned with NIS 2 and DORA.',
     items: [
       'Perimeter & End-point Security',
       'Enterprise SSO / PKI',
@@ -52,7 +49,7 @@ const pillars = [
     title: 'Software & Automation',
     href: p('/servicii/software'),
     icon: Code,
-    body: 'We build, modernize and automate enterprise applications — from refactoring and containerization to DevSecOps, blockchain and AI integration.',
+    body: 'We build, modernize and automate enterprise applications. We cover refactoring, containerization, DevSecOps, blockchain integration and AI-based solutions, adapted to the client\'s existing processes.',
     items: [
       'Custom software development & APIs',
       'DevOps / DevSecOps & CI/CD',
@@ -65,7 +62,7 @@ const pillars = [
     title: 'Managed Services',
     href: p('/servicii/managed'),
     icon: Settings2,
-    body: 'We take over the continuous operation of your infrastructure and applications — our own team, no subcontractors — with clear SLAs and transparent reporting.',
+    body: 'We take over continuous operation of your infrastructure and applications. Our in-house team works with clear SLAs and transparent reporting.',
     items: [
       'Managed Infrastructure Operations',
       'Service Desk Outsourcing',
@@ -138,31 +135,11 @@ const jsonLd = {
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-  {/* ── HERO (light, parallax blob) ───────────────────────────────── */}
+  {/* ── HERO (light) ──────────────────────────────────────────────── */}
   <header
     class="relative overflow-hidden"
-    style="background: linear-gradient(180deg, #F3F6FC 0%, #FFFFFF 100%)"
+    style="background: var(--sc-gradient-hero-light)"
   >
-    {/* Decorative parallax blob */}
-    <div
-      class="pointer-events-none absolute inset-0"
-      data-parallax="0.3"
-      aria-hidden="true"
-    >
-      <div
-        style="
-          position:absolute;
-          top:-140px;
-          right:-120px;
-          width:600px;
-          height:600px;
-          border-radius:999px;
-          background:radial-gradient(circle, rgba(122,180,232,0.18), rgba(122,180,232,0) 65%);
-          animation: scDriftA 18s ease-in-out infinite alternate;
-        "
-      ></div>
-    </div>
-
     <div class="container" style="padding-top:160px; padding-bottom:100px">
       <div data-hero-scrub>
         <Eyebrow variant="hero">SERVICES</Eyebrow>
@@ -181,7 +158,7 @@ const jsonLd = {
           data-reveal
           data-reveal-delay="200"
         >
-          Four service pillars, backed by <strong class="text-navy font-semibold">50 in-house specialists</strong> — our own team, no subcontractors. A consultative approach, source code included, ROI report at 90 days.
+          Four service pillars, backed by <strong class="text-navy font-semibold">50 in-house specialists</strong> employed directly by Smart Control. A consultative approach, source code included with every project.
         </p>
 
       </div>
@@ -197,14 +174,11 @@ const jsonLd = {
           heading="Four enterprise service pillars"
           headingMaxWidth="680px"
         >
-          Smart Control covers the full IT spectrum — from physical hardware and virtualization to cybersecurity and custom software development. All services are backed by our own team.
+          Smart Control covers the full enterprise IT spectrum: infrastructure, security, software and day-to-day operations. Every pillar is delivered by our in-house team.
         </SectionHeading>
       </div>
 
-      <div
-        class="grid gap-5 sm:grid-cols-2"
-        data-skew="4"
-      >
+      <div class="grid gap-5 sm:grid-cols-2">
         {
           pillars.map((pillar, i) => {
             const PillarIcon = pillar.icon;
@@ -239,7 +213,7 @@ const jsonLd = {
   </section>
 
   {/* ── PROOF STRIP ───────────────────────────────────────────────── */}
-  <section class="bg-page py-[72px] sm:py-[100px]" data-band>
+  <section class="bg-page py-[56px] sm:py-[84px]" data-band>
     <div class="container">
       {/* ISO + Compliance badges — ISO roundels grouped distinct from the teal regulatory trio */}
       <div data-reveal class="mb-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
@@ -256,30 +230,21 @@ const jsonLd = {
         </div>
       </div>
 
-      {/* Stats */}
-      <StatStrip>
-        <StatBlock value="650" count={650} suffix="+" caption="Projects delivered" />
-        <StatBlock value="250" count={250} suffix="+" caption="Satisfied clients" />
-        <StatBlock value="25" count={25} suffix="+" caption="International clients" />
-        <StatBlock value={String(years)} count={years} suffix="+" caption="Years of experience" />
-      </StatStrip>
-
       {/* Trust proof */}
-      <div data-reveal class="mt-12 text-center">
+      <div data-reveal class="mt-2 text-center">
         <p class="text-[15px] text-cool">
-          Founded in {FOUNDED} · 50 in-house specialists · 500+ cumulative years of experience · <span class="text-navy font-semibold">own team, no subcontractors</span>
+          Founded in {FOUNDED}, with 50 in-house specialists and over 500 cumulative years of experience across the team.
         </p>
       </div>
     </div>
   </section>
 
   {/* ── WHY SMART CONTROL (brief differentiation strip) ───────────── */}
-  <section class="bg-surface py-[72px] sm:py-[100px]">
+  <section class="bg-surface py-[56px] sm:py-[84px]">
     <div class="container">
       <div data-reveal class="mb-12">
         <SectionHeading
-          eyebrow="Why Smart Control"
-          heading="Advantages that matter in real projects"
+          heading="What you get from a project with Smart Control"
           headingMaxWidth="640px"
         />
       </div>
@@ -288,12 +253,12 @@ const jsonLd = {
         {
           [
             {
-              title: 'Own team, no subcontractors',
-              body: '50 in-house specialists available on-site and remote — the same level of quality, regardless of the project.',
+              title: 'Specialists employed directly',
+              body: '50 in-house specialists, available on-site and remote, maintain the same level of quality on every project.',
             },
             {
               title: 'Consultative approach',
-              body: 'Long-term relationships with 250+ clients — delivery based on real data, not theoretical estimates.',
+              body: 'Long-term relationships with 250+ clients, with delivery decisions based on results measured in the field.',
             },
             {
               title: 'Source code included',
@@ -304,18 +269,17 @@ const jsonLd = {
               body: '4 management systems certified simultaneously: ISO 9001, ISO 27001, ISO 14001, ISO 45001.',
             },
             {
-              title: 'ROI report at 90 days',
-              body: 'We validate the benefits of each project with a comparative performance report at 90 days post-implementation.',
+              title: 'One point of contact across all four pillars',
+              body: 'However many pillars you combine in a project, you get a single point of contact and unified coordination across teams.',
             },
             {
               title: 'NIS 2 · DORA · GDPR compliance',
               body: 'We operate and deliver in full compliance with EU directives — a direct advantage for clients in regulated sectors.',
             },
-          ].map((item, i) => (
+          ].map((item) => (
             <div
               class="rounded-xl border border-border bg-surface p-[28px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[4px] hover:border-border-blue hover:shadow-lg"
               data-reveal
-              data-reveal-delay={String((i % 3) * 80)}
             >
               <h3 class="text-[16px] font-bold text-navy">{item.title}</h3>
               <p class="mt-3 text-[13.5px] leading-relaxed text-cool">{item.body}</p>
@@ -329,11 +293,10 @@ const jsonLd = {
   {/* ── DARK CTA BAND ─────────────────────────────────────────────── */}
   <CtaBand
     id="contact"
-    eyebrow="Next steps"
-    heading="Free initial assessment — 2 days"
+    heading="A 2-day assessment that shows you where to start"
     cta={t('cta.assessment')}
     subject={t('subject.assessment')}
   >
-    We identify the priority area of interest together and deliver a recommendations report at the end. No contractual obligations — the decision to continue is yours.
+    We review your infrastructure, security, applications and current operations, then recommend the pillar with the highest impact for your first project.
   </CtaBand>
 </BaseLayout>
