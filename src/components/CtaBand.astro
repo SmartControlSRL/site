@@ -10,7 +10,7 @@ import { EMAIL_USER, EMAIL_DOMAIN } from '../i18n/ui';
 
 interface Props {
   id?: string;
-  eyebrow: string;
+  eyebrow?: string;
   heading: string;
   /** mailto button label. */
   cta: string;
@@ -37,7 +37,7 @@ const { id, eyebrow, heading, cta, subject, class: extra = '' } = Astro.props;
 
   <div class="relative z-[1] mx-auto max-w-[760px] text-center">
     <div data-reveal>
-      <SectionHeading eyebrow={eyebrow} heading={heading} variant="dark" size="cta" rule={false} center>
+      <SectionHeading eyebrow={eyebrow} heading={heading} variant="dark" size="cta" rule={false} center wordFill>
         <slot />
       </SectionHeading>
 

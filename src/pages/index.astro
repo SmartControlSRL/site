@@ -1,12 +1,11 @@
 ---
 // Home (RO) — /
 // Built 1:1 with docs/build-specs/home.md, applying RESOLUTIONS.md rulings:
-//  · ISO 27701 stripped (4 ISO badges only); GDPR/NIS2/DORA in compliance teal.
+//  · ISO 27701 stripped (4 ISO badges only); GDPR/NIS 2/DORA in compliance teal.
 //  · "Asset Management" stripped — the Produse dual cards pair SEKNET ↔ S-VPN.
 //  · Years computed from 2003; © year dynamic (handled in Footer).
 //  · No email inputs (no-forms); CTAs go straight to obfuscated mailto.
 //  · Body-size link text royal on light / sky on dark (AA) via TextLink/MailtoLink.
-//  · data-skew kept verbatim but inert (initScrollLean not wired).
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Eyebrow from '../components/Eyebrow.astro';
 import SectionHeading from '../components/SectionHeading.astro';
@@ -27,9 +26,8 @@ import {
   getLangFromUrl,
   useTranslations,
   localizedPath,
-  EMAIL_USER,
-  EMAIL_DOMAIN,
   yearsInBusiness,
+  yearsDecadeFloor,
 } from '../i18n/ui';
 import { Server, ShieldCheck, Code, LifeBuoy, Shield, Lock } from '@lucide/astro';
 
@@ -37,6 +35,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const p = (path: string) => localizedPath(lang, path);
 const years = yearsInBusiness(new Date().getUTCFullYear());
+const yearsFloor = yearsDecadeFloor(new Date().getUTCFullYear());
 
 const title = 'Smart Control — Trusted Service Delivery Partner';
 const description =
@@ -50,8 +49,9 @@ const org = {
   name: 'Smart Control SRL',
   url: 'https://smartcontrol.ro',
   logo: 'https://smartcontrol.ro/smartcontrol-mark.png',
-  email: 'office@smartcontrol.ro',
   foundingDate: '2003',
+  description:
+    'Infrastructură, securitate și software enterprise, execuție 100% in-house.',
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Intrarea Aviator Teodor Iliescu 37',
@@ -178,7 +178,7 @@ const cloudRows = [
   },
   {
     tag: 'ROI 90 ZILE',
-    body: 'Validarea investiției printr-un raport de performanță la 90 de zile — date reale, nu estimări.',
+    body: 'Validarea investiției printr-un raport de performanță măsurat după 90 de zile în producție.',
   },
 ];
 ---
@@ -189,7 +189,7 @@ const cloudRows = [
   {/* ── SECTION 2 — Hero (light) ── */}
   <header
     class="relative overflow-hidden"
-    style="background:linear-gradient(180deg,#F3F6FC 0%,#FFFFFF 100%)"
+    style="background:var(--sc-gradient-hero-light)"
   >
     {/* Parallax blob A */}
     <div data-parallax="0.35" class="pointer-events-none absolute inset-0" aria-hidden="true">
@@ -247,15 +247,24 @@ const cloudRows = [
       <p
         class="mt-7 max-w-[600px] text-[18px] leading-[1.7] text-slate opacity-0 [animation:scFadeIn_0.9s_ease-out_1.3s_forwards]"
       >
-        Smart Control dezvoltă, operează și protejează infrastructuri IT complexe de peste {years} de
-        ani, deservind un portofoliu extins de clienți locali și internaționali. Garantăm
-        continuitatea și calitatea business-ului prin utilizarea exclusivă a unei{' '}
-        <strong class="font-semibold text-navy">echipe proprii de experți</strong>, o metodologie
-        consultativă și o cultură organizațională fundamentată pe date reale.
+        Smart Control construiește și operează infrastructuri IT complexe de peste {years} de ani,
+        pentru clienți locali și internaționali. Lucrăm exclusiv cu{' '}
+        <strong class="font-semibold text-navy">echipa proprie de experți</strong>, într-o abordare
+        consultativă: fiecare recomandare pleacă de la măsurători făcute în infrastructura
+        clientului.
       </p>
 
       <div
-        class="mt-10 flex flex-wrap gap-2.5 opacity-0 [animation:scFadeIn_0.9s_ease-out_1.5s_forwards]"
+        class="mt-[38px] flex flex-wrap items-center gap-[18px] opacity-0 [animation:scFadeIn_0.9s_ease-out_1.5s_forwards]"
+      >
+        <MailtoLink variant="button" subject={t('subject.assessment')}>
+          Programează un assessment gratuit
+        </MailtoLink>
+        <TextLink href="#servicii">Vezi serviciile</TextLink>
+      </div>
+
+      <div
+        class="mt-10 flex flex-wrap gap-2.5 opacity-0 [animation:scFadeIn_0.9s_ease-out_1.7s_forwards]"
       >
         {isoBadges.map((b) => <MonoPill>{b}</MonoPill>)}
         {frameworks.map((f) => <MonoPill variant="compliance">{f}</MonoPill>)}
@@ -272,8 +281,8 @@ const cloudRows = [
           <StatBlock value="250" count={250} suffix="+" caption="Clienți satisfăcuți" />
           <StatBlock value="25" count={25} suffix="+" caption="Clienți internaționali" />
           <StatBlock
-            value={String(years)}
-            count={years}
+            value={String(yearsFloor)}
+            count={yearsFloor}
             suffix="+"
             caption="Ani de experiență"
           />
@@ -287,8 +296,7 @@ const cloudRows = [
     <div class="mx-auto max-w-[1180px]">
       <div data-reveal>
         <SectionHeading
-          eyebrow="Servicii"
-          heading="Un portofoliu integrat, de la arhitectura hardware până la nivelul de aplicație"
+          heading="Un portofoliu integrat de servicii enterprise"
           headingMaxWidth="700px"
         >
           Patru piloni de servicii, susținuți de 50 de specialiști interni cu peste 500 de ani de
@@ -296,10 +304,7 @@ const cloudRows = [
         </SectionHeading>
       </div>
 
-      <div
-        data-skew="4"
-        class="mt-[52px] grid grid-cols-1 gap-5 md:grid-cols-12"
-      >
+      <div class="mt-[52px] grid grid-cols-1 gap-5 md:grid-cols-12">
         {/* Card 01 — span 7 */}
         <div
           data-reveal
@@ -448,9 +453,9 @@ const cloudRows = [
             heading="SEKNET — monitorizare și securitate dintr-o singură consolă"
             variant="dark"
           >
-            Platformă enterprise integrată: vizibilitate completă, detectare avansată a amenințărilor
-            și management granular al identității. Cinci module specializate, o singură sursă de
-            adevăr — acum cu SEKNET Trap, modulul de decepție activă.
+            Platforma enterprise care corelează evenimentele de securitate din toată rețeaua într-o
+            singură consolă. Cinci module specializate, inclusiv SEKNET Trap, modulul de decepție
+            activă lansat recent.
           </SectionHeading>
           <div class="mt-7 flex flex-wrap items-center gap-5">
             <a
@@ -534,8 +539,8 @@ const cloudRows = [
     </div>
   </section>
 
-  {/* ── SECTION 6 — Cloud teaser (light wash) ── */}
-  <section data-band class="bg-page px-6 py-[72px] sm:py-[110px] md:px-10">
+  {/* ── SECTION 6 — Cloud teaser (light wash, tight tier) ── */}
+  <section data-band class="bg-page px-6 py-[56px] sm:py-[84px] md:px-10">
     <div class="mx-auto max-w-[1180px]">
       {/* Header split — heading left, context + CTA right */}
       <div data-reveal class="grid grid-cols-1 items-end gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">
@@ -565,7 +570,7 @@ const cloudRows = [
       </div>
 
       {/* Capability cards */}
-      <div data-reveal data-reveal-delay="120" class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+      <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
         {
           cloudRows.map(({ tag, body }) => (
             <div class="rounded-lg border border-border bg-surface p-[26px] shadow-sm transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[2px] hover:border-border-blue hover:shadow-lg">
@@ -586,12 +591,12 @@ const cloudRows = [
       <div data-reveal class="text-center">
         <Eyebrow>Parteneri tehnologici</Eyebrow>
         <p class="mx-auto mt-5 max-w-[540px] text-[15.5px] text-cool">
-          Parteneriate cu cei mai importanți producători din lume — soluții testate, suport
-          garantat, roadmap clar.
+          Parteneriate directe cu producătorii pe care îi instalăm și îi operăm zi de zi în
+          proiectele clienților.
         </p>
       </div>
     </div>
-    <div data-skew="8" class="mt-11 [will-change:transform]">
+    <div class="mt-11 [will-change:transform]">
       <LogoMarquee items={partners} />
     </div>
   </section>
@@ -601,35 +606,10 @@ const cloudRows = [
     id="contact"
     eyebrow="Pașii următori"
     heading="Assessment inițial gratuit — 2 zile"
-    cta="Solicită assessment-ul"
+    cta={t('cta.assessment')}
     subject={t('subject.assessment')}
   >
     Fără obligații contractuale. Identificăm împreună zona de interes prioritară și livrăm un raport de
     recomandări la final.
   </CtaBand>
-
-  {/* Contact details (email + address, NO map) */}
-  <section aria-label="Date de contact" class="bg-surface px-6 py-16 md:px-10">
-    <div class="mx-auto grid max-w-[1180px] grid-cols-1 gap-8 sm:grid-cols-2">
-      <div>
-        <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-cool">
-          Contact
-        </h2>
-        <div class="mt-4 grid gap-2.5 text-[13.5px]">
-          <MailtoLink variant="link" subject={t('subject.assessment')}>
-            <span data-email-user={EMAIL_USER} data-email-domain={EMAIL_DOMAIN}></span>
-          </MailtoLink>
-          <span class="text-slate">www.smartcontrol.ro</span>
-        </div>
-      </div>
-      <div>
-        <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-cool">
-          Adresă
-        </h2>
-        <address class="mt-4 text-[13.5px] not-italic leading-[1.6] text-cool">
-          Intrarea Aviator Teodor Iliescu 37,<br />011672 București
-        </address>
-      </div>
-    </div>
-  </section>
 </BaseLayout>

@@ -7,7 +7,6 @@ import Eyebrow from '../../components/Eyebrow.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
 import ChevronList from '../../components/ChevronList.astro';
 import TextLink from '../../components/TextLink.astro';
-import MailtoLink from '../../components/MailtoLink.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import { getLangFromUrl, useTranslations, localizedPath } from '../../i18n/ui';
 import { Monitor, Lock, Code, ArrowLeftRight } from '@lucide/astro';
@@ -31,7 +30,7 @@ const jsonLd = {
         '@type': 'Product',
         name: 'SEKNET',
         description:
-          'Platformă enterprise de monitorizare, securitate cibernetică și management al identității — 5 module specializate, arhitectură cloud-native.',
+          'Platformă enterprise de securitate cu 5 module specializate — SIEM, detecție ML, identitate și decepție activă — arhitectură cloud-native.',
         url: 'https://smartcontrol.ro/solutii/seknet/',
         brand: { '@type': 'Brand', name: 'Smart Control SRL' },
       },
@@ -104,11 +103,11 @@ const jsonLd = {
           data-word-fill="light"
           class="mt-6 text-h2 font-bold leading-[1.15] tracking-[-1px] text-navy mx-auto max-w-[700px]"
         >
-          Două produse, un ecosistem integrat
+          SEKNET și S-VPN: aceeași echipă, aceeași arhitectură cloud-native
         </h2>
       </div>
 
-      <div class="grid gap-6 md:grid-cols-2" data-skew="4">
+      <div class="grid gap-6 md:grid-cols-2">
 
         <!-- SEKNET Card -->
         <div data-reveal data-reveal-rotate="-4" data-drift="0.07">
@@ -126,8 +125,9 @@ const jsonLd = {
 
             <!-- Positioning line -->
             <p class="mt-5 text-[15px] leading-[1.65] text-cool">
-              Platformă enterprise integrată de <strong class="font-semibold text-slate">monitorizare, securitate cibernetică și management al identității</strong>
-              — cinci module specializate, arhitectură cloud-native pe microservicii.
+              Cinci module conectate sub <strong class="font-semibold text-slate">o singură consolă</strong>: identități și acces,
+              detecție a amenințărilor, căutare distribuită, peste 200 de dashboard-uri și un honeypot pentru mișcare laterală,
+              toate pe o arhitectură cloud-native de microservicii.
             </p>
 
             <!-- Module list -->
@@ -161,10 +161,9 @@ const jsonLd = {
               </div>
             </div>
 
-            <!-- CTAs -->
+            <!-- CTA -->
             <div class="mt-8 flex flex-wrap items-center gap-5">
               <TextLink href={p('/solutii/seknet')}>Explorează SEKNET</TextLink>
-              <MailtoLink variant="link" subject={t('subject.demo.seknet')}>Solicită un demo</MailtoLink>
             </div>
           </article>
         </div>
@@ -220,10 +219,9 @@ const jsonLd = {
               </div>
             </div>
 
-            <!-- CTAs -->
+            <!-- CTA -->
             <div class="mt-8 flex flex-wrap items-center gap-5">
               <TextLink href={p('/solutii/s-vpn')}>Explorează S-VPN</TextLink>
-              <MailtoLink variant="link" subject={t('subject.demo.svpn')}>Solicită un demo</MailtoLink>
             </div>
           </article>
         </div>
@@ -235,7 +233,7 @@ const jsonLd = {
   <!-- ═══════════════════════════════════════════════════════
        DE CE SOLUȚII PROPRII — 4-point chevron strip
        ═══════════════════════════════════════════════════════ -->
-  <section data-band class="bg-page py-[72px] sm:py-[110px] px-6 sm:px-10">
+  <section data-band class="bg-page py-[56px] sm:py-[84px] px-6 sm:px-10">
     <div class="mx-auto max-w-[1180px]">
       <div data-reveal>
         <SectionHeading
@@ -244,12 +242,13 @@ const jsonLd = {
           variant="light"
           headingMaxWidth="680px"
         >
-          Controlul complet al stivei tehnologice elimină dependențele externe și
-          permite adaptarea rapidă la cerințele specifice ale fiecărui client.
+          Codul sursă complet îți aparține, fără licențe terțe recurente per utilizator sau modul,
+          iar conectorii nativi (API REST, AD / LDAP / RADIUS, ITSM, SOAR) se leagă direct de
+          infrastructura existentă, fără implementări suplimentare de la parteneri terți.
         </SectionHeading>
       </div>
 
-      <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" data-skew="4">
+      <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
 
         <div data-reveal data-drift="0.06">
           <div class="h-full rounded-xl border border-border bg-surface p-7 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-border-blue hover:shadow-md">
@@ -263,7 +262,7 @@ const jsonLd = {
           </div>
         </div>
 
-        <div data-reveal data-reveal-delay="80" data-drift="-0.05">
+        <div data-reveal data-drift="-0.05">
           <div class="h-full rounded-xl border border-border bg-surface p-7 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-border-blue hover:shadow-md">
             <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-md border border-border-blue bg-blue-wash">
               <span class="font-mono text-[18px] font-bold text-navy">0</span>
@@ -275,7 +274,7 @@ const jsonLd = {
           </div>
         </div>
 
-        <div data-reveal data-reveal-delay="160" data-drift="0.06">
+        <div data-reveal data-drift="0.06">
           <div class="h-full rounded-xl border border-border bg-surface p-7 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-border-blue hover:shadow-md">
             <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-md border border-border-blue bg-blue-wash">
               <ArrowLeftRight class="h-[20px] w-[20px] text-navy" stroke-width={1.5} />
@@ -287,7 +286,7 @@ const jsonLd = {
           </div>
         </div>
 
-        <div data-reveal data-reveal-delay="240" data-drift="-0.05">
+        <div data-reveal data-drift="-0.05">
           <div class="h-full rounded-xl border border-border bg-surface p-7 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-border-blue hover:shadow-md">
             <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-md border border-border-blue bg-blue-wash">
               <span class="font-mono text-[18px] font-bold text-navy">RO</span>
@@ -308,12 +307,12 @@ const jsonLd = {
        ═══════════════════════════════════════════════════════ -->
   <CtaBand
     id="contact"
-    eyebrow="Pașii următori"
-    heading="Assessment inițial gratuit — 2 zile"
+    heading="O evaluare construită pe scenariile din infrastructura ta"
     cta={t('cta.assessment')}
     subject={t('subject.assessment')}
   >
-    Fără obligații contractuale. Identificăm împreună zona de interes prioritară și livrăm
-    un raport de recomandări la final.
+    Menționează platforma care te interesează — SEKNET sau S-VPN — iar mesajul ajunge direct la
+    echipa de produs potrivită. Discutăm pe topologia, volumul de evenimente și regulile de acces
+    din mediul tău real.
   </CtaBand>
 </BaseLayout>

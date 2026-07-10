@@ -23,7 +23,7 @@ const jsonLd = {
   '@type': 'Service',
   name: 'Security & Compliance — Smart Control',
   description:
-    'Enterprise cybersecurity and compliance services: DLP, secure remote access, SSO/PKI, perimeter & endpoint security, WAF, GDPR/NIS2/DORA compliance, and managed security operations.',
+    'Enterprise cybersecurity and compliance services: DLP, secure remote access, SSO/PKI, perimeter & endpoint security, WAF, GDPR, NIS 2, DORA compliance, and managed security operations.',
   provider: {
     '@type': 'Organization',
     name: 'Smart Control SRL',
@@ -40,30 +40,15 @@ const jsonLd = {
 
 <BaseLayout
   title="Security & Compliance — Smart Control"
-  description="Enterprise cybersecurity and compliance: DLP, secure remote access, SSO/PKI, WAF, GDPR/NIS2/DORA. Own team, 4 ISO certifications."
+  description="Enterprise cybersecurity and compliance: DLP, secure remote access, SSO/PKI, WAF, GDPR, NIS 2, DORA. Own team, 4 ISO certifications."
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
   {/* ── HERO ───────────────────────────────────────────────────────────────── */}
   <header
     class="relative overflow-hidden"
-    style="background:linear-gradient(180deg,#F3F6FC 0%,#FFFFFF 100%)"
+    style="background:var(--sc-gradient-hero-light)"
   >
-    {/* Decorative drift blob */}
-    <div
-      class="pointer-events-none absolute"
-      data-parallax="0.3"
-      aria-hidden="true"
-      style="inset:0"
-    >
-      <div
-        class="absolute"
-        style="width:600px;height:600px;top:-120px;right:-120px;border-radius:999px;background:radial-gradient(circle,rgba(122,180,232,0.18),rgba(122,180,232,0) 65%);animation:scDriftA 18s ease-in-out infinite alternate"
-        aria-hidden="true"
-      >
-      </div>
-    </div>
-
     <div class="container relative" data-hero-scrub>
       <div class="pb-[72px] pt-[136px] sm:pb-[100px] md:pt-[190px]">
         <Eyebrow variant="hero">Security &amp; Compliance</Eyebrow>
@@ -72,9 +57,9 @@ const jsonLd = {
           class="mt-6 max-w-[860px] font-extrabold leading-[1.1] tracking-[-1.8px] text-midnight"
           style="font-size:clamp(2.2rem, 1.5rem + 2.5vw, 4rem)"
         >
-          Threats never sleep.
+          Your network is monitored around the clock,
           <br />
-          <span class="text-bright">Neither do we.</span>
+          <span class="text-bright">with alerting under 60 seconds.</span>
         </h1>
 
         <p
@@ -83,9 +68,9 @@ const jsonLd = {
         >
           In a continuously evolving threat landscape, compliance with
           <strong class="font-semibold text-navy">GDPR, NIS 2, and DORA</strong> is no longer
-          optional — it is foundational. Smart Control delivers end-to-end
-          cybersecurity: from data loss prevention to managed security operations, backed by{' '}
-          {years} years of experience and 4 ISO certifications.
+          optional — it is foundational. We cover data loss prevention, infrastructure
+          protection, and managed security operations, backed by {years} years of experience
+          and 4 ISO certifications.
         </p>
 
         <div
@@ -105,25 +90,24 @@ const jsonLd = {
 
   {/* ── CONTEXT INTRO (3 cards) ────────────────────────────────────────────── */}
   <section class="bg-surface" aria-labelledby="context-heading">
-    <div class="container py-[72px] sm:py-[110px]">
+    <div class="container py-[56px] sm:py-[84px]">
       <h2 id="context-heading" class="sr-only">Why proactive security</h2>
-      <div class="grid gap-5 [grid-template-columns:repeat(3,1fr)] max-[1100px]:grid-cols-1 max-[768px]:grid-cols-1" data-skew="4">
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-12">
         {/* Card 1 */}
-        <div data-reveal data-reveal-rotate="-4" data-drift="0.07">
+        <div data-reveal data-reveal-rotate="-4" data-drift="0.07" class="md:col-span-12 lg:col-span-7">
           <div class="h-full box-border rounded-xl border border-border bg-surface p-[30px_32px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg">
             <IconChip>
               <Eye class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
             </IconChip>
             <h3 class="mt-[18px] text-[17px] font-bold text-navy">The attack surface is expanding</h3>
             <p class="mt-[10px] text-[14px] leading-[1.65] text-cool">
-              Hybrid work, SaaS proliferation, and IoT ecosystems multiply attack vectors.
-              A single misconfiguration can expose critical data or halt operations entirely.
+              Hybrid work, SaaS proliferation, and IoT devices keep extending attack vectors.
             </p>
           </div>
         </div>
 
         {/* Card 2 */}
-        <div data-reveal data-reveal-delay="100" data-reveal-rotate="4">
+        <div data-reveal data-reveal-delay="100" data-reveal-rotate="4" class="md:col-span-12 lg:col-span-5">
           <div class="h-full box-border rounded-xl border border-border bg-surface p-[30px_32px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg">
             <IconChip>
               <FileCheck class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
@@ -137,15 +121,15 @@ const jsonLd = {
         </div>
 
         {/* Card 3 */}
-        <div data-reveal data-reveal-delay="200" data-reveal-rotate="-4" data-drift="-0.07">
+        <div data-reveal data-reveal-delay="200" data-reveal-rotate="-4" data-drift="-0.07" class="md:col-span-12 lg:col-span-12">
           <div class="h-full box-border rounded-xl border border-border bg-surface p-[30px_32px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg">
             <IconChip>
               <ShieldCheck class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
             </IconChip>
-            <h3 class="mt-[18px] text-[17px] font-bold text-navy">Our own team makes the difference</h3>
+            <h3 class="mt-[18px] text-[17px] font-bold text-navy">The experience shows in the numbers</h3>
             <p class="mt-[10px] text-[14px] leading-[1.65] text-cool">
-              50 in-house specialists — no subcontractors — with expertise validated by ISO 27001
-              and hundreds of security projects delivered in Romania and internationally.
+              50 in-house specialists, ISO 27001 certified, with 650+ security projects
+              delivered in Romania and internationally.
             </p>
           </div>
         </div>
@@ -164,19 +148,17 @@ const jsonLd = {
     <div class="container py-[72px] sm:py-[110px]">
       <div data-reveal>
         <SectionHeading
-          eyebrow="Capabilities"
           heading="End-to-end security, from perimeter to compliance"
           headingId="cap-heading"
           headingMaxWidth="700px"
         >
-          Seven areas of expertise, delivered by a certified in-house team — from data loss
-          prevention to 24/7 managed security operations.
+          Seven areas of expertise, delivered by a certified in-house team: data loss
+          prevention, perimeter protection, and 24/7 managed security operations.
         </SectionHeading>
       </div>
 
       <div
         class="mt-[44px] grid grid-cols-2 gap-5 max-[768px]:grid-cols-1"
-        data-skew="4"
         id="cap-heading-grid"
       >
         {/* DLP */}
@@ -198,7 +180,7 @@ const jsonLd = {
         </div>
 
         {/* Secure Remote Access */}
-        <div data-reveal data-reveal-delay="80">
+        <div data-reveal>
           <ModuleCard
             title="Secure Remote Access"
             index="02"
@@ -234,7 +216,7 @@ const jsonLd = {
         </div>
 
         {/* Perimeter & Endpoint */}
-        <div data-reveal data-reveal-delay="80">
+        <div data-reveal>
           <ModuleCard
             title="Perimeter & Endpoint Security"
             index="04"
@@ -269,8 +251,8 @@ const jsonLd = {
           </ModuleCard>
         </div>
 
-        {/* GDPR/NIS2 Compliance */}
-        <div data-reveal data-reveal-delay="80">
+        {/* GDPR/NIS 2 Compliance */}
+        <div data-reveal>
           <ModuleCard
             title="GDPR / NIS 2 / DORA Compliance"
             index="06"
@@ -317,7 +299,7 @@ const jsonLd = {
     aria-labelledby="compliance-heading"
     style="scroll-margin-top:76px"
   >
-    <div class="container py-[72px] sm:py-[110px]">
+    <div class="container py-[56px] sm:py-[84px]">
       <div data-reveal>
         <SectionHeading
           eyebrow="Certifications & Compliance"
@@ -356,8 +338,8 @@ const jsonLd = {
       </div>
 
       {/* Two-col description cards */}
-      <div class="mt-12 grid grid-cols-2 gap-5 max-[768px]:grid-cols-1" data-skew="4">
-        <div data-reveal class="rounded-xl border border-border bg-page p-[28px_32px]">
+      <div class="mt-12 grid grid-cols-2 gap-5 max-[768px]:grid-cols-1">
+        <div class="rounded-xl border border-border bg-page p-[28px_32px]">
           <h3 class="text-[16px] font-bold text-navy">Proactive security &amp; NIS 2</h3>
           <p class="mt-3 text-[14px] leading-[1.7] text-cool">
             Smart Control guarantees its partners maximum cyber resilience, in full compliance
@@ -366,7 +348,7 @@ const jsonLd = {
             clients' supply chains.
           </p>
         </div>
-        <div data-reveal data-reveal-delay="80" class="rounded-xl border border-border bg-page p-[28px_32px]">
+        <div class="rounded-xl border border-border bg-page p-[28px_32px]">
           <h3 class="text-[16px] font-bold text-navy">Digital resilience &amp; DORA</h3>
           <p class="mt-3 text-[14px] leading-[1.7] text-cool">
             Smart Control is a trusted technology partner for the financial sector, operating
@@ -403,12 +385,12 @@ const jsonLd = {
   {/* ── CTA BAND (dark) ────────────────────────────────────────────────────── */}
   <CtaBand
     id="contact"
-    eyebrow="Next steps"
-    heading="Free security assessment — 2 days"
+    heading="A report that shows exactly where you're exposed"
     cta={t('cta.assessment')}
     subject={t('subject.assessment')}
   >
-    We identify your security and compliance gaps together and deliver a prioritized
-    recommendations report. No contractual obligations — the decision to proceed is entirely yours.
+    In two days, we assess your perimeter, exposed configurations, and sensitive data flows,
+    then hand you a report ranking every vulnerability found by risk. No contractual
+    obligations — the decision to proceed is entirely yours.
   </CtaBand>
 </BaseLayout>

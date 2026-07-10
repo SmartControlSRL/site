@@ -25,6 +25,12 @@ const loop = [...items, ...items];
   >
   </div>
 
+  <!-- AT-readable partner list — the animated track below is aria-hidden
+       (duplicated items would read twice) -->
+  <ul class="sr-only">
+    {items.map((name) => <li>{name}</li>)}
+  </ul>
+
   <div class="flex w-max gap-16" style="animation:scMarquee 50s linear infinite" aria-hidden="true">
     {
       loop.map((name) => (

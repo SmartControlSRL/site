@@ -5,19 +5,16 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
 import ModuleCard from '../../components/ModuleCard.astro';
-import StatStrip from '../../components/StatStrip.astro';
-import StatBlock from '../../components/StatBlock.astro';
 import MonoPill from '../../components/MonoPill.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import TextLink from '../../components/TextLink.astro';
 import Eyebrow from '../../components/Eyebrow.astro';
 import { Server, ShieldCheck, Code, Settings2 } from '@lucide/astro';
-import { useTranslations, getLangFromUrl, localizedPath, yearsInBusiness, FOUNDED } from '../../i18n/ui';
+import { useTranslations, getLangFromUrl, localizedPath, FOUNDED } from '../../i18n/ui';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const p = (path: string) => localizedPath(lang, path);
-const years = yearsInBusiness(new Date().getUTCFullYear());
 
 // 4 pillar cards — exact canonical names per CLAUDE.md
 const pillars = [
@@ -26,7 +23,7 @@ const pillars = [
     title: 'Infrastructură & Cloud',
     href: p('/servicii/cloud'),
     icon: Server,
-    body: 'Proiectăm și consolidăm centre de date, infrastructuri hibride și soluții cloud — de la hardware-ul fizic până la orchestrare Kubernetes.',
+    body: 'Proiectăm și consolidăm centre de date, infrastructuri hibride și soluții cloud, cu orchestrare Kubernetes end-to-end.',
     items: [
       'Data Center Design & Implementation',
       'Consolidare & Virtualizare',
@@ -39,7 +36,7 @@ const pillars = [
     title: 'Securitate & Conformitate',
     href: p('/servicii/securitate'),
     icon: ShieldCheck,
-    body: 'Apărăm infrastructuri enterprise cu un strat complet de securitate cibernetică — de la perimetru până la identitate — validat conform ISO 27001 și în conformitate cu NIS 2 și DORA.',
+    body: 'Apărăm infrastructuri enterprise cu un strat complet de securitate cibernetică, acoperind perimetrul și identitatea, validat conform ISO 27001 și aliniat la NIS 2 și DORA.',
     items: [
       'Perimeter & End-point Security',
       'Enterprise SSO / PKI',
@@ -52,7 +49,7 @@ const pillars = [
     title: 'Software & Automatizare',
     href: p('/servicii/software'),
     icon: Code,
-    body: 'Construim, modernizăm și automatizăm aplicații enterprise — de la refactoring și containerizare, până la DevSecOps, blockchain și integrare AI.',
+    body: 'Construim, modernizăm și automatizăm aplicații enterprise. Acoperim refactoring, containerizare, DevSecOps, integrare blockchain și soluții bazate pe AI, adaptate proceselor existente ale clientului.',
     items: [
       'Dezvoltare software custom & API',
       'DevOps / DevSecOps & CI/CD',
@@ -65,7 +62,7 @@ const pillars = [
     title: 'Servicii Gestionate',
     href: p('/servicii/managed'),
     icon: Settings2,
-    body: 'Preluăm operarea continuă a infrastructurii și aplicațiilor tale — echipă proprie, nu subcontractori — cu SLA-uri clare și raportare transparentă.',
+    body: 'Preluăm operarea continuă a infrastructurii și aplicațiilor tale. Echipa noastră internă lucrează cu SLA-uri clare și raportare transparentă.',
     items: [
       'Managed Infrastructure Operations',
       'Service Desk Outsourcing',
@@ -138,31 +135,11 @@ const jsonLd = {
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-  {/* ── HERO (light, parallax blob) ───────────────────────────────── */}
+  {/* ── HERO (light) ──────────────────────────────────────────────── */}
   <header
     class="relative overflow-hidden"
-    style="background: linear-gradient(180deg, #F3F6FC 0%, #FFFFFF 100%)"
+    style="background: var(--sc-gradient-hero-light)"
   >
-    {/* Decorative parallax blob */}
-    <div
-      class="pointer-events-none absolute inset-0"
-      data-parallax="0.3"
-      aria-hidden="true"
-    >
-      <div
-        style="
-          position:absolute;
-          top:-140px;
-          right:-120px;
-          width:600px;
-          height:600px;
-          border-radius:999px;
-          background:radial-gradient(circle, rgba(122,180,232,0.18), rgba(122,180,232,0) 65%);
-          animation: scDriftA 18s ease-in-out infinite alternate;
-        "
-      ></div>
-    </div>
-
     <div class="container" style="padding-top:160px; padding-bottom:100px">
       <div data-hero-scrub>
         <Eyebrow variant="hero">SERVICII</Eyebrow>
@@ -181,7 +158,7 @@ const jsonLd = {
           data-reveal
           data-reveal-delay="200"
         >
-          Patru piloni de servicii, susținuți de <strong class="text-navy font-semibold">50 de specialiști interni</strong> — echipă proprie, nu subcontractori. Abordare consultativă, cod sursă inclus, raport ROI la 90 de zile.
+          Patru piloni de servicii, susținuți de <strong class="text-navy font-semibold">50 de specialiști interni</strong> angajați direct de Smart Control. Abordare consultativă, cod sursă inclus pentru fiecare proiect.
         </p>
 
       </div>
@@ -197,14 +174,11 @@ const jsonLd = {
           heading="Patru piloni de servicii enterprise"
           headingMaxWidth="680px"
         >
-          Smart Control acoperă întregul spectru IT — de la hardware-ul fizic și virtualizare, până la securitate cibernetică și dezvoltare software custom. Toate serviciile sunt susținute de echipa proprie.
+          Smart Control acoperă întregul spectru IT enterprise: infrastructură, securitate, software și operare curentă. Fiecare pilon este livrat de echipa internă.
         </SectionHeading>
       </div>
 
-      <div
-        class="grid gap-5 sm:grid-cols-2"
-        data-skew="4"
-      >
+      <div class="grid gap-5 sm:grid-cols-2">
         {
           pillars.map((pillar, i) => {
             const PillarIcon = pillar.icon;
@@ -239,7 +213,7 @@ const jsonLd = {
   </section>
 
   {/* ── PROOF STRIP ───────────────────────────────────────────────── */}
-  <section class="bg-page py-[72px] sm:py-[100px]" data-band>
+  <section class="bg-page py-[56px] sm:py-[84px]" data-band>
     <div class="container">
       {/* ISO + Compliance badges — ISO roundels grouped distinct from the teal regulatory trio */}
       <div data-reveal class="mb-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
@@ -256,30 +230,21 @@ const jsonLd = {
         </div>
       </div>
 
-      {/* Stats */}
-      <StatStrip>
-        <StatBlock value="650" count={650} suffix="+" caption="Proiecte livrate" />
-        <StatBlock value="250" count={250} suffix="+" caption="Clienți satisfăcuți" />
-        <StatBlock value="25" count={25} suffix="+" caption="Clienți internaționali" />
-        <StatBlock value={String(years)} count={years} suffix="+" caption="Ani de experiență" />
-      </StatStrip>
-
       {/* Trust proof */}
-      <div data-reveal class="mt-12 text-center">
+      <div data-reveal class="mt-2 text-center">
         <p class="text-[15px] text-cool">
-          Fondată în {FOUNDED} · 50 de specialiști interni · 500+ ani de experiență cumulată · <span class="text-navy font-semibold">echipă proprie, nu subcontractori</span>
+          Fondată în {FOUNDED}, cu 50 de specialiști interni și peste 500 de ani de experiență cumulată în echipă.
         </p>
       </div>
     </div>
   </section>
 
   {/* ── WHY SMART CONTROL (brief differentiation strip) ───────────── */}
-  <section class="bg-surface py-[72px] sm:py-[100px]">
+  <section class="bg-surface py-[56px] sm:py-[84px]">
     <div class="container">
       <div data-reveal class="mb-12">
         <SectionHeading
-          eyebrow="De ce Smart Control"
-          heading="Avantaje care contează în proiecte reale"
+          heading="Ce primești într-un proiect cu Smart Control"
           headingMaxWidth="640px"
         />
       </div>
@@ -288,12 +253,12 @@ const jsonLd = {
         {
           [
             {
-              title: 'Echipă proprie, nu subcontractori',
-              body: '50 de specialiști interni disponibili on-site și remote — același nivel de calitate, indiferent de proiect.',
+              title: 'Specialiști angajați direct',
+              body: '50 de specialiști interni, disponibili on-site și remote, mențin același nivel de calitate pe fiecare proiect.',
             },
             {
               title: 'Abordare consultativă',
-              body: 'Relații pe termen lung cu 250+ clienți — livrare bazată pe date reale, nu pe estimări teoretice.',
+              body: 'Relații pe termen lung cu 250+ clienți, cu decizii de livrare bazate pe rezultate măsurate în teren.',
             },
             {
               title: 'Cod sursă inclus',
@@ -304,18 +269,17 @@ const jsonLd = {
               body: '4 sisteme de management certificate simultan: ISO 9001, ISO 27001, ISO 14001, ISO 45001.',
             },
             {
-              title: 'Raport ROI la 90 de zile',
-              body: 'Validăm beneficiile fiecărui proiect printr-un raport de performanță comparativ la 90 de zile post-implementare.',
+              title: 'Un singur interlocutor pe toți cei patru piloni',
+              body: 'Indiferent câți piloni combini într-un proiect, ai un singur punct de contact și o coordonare unitară a echipelor.',
             },
             {
               title: 'Conformitate NIS 2 · DORA · GDPR',
               body: 'Operăm și livrăm în deplină conformitate cu directivele UE — un avantaj direct pentru clienții din sectoare reglementate.',
             },
-          ].map((item, i) => (
+          ].map((item) => (
             <div
               class="rounded-xl border border-border bg-surface p-[28px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[4px] hover:border-border-blue hover:shadow-lg"
               data-reveal
-              data-reveal-delay={String((i % 3) * 80)}
             >
               <h3 class="text-[16px] font-bold text-navy">{item.title}</h3>
               <p class="mt-3 text-[13.5px] leading-relaxed text-cool">{item.body}</p>
@@ -329,11 +293,10 @@ const jsonLd = {
   {/* ── DARK CTA BAND ─────────────────────────────────────────────── */}
   <CtaBand
     id="contact"
-    eyebrow="Pașii următori"
-    heading="Assessment inițial gratuit — 2 zile"
+    heading="O evaluare de 2 zile care arată de unde începi"
     cta={t('cta.assessment')}
     subject={t('subject.assessment')}
   >
-    Identificăm împreună zona de interes prioritară și livrăm un raport de recomandări la final. Fără obligații contractuale — decizia de a continua îți aparține.
+    Analizăm infrastructura, securitatea, aplicațiile și operarea curentă și recomandăm pilonul cu cel mai mare impact pentru primul proiect.
   </CtaBand>
 </BaseLayout>

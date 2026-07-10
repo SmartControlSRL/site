@@ -9,6 +9,8 @@ import SectionHeading from '../../../components/SectionHeading.astro';
 import IconChip from '../../../components/IconChip.astro';
 import ChevronList from '../../../components/ChevronList.astro';
 import CtaBand from '../../../components/CtaBand.astro';
+import MailtoLink from '../../../components/MailtoLink.astro';
+import TextLink from '../../../components/TextLink.astro';
 import { getLangFromUrl, useTranslations } from '../../../i18n/ui';
 import {
   TrendingUp,
@@ -32,19 +34,19 @@ const reasons = [
   {
     Icon: TrendingUp,
     title: 'Rising hardware costs',
-    body: 'Demand for AI infrastructure is straining the supply chain — memory, storage and GPUs at record prices, with unpredictable lead times.',
+    body: 'Demand for AI infrastructure has pushed memory, storage and GPUs to record prices, with unpredictable lead times.',
     reveal: { 'data-reveal': true, 'data-reveal-rotate': '-4', 'data-drift': '0.07' },
   },
   {
     Icon: Recycle,
     title: 'The classic refresh no longer pays off',
-    body: 'The “every 5 years” server replacement is increasingly hard to justify in a business case — existing capacity is often used below 40%.',
+    body: 'The “every 5 years” server replacement is increasingly hard to justify in a business case. Existing capacity is often used below 40%.',
     reveal: { 'data-reveal': true, 'data-reveal-delay': '100', 'data-reveal-rotate': '4' },
   },
   {
     Icon: Rocket,
     title: 'Re-architecture wins',
-    body: 'Containerization, application tuning and selective cloud migration extract performance from what you already have — with predictable costs, CAPEX→OPEX.',
+    body: '650+ projects show what works: containerization, application tuning and selective cloud migration extract performance from existing infrastructure, with predictable costs, CAPEX→OPEX.',
     reveal: { 'data-reveal': true, 'data-reveal-delay': '200', 'data-reveal-rotate': '-4', 'data-drift': '-0.07' },
   },
 ];
@@ -98,7 +100,7 @@ const capabilities = [
       'Automated testing in staging',
       'Infrastructure-as-Code',
     ],
-    reveal: { 'data-reveal': true, 'data-reveal-delay': '80' },
+    reveal: { 'data-reveal': true },
   },
   {
     Icon: Cloud,
@@ -118,7 +120,7 @@ const capabilities = [
       '90-day performance report',
       'Continuous iteration on telemetry data',
     ],
-    reveal: { 'data-reveal': true, 'data-reveal-delay': '80' },
+    reveal: { 'data-reveal': true },
   },
 ];
 
@@ -148,7 +150,7 @@ const serviceLd = {
   {/* ============ SECTION 2 — HERO (light) ============ */}
   <header
     class="relative overflow-hidden"
-    style="background:linear-gradient(180deg,#F3F6FC 0%,#FFFFFF 100%)"
+    style="background:var(--sc-gradient-hero-light)"
   >
     {/* Decorative parallax blob — drifts + parallaxes, inert to pointer. */}
     <div class="pointer-events-none absolute inset-0" data-parallax="0.3" aria-hidden="true">
@@ -176,6 +178,13 @@ const serviceLd = {
         existing infrastructure before buying new hardware.
       </p>
 
+      <div class="mt-[38px] flex flex-wrap items-center gap-4">
+        <MailtoLink variant="button" subject={t('subject.assessment')}>
+          Schedule the free assessment
+        </MailtoLink>
+        <TextLink href="#flux">See the 5-stage flow</TextLink>
+      </div>
+
     </div>
   </header>
 
@@ -183,7 +192,7 @@ const serviceLd = {
   <section aria-labelledby="why-now" class="bg-surface">
     <div class="container pb-[72px] pt-[72px] sm:pb-[110px] sm:pt-20">
       <h2 id="why-now" class="sr-only">Why now</h2>
-      <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3" data-skew="4">
+      <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {
           reasons.map(({ Icon, title, body, reveal }) => (
             <div {...reveal}>
@@ -203,16 +212,16 @@ const serviceLd = {
 
   {/* ============ SECTION 4 — 5-STAGE WORKFLOW (#flux, scroll stepper, wash band) ============ */}
   <section id="flux" data-band class="bg-page">
-    <div class="container py-[72px] sm:py-[110px]">
+    <div class="container py-[88px] sm:py-[128px]">
       <div data-reveal>
         <SectionHeading
           eyebrow="Approach"
           heading="The 5-stage workflow"
           headingMaxWidth="700px"
         >
-          We don’t just propose a technical upgrade, but a strategic
-          re-architecture — a workflow validated across 650+ projects that
-          minimizes risk and maximizes ROI.
+          This workflow delivers a strategic re-architecture of your
+          applications, validated across 650+ projects, that minimizes risk
+          and maximizes ROI.
         </SectionHeading>
       </div>
 
@@ -266,17 +275,16 @@ const serviceLd = {
 
   {/* ============ SECTION 5 — STACK / WHAT WE DELIVER (light) ============ */}
   <section aria-labelledby="what-we-deliver" class="bg-surface">
-    <div class="container py-[72px] sm:py-[110px]">
+    <div class="container py-[56px] sm:py-[84px]">
       <div data-reveal>
         <SectionHeading
-          eyebrow="Capabilities"
           heading="What we deliver, concretely"
           headingMaxWidth="700px"
           headingId="what-we-deliver"
         />
       </div>
 
-      <div class="mt-11 grid gap-5 md:grid-cols-2" data-skew="4">
+      <div class="mt-11 grid gap-5 md:grid-cols-2">
         {
           capabilities.map(({ Icon, title, items, reveal }) => (
             <div {...reveal}>
@@ -297,12 +305,12 @@ const serviceLd = {
   {/* ============ SECTION 6 — CTA (#contact, dark band) ============ */}
   <CtaBand
     id="contact"
-    eyebrow="Stage 1 · free"
-    heading="Initial assessment — 2 days, no contractual obligations"
+    heading="What your current infrastructure actually costs — and what you’d save"
     cta={t('cta.assessment')}
     subject={t('subject.assessment')}
   >
-    Together we identify the priority area of interest and deliver a report of
-    recommendations at the end. The decision to continue is yours.
+    The free 2-day assessment maps what you already have and estimates the
+    savings from re-architecture. If you decide to move forward, you get a
+    90-day ROI report that confirms the numbers in production.
   </CtaBand>
 </BaseLayout>

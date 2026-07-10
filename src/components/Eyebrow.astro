@@ -1,9 +1,10 @@
 ---
 // Signature eyebrow: 12px mono, 2.5px tracking, uppercase, with optional 2px
-// rule. Color by variant: light=bright (#4487DC), dark/hero=sky (#7AB4E8).
-// RESOLUTIONS §20.
+// rule. Color by variant: light/hero=royal #1F3C80 (AA at 12px — not bright
+// #4487DC, which fails on white; the 2px rule stays blue-wash), dark=sky
+// #7AB4E8. RESOLUTIONS §20 + §22.
 interface Props {
-  /** light = on white (bright + blue-wash rule); dark = on midnight (sky + translucent rule); hero = same as light but used in light heroes. */
+  /** light = on white (royal + blue-wash rule); dark = on midnight (sky + translucent rule); hero = same as light but used in light heroes. */
   variant?: 'light' | 'dark' | 'hero';
   /** Render the 2px underline rule. Default true; CTA-band eyebrows pass false. */
   rule?: boolean;

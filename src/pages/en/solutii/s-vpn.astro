@@ -23,35 +23,31 @@ const description =
 const benefits = [
   {
     drift: '0.06',
-    delay: undefined as string | undefined,
     num: '−60',
     suffix: '%',
     h3: 'Predictable cost',
-    p: 'A full capability set at a fraction of the Cisco / Fortinet cost — no per-user or per-device billing.',
+    p: 'A full capability set at a fraction of the Cisco / Fortinet cost, with no per-user or per-device billing.',
   },
   {
     drift: '-0.05',
-    delay: '80',
-    num: '0',
-    suffix: undefined as string | undefined,
-    h3: 'Hidden costs',
-    p: 'Every license includes installation, configuration, integration, support, maintenance and warranty. No third-party dependencies.',
+    num: '20',
+    suffix: 'Gbps+',
+    h3: 'Sustained throughput',
+    p: 'Layer 7 inspection at over 20 Gbps, with no extra appliance at peak traffic.',
   },
   {
     drift: '0.06',
-    delay: '160',
-    num: '360',
-    suffix: '°',
-    h3: 'Full visibility',
-    p: 'A complete, real-time view of the attack surface — policies, traffic, vulnerabilities, compliance.',
+    num: '10',
+    suffix: 'K+',
+    h3: 'IPSec tunnels',
+    p: 'Concurrent connections, proven at scale during the pandemic.',
   },
   {
     drift: '-0.05',
-    delay: '240',
     num: '<5',
     suffix: 'min',
     h3: 'Setup in minutes',
-    p: 'The client installs and connects in under 5 minutes from provisioning — no advanced technical expertise required.',
+    p: 'The client installs and connects in under 5 minutes from provisioning, with no advanced technical expertise required.',
   },
 ];
 
@@ -238,14 +234,11 @@ const jsonLd = {
           headingMaxWidth="700px"
         >
           30 functional and 19 non-functional specifications, documented in the
-          technical sheet. 5 modules · 1 product · 1 license.
+          technical sheet. Five modules, one product, one license.
         </SectionHeading>
       </div>
 
-      <div
-        data-skew="4"
-        class="mt-[52px] grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-6"
-      >
+      <div class="mt-[52px] grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-6">
         <!-- Card 1 — VPN -->
         <div data-reveal data-reveal-rotate="-4" data-drift="0.07" class="lg:col-span-2">
           <ModuleCard
@@ -308,7 +301,7 @@ const jsonLd = {
           <ModuleCard
             title="Endpoint"
             kicker="S-VPN"
-            body="Client-station protection — no non-compliant device enters the network."
+            body="Client-station protection, blocking any non-compliant device."
             items={[
               'Real-time OS vulnerability scanning',
               'Third-party application CVE detection',
@@ -326,33 +319,20 @@ const jsonLd = {
           <ModuleCard
             title="Console"
             kicker="S-VPN"
-            body="Centralized management — everything in one place, through the browser."
+            body="Centralized management, straight from the browser."
             cols={2}
           >
             <SlidersHorizontal slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
             <ul class="mt-4 grid gap-y-2 sm:grid-cols-2 sm:gap-x-5">
               {
-                ['VPN, MFA, WAF, Endpoint policies', 'Real-time traffic monitoring', 'Tamper-proof audit log'].map(
-                  (item) => (
-                    <li class="flex text-[13.5px] leading-snug text-slate">
-                      <span class="mr-2 shrink-0 text-royal" aria-hidden="true">
-                        ›
-                      </span>
-                      <span>{item}</span>
-                    </li>
-                  )
-                )
-              }
-              <li class="flex text-[13.5px] leading-snug text-slate">
-                <span class="mr-2 shrink-0 text-royal" aria-hidden="true">›</span>
-                <span>
-                  Reporting for <span class="text-compliance">NIS 2</span>,
-                  <span class="text-compliance">ISO 27001</span>,
-                  <span class="text-compliance">GDPR</span>
-                </span>
-              </li>
-              {
-                ['Native AD / LDAP / RADIUS', 'REST API — OpenAPI / Swagger'].map((item) => (
+                [
+                  'VPN, MFA, WAF, Endpoint policies',
+                  'Real-time traffic monitoring',
+                  'Tamper-proof audit log',
+                  'Reporting for NIS 2, ISO 27001, GDPR',
+                  'Native AD / LDAP / RADIUS',
+                  'REST API — OpenAPI / Swagger',
+                ].map((item) => (
                   <li class="flex text-[13.5px] leading-snug text-slate">
                     <span class="mr-2 shrink-0 text-royal" aria-hidden="true">
                       ›
@@ -369,21 +349,20 @@ const jsonLd = {
   </section>
 
   <!-- ── Section 4 — WHY S-VPN (benefits, wash band) ── -->
-  <section data-band aria-labelledby="benefits-heading" class="bg-page px-6 sm:px-10 py-[72px] sm:py-[110px]">
+  <section data-band aria-labelledby="benefits-heading" class="bg-page px-6 sm:px-10 py-[56px] sm:py-[84px]">
     <div class="mx-auto max-w-[1180px]">
       <div data-reveal>
         <SectionHeading
-          eyebrow="Why S-VPN"
           heading="Enterprise security, without the big-budget privilege"
           headingId="benefits-heading"
           headingMaxWidth="720px"
         />
       </div>
 
-      <div data-skew="4" class="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {
           benefits.map((b) => (
-            <div data-reveal data-reveal-delay={b.delay} data-drift={b.drift}>
+            <div data-reveal data-drift={b.drift}>
               <div class="h-full rounded-xl border border-border bg-surface p-[30px] shadow-sm transition-all duration-200 hover:-translate-y-[2px] hover:border-border-blue hover:shadow-lg">
                 <div class="font-mono text-[40px] font-semibold leading-none text-navy">
                   {b.num}
@@ -400,7 +379,7 @@ const jsonLd = {
   </section>
 
   <!-- ── Section 5 — SPECIFICATIONS (mono spec table) ── -->
-  <section aria-labelledby="spec-heading" class="px-6 sm:px-10 py-[72px] sm:py-[110px]">
+  <section aria-labelledby="spec-heading" class="px-6 sm:px-10 py-[56px] sm:py-[84px]">
     <div class="mx-auto max-w-[1180px]">
       <div data-reveal>
         <SectionHeading
@@ -408,7 +387,7 @@ const jsonLd = {
           heading="Built for enterprise scale"
           headingId="spec-heading"
         >
-          A software-first architecture, proven at scale during the pandemic — with no
+          A software-first architecture, proven at scale during the pandemic, with no
           dependency on proprietary equipment.
         </SectionHeading>
       </div>
@@ -451,7 +430,7 @@ const jsonLd = {
       </div>
 
       <!-- Right -->
-      <div data-reveal data-reveal-delay="100" data-drift="-0.05" class="grid gap-3">
+      <div data-reveal data-drift="-0.05" class="grid gap-3">
         {
           audiences.map((a) => (
             <div class="flex items-center gap-4 rounded-lg border border-border bg-surface px-6 py-[18px] shadow-sm transition-all duration-200 hover:-translate-y-[2px] hover:border-border-blue hover:shadow-lg">
@@ -466,15 +445,15 @@ const jsonLd = {
     </div>
   </section>
 
-  <!-- ── Section 7 — CTA (dark band, assessment ask) ── -->
+  <!-- ── Section 7 — CTA (dark band, demo ask) ── -->
   <CtaBand
     id="contact"
-    eyebrow="Next steps"
-    heading="Free initial assessment — 2 days"
-    cta={t('cta.assessment')}
-    subject={t('subject.assessment')}
+    heading="A pilot on your own infrastructure"
+    cta={t('cta.demo.svpn')}
+    subject={t('subject.demo.svpn')}
   >
-    No contractual obligations. Together we identify the priority area of interest and deliver a
-    recommendations report at the end.
+    We install S-VPN on a segment of your network, with your existing policies and users, at
+    up to 60% below the Cisco or Fortinet license you're paying now. If you're migrating from
+    an existing VPN estate, we take over the tunnels and policies with no service interruption.
   </CtaBand>
 </BaseLayout>
