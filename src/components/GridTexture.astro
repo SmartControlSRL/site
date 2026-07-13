@@ -1,0 +1,28 @@
+---
+// Blueprint ruling background: static hairline grid + plus-marks (.tex-grid*
+// utilities in global.css). Replaces the old node-graph canvas — no JS, no
+// rAF loop, identical under reduced motion. Decorative → aria-hidden.
+interface Props {
+  /** Dark-zone variant (sky hairlines on midnight/navy floors). */
+  dark?: boolean;
+  /** Fade the ruling out toward the bottom (light heroes settling into content). */
+  fade?: boolean;
+  /** Layer opacity (1 by default — the rgba strokes already carry the faintness). */
+  opacity?: number;
+  class?: string;
+}
+
+const { dark = false, fade = false, opacity, class: extra = '' } = Astro.props;
+---
+
+<div
+  aria-hidden="true"
+  class:list={[
+    'pointer-events-none absolute inset-0',
+    dark ? 'tex-grid--dark' : 'tex-grid',
+    fade && 'tex-grid--fade',
+    extra,
+  ]}
+  style={opacity != null ? `opacity:${opacity}` : undefined}
+>
+</div>

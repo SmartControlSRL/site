@@ -84,7 +84,7 @@ const jsonLd = {
     style="background:var(--sc-gradient-hero-light)"
   >
     <div class="container" style="padding-top:190px;padding-bottom:100px">
-      <div data-hero-scrub>
+      <div>
         <Eyebrow variant="hero">Software &amp; Automatizare</Eyebrow>
 
         <h1
@@ -96,8 +96,8 @@ const jsonLd = {
         </h1>
 
         <p
-          class="mt-6 text-cool"
-          style="font-size:18px;line-height:1.7;max-width:640px;animation:scFadeIn 0.9s ease-out 1.2s both"
+          class="hero-in-3 mt-6 text-cool"
+          style="font-size:18px;line-height:1.7;max-width:640px"
         >
           De la arhitectura inițială până la deployment în producție — custom dev, DevSecOps,
           migrări, blockchain enterprise și automatizare cu AI.
@@ -105,8 +105,7 @@ const jsonLd = {
         </p>
 
         <div
-          class="mt-9 flex flex-wrap items-center gap-4"
-          style="animation:scFadeIn 0.9s ease-out 1.4s both"
+          class="hero-in-4 mt-9 flex flex-wrap items-center gap-4"
         >
           <MailtoLink variant="button" subject={t('subject.assessment')}>
             {t('cta.assessment')}
@@ -148,7 +147,7 @@ const jsonLd = {
 
       <div class="mt-11 grid gap-5 md:grid-cols-3">
         <!-- Card 1 -->
-        <div data-reveal data-reveal-rotate="-4" data-drift="0.07">
+        <div data-reveal>
           <div
             class="h-full rounded-xl border border-border bg-surface p-[30px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg"
           >
@@ -166,7 +165,7 @@ const jsonLd = {
         </div>
 
         <!-- Card 2 -->
-        <div data-reveal data-reveal-delay="100" data-reveal-rotate="4">
+        <div data-reveal data-reveal-delay="100">
           <div
             class="h-full rounded-xl border border-border bg-surface p-[30px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg"
           >
@@ -183,7 +182,7 @@ const jsonLd = {
         </div>
 
         <!-- Card 3 -->
-        <div data-reveal data-reveal-delay="200" data-reveal-rotate="-4" data-drift="-0.07">
+        <div data-reveal data-reveal-delay="200">
           <div
             class="h-full rounded-xl border border-border bg-surface p-[30px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg"
           >
@@ -206,7 +205,7 @@ const jsonLd = {
   <!-- ═══════════════════════════════════════════════════════════
        CAPABILITĂȚI — bento grid (#capabilitati)
        ═══════════════════════════════════════════════════════════ -->
-  <section id="capabilitati" class="bg-page py-[72px] sm:py-[110px]" data-band>
+  <section id="capabilitati" class="bg-page py-[72px] sm:py-[110px]">
     <div class="container">
       <div data-reveal>
         <SectionHeading
@@ -221,7 +220,7 @@ const jsonLd = {
 
       <div class="mt-11 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         <!-- 1. Custom dev & API -->
-        <div data-reveal data-reveal-rotate="-4">
+        <div data-reveal>
           <ModuleCard
             title="Dezvoltare software custom & API"
             index="01"
@@ -239,7 +238,7 @@ const jsonLd = {
         </div>
 
         <!-- 2. DevOps / DevSecOps & CI/CD -->
-        <div data-reveal data-reveal-rotate="4">
+        <div data-reveal>
           <ModuleCard
             title="DevOps / DevSecOps & CI/CD"
             index="02"
@@ -257,7 +256,7 @@ const jsonLd = {
         </div>
 
         <!-- 3. Migrare & modernizare -->
-        <div data-reveal data-reveal-rotate="-4">
+        <div data-reveal>
           <ModuleCard
             title="Migrare & modernizare aplicații"
             index="03"
@@ -372,7 +371,7 @@ const jsonLd = {
         </div>
 
         <!-- Right: tech pills + abordare -->
-        <div data-reveal data-drift="0.05">
+        <div data-reveal>
           <div
             class="rounded-xl border border-border bg-page p-8 shadow-sm"
           >
@@ -526,7 +525,7 @@ const jsonLd = {
           </div>
         </div>
 
-        <div data-reveal data-drift="0.05">
+        <div data-reveal>
           <div class="grid grid-cols-2 gap-4">
             {
               [

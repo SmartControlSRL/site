@@ -9,7 +9,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Eyebrow from '../components/Eyebrow.astro';
 import SectionHeading from '../components/SectionHeading.astro';
-import NetworkCanvas from '../components/NetworkCanvas.astro';
+import GridTexture from '../components/GridTexture.astro';
 import CtaBand from '../components/CtaBand.astro';
 import ModuleCard from '../components/ModuleCard.astro';
 import StatStrip from '../components/StatStrip.astro';
@@ -60,18 +60,6 @@ const org = {
     addressCountry: 'RO',
   },
 };
-
-// Hero headline, per word (verbatim from spec) — line 2 in bright blue.
-const heroLine1 = [
-  { word: 'Infrastructură.', delay: '0.25s' },
-  { word: 'Securitate.', delay: '0.40s' },
-  { word: 'Software.', delay: '0.55s' },
-];
-const heroLine2 = [
-  { word: 'Execuție', delay: '0.75s' },
-  { word: '100%', delay: '0.93s' },
-  { word: 'in-house.', delay: '1.11s' },
-];
 
 const isoBadges = ['ISO 9001', 'ISO 27001', 'ISO 14001', 'ISO 45001'];
 const frameworks = ['GDPR', 'NIS 2', 'DORA'];
@@ -191,61 +179,24 @@ const cloudRows = [
     class="relative overflow-hidden"
     style="background:var(--sc-gradient-hero-light)"
   >
-    {/* Parallax blob A */}
-    <div data-parallax="0.35" class="pointer-events-none absolute inset-0" aria-hidden="true">
-      <div
-        class="absolute h-[640px] w-[640px] rounded-full"
-        style="top:-180px;left:-120px;background:radial-gradient(circle,rgba(122,180,232,0.22),rgba(122,180,232,0) 65%);animation:scDriftA 16s ease-in-out infinite alternate"
-      >
-      </div>
-    </div>
-    {/* Parallax blob B */}
-    <div data-parallax="0.2" class="pointer-events-none absolute inset-0" aria-hidden="true">
-      <div
-        class="absolute h-[720px] w-[720px] rounded-full"
-        style="top:60px;right:-200px;background:radial-gradient(circle,rgba(68,135,220,0.14),rgba(68,135,220,0) 65%);animation:scDriftB 20s ease-in-out infinite alternate"
-      >
-      </div>
-    </div>
-    {/* Faint hero network */}
-    <NetworkCanvas lineAlpha={0.1} dotAlpha={0.3} spread={26000} lineDist={140} speed={0.12} />
+    <GridTexture fade />
 
     <div
-      data-hero-scrub
       class="relative z-[1] mx-auto max-w-[1180px] px-6 pb-[110px] pt-[150px] md:px-10 md:pt-[190px]"
     >
-      <Eyebrow class="opacity-0 [animation:scFadeIn_0.8s_ease-out_0.1s_forwards]">
+      <Eyebrow class="hero-in">
         Trusted Service Delivery Partner
       </Eyebrow>
 
       <h1
-        class="mt-7 max-w-[860px] text-[clamp(2.4rem,1.6rem+3.6vw,4rem)] font-extrabold leading-[1.08] tracking-[-2px] text-midnight"
+        class="hero-in-2 mt-7 max-w-[860px] text-[clamp(2.4rem,1.6rem+3.6vw,4rem)] font-extrabold leading-[1.08] tracking-[-2px] text-midnight"
       >
-        {
-          heroLine1.map(({ word, delay }) => (
-            <span
-              class="mr-[0.28em] inline-block opacity-0"
-              style={`animation:scWordIn 0.7s cubic-bezier(0.16,1,0.3,1) ${delay} forwards`}
-            >
-              {word}
-            </span>
-          ))
-        }
-        <br />
-        {
-          heroLine2.map(({ word, delay }) => (
-            <span
-              class="mr-[0.28em] inline-block text-bright opacity-0"
-              style={`animation:scWordIn 0.7s cubic-bezier(0.16,1,0.3,1) ${delay} forwards`}
-            >
-              {word}
-            </span>
-          ))
-        }
+        Infrastructură. Securitate. Software.<br />
+        <span class="text-bright">Execuție 100% in-house.</span>
       </h1>
 
       <p
-        class="mt-7 max-w-[600px] text-[18px] leading-[1.7] text-slate opacity-0 [animation:scFadeIn_0.9s_ease-out_1.3s_forwards]"
+        class="hero-in-3 mt-7 max-w-[600px] text-[18px] leading-[1.7] text-slate"
       >
         Smart Control construiește și operează infrastructuri IT complexe de peste {years} de ani,
         pentru clienți locali și internaționali. Lucrăm exclusiv cu{' '}
@@ -254,18 +205,14 @@ const cloudRows = [
         clientului.
       </p>
 
-      <div
-        class="mt-[38px] flex flex-wrap items-center gap-[18px] opacity-0 [animation:scFadeIn_0.9s_ease-out_1.5s_forwards]"
-      >
+      <div class="hero-in-4 mt-[38px] flex flex-wrap items-center gap-[18px]">
         <MailtoLink variant="button" subject={t('subject.assessment')}>
           Programează un assessment gratuit
         </MailtoLink>
         <TextLink href="#servicii">Vezi serviciile</TextLink>
       </div>
 
-      <div
-        class="mt-10 flex flex-wrap gap-2.5 opacity-0 [animation:scFadeIn_0.9s_ease-out_1.7s_forwards]"
-      >
+      <div class="hero-in-4 mt-10 flex flex-wrap gap-2.5">
         {isoBadges.map((b) => <MonoPill>{b}</MonoPill>)}
         {frameworks.map((f) => <MonoPill variant="compliance">{f}</MonoPill>)}
       </div>
@@ -275,7 +222,7 @@ const cloudRows = [
   {/* ── SECTION 3 — Statistici (count-up) ── */}
   <section class="px-6 pt-[56px] sm:pt-[72px] md:px-10">
     <div class="mx-auto max-w-[1180px]">
-      <div data-drift="-0.05">
+      <div>
         <StatStrip>
           <StatBlock value="650" count={650} suffix="+" caption="Proiecte livrate" />
           <StatBlock value="250" count={250} suffix="+" caption="Clienți satisfăcuți" />
@@ -308,8 +255,6 @@ const cloudRows = [
         {/* Card 01 — span 7 */}
         <div
           data-reveal
-          data-reveal-rotate="-4"
-          data-drift="0.07"
           class="md:col-span-12 lg:col-span-7"
         >
           <ModuleCard
@@ -334,8 +279,6 @@ const cloudRows = [
         <div
           data-reveal
           data-reveal-delay="100"
-          data-reveal-rotate="4"
-          data-drift="-0.07"
           class="md:col-span-12 lg:col-span-5"
         >
           <ModuleCard
@@ -358,8 +301,6 @@ const cloudRows = [
         {/* Card 03 — span 5 */}
         <div
           data-reveal
-          data-reveal-rotate="4"
-          data-drift="0.07"
           class="md:col-span-12 lg:col-span-5"
         >
           <ModuleCard
@@ -383,8 +324,6 @@ const cloudRows = [
         <div
           data-reveal
           data-reveal-delay="100"
-          data-reveal-rotate="-4"
-          data-drift="-0.07"
           class="md:col-span-12 lg:col-span-7"
         >
           <ModuleCard
@@ -426,22 +365,9 @@ const cloudRows = [
   {/* ── SECTION 5 — Produse (DARK band) ── */}
   <section
     id="produse"
-    data-band
     class="relative overflow-hidden bg-midnight px-6 py-[72px] sm:py-[110px] md:px-10"
   >
-    <NetworkCanvas
-      lineAlpha={0.22}
-      dotAlpha={0.55}
-      spread={20000}
-      lineDist={150}
-      opacity={0.65}
-    />
-    <div
-      class="pointer-events-none absolute inset-0"
-      style="background:radial-gradient(ellipse 70% 60% at 70% 30%, rgba(68,135,220,0.14), rgba(4,12,43,0) 70%)"
-      aria-hidden="true"
-    >
-    </div>
+    <GridTexture dark opacity={0.8} />
 
     <div class="relative z-[1] mx-auto max-w-[1180px]">
       {/* Top split grid */}
@@ -460,7 +386,7 @@ const cloudRows = [
           <div class="mt-7 flex flex-wrap items-center gap-5">
             <a
               href={p('/solutii/seknet')}
-              class="inline-flex items-center gap-2 rounded-md bg-royal px-6 py-3 text-[14.5px] font-semibold text-white transition-all [box-shadow:0_0_28px_rgba(68,135,220,0.4)] hover:bg-navy hover:[box-shadow:0_0_40px_rgba(68,135,220,0.6)]"
+              class="inline-flex items-center gap-2 rounded-md bg-surface px-6 py-3 text-[14.5px] font-semibold text-navy transition-all hover:bg-blue-wash"
             >
               Explorează SEKNET <span aria-hidden="true">›</span>
             </a>
@@ -485,7 +411,7 @@ const cloudRows = [
         </div>
 
         {/* Right column — live attack-map console */}
-        <div data-reveal data-reveal-delay="120" data-drift="-0.05">
+        <div data-reveal data-reveal-delay="120">
           <SeknetConsole
             title="SEKNET TRAP · HARTĂ DE ATAC LIVE"
             metrics={consoleMetrics}
@@ -499,7 +425,7 @@ const cloudRows = [
         {/* Card A — SEKNET (link) */}
         <a
           href={p('/solutii/seknet')}
-          class="flex items-start gap-[18px] rounded-lg border border-[rgba(122,180,232,0.18)] bg-[rgba(255,255,255,0.03)] px-7 py-6 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-[rgba(68,135,220,0.55)] hover:[box-shadow:0_0_28px_rgba(68,135,220,0.18)]"
+          class="flex items-start gap-[18px] rounded-lg border border-[rgba(122,180,232,0.18)] bg-[rgba(255,255,255,0.03)] px-7 py-6 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-[rgba(68,135,220,0.55)]"
         >
           <IconChip variant="dark" size={40} class="shrink-0">
             <Shield class="h-5 w-5 text-sky" stroke-width={1.5} />
@@ -519,7 +445,7 @@ const cloudRows = [
         {/* Card B — S-VPN (link) */}
         <a
           href={p('/solutii/s-vpn')}
-          class="flex items-start gap-[18px] rounded-lg border border-[rgba(122,180,232,0.18)] bg-[rgba(255,255,255,0.03)] px-7 py-6 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-[rgba(68,135,220,0.55)] hover:[box-shadow:0_0_28px_rgba(68,135,220,0.18)]"
+          class="flex items-start gap-[18px] rounded-lg border border-[rgba(122,180,232,0.18)] bg-[rgba(255,255,255,0.03)] px-7 py-6 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-[rgba(68,135,220,0.55)]"
         >
           <IconChip variant="dark" size={40} class="shrink-0">
             <Lock class="h-5 w-5 text-sky" stroke-width={1.5} />
@@ -540,7 +466,7 @@ const cloudRows = [
   </section>
 
   {/* ── SECTION 6 — Cloud teaser (light wash, tight tier) ── */}
-  <section data-band class="bg-page px-6 py-[56px] sm:py-[84px] md:px-10">
+  <section class="bg-page px-6 py-[56px] sm:py-[84px] md:px-10">
     <div class="mx-auto max-w-[1180px]">
       {/* Header split — heading left, context + CTA right */}
       <div data-reveal class="grid grid-cols-1 items-end gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">

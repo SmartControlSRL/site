@@ -93,28 +93,13 @@ const ogLocaleAlt = lang === 'en' ? 'ro_RO' : 'en_US';
         initEmails,
         initNavShrink,
         initReveals,
-        initWordFill,
         initCounters,
-        initParallax,
-        initDrift,
-        initBandScale,
-        initHeroScrub,
         initStepper,
-        initNetwork,
         initConsole,
       } from '../scripts/motion.js';
 
       type Cleanup = () => void;
       let cleanups: Cleanup[] = [];
-
-      const num = (el: Element, attr: string) => {
-        const v = el.getAttribute(attr);
-        return v == null ? undefined : parseFloat(v);
-      };
-      const int = (el: Element, attr: string) => {
-        const v = el.getAttribute(attr);
-        return v == null ? undefined : parseInt(v, 10);
-      };
 
       function wire() {
         const doc = document;
@@ -126,29 +111,12 @@ const ogLocaleAlt = lang === 'en' ? 'ro_RO' : 'en_US';
         if (nav) cleanups.push(initNavShrink(nav));
 
         cleanups.push(initReveals(doc));
-        cleanups.push(initWordFill(doc));
         cleanups.push(initCounters(doc));
-        cleanups.push(initParallax(doc));
-        cleanups.push(initDrift(doc));
-        cleanups.push(initBandScale(doc));
-        cleanups.push(initHeroScrub(doc));
 
         // Steppers: one per [data-stepper] container, with its own fill element.
         doc.querySelectorAll<HTMLElement>('[data-stepper]').forEach((container) => {
           const fill = container.querySelector<HTMLElement>('[data-stepper-fill]');
           if (fill) cleanups.push(initStepper(container, fill, { dark: container.hasAttribute('data-stepper-dark') }));
-        });
-
-        // Network canvases: opts read from data-* (omit when absent → defaults).
-        doc.querySelectorAll<HTMLCanvasElement>('canvas[data-network]').forEach((canvas) => {
-          const opts: Record<string, number> = {};
-          const la = num(canvas, 'data-line-alpha'); if (la != null) opts.lineAlpha = la;
-          const da = num(canvas, 'data-dot-alpha'); if (da != null) opts.dotAlpha = da;
-          const sp = int(canvas, 'data-spread'); if (sp != null) opts.spread = sp;
-          const ld = int(canvas, 'data-line-dist'); if (ld != null) opts.lineDist = ld;
-          const sd = num(canvas, 'data-speed'); if (sd != null) opts.speed = sd;
-          const mn = int(canvas, 'data-max-nodes'); if (mn != null) opts.maxNodes = mn;
-          cleanups.push(initNetwork(canvas, opts));
         });
 
         // Live consoles: one per [data-console] (SEKNET attack-map widget).

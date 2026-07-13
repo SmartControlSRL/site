@@ -141,7 +141,7 @@ const jsonLd = {
     style="background: var(--sc-gradient-hero-light)"
   >
     <div class="container" style="padding-top:160px; padding-bottom:100px">
-      <div data-hero-scrub>
+      <div>
         <Eyebrow variant="hero">SERVICII</Eyebrow>
 
         <h1
@@ -186,7 +186,6 @@ const jsonLd = {
               <div
                 data-reveal
                 data-reveal-delay={String(i * 80)}
-                data-reveal-rotate={i % 2 === 0 ? '-4' : '4'}
               >
                 <ModuleCard
                   title={pillar.title}
@@ -213,7 +212,7 @@ const jsonLd = {
   </section>
 
   {/* ── PROOF STRIP ───────────────────────────────────────────────── */}
-  <section class="bg-page py-[56px] sm:py-[84px]" data-band>
+  <section class="bg-page py-[56px] sm:py-[84px]">
     <div class="container">
       {/* ISO + Compliance badges — ISO roundels grouped distinct from the teal regulatory trio */}
       <div data-reveal class="mb-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">

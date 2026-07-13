@@ -173,37 +173,72 @@ body {
   border-bottom: 2px solid var(--color-border-blue);
 }
 
-/* ============================================================
-   EXPORT KEYFRAMES (from the Claude Design exports' <helmet>).
-   Gated by prefers-reduced-motion below.
-   ============================================================ */
-@keyframes scWordIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-    filter: blur(3px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
-  }
+/* Hero entrance ladder — block-level groups (eyebrow → H1 → lead → CTAs),
+   whole sequence settles in <0.9s. `both` + the reduced-motion block below
+   means reduced-motion users get the final state instantly. */
+.hero-in {
+  animation: scRiseIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+.hero-in-2 {
+  animation: scRiseIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 90ms both;
+}
+.hero-in-3 {
+  animation: scRiseIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 180ms both;
+}
+.hero-in-4 {
+  animation: scRiseIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 270ms both;
+}
+
+/* Blueprint ruling texture: hairline 56px grid + a plus-mark on every 3rd
+   intersection (168px tile, 1.5px strokes — the Lucide/StackTeardown line
+   weight). Static by design → identical under reduced motion. Colors are the
+   bright/sky token values at low alpha. */
+.tex-grid {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='168' height='168'%3E%3Cpath d='M112 107v10M107 112h10' stroke='rgba(68,135,220,0.16)' stroke-width='1.5'/%3E%3C/svg%3E"),
+    linear-gradient(to right, rgba(31, 60, 128, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(31, 60, 128, 0.05) 1px, transparent 1px);
+  background-size:
+    168px 168px,
+    56px 56px,
+    56px 56px;
+}
+.tex-grid--dark {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='168' height='168'%3E%3Cpath d='M112 107v10M107 112h10' stroke='rgba(122,180,232,0.22)' stroke-width='1.5'/%3E%3C/svg%3E"),
+    linear-gradient(to right, rgba(122, 180, 232, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(122, 180, 232, 0.07) 1px, transparent 1px);
+  background-size:
+    168px 168px,
+    56px 56px,
+    56px 56px;
+}
+/* Settle the ruling into the content below (light heroes). */
+.tex-grid--fade {
+  -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+}
+
+/* ============================================================
+   MOTION KEYFRAMES — gated by prefers-reduced-motion below.
+   ============================================================ */
 @keyframes scFadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
+@keyframes scRiseIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 @keyframes scMarquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
-}
-@keyframes scDriftA {
-  from { transform: translate(0, 0); }
-  to { transform: translate(60px, 40px); }
-}
-@keyframes scDriftB {
-  from { transform: translate(0, 0); }
-  to { transform: translate(-50px, -30px); }
 }
 /* Live-status pulse for the SEKNET console indicator dot. */
 @keyframes scBlink {

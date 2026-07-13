@@ -4,6 +4,7 @@
 // → "Ce livrăm" capabilities bento → dark CtaBand (#contact). Copy verbatim from
 // docs/build-specs/cloud.md; motion via data-attributes auto-wired by BaseLayout.
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import GridTexture from '../../components/GridTexture.astro';
 import Eyebrow from '../../components/Eyebrow.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
 import IconChip from '../../components/IconChip.astro';
@@ -35,19 +36,19 @@ const reasons = [
     Icon: TrendingUp,
     title: 'Costuri hardware în creștere',
     body: 'Cererea pentru infrastructură AI a împins memoria, stocarea și GPU-urile la prețuri record, cu termene de livrare imprevizibile.',
-    reveal: { 'data-reveal': true, 'data-reveal-rotate': '-4', 'data-drift': '0.07' },
+    reveal: { 'data-reveal': true },
   },
   {
     Icon: Recycle,
     title: 'Refresh-ul clasic nu mai e rentabil',
     body: 'Înlocuirea „la 5 ani” a serverelor e tot mai greu de justificat într-un business case. Capacitatea existentă e adesea folosită sub 40%.',
-    reveal: { 'data-reveal': true, 'data-reveal-delay': '100', 'data-reveal-rotate': '4' },
+    reveal: { 'data-reveal': true, 'data-reveal-delay': '100' },
   },
   {
     Icon: Rocket,
     title: 'Re-arhitecturarea câștigă',
     body: '650+ proiecte arată ce funcționează: containerizare, tuning aplicativ și migrare selectivă în cloud extrag performanță din infrastructura existentă, cu costuri predictibile, CAPEX→OPEX.',
-    reveal: { 'data-reveal': true, 'data-reveal-delay': '200', 'data-reveal-rotate': '-4', 'data-drift': '-0.07' },
+    reveal: { 'data-reveal': true, 'data-reveal-delay': '200' },
   },
 ];
 
@@ -152,25 +153,18 @@ const serviceLd = {
     class="relative overflow-hidden"
     style="background:var(--sc-gradient-hero-light)"
   >
-    {/* Decorative parallax blob — drifts + parallaxes, inert to pointer. */}
-    <div class="pointer-events-none absolute inset-0" data-parallax="0.3" aria-hidden="true">
-      <div
-        class="absolute h-[680px] w-[680px] rounded-full"
-        style="top:-160px;right:-140px;background:radial-gradient(circle,rgba(122,180,232,0.2),rgba(122,180,232,0) 65%);animation:scDriftA 18s ease-in-out infinite alternate"
-      >
-      </div>
-    </div>
+    <GridTexture fade />
 
-    <div class="container relative pb-[100px] pt-[120px] md:pt-[190px]" data-hero-scrub>
-      <Eyebrow variant="light">Cloud &amp; Modernization</Eyebrow>
+    <div class="container relative pb-[100px] pt-[120px] md:pt-[190px]">
+      <Eyebrow variant="light" class="hero-in">Cloud &amp; Modernization</Eyebrow>
 
       <h1
-        class="mt-6 max-w-[860px] text-[clamp(2.25rem,1.6rem+2.8vw,3.625rem)] font-extrabold leading-[1.1] tracking-[-1.8px] text-midnight"
+        class="hero-in-2 mt-6 max-w-[860px] text-[clamp(2.25rem,1.6rem+2.8vw,3.625rem)] font-extrabold leading-[1.1] tracking-[-1.8px] text-midnight"
       >
         Hardware-ul se scumpește.<br /><span class="text-bright">Aplicațiile tale nu trebuie.</span>
       </h1>
 
-      <p class="mt-6 max-w-[640px] text-[18px] leading-[1.7] text-slate">
+      <p class="hero-in-3 mt-6 max-w-[640px] text-[18px] leading-[1.7] text-slate">
         Prețurile componentelor critice cresc sub presiunea cererii pentru
         infrastructură AI, iar bugetele de refresh nu mai ajung.
         <span class="font-semibold text-navy">Re-arhitecturarea și optimizarea aplicațiilor</span>
@@ -178,7 +172,7 @@ const serviceLd = {
         infrastructura existentă, înainte să cumperi una nouă.
       </p>
 
-      <div class="mt-[38px] flex flex-wrap items-center gap-4">
+      <div class="hero-in-4 mt-[38px] flex flex-wrap items-center gap-4">
         <MailtoLink variant="button" subject={t('subject.assessment')}>
           Programează assessment-ul gratuit
         </MailtoLink>
@@ -211,7 +205,7 @@ const serviceLd = {
   </section>
 
   {/* ============ SECTION 4 — FLUX 5 ETAPE (#flux, scroll stepper, wash band) ============ */}
-  <section id="flux" data-band class="bg-page">
+  <section id="flux" class="bg-page">
     <div class="container py-[88px] sm:py-[128px]">
       <div data-reveal>
         <SectionHeading
@@ -233,7 +227,7 @@ const serviceLd = {
           <div
             data-stepper-fill
             class="absolute left-0 top-0 w-full"
-            style="height:0;background:linear-gradient(180deg,#4487DC,#7AB4E8);box-shadow:0 0 12px rgba(68,135,220,0.5)"
+            style="height:0;background:linear-gradient(180deg,#4487DC,#7AB4E8)"
           >
           </div>
         </div>

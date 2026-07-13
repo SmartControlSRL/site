@@ -30,16 +30,18 @@ const {
 
 const base =
   variant === 'button'
-    ? 'inline-flex items-center justify-center rounded-md px-[22px] py-[11px] text-[14.5px] font-semibold text-white transition-all'
+    ? 'inline-flex items-center justify-center rounded-md px-[22px] py-[11px] text-[14.5px] font-semibold transition-all'
     : variant === 'link'
       ? 'font-semibold transition-colors'
       : 'transition-colors';
 
+// Buttons are flat — no glow. Dark zones get the confident white fill
+// (navy ink on white, trivially AA on the midnight floor).
 const tone =
   variant === 'button'
     ? dark
-      ? 'bg-royal [box-shadow:0_0_28px_rgba(68,135,220,0.45)] hover:bg-mid-blue hover:[box-shadow:0_0_40px_rgba(68,135,220,0.65)]'
-      : 'bg-navy hover:bg-midnight hover:[box-shadow:0_4px_16px_rgba(14,31,91,0.25)]'
+      ? 'bg-surface text-navy hover:bg-blue-wash'
+      : 'bg-navy text-white hover:bg-midnight hover:[box-shadow:0_4px_16px_rgba(14,31,91,0.25)]'
     : dark
       ? 'text-sky hover:text-white'
       : 'text-royal hover:text-navy';

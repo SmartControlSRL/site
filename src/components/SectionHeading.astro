@@ -1,17 +1,14 @@
 ---
-// Section H2 with optional eyebrow and optional word-fill sweep (+ optional
-// sub-paragraph). Eyebrows are reserved for headings where the label carries
-// information (spec versions, compliance, product family) — most sections omit
-// it. wordFill opts into the initWordFill dictation sweep (CTA bands only);
-// when set, the heading text MUST be plain (the script splits textContent into
-// chars), so the heading is a string prop, not a slot. 38px/700/-1px, navy on
+// Section H2 with optional eyebrow (+ optional sub-paragraph). Eyebrows are
+// reserved for headings where the label carries information (spec versions,
+// compliance, product family) — most sections omit it. 38px/700/-1px, navy on
 // light / white on dark. CTA bands use size="cta" (40px). The optional
 // sub-paragraph is the default slot.
 import Eyebrow from './Eyebrow.astro';
 
 interface Props {
   eyebrow?: string;
-  /** Plain-text H2 (no markup — consumed char-by-char by initWordFill). */
+  /** Plain-text H2. */
   heading: string;
   variant?: 'light' | 'dark';
   /** cta = ~40px headline (dark CTA bands). */
@@ -19,8 +16,6 @@ interface Props {
   rule?: boolean;
   /** Center the block (CTA bands). */
   center?: boolean;
-  /** Opt into the dictation sweep (one set-piece heading per page, not every H2). */
-  wordFill?: boolean;
   /** Max width on the H2 (e.g. "700px"). */
   headingMaxWidth?: string;
   class?: string;
@@ -34,7 +29,6 @@ const {
   size = 'section',
   rule = size !== 'cta',
   center = false,
-  wordFill = false,
   headingMaxWidth,
   class: extra = '',
   headingId,
@@ -47,7 +41,6 @@ const isDark = variant === 'dark';
   {eyebrow && <Eyebrow variant={isDark ? 'dark' : 'light'} rule={rule}>{eyebrow}</Eyebrow>}
   <h2
     id={headingId}
-    data-word-fill={wordFill ? (isDark ? 'dark' : 'light') : undefined}
     class:list={[
       eyebrow ? 'mt-6' : undefined,
       'font-bold leading-[1.15] tracking-[-1px]',
