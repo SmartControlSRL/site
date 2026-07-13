@@ -173,7 +173,7 @@ const capabilities = [
     class="relative overflow-hidden"
     style="background: var(--sc-gradient-hero-light)"
   >
-    <div class="container py-[110px] pb-[90px]" data-hero-scrub>
+    <div class="container py-[110px] pb-[90px]">
       <div class="max-w-[860px]">
         <Eyebrow variant="light">Managed Services</Eyebrow>
 
@@ -186,8 +186,7 @@ const capabilities = [
         </h1>
 
         <p
-          class="mt-6 max-w-[620px] text-[18px] leading-[1.7] text-cool"
-          style="animation:scFadeIn 0.9s ease-out 0.5s both"
+          class="hero-in-3 mt-6 max-w-[620px] text-[18px] leading-[1.7] text-cool"
         >
           We take over the operation, monitoring and security of your IT infrastructure — with
           <strong class="text-navy font-semibold">engineers employed directly by Smart Control</strong>,
@@ -195,8 +194,7 @@ const capabilities = [
         </p>
 
         <div
-          class="mt-9 flex flex-wrap items-center gap-4"
-          style="animation:scFadeIn 0.9s ease-out 0.8s both"
+          class="hero-in-4 mt-9 flex flex-wrap items-center gap-4"
         >
           <MailtoLink variant="button" subject={t('subject.assessment')}>
             {t('cta.assessment')}
@@ -212,7 +210,7 @@ const capabilities = [
   <!-- ═══════════════════════════════════════════════════════════
        SLA / COVERAGE — proof angle
        ═══════════════════════════════════════════════════════════ -->
-  <section class="bg-page py-[56px] sm:py-[84px]" data-band aria-labelledby="sla-heading">
+  <section class="bg-page py-[56px] sm:py-[84px]" aria-labelledby="sla-heading">
     <div class="container">
       <div data-reveal>
         <SectionHeading
@@ -232,8 +230,6 @@ const capabilities = [
         <div
           class="rounded-xl border border-border bg-surface p-[30px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg md:col-span-12 lg:col-span-7"
           data-reveal
-          data-reveal-rotate="-4"
-          data-drift="0.07"
         >
           <IconChip>
             <Clock class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
@@ -250,7 +246,6 @@ const capabilities = [
           class="rounded-xl border border-border bg-surface p-[30px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg md:col-span-12 lg:col-span-5"
           data-reveal
           data-reveal-delay="100"
-          data-reveal-rotate="4"
         >
           <IconChip>
             <CircleCheck class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
@@ -267,8 +262,6 @@ const capabilities = [
           class="rounded-xl border border-border bg-surface p-[30px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg md:col-span-12"
           data-reveal
           data-reveal-delay="200"
-          data-reveal-rotate="-4"
-          data-drift="-0.07"
         >
           <IconChip>
             <FileText class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
@@ -320,13 +313,11 @@ const capabilities = [
 
       <div class="mt-[44px] grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {
-          capabilities.map((cap, i) => {
+          capabilities.map((cap) => {
             const CapIcon = cap.icon;
             return (
               <div
                 data-reveal
-                data-reveal-rotate={i % 2 === 0 ? '-4' : '4'}
-                data-drift={i % 2 === 0 ? '0.05' : '-0.05'}
               >
                 <ModuleCard
                   title={cap.title}

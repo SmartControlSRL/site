@@ -5,7 +5,7 @@
 // dark CTA band → shared footer. Motion is wired purely via data-* attributes
 // picked up by BaseLayout; canvas opts come from the spec verbatim.
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import NetworkCanvas from '../../components/NetworkCanvas.astro';
+import GridTexture from '../../components/GridTexture.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
 import ModuleCard from '../../components/ModuleCard.astro';
 import SpecTable from '../../components/SpecTable.astro';
@@ -87,9 +87,9 @@ const jsonLd = {
 <BaseLayout title={title} description={description}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-  {/* ─── 2. PRODUCT HERO (dark + network) ─────────────────────────────── */}
+  {/* ─── 2. PRODUCT HERO (dark) ─────────────────────────────── */}
   <header class="relative overflow-hidden bg-midnight">
-    <NetworkCanvas lineAlpha={0.24} dotAlpha={0.6} spread={18000} lineDist={155} opacity={0.75} />
+    <GridTexture dark />
     <div
       class="pointer-events-none absolute inset-0"
       style="background:radial-gradient(ellipse 75% 65% at 35% 40%, rgba(4,12,43,0) 0%, rgba(4,12,43,0.5) 60%, #040C2B 100%)"
@@ -98,27 +98,24 @@ const jsonLd = {
     </div>
 
     <div
-      data-hero-scrub
       class="relative z-[1] mx-auto max-w-[1180px] px-6 pb-[120px] pt-[150px] sm:px-10 sm:pt-[190px]"
     >
       <span
-        class="sc-hero-eyebrow inline-block border-b-2 border-[rgba(122,180,232,0.3)] pb-2.5 font-mono text-[12.5px] font-medium uppercase tracking-[2.5px] text-sky"
+        class="hero-in inline-block border-b-2 border-[rgba(122,180,232,0.3)] pb-2.5 font-mono text-[12.5px] font-medium uppercase tracking-[2.5px] text-sky"
       >
         Produs proprietar · Fișa de specificații v2.3
       </span>
 
       <h1
-        class="mt-[26px] max-w-[840px] text-[clamp(2.5rem,1.9rem+2.6vw,3.875rem)] font-extrabold leading-[1.08] tracking-[-2px] text-white"
+        class="hero-in-2 mt-[26px] max-w-[840px] text-[clamp(2.5rem,1.9rem+2.6vw,3.875rem)] font-extrabold leading-[1.08] tracking-[-2px] text-white"
       >
-        <span class="sc-word sc-word-1 inline-block text-white">SEKNET.</span>{' '}
-        <span class="sc-word sc-word-2 inline-block text-sky">Monitorizare.</span>
+        SEKNET. <span class="text-sky">Monitorizare.</span>
         <br />
-        <span class="sc-word sc-word-3 inline-block text-sky">Securitate.</span>{' '}
-        <span class="sc-word sc-word-4 inline-block text-sky">Control.</span>
+        <span class="text-sky">Securitate. Control.</span>
       </h1>
 
       <p
-        class="sc-hero-lead mt-[26px] max-w-[640px] text-[18px] leading-[1.7] text-[rgba(226,233,245,0.72)]"
+        class="hero-in-3 mt-[26px] max-w-[640px] text-[18px] leading-[1.7] text-[rgba(226,233,245,0.72)]"
       >
         Platformă enterprise integrată de monitorizare, securitate cibernetică și management al
         identității — <strong class="font-semibold text-white">cinci module specializate</strong>,
@@ -127,7 +124,7 @@ const jsonLd = {
         >.
       </p>
 
-      <ul class="sc-hero-stats mt-[56px] flex flex-wrap gap-x-5 gap-y-3 sm:gap-x-9">
+      <ul class="hero-in-4 mt-[56px] flex flex-wrap gap-x-5 gap-y-3 sm:gap-x-9">
         {
           heroStats.map((s) => (
             <li class="font-mono text-[12.5px] text-[rgba(226,233,245,0.55)]">
@@ -161,8 +158,6 @@ const jsonLd = {
         <div
           class="md:col-span-3 lg:col-span-2"
           data-reveal
-          data-reveal-rotate="-4"
-          data-drift="0.07"
         >
           <ModuleCard
             kicker="Seknet"
@@ -182,7 +177,7 @@ const jsonLd = {
         </div>
 
         {/* Card 2 — Shield (span 2) */}
-        <div class="md:col-span-3 lg:col-span-2" data-reveal data-reveal-rotate="4">
+        <div class="md:col-span-3 lg:col-span-2" data-reveal>
           <ModuleCard
             kicker="Seknet"
             title="Shield"
@@ -204,8 +199,6 @@ const jsonLd = {
         <div
           class="md:col-span-6 lg:col-span-2"
           data-reveal
-          data-reveal-rotate="-4"
-          data-drift="-0.07"
         >
           <ModuleCard
             kicker="Seknet"
@@ -225,7 +218,7 @@ const jsonLd = {
         </div>
 
         {/* Card 4 — View (span 3, two-column bullets) */}
-        <div class="md:col-span-3" data-reveal data-reveal-rotate="4" data-drift="0.07">
+        <div class="md:col-span-3" data-reveal>
           <ModuleCard
             kicker="Seknet"
             title="View"
@@ -244,7 +237,7 @@ const jsonLd = {
         </div>
 
         {/* Card 5 — Trap (span 3, DARK featured) */}
-        <div class="md:col-span-3" data-reveal data-reveal-rotate="-4" data-drift="-0.07">
+        <div class="md:col-span-3" data-reveal>
           <ModuleCard
             variant="dark"
             kicker="Seknet"
@@ -283,7 +276,7 @@ const jsonLd = {
   </section>
 
   {/* ─── 4. SPEC TABLE (mono, gray-wash band) ─────────────────────────── */}
-  <section data-band class="bg-page px-6 py-[72px] sm:px-10 sm:py-[110px]">
+  <section class="bg-page px-6 py-[72px] sm:px-10 sm:py-[110px]">
     <div class="mx-auto max-w-[1180px]">
       <div data-reveal>
         <SectionHeading
@@ -316,7 +309,7 @@ const jsonLd = {
         }
       </div>
 
-      <div class="mt-12" data-reveal data-drift="-0.04">
+      <div class="mt-12" data-reveal>
         <SpecTable rows={specRows} />
       </div>
     </div>
@@ -394,50 +387,3 @@ const jsonLd = {
   </CtaBand>
 </BaseLayout>
 
-<style>
-  /* Hero entry animations (export <helmet>): the keyframes live in global.css;
-     here we set the initial hidden state + staggered timings. Collapsed to a
-     resting visible state under prefers-reduced-motion (handled globally). */
-  .sc-hero-eyebrow {
-    opacity: 0;
-    animation: scFadeIn 0.8s ease-out 0.1s forwards;
-  }
-  .sc-word {
-    opacity: 0;
-    animation: scWordIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-  .sc-word-1 {
-    animation-delay: 0.25s;
-  }
-  .sc-word-2 {
-    animation-delay: 0.45s;
-  }
-  .sc-word-3 {
-    animation-delay: 0.62s;
-  }
-  .sc-word-4 {
-    animation-delay: 0.79s;
-  }
-  .sc-hero-lead {
-    opacity: 0;
-    animation: scFadeIn 0.9s ease-out 1s forwards;
-  }
-  .sc-hero-cta {
-    opacity: 0;
-    animation: scFadeIn 0.9s ease-out 1.2s forwards;
-  }
-  .sc-hero-stats {
-    opacity: 0;
-    animation: scFadeIn 0.9s ease-out 1.4s forwards;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .sc-hero-eyebrow,
-    .sc-word,
-    .sc-hero-lead,
-    .sc-hero-cta,
-    .sc-hero-stats {
-      opacity: 1;
-    }
-  }
-</style>

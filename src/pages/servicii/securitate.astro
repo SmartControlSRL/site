@@ -49,7 +49,7 @@ const jsonLd = {
     class="relative overflow-hidden"
     style="background:var(--sc-gradient-hero-light)"
   >
-    <div class="container relative" data-hero-scrub>
+    <div class="container relative">
       <div class="pb-[72px] pt-[136px] sm:pb-[100px] md:pt-[190px]">
         <Eyebrow variant="hero">Securitate &amp; Conformitate</Eyebrow>
 
@@ -63,10 +63,9 @@ const jsonLd = {
         </h1>
 
         <p
-          class="mt-6 max-w-[640px] text-[18px] leading-[1.7] text-slate"
-          style="animation:scFadeIn 0.9s ease-out 1.2s both"
+          class="hero-in-3 mt-6 max-w-[640px] text-[18px] leading-[1.7] text-slate"
         >
-          Într-un peisaj de amenințări în continuă evoluție, conformitatea cu
+          Conformitatea cu
           <strong class="font-semibold text-navy">GDPR, NIS 2 și DORA</strong> nu mai este
           opțională — este o condiție de bază. Acoperim prevenirea scurgerilor de date, protecția
           infrastructurii și operațiuni de securitate gestionate, cu {years} ani de experiență
@@ -74,8 +73,7 @@ const jsonLd = {
         </p>
 
         <div
-          class="mt-[38px] flex flex-wrap items-center gap-x-6 gap-y-4"
-          style="animation:scFadeIn 0.9s ease-out 1.4s both"
+          class="hero-in-4 mt-[38px] flex flex-wrap items-center gap-x-6 gap-y-4"
         >
           <TextLink href="#capabilities">
             Explorează capabilitățile
@@ -94,7 +92,7 @@ const jsonLd = {
       <h2 id="context-heading" class="sr-only">De ce securitate proactivă</h2>
       <div class="grid grid-cols-1 gap-5 md:grid-cols-12">
         {/* Card 1 */}
-        <div data-reveal data-reveal-rotate="-4" data-drift="0.07" class="md:col-span-12 lg:col-span-7">
+        <div data-reveal class="md:col-span-12 lg:col-span-7">
           <div class="h-full box-border rounded-xl border border-border bg-surface p-[30px_32px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg">
             <IconChip>
               <Eye class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
@@ -107,7 +105,7 @@ const jsonLd = {
         </div>
 
         {/* Card 2 */}
-        <div data-reveal data-reveal-delay="100" data-reveal-rotate="4" class="md:col-span-12 lg:col-span-5">
+        <div data-reveal data-reveal-delay="100" class="md:col-span-12 lg:col-span-5">
           <div class="h-full box-border rounded-xl border border-border bg-surface p-[30px_32px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg">
             <IconChip>
               <FileCheck class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
@@ -121,7 +119,7 @@ const jsonLd = {
         </div>
 
         {/* Card 3 */}
-        <div data-reveal data-reveal-delay="200" data-reveal-rotate="-4" data-drift="-0.07" class="md:col-span-12 lg:col-span-12">
+        <div data-reveal data-reveal-delay="200" class="md:col-span-12 lg:col-span-12">
           <div class="h-full box-border rounded-xl border border-border bg-surface p-[30px_32px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg">
             <IconChip>
               <ShieldCheck class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
@@ -141,7 +139,6 @@ const jsonLd = {
   <section
     id="capabilities"
     class="bg-page"
-    data-band
     aria-labelledby="cap-heading"
     style="scroll-margin-top:76px"
   >

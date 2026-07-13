@@ -4,6 +4,7 @@
 // headings, no fluff, chevron bullets, no emoji. Motion contract identical to RO
 // (same data-attributes; BaseLayout auto-wires).
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import GridTexture from '../../../components/GridTexture.astro';
 import Eyebrow from '../../../components/Eyebrow.astro';
 import SectionHeading from '../../../components/SectionHeading.astro';
 import IconChip from '../../../components/IconChip.astro';
@@ -35,19 +36,19 @@ const reasons = [
     Icon: TrendingUp,
     title: 'Rising hardware costs',
     body: 'Demand for AI infrastructure has pushed memory, storage and GPUs to record prices, with unpredictable lead times.',
-    reveal: { 'data-reveal': true, 'data-reveal-rotate': '-4', 'data-drift': '0.07' },
+    reveal: { 'data-reveal': true },
   },
   {
     Icon: Recycle,
     title: 'The classic refresh no longer pays off',
     body: 'The “every 5 years” server replacement is increasingly hard to justify in a business case. Existing capacity is often used below 40%.',
-    reveal: { 'data-reveal': true, 'data-reveal-delay': '100', 'data-reveal-rotate': '4' },
+    reveal: { 'data-reveal': true, 'data-reveal-delay': '100' },
   },
   {
     Icon: Rocket,
     title: 'Re-architecture wins',
     body: '650+ projects show what works: containerization, application tuning and selective cloud migration extract performance from existing infrastructure, with predictable costs, CAPEX→OPEX.',
-    reveal: { 'data-reveal': true, 'data-reveal-delay': '200', 'data-reveal-rotate': '-4', 'data-drift': '-0.07' },
+    reveal: { 'data-reveal': true, 'data-reveal-delay': '200' },
   },
 ];
 
@@ -56,7 +57,7 @@ const steps = [
   {
     title: 'Re-architecture proposal',
     pill: 'Fast Track',
-    body: 'For clients we already have an established relationship with: we leverage what we know about the existing infrastructure to identify the critical points and propose modernizations based on real data, not theoretical estimates.',
+    body: 'For clients we already have an established relationship with: we use what we already know about the existing infrastructure to identify the critical points and propose modernizations based on real data, not theoretical estimates.',
   },
   {
     title: 'Initial assessment & quick wins',
@@ -152,25 +153,18 @@ const serviceLd = {
     class="relative overflow-hidden"
     style="background:var(--sc-gradient-hero-light)"
   >
-    {/* Decorative parallax blob — drifts + parallaxes, inert to pointer. */}
-    <div class="pointer-events-none absolute inset-0" data-parallax="0.3" aria-hidden="true">
-      <div
-        class="absolute h-[680px] w-[680px] rounded-full"
-        style="top:-160px;right:-140px;background:radial-gradient(circle,rgba(122,180,232,0.2),rgba(122,180,232,0) 65%);animation:scDriftA 18s ease-in-out infinite alternate"
-      >
-      </div>
-    </div>
+    <GridTexture fade />
 
-    <div class="container relative pb-[100px] pt-[120px] md:pt-[190px]" data-hero-scrub>
-      <Eyebrow variant="light">Cloud &amp; Modernization</Eyebrow>
+    <div class="container relative pb-[100px] pt-[120px] md:pt-[190px]">
+      <Eyebrow variant="light" class="hero-in">Cloud &amp; Modernization</Eyebrow>
 
       <h1
-        class="mt-6 max-w-[860px] text-[clamp(2.25rem,1.6rem+2.8vw,3.625rem)] font-extrabold leading-[1.1] tracking-[-1.8px] text-midnight"
+        class="hero-in-2 mt-6 max-w-[860px] text-[clamp(2.25rem,1.6rem+2.8vw,3.625rem)] font-extrabold leading-[1.1] tracking-[-1.8px] text-midnight"
       >
         Hardware is getting more expensive.<br /><span class="text-bright">Your applications shouldn’t be.</span>
       </h1>
 
-      <p class="mt-6 max-w-[640px] text-[18px] leading-[1.7] text-slate">
+      <p class="hero-in-3 mt-6 max-w-[640px] text-[18px] leading-[1.7] text-slate">
         Prices for critical components are climbing under the pressure of demand
         for AI infrastructure, and refresh budgets no longer stretch far enough.
         <span class="font-semibold text-navy">Re-architecting and optimizing applications</span>
@@ -178,7 +172,7 @@ const serviceLd = {
         existing infrastructure before buying new hardware.
       </p>
 
-      <div class="mt-[38px] flex flex-wrap items-center gap-4">
+      <div class="hero-in-4 mt-[38px] flex flex-wrap items-center gap-4">
         <MailtoLink variant="button" subject={t('subject.assessment')}>
           Schedule the free assessment
         </MailtoLink>
@@ -211,7 +205,7 @@ const serviceLd = {
   </section>
 
   {/* ============ SECTION 4 — 5-STAGE WORKFLOW (#flux, scroll stepper, wash band) ============ */}
-  <section id="flux" data-band class="bg-page">
+  <section id="flux" class="bg-page">
     <div class="container py-[88px] sm:py-[128px]">
       <div data-reveal>
         <SectionHeading
@@ -234,7 +228,7 @@ const serviceLd = {
           <div
             data-stepper-fill
             class="absolute left-0 top-0 w-full"
-            style="height:0;background:linear-gradient(180deg,#4487DC,#7AB4E8);box-shadow:0 0 12px rgba(68,135,220,0.5)"
+            style="height:0;background:linear-gradient(180deg,#4487DC,#7AB4E8)"
           >
           </div>
         </div>

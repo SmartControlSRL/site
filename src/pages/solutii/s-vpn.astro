@@ -6,7 +6,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
 import Eyebrow from '../../components/Eyebrow.astro';
-import NetworkCanvas from '../../components/NetworkCanvas.astro';
+import GridTexture from '../../components/GridTexture.astro';
 import StatStrip from '../../components/StatStrip.astro';
 import StatBlock from '../../components/StatBlock.astro';
 import ModuleCard from '../../components/ModuleCard.astro';
@@ -25,28 +25,24 @@ const description =
 // Benefit cards (Section 4) — number fragments split for the accent suffix.
 const benefits = [
   {
-    drift: '0.06',
     num: '−60',
     suffix: '%',
     h3: 'Cost predictibil',
     p: 'Set complet de capabilități la o fracțiune din costul Cisco / Fortinet, fără facturare per utilizator sau dispozitiv.',
   },
   {
-    drift: '-0.05',
     num: '20',
     suffix: 'Gbps+',
     h3: 'Debit susținut',
     p: 'Inspecție Layer 7 la peste 20 Gbps, fără echipament suplimentar la vârf de trafic.',
   },
   {
-    drift: '0.06',
     num: '10',
     suffix: 'K+',
     h3: 'Tuneluri IPSec',
     p: 'Conexiuni simultane, testate la scară în perioada pandemiei.',
   },
   {
-    drift: '-0.05',
     num: '<5',
     suffix: 'min',
     h3: 'Setup în minute',
@@ -136,9 +132,9 @@ const jsonLd = {
 <BaseLayout title={title} description={description}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-  <!-- ── Section 1 — PRODUCT HERO (dark + network canvas) ── -->
+  <!-- ── Section 1 — PRODUCT HERO (dark) ── -->
   <header class="relative overflow-hidden bg-midnight">
-    <NetworkCanvas lineAlpha={0.24} dotAlpha={0.6} spread={18000} lineDist={155} opacity={0.75} />
+    <GridTexture dark />
     <div
       class="pointer-events-none absolute inset-0"
       style="background:radial-gradient(ellipse 75% 65% at 35% 40%, rgba(4,12,43,0) 0%, rgba(4,12,43,0.5) 60%, #040C2B 100%)"
@@ -147,41 +143,24 @@ const jsonLd = {
     </div>
 
     <div
-      data-hero-scrub
       class="relative z-[1] mx-auto max-w-[1180px] px-6 pb-[120px] pt-[150px] sm:px-10 sm:pt-[190px]"
     >
       <span
-        class="inline-block border-b-2 border-[rgba(122,180,232,0.3)] pb-2.5 font-mono text-[12.5px] font-medium uppercase tracking-[2.5px] text-sky [animation:scFadeIn_0.8s_ease-out_0.1s_both]"
+        class="hero-in inline-block border-b-2 border-[rgba(122,180,232,0.3)] pb-2.5 font-mono text-[12.5px] font-medium uppercase tracking-[2.5px] text-sky"
       >
         Produs proprietar · Suită integrată de acces remote
       </span>
 
       <h1
-        class="mt-[26px] max-w-[860px] text-[clamp(2.5rem,1.9rem+3vw,3.875rem)] font-extrabold leading-[1.08] tracking-[-2px] text-white"
+        class="hero-in-2 mt-[26px] max-w-[860px] text-[clamp(2.5rem,1.9rem+3vw,3.875rem)] font-extrabold leading-[1.08] tracking-[-2px] text-white"
       >
-        <span class="inline-block [animation:scWordIn_0.7s_cubic-bezier(0.16,1,0.3,1)_0.25s_both]"
-          >S-VPN.</span
-        >
-        <span class="inline-block text-sky [animation:scWordIn_0.7s_cubic-bezier(0.16,1,0.3,1)_0.45s_both]"
-          >Acces</span
-        >
-        <span class="inline-block text-sky [animation:scWordIn_0.7s_cubic-bezier(0.16,1,0.3,1)_0.57s_both]"
-          >remote</span
-        >
-        <span class="inline-block text-sky [animation:scWordIn_0.7s_cubic-bezier(0.16,1,0.3,1)_0.69s_both]"
-          >sigur.</span
-        >
+        S-VPN. <span class="text-sky">Acces remote sigur.</span>
         <br />
-        <span class="inline-block text-sky [animation:scWordIn_0.7s_cubic-bezier(0.16,1,0.3,1)_0.86s_both]"
-          >Fără</span
-        >
-        <span class="inline-block text-sky [animation:scWordIn_0.7s_cubic-bezier(0.16,1,0.3,1)_0.98s_both]"
-          >compromisuri.</span
-        >
+        <span class="text-sky">Fără compromisuri.</span>
       </h1>
 
       <p
-        class="mt-[26px] max-w-[640px] text-[18px] leading-[1.7] text-[rgba(226,233,245,0.72)] [animation:scFadeIn_0.9s_ease-out_1.15s_both]"
+        class="hero-in-3 mt-[26px] max-w-[640px] text-[18px] leading-[1.7] text-[rgba(226,233,245,0.72)]"
       >
         Ceea ce la alți furnizori se cumpără și se administrează separat, S-VPN livrează
         integrat: <strong class="font-semibold text-white"
@@ -191,7 +170,7 @@ const jsonLd = {
       </p>
 
       <ul
-        class="mt-14 flex flex-wrap gap-9 [animation:scFadeIn_0.9s_ease-out_1.55s_both]"
+        class="hero-in-4 mt-14 flex flex-wrap gap-9"
         aria-label="Caracteristici tehnice S-VPN"
       >
         {
@@ -242,7 +221,7 @@ const jsonLd = {
 
       <div class="mt-[52px] grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-6">
         <!-- Card 1 — VPN -->
-        <div data-reveal data-reveal-rotate="-4" data-drift="0.07" class="lg:col-span-2">
+        <div data-reveal class="lg:col-span-2">
           <ModuleCard
             title="VPN"
             kicker="S-VPN"
@@ -261,7 +240,7 @@ const jsonLd = {
         </div>
 
         <!-- Card 2 — MFA -->
-        <div data-reveal data-reveal-delay="80" data-reveal-rotate="4" class="lg:col-span-2">
+        <div data-reveal data-reveal-delay="80" class="lg:col-span-2">
           <ModuleCard
             title="MFA"
             kicker="S-VPN"
@@ -280,7 +259,7 @@ const jsonLd = {
         </div>
 
         <!-- Card 3 — WAF -->
-        <div data-reveal data-reveal-delay="160" data-reveal-rotate="-4" data-drift="-0.07" class="lg:col-span-2">
+        <div data-reveal data-reveal-delay="160" class="lg:col-span-2">
           <ModuleCard
             title="WAF"
             kicker="S-VPN"
@@ -299,7 +278,7 @@ const jsonLd = {
         </div>
 
         <!-- Card 4 — Endpoint -->
-        <div data-reveal data-reveal-rotate="4" data-drift="0.07" class="lg:col-span-3">
+        <div data-reveal class="lg:col-span-3">
           <ModuleCard
             title="Endpoint"
             kicker="S-VPN"
@@ -317,7 +296,7 @@ const jsonLd = {
         </div>
 
         <!-- Card 5 — Console -->
-        <div data-reveal data-reveal-delay="80" data-reveal-rotate="-4" data-drift="-0.07" class="lg:col-span-3">
+        <div data-reveal data-reveal-delay="80" class="lg:col-span-3">
           <ModuleCard
             title="Console"
             kicker="S-VPN"
@@ -351,7 +330,7 @@ const jsonLd = {
   </section>
 
   <!-- ── Section 4 — DE CE S-VPN (benefits, wash band) ── -->
-  <section data-band aria-labelledby="benefits-heading" class="bg-page px-6 sm:px-10 py-[56px] sm:py-[84px]">
+  <section aria-labelledby="benefits-heading" class="bg-page px-6 sm:px-10 py-[56px] sm:py-[84px]">
     <div class="mx-auto max-w-[1180px]">
       <div data-reveal>
         <SectionHeading
@@ -364,7 +343,7 @@ const jsonLd = {
       <div class="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {
           benefits.map((b) => (
-            <div data-reveal data-drift={b.drift}>
+            <div data-reveal>
               <div class="h-full rounded-xl border border-border bg-surface p-[30px] shadow-sm transition-all duration-200 hover:-translate-y-[2px] hover:border-border-blue hover:shadow-lg">
                 <div class="font-mono text-[40px] font-semibold leading-none text-navy">
                   {b.num}
@@ -394,7 +373,7 @@ const jsonLd = {
         </SectionHeading>
       </div>
 
-      <div data-reveal data-drift="-0.04" class="mt-12">
+      <div data-reveal class="mt-12">
         <SpecTable rows={specRows} />
       </div>
     </div>
@@ -408,7 +387,6 @@ const jsonLd = {
         <Eyebrow variant="light">Incluse în licență</Eyebrow>
         <h2
           id="included-heading"
-          data-word-fill="light"
           class="mt-6 text-[30px] font-bold leading-[1.2] tracking-[-0.7px] text-navy"
         >
           Tot ce trebuie — inclus
@@ -432,7 +410,7 @@ const jsonLd = {
       </div>
 
       <!-- Right -->
-      <div data-reveal data-drift="-0.05" class="grid gap-3">
+      <div data-reveal class="grid gap-3">
         {
           audiences.map((a) => (
             <div class="flex items-center gap-4 rounded-lg border border-border bg-surface px-6 py-[18px] shadow-sm transition-all duration-200 hover:-translate-y-[2px] hover:border-border-blue hover:shadow-lg">
