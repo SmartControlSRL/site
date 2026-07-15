@@ -1,0 +1,37 @@
+#!/bin/bash
+# PreToolUse guardrail for Bash. Blocks destructive box ops (exit 2 = block).
+# Adapted from periscop's .claude/hooks/block-destructive.sh (2026-07-13):
+# site has no /ship or /feature skill, so the periscop ship-marker exception
+# (which lets those skills push tags / merge PRs) was dropped — here those
+# ops are blocked unconditionally.
+input=$(cat)
+cmd=$(printf '%s' "$input" | python3 -c 'import sys,json
+try:
+    print(json.load(sys.stdin).get("tool_input",{}).get("command",""))
+except Exception:
+    print("")' 2>/dev/null)
+[ -z "$cmd" ] && exit 0
+low=$(printf '%s' "$cmd" | tr "A-Z" "a-z")
+block(){ echo "BLOCKED by .claude guardrail: $1 (see .claude/hooks/block-destructive.sh)" >&2; exit 2; }
+
+if [[ "$cmd" =~ (^|[^[:alnum:]_])sudo([[:space:]]|$) ]]; then block "sudo not allowed"; fi
+if [[ "$cmd" =~ (^|[^[:alnum:]_])rm[[:space:]]+-[a-zA-Z]*r[a-zA-Z]*f ]]; then block "rm -rf"; fi
+if [[ "$cmd" =~ docker[[:space:]]+(restart|prune)|docker[[:space:]]+system[[:space:]]+prune|docker[[:space:]]+compose[[:space:]]+(up|down) ]]; then block "destructive docker op"; fi
+if [[ "$cmd" =~ (^|[^[:alnum:]_])colima([[:space:]]|$) ]]; then block "colima control"; fi
+
+# git push: block pushing tags, and pushing to main/master (any refspec form)
+if [[ "$cmd" =~ git[[:space:]]+push ]]; then
+  if [[ "$cmd" =~ (--tags|--follow-tags|refs/tags/|[[:space:]]v[0-9]+\.[0-9]+\.[0-9]+) ]]; then block "push tags"; fi
+  if [[ "$cmd" =~ [[:space:]:](main|master)([[:space:]]|$) ]]; then block "push to main/master"; fi
+fi
+
+if [[ "$cmd" =~ gh[[:space:]]+pr[[:space:]]+merge ]]; then block "pr merge"; fi
+if [[ "$cmd" =~ gh[[:space:]]+release[[:space:]]+create ]]; then block "gh release create (releases are tag-driven)"; fi
+
+# mutating SQL against prod: case-insensitive; also block -f script files via psql
+if [[ "$low" =~ (psql|pg_dump|pg_restore|docker[[:space:]]+exec.*psql) ]]; then
+  if [[ "$low" =~ (drop[[:space:]]|truncate[[:space:]]|delete[[:space:]]+from|update[[:space:]].*[[:space:]]set|insert[[:space:]]+into) ]] || [[ "$low" =~ psql[^|]*[[:space:]]-f[[:space:]] ]]; then
+    block "mutating SQL / -f script against prod (read-only only)"
+  fi
+fi
+exit 0
