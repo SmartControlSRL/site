@@ -1,6 +1,6 @@
 ---
 // Self-hosted variable fonts (Vite bundles them; NO Google Fonts CDN —
-// the CDN would leak visitor IPs to Google in the US, the same GDPR
+// the CDN would leak visitor IPs outside the EU
 // problem that got the Google Map dropped). See /CLAUDE.md.
 import '@fontsource-variable/inter';
 import '@fontsource-variable/jetbrains-mono';
@@ -95,7 +95,6 @@ const ogLocaleAlt = lang === 'en' ? 'ro_RO' : 'en_US';
         initReveals,
         initCounters,
         initStepper,
-        initConsole,
       } from '../scripts/motion.js';
 
       type Cleanup = () => void;
@@ -119,10 +118,6 @@ const ogLocaleAlt = lang === 'en' ? 'ro_RO' : 'en_US';
           if (fill) cleanups.push(initStepper(container, fill, { dark: container.hasAttribute('data-stepper-dark') }));
         });
 
-        // Live consoles: one per [data-console] (SEKNET attack-map widget).
-        doc.querySelectorAll<HTMLElement>('[data-console]').forEach((el) => {
-          cleanups.push(initConsole(el));
-        });
       }
 
       function teardown() {

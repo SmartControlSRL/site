@@ -36,12 +36,6 @@
   /* — Dark-zone light ink (text on midnight/navy) — */
   --color-on-dark: rgba(226, 233, 245, 0.7);
 
-  /* — SEKNET console panel tone (dark product-UI surface) — */
-  --color-console: #070f29;
-
-  /* — Compliance teal (RESERVED: NIS 2 / DORA / GDPR / ISO only) — */
-  --color-compliance: #1a7a6e;
-  --color-compliance-tint: #e6f2f0;
 
   /* — Fonts (self-hosted via @fontsource-variable; no Google CDN) — */
   --font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -239,11 +233,6 @@ body {
 @keyframes scMarquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
-}
-/* Live-status pulse for the SEKNET console indicator dot. */
-@keyframes scBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
 }
 
 /* Reduced-motion is non-negotiable: kill non-essential motion. */
