@@ -34,20 +34,20 @@ const capabilities = [
   <script is:inline type="application/ld+json" set:html={JSON.stringify(productLd)} />
   <header class="relative overflow-hidden bg-midnight">
     <GridTexture dark />
-    <div class="container relative pb-[100px] pt-[150px] md:pt-[190px]">
+    <div class="container relative pb-[72px] pt-[120px] md:pt-[120px]">
       <Eyebrow variant="dark">Produs Smart Control</Eyebrow>
       <h1 class="mt-6 max-w-[850px] text-[clamp(2.5rem,1.7rem+3vw,4rem)] font-extrabold leading-[1.08] tracking-[-1.8px] text-white">SEKNET. <span class="text-sky">Monitorizare. Securitate. Control.</span></h1>
       <p class="mt-6 max-w-[650px] text-[18px] leading-[1.7] text-[rgba(226,233,245,.78)]">O perspectivă unificată asupra infrastructurii IT, care sprijină echipele în monitorizarea operațiunilor, identificarea riscurilor și coordonarea răspunsului.</p>
       <div class="mt-9"><MailtoLink variant="button" dark subject={t('subject.demo.seknet')}>{t('cta.demo.seknet')}</MailtoLink></div>
     </div>
   </header>
-  <section id="capabilitati" class="bg-surface py-[72px] sm:py-[110px]">
+  <section id="capabilitati" class="bg-surface py-[56px] sm:py-[80px]">
     <div class="container">
       <SectionHeading heading="Vizibilitate și protecție într-o experiență unificată">SEKNET centralizează informațiile relevante pentru operarea și protejarea infrastructurii IT, într-o experiență adaptată contextului organizației.</SectionHeading>
-      <div class="mt-11 grid gap-5 md:grid-cols-3">{capabilities.map(({title,body,Icon}) => <ModuleCard kicker="SEKNET" title={title} body={body}><Icon slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5}/></ModuleCard>)}</div>
+      <div class="mt-9 grid gap-5 md:grid-cols-3">{capabilities.map(({title,body,Icon}) => <ModuleCard kicker="SEKNET" title={title} body={body}><Icon slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5}/></ModuleCard>)}</div>
     </div>
   </section>
-  <section class="bg-page py-[64px] sm:py-[92px]">
+  <section class="bg-page py-[48px] sm:py-[72px]">
     <div class="container">
       <SectionHeading eyebrow="Alte soluții Smart Control" heading="Continuă explorarea" />
       <div class="mt-10 grid gap-5 md:grid-cols-2">
