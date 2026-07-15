@@ -95,6 +95,7 @@ const ogLocaleAlt = lang === 'en' ? 'ro_RO' : 'en_US';
         initReveals,
         initCounters,
         initStepper,
+        initConsole,
       } from '../scripts/motion.js';
 
       type Cleanup = () => void;
@@ -116,6 +117,10 @@ const ogLocaleAlt = lang === 'en' ? 'ro_RO' : 'en_US';
         doc.querySelectorAll<HTMLElement>('[data-stepper]').forEach((container) => {
           const fill = container.querySelector<HTMLElement>('[data-stepper-fill]');
           if (fill) cleanups.push(initStepper(container, fill, { dark: container.hasAttribute('data-stepper-dark') }));
+        });
+
+        doc.querySelectorAll<HTMLElement>('[data-console]').forEach((container) => {
+          cleanups.push(initConsole(container));
         });
 
       }
