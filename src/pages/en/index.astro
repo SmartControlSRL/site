@@ -15,6 +15,7 @@ import IconChip from '../../components/IconChip.astro';
 import LogoMarquee from '../../components/LogoMarquee.astro';
 import TextLink from '../../components/TextLink.astro';
 import MailtoLink from '../../components/MailtoLink.astro';
+import SeknetConsole from '../../components/SeknetConsole.astro';
 import CloudPipeline from '../../components/CloudPipeline.astro';
 import StackTeardown from '../../components/StackTeardown.astro';
 import {
@@ -70,6 +71,18 @@ const partners = [
   'IBM',
   'HPE',
   'DELL',
+];
+
+const consoleMetrics = [
+  { label: 'Visibility', value: 'Active' },
+  { label: 'Protection', value: 'Continuous', accent: true },
+  { label: 'Control', value: 'Centralized' },
+];
+const consoleLog = [
+  { time: '08:14:02', msg: 'Infrastructure status updated', blocked: false },
+  { time: '08:14:05', msg: 'Operational event analyzed' },
+  { time: '08:14:09', msg: 'Response coordinated from the central view', blocked: false },
+  { time: '08:14:12', msg: 'Organization context synchronized' },
 ];
 
 
@@ -150,7 +163,7 @@ const cloudRows = [
     <GridTexture fade />
 
     <div
-      class="relative z-[1] mx-auto max-w-[1180px] px-6 pb-[110px] pt-[150px] md:px-10 md:pt-[190px]"
+      class="relative z-[1] mx-auto max-w-[1180px] px-6 pb-[110px] pt-[120px] md:px-10 md:pt-[140px]"
     >
       <Eyebrow class="hero-in">
         Trusted Service Delivery Partner
@@ -313,7 +326,8 @@ const cloudRows = [
     <GridTexture dark opacity={0.8} />
 
     <div class="relative z-[1] mx-auto max-w-[1180px]">
-      <div data-reveal class="max-w-[820px]">
+      <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+        <div data-reveal>
           <SectionHeading
             eyebrow="Proprietary products"
             heading="Proprietary products for security and protected access"
@@ -331,6 +345,10 @@ const cloudRows = [
             <TextLink href={p('/solutii/s-vpn')} dark>Explore S-VPN</TextLink>
           </div>
 
+        </div>
+        <div data-reveal data-reveal-delay="120">
+          <SeknetConsole title="SEKNET · OPERATIONAL VISIBILITY" metrics={consoleMetrics} log={consoleLog} />
+        </div>
       </div>
 
       {/* Bottom dual cards — SEKNET ↔ S-VPN (Asset Management stripped) */}

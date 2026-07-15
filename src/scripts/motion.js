@@ -48,3 +48,25 @@ export function initStepper(container, fill, opts={}) {
 export function initEmails(root) {
   root?.querySelectorAll('[data-email-user]').forEach((el)=>{ const address=`${el.getAttribute('data-email-user')}@${el.getAttribute('data-email-domain')}`; if(el.tagName==='A'){const subject=el.getAttribute('data-email-subject');el.setAttribute('href',`mailto:${address}${subject?`?subject=${encodeURIComponent(subject)}`:''}`);} if(!el.textContent.trim())el.textContent=address; });
 }
+
+// Ambient console visual used in the homepage product band. The copy remains generic;
+// motion stops completely when reduced motion is requested.
+export function initConsole(container) {
+  if (!container) return () => {};
+  const canvas = container.querySelector('[data-console-canvas]');
+  const cleanups = [];
+  if (canvas?.getContext) {
+    const ctx = canvas.getContext('2d');
+    let width=0,height=0,frame=0,visible=true,destroyed=false,time=0,pings=[];
+    const resize=()=>{const dpr=Math.min(window.devicePixelRatio||1,2);width=canvas.clientWidth;height=canvas.clientHeight;canvas.width=Math.max(1,width*dpr);canvas.height=Math.max(1,height*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);};
+    const spawn=()=>{const edge=Math.floor(Math.random()*4);let x,y;if(edge===0){x=Math.random()*width;y=-6;}else if(edge===1){x=width+6;y=Math.random()*height;}else if(edge===2){x=Math.random()*width;y=height+6;}else{x=-6;y=Math.random()*height;}pings.push({x,y,p:0,speed:.006+Math.random()*.007});};
+    const rings=(x,y)=>{for(let i=1;i<=3;i++){ctx.strokeStyle='rgba(122,180,232,.10)';ctx.lineWidth=1;ctx.beginPath();ctx.arc(x,y,Math.min(width,height)/2*(i/3.4),0,Math.PI*2);ctx.stroke();}ctx.fillStyle='rgba(68,135,220,.9)';ctx.beginPath();ctx.arc(x,y,3.2,0,Math.PI*2);ctx.fill();};
+    const draw=()=>{frame=0;if(destroyed||!visible||document.hidden)return;time++;ctx.clearRect(0,0,width,height);const cx=width/2,cy=height/2;rings(cx,cy);const pulse=(time%150)/150;ctx.strokeStyle=`rgba(68,135,220,${(1-pulse)*.22})`;ctx.beginPath();ctx.arc(cx,cy,pulse*Math.min(width,height)/2,0,Math.PI*2);ctx.stroke();pings.forEach(point=>{point.p+=point.speed;const x=point.x+(cx-point.x)*point.p,y=point.y+(cy-point.y)*point.p;ctx.strokeStyle='rgba(122,180,232,.12)';ctx.beginPath();ctx.moveTo(point.x,point.y);ctx.lineTo(x,y);ctx.stroke();ctx.fillStyle='rgba(68,135,220,.95)';ctx.beginPath();ctx.arc(x,y,2,0,Math.PI*2);ctx.fill();});pings=pings.filter(point=>point.p<1);if(Math.random()<.05&&pings.length<14)spawn();frame=requestAnimationFrame(draw);};
+    resize();
+    if (reducedMotion()) rings(width/2,height/2);
+    else {for(let i=0;i<6;i++)spawn();const kick=()=>{if(!frame&&!destroyed)frame=requestAnimationFrame(draw);};const onResize=()=>{resize();kick();};const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>visible=entry.isIntersecting);kick();});observer.observe(canvas);window.addEventListener('resize',onResize);kick();cleanups.push(()=>{destroyed=true;if(frame)cancelAnimationFrame(frame);observer.disconnect();window.removeEventListener('resize',onResize);});}
+  }
+  const log=container.querySelector('[data-console-log]');
+  if(log&&!reducedMotion()){const seeds=[...log.querySelectorAll('li')].map(item=>({msg:item.getAttribute('data-msg')||'',allow:item.getAttribute('data-kind')==='allow'}));let index=0;const pad=value=>String(value).padStart(2,'0');const timer=setInterval(()=>{if(!seeds.length)return;const now=new Date(),seed=seeds[index++%seeds.length],item=document.createElement('li');item.className='flex items-center gap-2.5';item.innerHTML=`<span style="color:#7AB4E8">${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}</span><span style="color:${seed.allow?'#7AB4E8':'#4487DC'}">${seed.allow?'▸':'■'}</span><span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:rgba(226,233,245,.72)">${seed.msg}</span>`;log.prepend(item);while(log.children.length>6)log.lastElementChild.remove();},1900);cleanups.push(()=>clearInterval(timer));}
+  return()=>cleanups.forEach(cleanup=>cleanup());
+}
