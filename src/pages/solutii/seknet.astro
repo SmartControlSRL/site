@@ -1,5 +1,4 @@
 ---
-// SEKNET — pagină de produs. Conținut public general, fără specificații tehnice.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Eyebrow from '../../components/Eyebrow.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
@@ -10,51 +9,59 @@ import TextLink from '../../components/TextLink.astro';
 import IconChip from '../../components/IconChip.astro';
 import GridTexture from '../../components/GridTexture.astro';
 import { getLangFromUrl, useTranslations, localizedPath } from '../../i18n/ui';
-import { Activity, ShieldCheck, SlidersHorizontal, Network, Cloud } from '@lucide/astro';
+import { Activity, ShieldCheck, SlidersHorizontal, BellRing, Network, Cloud } from '@lucide/astro';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const p = (path: string) => localizedPath(lang, path);
-const description = 'SEKNET este o soluție Smart Control pentru vizibilitate operațională și protecția infrastructurii IT, adaptată cerințelor fiecărei organizații.';
+const description = 'SEKNET este soluția Smart Control pentru monitorizarea și protejarea infrastructurii IT, cu vizibilitate operațională și control centralizat.';
 const productLd = {
   '@context': 'https://schema.org', '@type': 'Product', name: 'SEKNET',
   brand: { '@type': 'Brand', name: 'Smart Control' },
-  category: 'IT infrastructure monitoring and protection',
-  description: 'Soluție Smart Control pentru vizibilitate operațională și protecția infrastructurii IT.',
+  category: 'IT infrastructure monitoring and protection', description,
   url: 'https://smartcontrol.ro/solutii/seknet/',
   manufacturer: { '@type': 'Organization', name: 'Smart Control SRL' },
 };
 const capabilities = [
-  { title: 'Monitorizare operațională', body: 'Oferă echipelor o imagine coerentă asupra stării infrastructurii și susține identificarea rapidă a situațiilor care necesită atenție.', Icon: Activity },
-  { title: 'Protecție integrată', body: 'Sprijină observarea riscurilor și coordonarea acțiunilor de răspuns dintr-un punct central.', Icon: ShieldCheck },
-  { title: 'Control centralizat', body: 'Reunește informațiile relevante într-o experiență clară pentru echipele tehnice și operaționale.', Icon: SlidersHorizontal },
+  { title: 'Monitorizare operațională', body: 'O imagine coerentă asupra stării infrastructurii, astfel încât echipele să identifice mai repede situațiile care necesită atenție.', Icon: Activity },
+  { title: 'Protecție integrată', body: 'Evenimentele relevante sunt reunite pentru analiză și pentru coordonarea răspunsului dintr-un punct central.', Icon: ShieldCheck },
+  { title: 'Control centralizat', body: 'Informațiile tehnice sunt organizate într-o experiență unitară, adaptată rolurilor operaționale și de securitate.', Icon: SlidersHorizontal },
+];
+const uses = [
+  { title: 'Vizibilitate asupra mediilor distribuite', body: 'Pentru organizații care operează infrastructură eterogenă și au nevoie de o perspectivă comună asupra evenimentelor.' },
+  { title: 'Prioritizarea alertelor', body: 'Pentru echipe care trebuie să reducă timpul dintre apariția unui eveniment, analiză și acțiunea potrivită.' },
+  { title: 'Suport pentru operare și audit', body: 'Pentru contexte în care istoricul, trasabilitatea și raportarea trebuie păstrate într-un mod coerent.' },
 ];
 ---
 <BaseLayout title="SEKNET — Monitorizare, securitate și control | Smart Control" description={description}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(productLd)} />
   <header class="relative overflow-hidden bg-midnight">
     <GridTexture dark />
-    <div class="container relative pb-[72px] pt-[120px] md:pt-[120px]">
-      <Eyebrow variant="dark">Produs Smart Control</Eyebrow>
+    <div class="container relative pb-[88px] pt-[120px] md:pb-[96px] md:pt-[140px]">
+      <Eyebrow variant="dark">Produs proprietar Smart Control</Eyebrow>
       <h1 class="mt-6 max-w-[850px] text-[clamp(2.5rem,1.7rem+3vw,4rem)] font-extrabold leading-[1.08] tracking-[-1.8px] text-white">SEKNET. <span class="text-sky">Monitorizare. Securitate. Control.</span></h1>
-      <p class="mt-6 max-w-[650px] text-[18px] leading-[1.7] text-[rgba(226,233,245,.78)]">O perspectivă unificată asupra infrastructurii IT, care sprijină echipele în monitorizarea operațiunilor, identificarea riscurilor și coordonarea răspunsului.</p>
-      <div class="mt-9"><MailtoLink variant="button" dark subject={t('subject.demo.seknet')}>{t('cta.demo.seknet')}</MailtoLink></div>
+      <p class="mt-6 max-w-[660px] text-[18px] leading-[1.7] text-[rgba(226,233,245,.78)]">O perspectivă unificată asupra infrastructurii IT, care sprijină echipele în monitorizarea operațiunilor, identificarea riscurilor și coordonarea răspunsului.</p>
+      <div class="mt-9 flex flex-wrap items-center gap-5"><MailtoLink variant="button" dark subject={t('subject.demo.seknet')}>{t('cta.demo.seknet')}</MailtoLink><TextLink href="#capabilitati" dark>Vezi capabilitățile</TextLink></div>
     </div>
   </header>
-  <section id="capabilitati" class="bg-surface py-[56px] sm:py-[80px]">
+
+  <section id="capabilitati" class="bg-surface py-[64px] sm:py-[88px]">
     <div class="container">
-      <SectionHeading heading="Vizibilitate și protecție într-o experiență unificată">SEKNET centralizează informațiile relevante pentru operarea și protejarea infrastructurii IT, într-o experiență adaptată contextului organizației.</SectionHeading>
-      <div class="mt-9 grid gap-5 md:grid-cols-3">{capabilities.map(({title,body,Icon}) => <ModuleCard kicker="SEKNET" title={title} body={body}><Icon slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5}/></ModuleCard>)}</div>
+      <SectionHeading eyebrow="Platforma SEKNET" heading="Vizibilitate și protecție într-o experiență unificată">SEKNET centralizează informațiile relevante pentru operarea și protejarea infrastructurii IT, într-o experiență configurată în funcție de mediul și cerințele organizației.</SectionHeading>
+      <div class="mt-10 grid gap-5 md:grid-cols-3">{capabilities.map(({title,body,Icon}) => <ModuleCard kicker="SEKNET" title={title} body={body}><Icon slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5}/></ModuleCard>)}</div>
     </div>
   </section>
-  <section class="bg-page py-[48px] sm:py-[72px]">
+
+  <section class="bg-surface py-[56px] sm:py-[80px]">
     <div class="container">
-      <SectionHeading eyebrow="Alte soluții Smart Control" heading="Continuă explorarea" />
-      <div class="mt-10 grid gap-5 md:grid-cols-2">
-        <article class="rounded-xl bg-surface p-8 shadow-sm"><div class="flex items-center gap-3"><IconChip><Network class="h-5 w-5 text-navy" stroke-width={1.5}/></IconChip><h3 class="text-[19px] font-bold text-navy">S-VPN</h3></div><p class="mt-4 text-[14px] leading-[1.65] text-cool">Soluție Smart Control pentru acces remote securizat, adaptată cerințelor organizației.</p><div class="mt-5"><TextLink href={p('/solutii/s-vpn')}>Explorează S-VPN</TextLink></div></article>
-        <article class="rounded-xl bg-surface p-8 shadow-sm"><div class="flex items-center gap-3"><IconChip><Cloud class="h-5 w-5 text-navy" stroke-width={1.5}/></IconChip><h3 class="text-[19px] font-bold text-navy">Cloud &amp; Modernizare</h3></div><p class="mt-4 text-[14px] leading-[1.65] text-cool">Re-arhitecturare, containerizare și migrare selectivă pentru infrastructura și aplicațiile organizației.</p><div class="mt-5"><TextLink href={p('/servicii/cloud')}>Explorează Cloud &amp; Modernizare</TextLink></div></article>
-      </div>
+      <SectionHeading eyebrow="Contexte de utilizare" heading="Unde aduce valoare SEKNET" />
+      <div class="mt-10 grid gap-5 md:grid-cols-3">{uses.map(({title,body},i) => <article class="rounded-xl bg-surface p-8 shadow-sm"><div class="flex items-center gap-3"><IconChip><BellRing class="h-5 w-5 text-navy" stroke-width={1.5}/></IconChip><span class="font-mono text-[11px] text-royal">0{i+1}</span></div><h3 class="mt-5 text-[18px] font-bold text-navy">{title}</h3><p class="mt-3 text-[14px] leading-[1.7] text-cool">{body}</p></article>)}</div>
     </div>
   </section>
-  <CtaBand heading="Discutăm despre cerințele organizației tale" cta={t('cta.demo.seknet')} subject={t('subject.demo.seknet')}>Îți prezentăm SEKNET și stabilim împreună dacă soluția răspunde contextului tău operațional.</CtaBand>
+
+  <section class="bg-page py-[56px] sm:py-[72px]"><div class="container"><SectionHeading eyebrow="Ecosistem Smart Control" heading="Continuă explorarea" /><div class="mt-10 grid gap-5 md:grid-cols-2">
+    <article class="rounded-xl bg-surface p-8 shadow-sm"><div class="flex items-center gap-3"><IconChip><Network class="h-5 w-5 text-navy" stroke-width={1.5}/></IconChip><h3 class="text-[19px] font-bold text-navy">S-VPN</h3></div><p class="mt-4 text-[14px] leading-[1.65] text-cool">Soluție Smart Control pentru acces remote securizat, adaptată cerințelor organizației.</p><div class="mt-5"><TextLink href={p('/solutii/s-vpn')}>Explorează S-VPN</TextLink></div></article>
+    <article class="rounded-xl bg-surface p-8 shadow-sm"><div class="flex items-center gap-3"><IconChip><Cloud class="h-5 w-5 text-navy" stroke-width={1.5}/></IconChip><h3 class="text-[19px] font-bold text-navy">Cloud &amp; Modernizare</h3></div><p class="mt-4 text-[14px] leading-[1.65] text-cool">Re-arhitecturare, containerizare și migrare selectivă pentru infrastructura și aplicațiile organizației.</p><div class="mt-5"><TextLink href={p('/servicii/cloud')}>Explorează Cloud &amp; Modernizare</TextLink></div></article>
+  </div></div></section>
+  <CtaBand heading="Vezi SEKNET în contextul infrastructurii tale" cta={t('cta.demo.seknet')} subject={t('subject.demo.seknet')}>Îți prezentăm platforma și discutăm cerințele, integrarea și configurația potrivită pentru mediul tău.</CtaBand>
 </BaseLayout>
