@@ -10,7 +10,7 @@ import { EMAIL_USER, EMAIL_DOMAIN } from '../i18n/ui';
 interface Props {
   id?: string;
   eyebrow?: string;
-  heading: string;
+  heading?: string;
   /** mailto button label. */
   cta: string;
   /** Email subject appended to the mailto. */
@@ -25,17 +25,20 @@ const { id, eyebrow, heading, cta, subject, showContact = true, class: extra = '
 
 <section
   id={id}
+  aria-label={!heading ? cta : undefined}
   class:list={['relative overflow-hidden bg-midnight px-6 py-[72px] sm:px-10 sm:py-[110px]', extra]}
 >
   <GridTexture dark opacity={0.7} />
 
   <div class="relative z-[1] mx-auto max-w-[760px] text-center">
     <div data-reveal>
-      <SectionHeading eyebrow={eyebrow} heading={heading} variant="dark" size="cta" rule={false} center>
-        <slot />
-      </SectionHeading>
+      {heading && (
+        <SectionHeading eyebrow={eyebrow} heading={heading} variant="dark" size="cta" rule={false} center>
+          <slot />
+        </SectionHeading>
+      )}
 
-      <div class="mt-9 flex justify-center">
+      <div class:list={[heading && 'mt-9', 'flex justify-center']}>
         <MailtoLink variant="button" dark subject={subject}>{cta}</MailtoLink>
       </div>
 

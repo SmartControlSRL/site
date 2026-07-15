@@ -7,16 +7,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import GridTexture from '../../components/GridTexture.astro';
 import Eyebrow from '../../components/Eyebrow.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
-import IconChip from '../../components/IconChip.astro';
 import ChevronList from '../../components/ChevronList.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import MailtoLink from '../../components/MailtoLink.astro';
 import TextLink from '../../components/TextLink.astro';
 import { getLangFromUrl, useTranslations } from '../../i18n/ui';
 import {
-  TrendingUp,
-  Recycle,
-  Rocket,
   Container,
   GitBranch,
   Cloud,
@@ -28,56 +24,34 @@ const t = useTranslations(lang);
 
 const pageTitle = 'Cloud & Modernizare — Re-arhitecturare și optimizare aplicații | Smart Control';
 const pageDescription =
-  'Hardware-ul se scumpește; aplicațiile tale nu trebuie. Re-arhitecturare, containerizare și migrare selectivă în cloud printr-un flux validat în 650+ proiecte — CAPEX→OPEX, raport ROI la 90 de zile.';
-
-// SECTION 3 — "De ce acum" reasons (icon / title / body, verbatim).
-const reasons = [
-  {
-    Icon: TrendingUp,
-    title: 'Costuri hardware în creștere',
-    body: 'Cererea pentru infrastructură AI a împins memoria, stocarea și GPU-urile la prețuri record, cu termene de livrare imprevizibile.',
-    reveal: { 'data-reveal': true },
-  },
-  {
-    Icon: Recycle,
-    title: 'Refresh-ul clasic nu mai e rentabil',
-    body: 'Înlocuirea „la 5 ani” a serverelor e tot mai greu de justificat într-un business case. Capacitatea existentă e adesea folosită sub 40%.',
-    reveal: { 'data-reveal': true, 'data-reveal-delay': '100' },
-  },
-  {
-    Icon: Rocket,
-    title: 'Re-arhitecturarea câștigă',
-    body: '650+ proiecte arată ce funcționează: containerizare, tuning aplicativ și migrare selectivă în cloud extrag performanță din infrastructura existentă, cu costuri predictibile, CAPEX→OPEX.',
-    reveal: { 'data-reveal': true, 'data-reveal-delay': '200' },
-  },
-];
+  'Hardware-ul se scumpește. Propunem o abordare de re-arhitecturare, containerizare și migrare selectivă în cloud pentru performanță și costuri predictibile.';
 
 // SECTION 4 — #flux 5-stage methodology (number / title / pill / body, verbatim).
 const steps = [
   {
     title: 'Propunere de re-arhitecturare',
     pill: 'Fast Track',
-    body: 'Pentru clienții cu care avem deja o relație stabilă: valorificăm cunoștințele despre infrastructura existentă pentru a identifica punctele critice și propunem modernizări bazate pe date reale, nu pe estimări teoretice.',
+    body: 'Pentru clienții cu care avem deja o relație stabilă: valorificăm cunoștințele despre infrastructura existentă pentru a identifica punctele critice și propunem modernizări bazate pe date reale.',
   },
   {
     title: 'Assessment inițial & quick wins',
     pill: '2 zile · gratuit',
-    body: 'Inventariere automatizată a infrastructurii cu instrumentele noastre proprii, analiză de performanță prin platforma de monitorizare, evaluarea gap-urilor NIS 2 / GDPR — și rezolvarea problemelor minore încă din primele zile.',
+    body: 'Inventarierea infrastructurii, analiza de performanță și evaluarea gap-urilor.',
   },
   {
-    title: 'Planul de refactoring & business case',
-    pill: 'ROI estimat',
-    body: 'Roadmap tehnic cu prioritizarea aplicațiilor pentru containerizare (Kubernetes-ready), analiză cost-beneficiu înainte de implementare și strategii de testare în staging cu planuri de rollback pentru zero-downtime.',
+    title: 'Planul de refactoring',
+    pill: 'Plan tehnic',
+    body: 'Roadmap tehnic cu prioritizarea aplicațiilor, testare în staging și plan de rollback.',
   },
   {
     title: 'Implementare agilă & transfer de cunoștințe',
     pill: 'DevSecOps',
-    body: 'Containerizare și migrare pe Kubernetes / OpenShift / AKS / GKE, pipeline-uri CI/CD, integrare hibridă on-premise–cloud — plus workshop-uri tehnice și documentație pentru autonomia echipei tale.',
+    body: 'Containerizare și migrare, pipeline-uri de livrare, integrare hibridă, workshop-uri tehnice și documentație.',
   },
   {
-    title: 'Observabilitate continuă & optimizare',
-    pill: 'Raport ROI la 90 de zile',
-    body: 'Monitorizare proactivă cu soluția proprietară Smart Control, validarea ROI printr-un raport de performanță la 90 de zile și iterație continuă pe baza datelor de telemetrie.',
+    title: 'Monitorizare continuă și optimizare',
+    pill: 'Indicatori propuși',
+    body: 'Monitorizare și optimizare proactive pentru a atinge indicatorii propuși.',
   },
 ];
 
@@ -87,9 +61,9 @@ const capabilities = [
     Icon: Container,
     title: 'Containerizare & orchestrare',
     items: [
-      'Kubernetes · OpenShift · AKS · GKE',
-      'Prioritizarea aplicațiilor Kubernetes-ready',
-      'Migrare cu zero-downtime, rollback planificat',
+      'Prioritizarea aplicațiilor',
+      'Migrare controlată',
+      'Rollback planificat',
     ],
     reveal: { 'data-reveal': true },
   },
@@ -97,7 +71,7 @@ const capabilities = [
     Icon: GitBranch,
     title: 'DevSecOps & CI/CD',
     items: [
-      'Pipeline-uri CI/CD cu security gates',
+      'Pipeline-uri de livrare',
       'Testare automată în staging',
       'Infrastructure-as-Code',
     ],
@@ -107,19 +81,19 @@ const capabilities = [
     Icon: Cloud,
     title: 'Integrare hibridă',
     items: [
-      'On-premise ↔ cloud, fără lock-in',
-      'Migrare selectivă — doar ce are sens economic',
-      'CAPEX→OPEX cu costuri predictibile',
+      'Integrare on-premise și cloud',
+      'Migrare selectivă',
+      'Costuri predictibile',
     ],
     reveal: { 'data-reveal': true },
   },
   {
     Icon: Gauge,
-    title: 'Observabilitate & ROI',
+    title: 'Monitorizare & suport',
     items: [
-      'Monitorizare proactivă cu SEKNET',
-      'Raport de performanță la 90 de zile',
-      'Iterație continuă pe date de telemetrie',
+      'Suport proactiv',
+      'Monitorizare continuă',
+      'Urmărirea indicatorilor propuși',
     ],
     reveal: { 'data-reveal': true },
   },
@@ -134,7 +108,7 @@ const serviceLd = {
   serviceType: 'Cloud modernization & application re-architecture',
   url: `${SITE}/servicii/cloud`,
   description:
-    'Re-arhitecturare și optimizare a aplicațiilor, containerizare, DevSecOps și migrare selectivă în cloud — un flux validat în 5 etape care extrage performanță din infrastructura existentă, cu costuri predictibile CAPEX→OPEX.',
+    'Re-arhitecturare și optimizare a aplicațiilor, containerizare, DevSecOps și migrare selectivă în cloud printr-o abordare în 5 etape.',
   provider: {
     '@type': 'Organization',
     name: 'Smart Control SRL',
@@ -161,14 +135,14 @@ const serviceLd = {
       <h1
         class="hero-in-2 mt-6 max-w-[860px] text-[clamp(2.25rem,1.6rem+2.8vw,3.625rem)] font-extrabold leading-[1.1] tracking-[-1.8px] text-midnight"
       >
-        Hardware-ul se scumpește.<br /><span class="text-bright">Aplicațiile tale nu trebuie.</span>
+        Hardware-ul se scumpește.<br /><span class="text-bright">Propunem următoarea abordare.</span>
       </h1>
 
       <p class="hero-in-3 mt-6 max-w-[640px] text-[18px] leading-[1.7] text-slate">
         Prețurile componentelor critice cresc sub presiunea cererii pentru
         infrastructură AI, iar bugetele de refresh nu mai ajung.
         <span class="font-semibold text-navy">Re-arhitecturarea și optimizarea aplicațiilor</span>
-        devin strategia principală — extragi mai multă performanță din
+        devin strategia principală — obții mai multă performanță din
         infrastructura existentă, înainte să cumperi una nouă.
       </p>
 
@@ -182,40 +156,15 @@ const serviceLd = {
     </div>
   </header>
 
-  {/* ============ SECTION 3 — "DE CE ACUM" (3 reason cards, light) ============ */}
-  <section aria-labelledby="de-ce-acum" class="bg-surface">
-    <div class="container pb-[72px] pt-[72px] sm:pb-[110px] sm:pt-20">
-      <h2 id="de-ce-acum" class="sr-only">De ce acum</h2>
-      <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {
-          reasons.map(({ Icon, title, body, reveal }) => (
-            <div {...reveal}>
-              <article class="box-border flex h-full flex-col rounded-xl border border-border bg-surface px-8 py-[30px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:shadow-lg">
-                <IconChip>
-                  <Icon class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
-                </IconChip>
-                <h3 class="mt-[18px] text-[17px] font-bold text-navy">{title}</h3>
-                <p class="mt-2.5 text-[14px] leading-[1.65] text-cool">{body}</p>
-              </article>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
   {/* ============ SECTION 4 — FLUX 5 ETAPE (#flux, scroll stepper, wash band) ============ */}
   <section id="flux" class="bg-page">
     <div class="container py-[88px] sm:py-[128px]">
       <div data-reveal>
         <SectionHeading
           eyebrow="Abordare"
-          heading="Fluxul de lucru în 5 etape"
+          heading="Propunem 5 etape"
           headingMaxWidth="700px"
-        >
-          Fluxul e o re-arhitecturare strategică a aplicațiilor tale, validată
-          în 650+ proiecte, care minimizează riscurile și maximizează ROI.
-        </SectionHeading>
+        />
       </div>
 
       {/* Page-local stepper composite — matches the initStepper data-contract
@@ -298,12 +247,10 @@ const serviceLd = {
   {/* ============ SECTION 6 — CTA (#contact, dark band) ============ */}
   <CtaBand
     id="contact"
-    heading="Cât te costă infrastructura actuală — și cât ai putea economisi"
+    heading="Cât te costă infrastructura actuală și cât ai putea economisi"
     cta={t('cta.assessment')}
     subject={t('subject.assessment')}
   >
-    Assessment-ul gratuit de 2 zile cartografiază ce ai acum și estimează
-    economia unei re-arhitecturări. Dacă alegi să continui, primești un
-    raport ROI la 90 de zile care confirmă cifrele în producție.
+    Assessment-ul gratuit de 2 zile cartografiază infrastructura actuală și estimează economia posibilă prin re-arhitecturare.
   </CtaBand>
 </BaseLayout>

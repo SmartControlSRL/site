@@ -3,9 +3,8 @@
 // "Nou" badges, capability tags. Variants:
 //   light      — cool text, white bg, hairline border (ISO pills)
 //   dark       — white text on bright bg (the "Nou" badge)
-//   compliance — reserved teal (GDPR / NIS 2 / DORA / ISO badge contexts only)
 interface Props {
-  variant?: 'light' | 'dark' | 'compliance';
+  variant?: 'light' | 'dark';
   class?: string;
 }
 
@@ -14,9 +13,7 @@ const { variant = 'light', class: extra = '' } = Astro.props;
 const tone =
   variant === 'dark'
     ? 'bg-royal text-white'
-    : variant === 'compliance'
-      ? 'bg-compliance-tint text-compliance border border-compliance/30'
-      : 'bg-surface text-cool border border-border';
+    : 'bg-surface text-cool border border-border';
 ---
 
 <span

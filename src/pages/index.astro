@@ -1,7 +1,7 @@
 ---
 // Home (RO) — /
 // Built 1:1 with docs/build-specs/home.md, applying RESOLUTIONS.md rulings:
-//  · ISO 27701 stripped (4 ISO badges only); GDPR/NIS 2/DORA in compliance teal.
+//  · ISO 27701 stripped (4 ISO badges only); legal frameworks excluded from marketing copy.
 //  · "Asset Management" stripped — the Produse dual cards pair SEKNET ↔ S-VPN.
 //  · Years computed from 2003; © year dynamic (handled in Footer).
 //  · No email inputs (no-forms); CTAs go straight to obfuscated mailto.
@@ -17,7 +17,6 @@ import IconChip from '../components/IconChip.astro';
 import LogoMarquee from '../components/LogoMarquee.astro';
 import TextLink from '../components/TextLink.astro';
 import MailtoLink from '../components/MailtoLink.astro';
-import SeknetConsole from '../components/SeknetConsole.astro';
 import CloudPipeline from '../components/CloudPipeline.astro';
 import StackTeardown from '../components/StackTeardown.astro';
 import {
@@ -34,9 +33,7 @@ const p = (path: string) => localizedPath(lang, path);
 const years = yearsInBusiness(new Date().getUTCFullYear());
 
 const title = 'Smart Control — Trusted Service Delivery Partner';
-const description =
-  'Infrastructură, securitate și software enterprise, execuție 100% in-house. ' +
-  'Peste 650 de proiecte, 250+ clienți, 4 certificări ISO și conformitate GDPR · NIS 2 · DORA.';
+const description = 'Infrastructură, networking, security și software enterprise, cu execuție 100% in-house și patru certificări ISO.';
 
 // — JSON-LD: Organization —
 const org = {
@@ -77,28 +74,6 @@ const partners = [
   'DELL',
 ];
 
-// SEKNET module chips (4 standard + Trap, the active-deception module).
-const seknetChips = [
-  { title: 'Identity', sub: 'SSO · FIDO2 · SCIM' },
-  { title: 'Shield', sub: 'SIEM · IDS · MITRE' },
-  { title: 'Insight', sub: 'ML · anomalii' },
-  { title: 'View', sub: 'topologie · rapoarte' },
-];
-
-// SEKNET live console — attack-map metrics + seed log feed.
-const consoleMetrics = [
-  { label: 'Evenimente/s', value: '1 240', base: 1240 },
-  { label: 'Blocate', value: '1 240', base: 1240, accent: true },
-  { label: 'Honeypot-uri', value: '20+' },
-];
-const consoleLog = [
-  { time: '08:14:02', msg: 'IDS · scanare porturi blocată — 203.0.113.7' },
-  { time: '08:14:05', msg: 'Trap · honeypot SSH atins — credențiale capturate' },
-  { time: '08:14:09', msg: 'Identity · MFA FIDO2 validat — sesiune autorizată', blocked: false },
-  { time: '08:14:11', msg: 'Shield · regulă MITRE T1110 declanșată — brute-force' },
-  { time: '08:14:15', msg: 'Insight · anomalie trafic — host izolat' },
-  { time: '08:14:18', msg: 'View · topologie actualizată — 142 noduri', blocked: false },
-];
 
 // Stack Teardown — 4 operational layers, top of the stack (L4) first.
 // Copy verbatim from the "Design originality recommendations" handoff.
@@ -125,7 +100,7 @@ const stackLayers = [
     code: 'L2',
     name: 'Rețea & Conectivitate',
     desc: 'Core networking, SD-WAN și acces remote securizat.',
-    chips: ['LAN / WAN core', 'SD-WAN', 'S-VPN', 'Load balancing'],
+    chips: ['LAN / WAN core', 'SD-WAN', 'Acces remote securizat', 'Load balancing'],
     href: p('/servicii/managed'),
     linkLabel: 'Network Managed Services',
     aria: 'Nivel L2 — Rețea și Conectivitate',
@@ -257,14 +232,14 @@ const cloudRows = [
           class="md:col-span-12 lg:col-span-5"
         >
           <ModuleCard
-            title="Securitate & Conformitate"
+            title="Networking & Security"
             index="02"
             body="Securitate perimetrală și end-point, identitate și operațiuni de securitate gestionate."
             items={[
               'Perimeter & End-point Security',
               'Enterprise SSO / PKI',
               'Data Leakage Prevention · WAF',
-              'Conformitate GDPR / NIS 2',
+              'Rapoarte de securitate și audit',
               'Managed Security Operations',
             ]}
             cols={1}
@@ -286,7 +261,6 @@ const cloudRows = [
               'Dezvoltare software custom & API',
               'DevOps / DevSecOps & CI/CD',
               'Migrare și modernizare aplicații',
-              'Blockchain (Hyperledger, Multichain)',
               'Automatizare cu AI / LLM',
             ]}
             cols={1}
@@ -341,18 +315,13 @@ const cloudRows = [
     <GridTexture dark opacity={0.8} />
 
     <div class="relative z-[1] mx-auto max-w-[1180px]">
-      {/* Top split grid */}
-      <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
-        {/* Left column — heading, CTAs, module chips */}
-        <div data-reveal>
+      <div data-reveal class="max-w-[820px]">
           <SectionHeading
             eyebrow="Produse proprietare"
-            heading="SEKNET — monitorizare și securitate dintr-o singură consolă"
+            heading="Produse proprii pentru securitate și acces protejat"
             variant="dark"
           >
-            Platforma enterprise care corelează evenimentele de securitate din toată rețeaua într-o
-            singură consolă. Cinci module specializate, inclusiv SEKNET Trap, modulul de decepție
-            activă lansat recent.
+            SEKNET și S-VPN susțin organizațiile care au nevoie de control, vizibilitate și acces securizat. Detaliile tehnice sunt prezentate în cadrul unei discuții comerciale.
           </SectionHeading>
           <div class="mt-7 flex flex-wrap items-center gap-5">
             <a
@@ -364,31 +333,6 @@ const cloudRows = [
             <TextLink href={p('/solutii/s-vpn')} dark>Explorează S-VPN</TextLink>
           </div>
 
-          {/* module chips (4 standard + Trap) */}
-          <div class="mt-8 flex flex-wrap gap-2">
-            {
-              seknetChips.map(({ title: cTitle, sub }) => (
-                <div class="flex items-center gap-2 rounded-md border border-[rgba(122,180,232,0.18)] bg-[rgba(255,255,255,0.03)] px-3 py-2">
-                  <span class="text-[13.5px] font-bold text-white">{cTitle}</span>
-                  <span class="font-mono text-[10.5px] text-[rgba(226,233,245,0.5)]">{sub}</span>
-                </div>
-              ))
-            }
-            <div class="flex items-center gap-2 rounded-md border border-[rgba(68,135,220,0.45)] bg-[rgba(68,135,220,0.12)] px-3 py-2">
-              <span class="text-[13.5px] font-bold text-white">Trap</span>
-              <MonoPill variant="dark" class="!text-[10px] !tracking-[1px]">Nou</MonoPill>
-            </div>
-          </div>
-        </div>
-
-        {/* Right column — live attack-map console */}
-        <div data-reveal data-reveal-delay="120">
-          <SeknetConsole
-            title="SEKNET TRAP · HARTĂ DE ATAC LIVE"
-            metrics={consoleMetrics}
-            log={consoleLog}
-          />
-        </div>
       </div>
 
       {/* Bottom dual cards — SEKNET ↔ S-VPN (Asset Management stripped) */}
@@ -404,8 +348,7 @@ const cloudRows = [
           <div>
             <div class="text-[15.5px] font-bold text-white">SEKNET</div>
             <p class="mt-1.5 text-[13.5px] leading-[1.6] text-[rgba(226,233,245,0.6)]">
-              Platformă proprietară de monitorizare și securitate — SIEM, detecție bazată pe ML,
-              identitate și decepție activă, într-o singură consolă. Acces la codul sursă.
+              Produs proprietar pentru monitorizarea și protejarea mediilor IT. Detaliile de capabilitate și integrare sunt disponibile la cerere.
             </p>
             <span class="mt-2.5 inline-block text-[13px] font-semibold text-sky"
               >Explorează SEKNET ›</span
@@ -424,8 +367,7 @@ const cloudRows = [
           <div>
             <div class="text-[15.5px] font-bold text-white">S-VPN</div>
             <p class="mt-1.5 text-[13.5px] leading-[1.6] text-[rgba(226,233,245,0.6)]">
-              Suită integrată de acces remote securizat — VPN, MFA, WAF, Endpoint și Console, la
-              −60% față de soluțiile tradiționale.
+              Produs proprietar pentru acces remote securizat. Detaliile de capabilitate și integrare sunt disponibile la cerere.
             </p>
             <span class="mt-2.5 inline-block text-[13px] font-semibold text-sky"
               >Explorează S-VPN ›</span
