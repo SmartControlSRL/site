@@ -29,8 +29,6 @@ interface Props {
   heading: string;
   /** Exactly 4 layers, rendered top (L4) → bottom (L1). */
   layers: Layer[];
-  legendSecurity: string;
-  legendOps: string;
   note: string;
   id?: string;
   class?: string;
@@ -40,8 +38,6 @@ const {
   eyebrow,
   heading,
   layers,
-  legendSecurity,
-  legendOps,
   note,
   id = 'stack',
   class: extra = '',
@@ -230,11 +226,6 @@ const TOPS = [118, 202, 286, 370];
             <line class="sctd-i" x1="200" y1="198" x2="220" y2="198" stroke-width="1.3"></line>
           </svg>
         </div>
-
-        <div class="sctd-legend">
-          <span class="sctd-tag"><i class="sctd-dot sctd-dot--accent"></i>{legendSecurity}</span>
-          <span class="sctd-tag"><i class="sctd-dot sctd-dot--ops"></i>{legendOps}</span>
-        </div>
       </div>
 
       {/* ══ Per-layer detail rows ══ */}
@@ -405,38 +396,13 @@ const TOPS = [118, 202, 286, 370];
     border-color: color-mix(in srgb, var(--color-bright) 55%, transparent);
   }
 
-  /* ── legend ── */
-  .sctd-legend {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  .sctd-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: var(--font-mono);
-    font-size: 11.5px;
-    color: var(--color-cool);
-    background: var(--color-surface);
-    border: 1px dashed var(--color-border-blue);
-    border-radius: var(--radius-sm);
-    padding: 7px 12px;
-  }
+  /* ── note dot ── */
   .sctd-dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
     display: inline-block;
     flex-shrink: 0;
-  }
-  .sctd-dot--accent {
-    background: var(--color-bright);
   }
   .sctd-dot--ops {
     background: var(--color-sky);

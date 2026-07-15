@@ -15,10 +15,12 @@ interface Props {
   cta: string;
   /** Email subject appended to the mailto. */
   subject?: string;
+  /** Render the mono contact line under the button (default true). */
+  showContact?: boolean;
   class?: string;
 }
 
-const { id, eyebrow, heading, cta, subject, class: extra = '' } = Astro.props;
+const { id, eyebrow, heading, cta, subject, showContact = true, class: extra = '' } = Astro.props;
 ---
 
 <section
@@ -37,9 +39,11 @@ const { id, eyebrow, heading, cta, subject, class: extra = '' } = Astro.props;
         <MailtoLink variant="button" dark subject={subject}>{cta}</MailtoLink>
       </div>
 
-      <p class="mt-6 font-mono text-[13px] text-[rgba(226,233,245,0.55)]">
-        <span data-email-user={EMAIL_USER} data-email-domain={EMAIL_DOMAIN}></span> · www.smartcontrol.ro
-      </p>
+      {showContact && (
+        <p class="mt-6 font-mono text-[13px] text-[rgba(226,233,245,0.55)]">
+          <span data-email-user={EMAIL_USER} data-email-domain={EMAIL_DOMAIN}></span> · www.smartcontrol.ro
+        </p>
+      )}
     </div>
   </div>
 </section>
