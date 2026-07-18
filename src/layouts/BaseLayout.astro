@@ -78,8 +78,9 @@ const ogLocaleAlt = lang === 'en' ? 'ro_RO' : 'en_US';
   </head>
   <body>
     <a href="#main" class="sr-only focus:not-sr-only">{t('a11y.skip')}</a>
+    <div class="sc-route-sweep" aria-hidden="true"></div>
     <Nav />
-    <main id="main">
+    <main id="main" tabindex="-1">
       <slot />
     </main>
     <Footer />
@@ -96,6 +97,8 @@ const ogLocaleAlt = lang === 'en' ? 'ro_RO' : 'en_US';
         initCounters,
         initStepper,
         initConsole,
+        initScenes,
+        initStackTeardown,
       } from '../scripts/motion.js';
 
       type Cleanup = () => void;
@@ -123,6 +126,11 @@ const ogLocaleAlt = lang === 'en' ? 'ro_RO' : 'en_US';
           cleanups.push(initConsole(container));
         });
 
+        // Layered scene engine ([data-scene]) + StackTeardown layer sync
+        // (folded in from the component). Both no-op gracefully when their
+        // markup is absent and return cleanups collected below.
+        cleanups.push(initScenes(doc));
+        cleanups.push(initStackTeardown(doc));
       }
 
       function teardown() {
@@ -132,8 +140,16 @@ const ogLocaleAlt = lang === 'en' ? 'ro_RO' : 'en_US';
         cleanups = [];
       }
 
+      // Route-transition focus restoration: after a View Transition swap, move
+      // focus to the main landmark so keyboard/AT users start at the new page's
+      // content (preventScroll keeps the crossfade from jumping).
+      function focusMain() {
+        document.getElementById('main')?.focus({ preventScroll: true });
+      }
+
       document.addEventListener('astro:page-load', wire);
       document.addEventListener('astro:before-swap', teardown);
+      document.addEventListener('astro:after-swap', focusMain);
     </script>
   </body>
 </html>

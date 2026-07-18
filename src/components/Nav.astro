@@ -1,11 +1,13 @@
 ---
-// Export nav (RESOLUTIONS §16): fixed top, ALWAYS light (logo on white), logo +
-// links + assessment CTA (obfuscated mailto) + RO/EN switch. Active-page
-// underline by pathname. initNavShrink (wired in BaseLayout) tightens padding +
-// adds a hairline/shadow past 24px scroll — it targets [data-nav-shrink].
-// Mobile (<768px): hamburger toggles a light slide-down panel (aria-expanded,
-// ESC closes, body scroll-lock while open).
-import { ChevronDown, Menu, X } from '@lucide/astro';
+// Command/index bar (RESOLUTIONS §16): fixed top, ALWAYS light (logo on white),
+// logo + links + assessment CTA (obfuscated mailto) + RO/EN switch. Active-page
+// datum underline by pathname. The resting 1px blue hairline + the scrolled
+// padding/shadow/deepened-border live in global.css ([data-nav-shrink]);
+// initNavShrink (wired in BaseLayout) only toggles `.is-scrolled` past 24px.
+// Desktop route menus are richer light "index cards"; the mobile panel is an
+// intentional light navigation surface (focus-trapped, ESC closes, body
+// scroll-lock, RO/EN switch in its footer cluster).
+import { ChevronDown, Menu, X, Server, ShieldCheck, Code, LifeBuoy, Shield, Lock } from '@lucide/astro';
 import { getLangFromUrl, useTranslations, localizedPath, altLocalePath } from '../i18n/ui';
 import MailtoLink from './MailtoLink.astro';
 
@@ -14,25 +16,26 @@ const t = useTranslations(lang);
 const p = (path: string) => localizedPath(lang, path);
 
 // Two dropdown groups (parent links to the hub/index, panel lists the child
-// pages) + a plain Contact anchor. This surfaces every service/solution page
-// one hover/tap deep and gives /servicii + /solutii their entry points.
+// pages with their Lucide glyphs) + a plain Contact anchor. This surfaces every
+// service/solution page one hover/tap deep and gives /servicii + /solutii their
+// entry points. Icons are decorative (aria-hidden).
 const navItems = [
   {
     href: p('/servicii'),
     label: t('nav.services'),
     children: [
-      { href: p('/servicii/cloud'), label: t('nav.cloud') },
-      { href: p('/servicii/securitate'), label: t('footer.service.security') },
-      { href: p('/servicii/software'), label: t('footer.service.software') },
-      { href: p('/servicii/managed'), label: t('footer.service.managed') },
+      { href: p('/servicii/cloud'), label: t('nav.cloud'), icon: Server },
+      { href: p('/servicii/securitate'), label: t('footer.service.security'), icon: ShieldCheck },
+      { href: p('/servicii/software'), label: t('footer.service.software'), icon: Code },
+      { href: p('/servicii/managed'), label: t('footer.service.managed'), icon: LifeBuoy },
     ],
   },
   {
     href: p('/solutii'),
     label: t('nav.products'),
     children: [
-      { href: p('/solutii/seknet'), label: t('nav.seknet') },
-      { href: p('/solutii/s-vpn'), label: t('nav.svpn') },
+      { href: p('/solutii/seknet'), label: t('nav.seknet'), icon: Shield },
+      { href: p('/solutii/s-vpn'), label: t('nav.svpn'), icon: Lock },
     ],
   },
   { href: p('/#contact'), label: t('nav.contact') },
@@ -41,7 +44,7 @@ const navItems = [
 // Active-page underline: compare against the current pathname (ignore anchors).
 const here = Astro.url.pathname.replace(/\/$/, '') || '/';
 const cleanPath = (href: string) => href.split('#')[0].replace(/\/$/, '') || '/';
-// Exact match — for leaf links (children, Contact).
+// Exact match — for leaf links (children, Contact) and hub pages.
 const isActive = (href: string) => {
   const clean = cleanPath(href);
   return clean !== '/' && clean !== p('/') && here === clean;
@@ -59,11 +62,7 @@ const altHref = altLocalePath(path);
 ---
 
 <header class="fixed inset-x-0 top-0 z-50">
-  <nav
-    data-nav-shrink
-    aria-label={t('a11y.nav')}
-    class="border-b border-transparent bg-surface px-10 py-[18px] transition-[padding,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
-  >
+  <nav data-nav-shrink aria-label={t('a11y.nav')} class="bg-surface">
     <div class="mx-auto flex max-w-[1180px] items-center justify-between gap-8">
       <!-- Logo -->
       <a href={p('/')} class="flex shrink-0 items-center gap-[11px]" aria-label={t('a11y.home')}>
@@ -100,27 +99,51 @@ const altHref = altLocalePath(path);
                     aria-hidden="true"
                   />
                 </a>
-                {/* Dropdown panel — pt-3 is a hover bridge over the gap to the trigger */}
+                {/* Dropdown "index card" — pt-3 is a hover bridge over the gap to the trigger */}
                 <div
                   data-nav-dropdown
                   class="invisible absolute left-1/2 top-full z-10 -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100"
                 >
-                  <ul class="min-w-[232px] rounded-xl border border-border bg-surface p-2 [box-shadow:0_12px_32px_rgba(14,31,91,0.16)]">
-                    {item.children.map((c) => (
+                  <div class="min-w-[264px] rounded-xl border border-border-blue bg-surface p-2.5 shadow-lg">
+                    <p
+                      class="px-2.5 pb-2 font-mono text-[11px] font-semibold uppercase tracking-[2px] text-faint"
+                      aria-hidden="true"
+                    >
+                      {item.label}
+                    </p>
+                    <ul class="flex flex-col gap-0.5">
                       <li>
                         <a
-                          href={c.href}
-                          aria-current={isActive(c.href) ? 'page' : undefined}
+                          href={item.href}
+                          aria-current={isActive(item.href) ? 'page' : undefined}
                           class:list={[
-                            'block rounded-md px-3 py-2.5 text-[13.5px] no-underline transition-colors hover:bg-blue-wash hover:text-navy',
-                            isActive(c.href) ? 'font-semibold text-navy' : 'font-medium text-slate',
+                            'block border-b border-divider px-2.5 pb-2.5 pt-1 text-[13.5px] no-underline transition-colors hover:text-navy',
+                            isActive(item.href) ? 'font-semibold text-navy' : 'font-medium text-slate',
                           ]}
                         >
-                          {c.label}
+                          {item.label}
                         </a>
                       </li>
-                    ))}
-                  </ul>
+                      {item.children.map((c) => {
+                        const Icon = c.icon;
+                        return (
+                          <li>
+                            <a
+                              href={c.href}
+                              aria-current={isActive(c.href) ? 'page' : undefined}
+                              class:list={[
+                                'flex items-center gap-2.5 rounded-md px-2.5 py-2.5 text-[13.5px] no-underline transition-colors hover:bg-blue-wash hover:text-navy',
+                                isActive(c.href) ? 'font-semibold text-navy' : 'font-medium text-slate',
+                              ]}
+                            >
+                              <Icon class="h-[15px] w-[15px] shrink-0 text-royal" stroke-width={1.5} aria-hidden="true" />
+                              <span>{c.label}</span>
+                            </a>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
                 </div>
               </li>
             ) : (
@@ -178,75 +201,88 @@ const altHref = altLocalePath(path);
     </div>
   </nav>
 
-  <!-- Mobile slide-down panel -->
+  <!-- Mobile navigation surface -->
   <div
     id="nav-mobile-panel"
     data-nav-panel
     hidden
-    class="max-h-[calc(100dvh_-_var(--nav-offset))] overflow-y-auto border-b border-border bg-surface shadow-md md:hidden"
+    class="max-h-[calc(100dvh_-_var(--nav-offset))] overflow-y-auto border-b border-border-blue bg-surface shadow-md md:hidden"
   >
-    <ul class="mx-auto flex max-w-[1180px] flex-col gap-1 px-6 py-4">
+    <div class="mx-auto flex max-w-[1180px] flex-col gap-5 px-6 py-5">
       {
         navItems.map((item) =>
           item.children ? (
-            <li>
+            <div>
               <a
                 href={item.href}
                 aria-current={inTree(item.href) ? 'page' : undefined}
                 class:list={[
-                  'block rounded-md px-3 py-3 text-[15px] transition-colors hover:bg-blue-wash',
-                  inTree(item.href) ? 'font-semibold text-navy' : 'font-medium text-slate',
+                  'flex min-h-[44px] items-center rounded-md px-2 font-mono text-[12px] font-semibold uppercase tracking-[2px] transition-colors',
+                  inTree(item.href) ? 'text-navy' : 'text-cool',
                 ]}
               >
                 {item.label}
               </a>
-              <ul class="mb-1 ml-3 flex flex-col gap-0.5 border-l border-divider pl-3">
-                {item.children.map((c) => (
-                  <li>
-                    <a
-                      href={c.href}
-                      aria-current={isActive(c.href) ? 'page' : undefined}
-                      class:list={[
-                        'block rounded-md px-3 py-2.5 text-[14px] transition-colors hover:bg-blue-wash hover:text-navy',
-                        isActive(c.href) ? 'font-semibold text-navy' : 'font-medium text-cool',
-                      ]}
-                    >
-                      {c.label}
-                    </a>
-                  </li>
-                ))}
+              <ul class="mt-1 flex flex-col border-l pl-4" style="border-color: var(--sc-datum-soft)">
+                {item.children.map((c) => {
+                  const Icon = c.icon;
+                  return (
+                    <li>
+                      <a
+                        href={c.href}
+                        aria-current={isActive(c.href) ? 'page' : undefined}
+                        class:list={[
+                          'flex min-h-[44px] items-center gap-2.5 rounded-md px-2 text-[15px] transition-colors hover:bg-blue-wash hover:text-navy',
+                          isActive(c.href) ? 'font-semibold text-navy' : 'font-medium text-slate',
+                        ]}
+                      >
+                        <Icon class="h-[16px] w-[16px] shrink-0 text-royal" stroke-width={1.5} aria-hidden="true" />
+                        <span>{c.label}</span>
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
-            </li>
+            </div>
           ) : (
-            <li>
-              <a
-                href={item.href}
-                aria-current={isActive(item.href) ? 'page' : undefined}
-                class:list={[
-                  'block rounded-md px-3 py-3 text-[15px] transition-colors hover:bg-blue-wash',
-                  isActive(item.href) ? 'font-semibold text-navy' : 'font-medium text-slate',
-                ]}
-              >
-                {item.label}
-              </a>
-            </li>
+            <a
+              href={item.href}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+              class:list={[
+                'flex min-h-[44px] items-center rounded-md px-2 text-[15px] transition-colors hover:bg-blue-wash',
+                isActive(item.href) ? 'font-semibold text-navy' : 'font-medium text-slate',
+              ]}
+            >
+              {item.label}
+            </a>
           )
         )
       }
-      <li class="mt-2 px-3">
+
+      <!-- Footer cluster: assessment CTA pinned full-width + RO/EN switch -->
+      <div class="mt-1 flex flex-col gap-3 border-t border-divider pt-4">
         <MailtoLink variant="button" subject={t('subject.assessment')} class="w-full">
           {t('cta.assessment')}
         </MailtoLink>
-      </li>
-    </ul>
+        <a
+          href={altHref}
+          class="flex min-h-[44px] items-center justify-center rounded-md font-mono text-[12px] font-semibold uppercase tracking-[2px] text-cool transition-colors hover:text-navy"
+          aria-label={t('lang.switch.aria')}
+        >
+          {t('lang.switch')}
+        </a>
+      </div>
+    </div>
   </div>
 </header>
 
 <script>
-  // Mobile menu: toggle the slide-down panel, swap icon, lock body scroll, ESC
-  // closes. Re-bound on every View Transition page load. Idempotent: each run
-  // aborts the previous run's listeners (incl. the document keydown) via an
-  // AbortController before re-wiring against the fresh DOM.
+  // Mobile menu: toggle the slide-down surface, swap icon, lock body scroll, ESC
+  // closes and returns focus to the toggle. While open, Tab cycles within the
+  // panel (the one sanctioned focus trap). Re-bound on every View Transition
+  // page load. Idempotent: each run aborts the previous run's listeners (incl.
+  // the document keydown) via an AbortController before re-wiring against the
+  // fresh DOM.
   let mobileNavAborter: AbortController | undefined;
   function wireMobileNav() {
     mobileNavAborter?.abort();
@@ -258,6 +294,11 @@ const altHref = altLocalePath(path);
     const iconOpen = toggle.querySelector<SVGElement>('[data-nav-icon-open]');
     const iconClose = toggle.querySelector<SVGElement>('[data-nav-icon-close]');
 
+    const focusable = () =>
+      Array.from(panel.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')).filter(
+        (el) => el.offsetParent !== null
+      );
+
     let open = false;
     const set = (next: boolean) => {
       open = next;
@@ -268,6 +309,7 @@ const altHref = altLocalePath(path);
       iconOpen?.classList.toggle('hidden', open);
       iconClose?.classList.toggle('hidden', !open);
       document.body.style.overflow = open ? 'hidden' : '';
+      if (open) focusable()[0]?.focus();
     };
     set(false);
 
@@ -278,9 +320,25 @@ const altHref = altLocalePath(path);
     document.addEventListener(
       'keydown',
       (e) => {
-        if (e.key === 'Escape' && open) {
+        if (!open) return;
+        if (e.key === 'Escape') {
           set(false);
           toggle.focus();
+          return;
+        }
+        if (e.key === 'Tab') {
+          const items = focusable();
+          if (!items.length) return;
+          const first = items[0];
+          const last = items[items.length - 1];
+          const activeEl = document.activeElement as HTMLElement | null;
+          if (e.shiftKey && (activeEl === first || !panel.contains(activeEl))) {
+            e.preventDefault();
+            last.focus();
+          } else if (!e.shiftKey && (activeEl === last || !panel.contains(activeEl))) {
+            e.preventDefault();
+            first.focus();
+          }
         }
       },
       { signal }

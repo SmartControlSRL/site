@@ -12,11 +12,11 @@
 @theme {
   /* — Core blue ladder (the brand spine) — */
   --color-midnight: #040c2b; /* hero floors          */
-  --color-navy: #0e1f5b;     /* PRIMARY brand colour */
-  --color-royal: #1f3c80;    /* secondary; LINK TEXT (AA-safe) */
+  --color-navy: #0e1f5b; /* PRIMARY brand colour */
+  --color-royal: #1f3c80; /* secondary; LINK TEXT (AA-safe) */
   --color-mid-blue: #3470c0; /* gradient stop only   */
-  --color-bright: #4487dc;   /* ACCENT — rules, large headings, hover. NOT body-size link text (fails AA) */
-  --color-sky: #7ab4e8;      /* light accent on dark */
+  --color-bright: #4487dc; /* ACCENT — rules, large headings, hover. NOT body-size link text (fails AA) */
+  --color-sky: #7ab4e8; /* light accent on dark */
 
   /* — Surfaces (light theme) — */
   --color-blue-wash: #edf5fc;
@@ -37,19 +37,20 @@
   --color-on-dark: rgba(226, 233, 245, 0.7);
   --color-console: #070f29;
 
-
   /* — Fonts (self-hosted via @fontsource-variable; no Google CDN) — */
-  --font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: "JetBrains Mono Variable", ui-monospace, "Courier New", monospace;
+  --font-sans:
+    "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:
+    "JetBrains Mono Variable", ui-monospace, "Courier New", monospace;
 
   /* — Fluid type scale. clamp() MAX = export desktop px (canonical). — */
-  --text-display: clamp(2.5rem, 1.6rem + 3.9vw, 4rem);   /* hero H1 → 64px */
+  --text-display: clamp(2.5rem, 1.6rem + 3.9vw, 4rem); /* hero H1 → 64px */
   --text-display--line-height: 1.08;
-  --text-h1: clamp(2rem, 1.5rem + 2.2vw, 2.875rem);       /* product hero → 46px */
+  --text-h1: clamp(2rem, 1.5rem + 2.2vw, 2.875rem); /* product hero → 46px */
   --text-h1--line-height: 1.12;
-  --text-h2: clamp(1.75rem, 1.45rem + 1.3vw, 2.375rem);   /* section H2 → 38px */
+  --text-h2: clamp(1.75rem, 1.45rem + 1.3vw, 2.375rem); /* section H2 → 38px */
   --text-h2--line-height: 1.15;
-  --text-h3: clamp(1.125rem, 1.02rem + 0.45vw, 1.3125rem);/* card H3 → 21px */
+  --text-h3: clamp(1.125rem, 1.02rem + 0.45vw, 1.3125rem); /* card H3 → 21px */
   --text-h3--line-height: 1.4;
   --text-body: 1rem; /* 16px — export base (canonical, RESOLUTIONS §1) */
   --text-body--line-height: 1.65;
@@ -58,8 +59,8 @@
 
   /* — Navy-tinted shadow ladder (never neutral black) — */
   --shadow-xs: 0 1px 2px rgba(14, 31, 91, 0.06);
-  --shadow-sm: 0 2px 12px rgba(14, 31, 91, 0.06);  /* resting card (export) */
-  --shadow-md: 0 2px 12px rgba(14, 31, 91, 0.08);  /* shrunk nav */
+  --shadow-sm: 0 2px 12px rgba(14, 31, 91, 0.06); /* resting card (export) */
+  --shadow-md: 0 2px 12px rgba(14, 31, 91, 0.08); /* shrunk nav */
   --shadow-lg: 0 12px 32px rgba(14, 31, 91, 0.14); /* card hover */
   --shadow-xl: 0 24px 56px rgba(4, 12, 43, 0.22);
 
@@ -75,8 +76,12 @@
 :root {
   --sc-gradient-hero: linear-gradient(
     135deg,
-    #040c2b 0%, #0e1f5b 25%, #1f3c80 50%,
-    #3470c0 75%, #4487dc 92%, #7ab4e8 100%
+    #040c2b 0%,
+    #0e1f5b 25%,
+    #1f3c80 50%,
+    #3470c0 75%,
+    #4487dc 92%,
+    #7ab4e8 100%
   );
   --sc-gradient-footer: linear-gradient(135deg, #040c2b 0%, #0e1f5b 100%);
   /* Light-hero wash: page tint settling into white content below. */
@@ -87,6 +92,21 @@
   );
   /* Offset for the fixed nav: anchors land below it. */
   --nav-offset: 76px;
+
+  /* — Control-plane scene system (Phase 1). Derived alpha/tints of the
+     existing blue ladder — no new hues, no new radii. --sc-datum is the
+     routing/datum stroke: decorative or large-display only, NEVER body
+     link text (bright fails AA at body size). — */
+  --sc-datum: var(--color-bright);
+  --sc-datum-soft: color-mix(in srgb, var(--color-bright) 55%, transparent);
+  --sc-tick: color-mix(in srgb, var(--color-royal) 20%, transparent);
+  --sc-tick-dark: color-mix(in srgb, var(--color-sky) 28%, transparent);
+  --sc-wash-08: color-mix(in srgb, var(--color-bright) 8%, transparent);
+  --sc-wash-12: color-mix(in srgb, var(--color-bright) 12%, transparent);
+  --sc-plane-face: rgba(255, 255, 255, 0.72);
+  --sc-chapter-pad: clamp(56px, 3vw + 40px, 96px);
+  --sc-gutter: 40px;
+  --sc-stage-h: calc(100svh - var(--nav-offset));
 }
 
 /* ============================================================
@@ -142,6 +162,9 @@ body {
 @media (max-width: 768px) {
   .container {
     padding-inline: 24px;
+  }
+  :root {
+    --sc-gutter: 24px;
   }
 }
 
@@ -215,11 +238,112 @@ body {
 }
 
 /* ============================================================
+   CONTROL-PLANE SCENE GRAMMAR (Phase 1)
+   Shared depth ladder for layered scenes. Decorative layers are
+   absolute + non-interactive; .sc-narrative carries the readable
+   semantic content. The scene engine (motion.js initScenes) writes
+   a single custom property --p on [data-scene]; all visuals key
+   off var(--p, 0) so nothing runs without the engine.
+   ============================================================ */
+.sc-scene {
+  position: relative;
+  isolation: isolate;
+}
+.sc-field,
+.sc-blueprint,
+.sc-routing,
+.sc-artifact,
+.sc-frame {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.sc-field {
+  z-index: 0;
+}
+.sc-blueprint {
+  z-index: 1;
+}
+.sc-routing {
+  z-index: 2;
+}
+.sc-artifact {
+  z-index: 3;
+}
+.sc-narrative {
+  position: relative;
+  z-index: 4;
+}
+.sc-frame {
+  z-index: 5;
+}
+
+/* Ghost mono chapter numeral (aria-hidden decorative). */
+.sc-chapter-no {
+  font-family: var(--font-mono);
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 1;
+  font-weight: 700;
+  color: var(--sc-tick);
+}
+
+/* Eyebrow prefixed by a faint mono index. */
+.sc-eyebrow-index {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--color-royal);
+}
+.sc-eyebrow-index .sc-index {
+  color: var(--color-faint);
+}
+
+/* Disciplined 12-column composition grid. */
+.sc-grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(16px, 2vw, 32px);
+}
+
+/* ============================================================
+   COMMAND/INDEX BAR — the fixed light nav. Resting state carries a
+   permanent 1px blue hairline; .is-scrolled (toggled by initNavShrink)
+   deepens the hairline, tightens padding, and lifts a soft shadow.
+   (Was inline JS styles before Phase 1.)
+   ============================================================ */
+[data-nav-shrink] {
+  padding: 18px 40px;
+  border-bottom: 1px solid var(--color-border-blue);
+  transition:
+    padding 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-nav-shrink].is-scrolled {
+  padding: 11px 40px;
+  border-bottom-color: color-mix(
+    in srgb,
+    var(--color-bright) 35%,
+    var(--color-border-blue)
+  );
+  box-shadow: var(--shadow-md);
+}
+
+/* ============================================================
    MOTION KEYFRAMES — gated by prefers-reduced-motion below.
    ============================================================ */
 @keyframes scFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 @keyframes scRiseIn {
   from {
@@ -232,12 +356,21 @@ body {
   }
 }
 @keyframes scMarquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 @keyframes scBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
 }
 
 /* Reduced-motion is non-negotiable: kill non-essential motion. */
@@ -253,4 +386,93 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  /* View-transition pseudo-elements are NOT matched by `*`; disable the
+     route crossfade/sweep explicitly so reduced motion gets an instant swap. */
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* ============================================================
+   ROUTE TRANSITION — CSS-only native View Transitions (ClientRouter
+   is mounted in BaseLayout). A restrained crossfade + <=8px vertical
+   translate on the page root, plus a 2px datum line sweeping once
+   across the top during the swap. The overlay renders in the top
+   layer above normal-DOM pseudo-elements, so the sweep is hooked to
+   a dedicated aria-hidden element's own view-transition group and
+   driven by a single ::view-transition-new keyframe. All of it lives
+   under prefers-reduced-motion: no-preference (see the reduce block
+   above for the instant-swap fallback).
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 360ms;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    animation-fill-mode: both;
+  }
+  ::view-transition-old(root) {
+    animation-name: scRouteOut;
+  }
+  ::view-transition-new(root) {
+    animation-name: scRouteIn;
+  }
+
+  /* The sweep element is transparent on the page; its snapshot is empty,
+     so the datum colour comes from the pseudo-element's own background
+     showing through, clipped to the 2px full-width box. */
+  .sc-route-sweep {
+    view-transition-name: sc-route-sweep;
+  }
+  ::view-transition-group(sc-route-sweep) {
+    z-index: 2147483647;
+  }
+  ::view-transition-old(sc-route-sweep) {
+    animation: none;
+    opacity: 0;
+  }
+  ::view-transition-new(sc-route-sweep) {
+    background: var(--sc-datum);
+    transform-origin: left center;
+    animation: scRouteDatum 360ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+@keyframes scRouteOut {
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+@keyframes scRouteIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+@keyframes scRouteDatum {
+  0% {
+    transform: scaleX(0);
+    opacity: 1;
+  }
+  55% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+}
+
+/* Resting state: a fixed, transparent 2px strip at the very top. It carries
+   no visible paint outside a transition and never intercepts pointer input. */
+.sc-route-sweep {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 2px;
+  pointer-events: none;
+  z-index: 60;
 }

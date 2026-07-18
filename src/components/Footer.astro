@@ -25,9 +25,24 @@ const solutions = [
 
 <footer class="border-t border-border bg-surface px-6 pb-10 pt-16 md:px-10">
   <div class="mx-auto max-w-[1180px]">
+    {/* System-index datum rule with coordinate ticks at the column boundaries */}
+    <div class="relative mb-10" aria-hidden="true">
+      <div class="h-px w-full" style="background: var(--color-border-blue)"></div>
+      <div class="hidden gap-12 md:grid md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
+        <div><span class="block h-2 w-px" style="background: var(--sc-datum)"></span></div>
+        <div><span class="block h-2 w-px" style="background: var(--sc-datum)"></span></div>
+        <div><span class="block h-2 w-px" style="background: var(--sc-datum)"></span></div>
+        <div class="relative">
+          <span class="block h-2 w-px" style="background: var(--sc-datum)"></span>
+          <span class="absolute right-0 top-0 block h-2 w-px" style="background: var(--sc-datum)"></span>
+        </div>
+      </div>
+    </div>
+
     <div class="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
       <!-- Col 1 — brand -->
       <div>
+        <span class="mb-3 block font-mono text-[11px] font-semibold tracking-[2px] text-faint" aria-hidden="true">01</span>
         <a href={p('/')} class="flex items-center gap-[11px]" aria-label="Smart Control — home">
           <img src="/smartcontrol-mark-96.png" alt="" width="34" height="34" class="h-[34px] w-[34px]" loading="lazy" decoding="async" />
           <span class="text-[17px] font-bold tracking-[-0.3px] text-navy">Smart<span class="text-bright">Control</span></span>
@@ -38,6 +53,7 @@ const solutions = [
 
       <!-- Col 2 — Servicii -->
       <div>
+        <span class="mb-1.5 block font-mono text-[11px] font-semibold tracking-[2px] text-faint" aria-hidden="true">02</span>
         <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-cool">{t('footer.col.services')}</h2>
         <ul class="mt-4 grid gap-2.5">
           {services.map((l) => (
@@ -48,6 +64,7 @@ const solutions = [
 
       <!-- Col 3 — Soluții -->
       <div>
+        <span class="mb-1.5 block font-mono text-[11px] font-semibold tracking-[2px] text-faint" aria-hidden="true">03</span>
         <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-cool">{t('footer.col.solutions')}</h2>
         <ul class="mt-4 grid gap-2.5">
           {solutions.map((l) => (
@@ -58,6 +75,7 @@ const solutions = [
 
       <!-- Col 4 — Contact -->
       <div>
+        <span class="mb-1.5 block font-mono text-[11px] font-semibold tracking-[2px] text-faint" aria-hidden="true">04</span>
         <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-cool">{t('footer.col.contact')}</h2>
         <div class="mt-4 grid gap-2.5">
           <a data-email-user={EMAIL_USER} data-email-domain={EMAIL_DOMAIN} href="#" class="text-[13.5px] text-slate transition-colors hover:text-royal"></a>

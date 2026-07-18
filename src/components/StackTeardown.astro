@@ -325,7 +325,7 @@ const TOPS = [118, 202, 286, 370];
     border-radius: var(--radius-lg);
     cursor: pointer;
     border: 1.5px solid var(--color-border-blue);
-    background: rgba(255, 255, 255, 0.72);
+    background: var(--sc-plane-face);
     box-shadow: 0 18px 34px -24px rgba(14, 31, 91, 0.28);
     transform: translate(-50%, -50%) rotateX(58deg) rotateZ(-45deg);
     transition: all 0.45s cubic-bezier(0.22, 0.8, 0.36, 1);
@@ -519,72 +519,3 @@ const TOPS = [118, 202, 286, 370];
     }
   }
 </style>
-
-<script>
-  // Layer sync: hover previews, click/Enter pins (stops the ambient cycle),
-  // auto-advance every 3.2s until the visitor interacts. Reduced motion: no
-  // auto-cycle (transitions are already killed globally in global.css).
-  const initStackTeardown = () => {
-    document.querySelectorAll<HTMLElement>('[data-sctd]').forEach((root) => {
-      if (root.dataset.sctdInit) return;
-      root.dataset.sctdInit = '1';
-      const els = Array.from(root.querySelectorAll<HTMLElement>('[data-layer]'));
-      const count = new Set(els.map((el) => el.dataset.layer)).size;
-      let active = 0;
-      let hover = false;
-      let picked = false;
-      const apply = () => {
-        els.forEach((el) => {
-          const i = Number(el.dataset.layer);
-          const isActive = i === active;
-          el.classList.toggle('is-active', isActive);
-          el.classList.toggle('is-above', i < active);
-          // role="button" plates + rows expose expanded state to AT; collapsed
-          // row content leaves the tab order via inert (WCAG 2.4.7).
-          if (el.getAttribute('role') === 'button') el.setAttribute('aria-expanded', String(isActive));
-          const more = el.querySelector('.sctd-more');
-          if (more) more.toggleAttribute('inert', !isActive);
-        });
-      };
-      const set = (i: number, byUser: boolean) => {
-        if (byUser) picked = true;
-        if (i !== active) {
-          active = i;
-          apply();
-        }
-      };
-      els.forEach((el) => {
-        const i = Number(el.dataset.layer);
-        el.addEventListener('mouseenter', () => set(i, false));
-        el.addEventListener('click', () => set(i, true));
-        el.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            set(i, true);
-          }
-        });
-      });
-      root.addEventListener('mouseenter', () => {
-        hover = true;
-      });
-      root.addEventListener('mouseleave', () => {
-        hover = false;
-      });
-      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        const timer = window.setInterval(() => {
-          if (!root.isConnected) {
-            window.clearInterval(timer);
-            return;
-          }
-          if (!hover && !picked) {
-            active = (active + 1) % count;
-            apply();
-          }
-        }, 3200);
-      }
-      apply();
-    });
-  };
-  document.addEventListener('astro:page-load', initStackTeardown);
-  initStackTeardown();
-</script>
