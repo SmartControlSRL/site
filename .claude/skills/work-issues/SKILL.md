@@ -35,8 +35,12 @@ gate) -> branch off `main` `fix/<n>-slug` -> implement (`implementer` or `implem
 with a FAILING case first for bugs -> `test-author` (Playwright e2e where interactive) ->
 `code-reviewer` (+ `security-reviewer` for JS islands / external resources / privacy page) ->
 `verifier` (`npm run check` 0 errors + `npm run build` clean + acceptance + RO/EN parity) -> open a
-PR referencing the issue -> **merge it once code-reviewer approved AND verifier green**, via the
-ship marker: `mkdir -p .claude && touch .claude/.ship-active` -> `gh pr merge <n> --squash
+PR referencing the issue -> confirm the PR checks (incl. Vercel preview build) green via the
+bounded foreground gate from `/work-issue` step 8 (`timeout 900 gh pr checks <pr> --watch
+--interval 30 --fail-fast`; re-issue on exit 124/early tool kill, budget 4 calls; NEVER a
+backgrounded watcher — its handle is dropped at a compaction/resume boundary and the session hangs
+forever) -> **merge it once the checks gate is green AND code-reviewer approved AND verifier
+green**, via the ship marker: `mkdir -p .claude && touch .claude/.ship-active` -> `gh pr merge <n> --squash
 --delete-branch` -> `rm -f .claude/.ship-active` (always clear). Then post-merge verify on `main`
 (`git switch main && git pull --ff-only && npm ci && npm run check && npm run build`). Never push
 release tags, never deploy.

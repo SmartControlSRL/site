@@ -34,7 +34,14 @@ Run this pipeline, stopping for my approval only at the marked plan gate:
 7. `verifier` -> `npm run check` (astro check: 0 errors) + `npm run build` (clean) + every
    acceptance criterion + RO/EN parity. Loop failures back.
 8. Open a PR referencing #$ARGUMENTS (`Closes #$ARGUMENTS`) with the ticked acceptance checklist
-   and verification evidence. **Merge it yourself ONLY when BOTH hold:** `code-reviewer` approved
+   and verification evidence. Then confirm the PR checks (incl. the Vercel preview build) green —
+   ONE bounded foreground Bash call, NEVER backgrounded (a backgrounded watcher's handle is dropped
+   at any compaction/resume boundary and the session hangs forever on checks that already finished):
+   `timeout 900 gh pr checks <pr> --watch --interval 30 --fail-fast; echo "checks_exit=$?"`
+   0 → green. 124 (or the Bash tool killed the call early) → checks still running, NOT a failure:
+   re-issue the same call (budget 4 calls, ~1 h), then report checks-stuck. Anything else → checks
+   FAILED: feed them back to the implementer, push, rerun this gate.
+   **Merge it yourself ONLY when ALL THREE hold:** the checks gate above is green; `code-reviewer` approved
    (no open changes-requested; plus `security-reviewer` if it ran) AND `verifier` is green on every
    gate + acceptance criterion. The box guard hook blocks `gh pr merge` unless a ship marker exists,
    so raise it, merge, then always clear it:
