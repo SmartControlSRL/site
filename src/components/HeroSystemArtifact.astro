@@ -1,0 +1,78 @@
+---
+// Decorative hero artifact — the assembled four-layer operational system as an
+// exploded isometric stack (StackTeardown plate grammar: rotateX(58deg)
+// rotateZ(-45deg), --sc-plane-face faces, a --sc-datum vertical rail threading
+// the stack). Purely decorative → aria-hidden, carries NO copy. A reserved
+// square aspect-ratio prevents CLS; a single one-shot <=600ms settle plays on
+// entrance (disabled under reduced motion).
+const { class: extra = '' } = Astro.props as { class?: string };
+---
+
+<div class:list={['hsa', extra]} aria-hidden="true">
+  <div class="hsa-stack">
+    <span class="hsa-rail"></span>
+    <span class="hsa-plate" style="--i:0"></span>
+    <span class="hsa-plate" style="--i:1"></span>
+    <span class="hsa-plate" style="--i:2"></span>
+    <span class="hsa-plate" style="--i:3"></span>
+  </div>
+</div>
+
+<style>
+  .hsa {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    margin-inline: auto;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+  .hsa-stack {
+    position: absolute;
+    inset: 0;
+  }
+  .hsa-rail {
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    height: 80%;
+    width: 0;
+    border-left: 1px dashed var(--sc-datum-soft);
+    transform: translateX(-0.5px);
+  }
+  .hsa-plate {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 46%;
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius-lg);
+    border: 1.5px solid var(--color-border-blue);
+    background: var(--sc-plane-face);
+    box-shadow: 0 18px 34px -24px rgba(14, 31, 91, 0.28);
+    transform: translate(-50%, calc(-50% + (var(--i) - 1.5) * -44px)) rotateX(58deg) rotateZ(-45deg);
+  }
+  .hsa-plate::before {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border-radius: var(--radius-md);
+    border: 1px dashed rgba(14, 31, 91, 0.14);
+  }
+  /* The topmost plate carries the accent datum edge. */
+  .hsa-plate[style*="--i:3"] {
+    border-color: var(--sc-datum);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hsa-stack {
+      animation: hsaSettle 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+  }
+  @keyframes hsaSettle {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+  }
+</style>

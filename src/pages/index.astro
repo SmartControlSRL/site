@@ -11,15 +11,16 @@ import Eyebrow from '../components/Eyebrow.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import GridTexture from '../components/GridTexture.astro';
 import CtaBand from '../components/CtaBand.astro';
-import ModuleCard from '../components/ModuleCard.astro';
 import MonoPill from '../components/MonoPill.astro';
 import IconChip from '../components/IconChip.astro';
-import LogoMarquee from '../components/LogoMarquee.astro';
+import PartnerLedger from '../components/PartnerLedger.astro';
 import TextLink from '../components/TextLink.astro';
 import MailtoLink from '../components/MailtoLink.astro';
 import SeknetConsole from '../components/SeknetConsole.astro';
 import CloudPipeline from '../components/CloudPipeline.astro';
 import StackTeardown from '../components/StackTeardown.astro';
+import HeroSystemArtifact from '../components/HeroSystemArtifact.astro';
+import ServicesSignature from '../components/ServicesSignature.astro';
 import {
   getLangFromUrl,
   useTranslations,
@@ -152,180 +153,176 @@ const cloudRows = [
     body: 'Validarea investiției printr-un raport de performanță măsurat după 90 de zile în producție.',
   },
 ];
+
+// Ch1 — four service domains (copy verbatim from the former ModuleCard grid).
+// Atlas cards link to the four service detail routes; aria-labelledby → headingId.
+const services = [
+  {
+    index: '01',
+    title: 'Infrastructură & Cloud',
+    body: 'Proiectăm și consolidăm centre de date, virtualizăm și operăm medii private, hibride și cloud.',
+    items: [
+      'Data Center Design & Implementation',
+      'Consolidare & Virtualizare',
+      'Private & Hybrid Cloud',
+      'Business Continuity & DR',
+      'Storage & Information Management',
+      'Infrastructure Management',
+    ],
+    href: p('/servicii/cloud'),
+    headingId: 'svc-infra',
+    icon: Server,
+  },
+  {
+    index: '02',
+    title: 'Networking & Security',
+    body: 'Securitate perimetrală și end-point, identitate și operațiuni de securitate gestionate.',
+    items: [
+      'Perimeter & End-point Security',
+      'Enterprise SSO / PKI',
+      'Data Leakage Prevention · WAF',
+      'Rapoarte de securitate și audit',
+      'Managed Security Operations',
+    ],
+    href: p('/servicii/securitate'),
+    headingId: 'svc-security',
+    icon: ShieldCheck,
+  },
+  {
+    index: '03',
+    title: 'Software & Automatizare',
+    body: 'Dezvoltare custom, modernizare aplicații și automatizare cu AI — livrare DevSecOps.',
+    items: [
+      'Dezvoltare software custom & API',
+      'DevOps / DevSecOps & CI/CD',
+      'Migrare și modernizare aplicații',
+      'Automatizare cu AI / LLM',
+    ],
+    href: p('/servicii/software'),
+    headingId: 'svc-software',
+    icon: Code,
+  },
+  {
+    index: '04',
+    title: 'Servicii Gestionate',
+    body: 'Operăm infrastructura, rețeaua și securitatea cibernetică — service desk și suport on-site & remote.',
+    items: [
+      'Service Desk Outsourcing',
+      'Managed Infrastructure Operations',
+      'Network Managed Services',
+      'Cyber Security Managed Services',
+      'Outsourced Systems Support',
+      'Cloud Based System Support',
+    ],
+    href: p('/servicii/managed'),
+    headingId: 'svc-managed',
+    icon: LifeBuoy,
+  },
+];
 ---
 
 <BaseLayout title={title} description={description}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(org)} />
 
-  {/* ── SECTION 2 — Hero (light) ── */}
+  {/* ── Ch0 — Hero (light): narrative left, assembled-system artifact right ── */}
   <header
-    class="relative overflow-hidden"
+    class="sc-scene relative overflow-hidden"
     style="background:var(--sc-gradient-hero-light)"
   >
     <GridTexture fade />
 
     <div
-      class="relative z-[1] mx-auto max-w-[1180px] px-6 pb-[80px] pt-[120px] md:px-10 md:pt-[140px]"
+      class="relative z-[1] mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-10 px-6 pb-[80px] pt-[120px] md:px-10 md:pt-[140px] lg:grid-cols-[1fr_0.82fr] lg:gap-16"
     >
-      <Eyebrow class="hero-in">
-        Trusted Service Delivery Partner
-      </Eyebrow>
+      <div class="sc-narrative order-2 lg:order-1">
+        <Eyebrow class="hero-in">
+          Trusted Service Delivery Partner
+        </Eyebrow>
 
-      <h1
-        class="hero-in-2 mt-7 max-w-[860px] text-[clamp(2.4rem,1.6rem+3.6vw,4rem)] font-extrabold leading-[1.08] tracking-[-2px] text-midnight"
-      >
-        Infrastructură. Securitate. Software.<br />
-        <span class="text-bright">Execuție 100% in-house.</span>
-      </h1>
+        <h1
+          class="hero-in-2 mt-7 max-w-[860px] text-[clamp(2.4rem,1.6rem+3.6vw,4rem)] font-extrabold leading-[1.08] tracking-[-2px] text-midnight"
+        >
+          Infrastructură. Securitate. Software.<br />
+          <span class="text-bright">Execuție 100% in-house.</span>
+        </h1>
 
-      <p
-        class="hero-in-3 mt-7 max-w-[600px] text-[18px] leading-[1.7] text-slate"
-      >
-        Smart Control construiește și operează infrastructuri IT complexe de peste {years} de ani,
-        pentru clienți locali și internaționali. Lucrăm exclusiv cu{' '}
-        <strong class="font-semibold text-navy">echipa proprie de experți</strong>, într-o abordare
-        consultativă: fiecare recomandare pleacă de la măsurători făcute în infrastructura
-        clientului.
-      </p>
+        <p
+          class="hero-in-3 mt-7 max-w-[600px] text-[18px] leading-[1.7] text-slate"
+        >
+          Smart Control construiește și operează infrastructuri IT complexe de peste {years} de ani,
+          pentru clienți locali și internaționali. Lucrăm exclusiv cu{' '}
+          <strong class="font-semibold text-navy">echipa proprie de experți</strong>, într-o abordare
+          consultativă: fiecare recomandare pleacă de la măsurători făcute în infrastructura
+          clientului.
+        </p>
 
-      <div class="hero-in-4 mt-[38px] flex flex-wrap items-center gap-[18px]">
-        <MailtoLink variant="button" subject={t('subject.assessment')}>
-          Programează un assessment gratuit
-        </MailtoLink>
-        <TextLink href="#servicii">Vezi serviciile</TextLink>
+        <div class="hero-in-4 mt-[38px] flex flex-wrap items-center gap-[18px]">
+          <MailtoLink variant="button" subject={t('subject.assessment')}>
+            Programează un assessment gratuit
+          </MailtoLink>
+          <TextLink href="#servicii">Vezi serviciile</TextLink>
+        </div>
+
+        <div class="hero-in-4 mt-10 flex flex-wrap gap-2.5">
+          {isoBadges.map((b) => <MonoPill class="!text-[13px] !px-3.5 !py-2 !tracking-[0.6px]">{b}</MonoPill>)}
+        </div>
       </div>
 
-      <div class="hero-in-4 mt-10 flex flex-wrap gap-2.5">
-        {isoBadges.map((b) => <MonoPill class="!text-[13px] !px-3.5 !py-2 !tracking-[0.6px]">{b}</MonoPill>)}
+      <div class="hero-in-3 order-1 lg:order-2">
+        <HeroSystemArtifact />
       </div>
     </div>
   </header>
 
-  {/* ── SECTION 4 — Servicii (bento, light) ── */}
-  <section id="servicii" class="px-6 py-[56px] sm:py-[80px] md:px-10">
-    <div class="mx-auto max-w-[1180px]">
-      <div data-reveal>
-        <SectionHeading
-          heading="Un portofoliu integrat de servicii enterprise"
-          headingMaxWidth="700px"
-        >
-          Patru piloni de servicii, susținuți de 50 de specialiști interni cu peste 500 de ani de
-          experiență cumulată — on-site și remote, același nivel de calitate.
-        </SectionHeading>
-      </div>
+  {/* ── Ch1 — Services signature: assembled system → four-route atlas (single long pin) ── */}
+  <ServicesSignature
+    id="servicii"
+    heading="Un portofoliu integrat de servicii enterprise"
+    lead="Patru piloni de servicii, susținuți de 50 de specialiști interni cu peste 500 de ani de experiență cumulată — on-site și remote, același nivel de calitate."
+    services={services}
+  />
 
-      <div class="mt-10 grid grid-cols-1 gap-5 md:grid-cols-12">
-        {/* Card 01 — span 7 */}
-        <div
-          data-reveal
-          class="md:col-span-12 lg:col-span-7"
-        >
-          <ModuleCard
-            title="Infrastructură & Cloud"
-            index="01"
-            body="Proiectăm și consolidăm centre de date, virtualizăm și operăm medii private, hibride și cloud."
-            items={[
-              'Data Center Design & Implementation',
-              'Consolidare & Virtualizare',
-              'Private & Hybrid Cloud',
-              'Business Continuity & DR',
-              'Storage & Information Management',
-              'Infrastructure Management',
-            ]}
-            cols={2}
-          >
-            <Server slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
-          </ModuleCard>
-        </div>
+  {/* ── Ch2 — Stack Teardown: the culmination of the service architecture ── */}
+  <div class="sc-scene relative">
+    {/* datum-rail continuity from Ch1's atlas */}
+    <span
+      class="pointer-events-none absolute left-1/2 top-0 z-[1] h-9 w-px -translate-x-1/2"
+      style="background:var(--sc-datum-soft)"
+      aria-hidden="true"></span>
+    <StackTeardown
+      eyebrow="Stack Teardown"
+      heading="Un singur partener, unic responsabil"
+      layers={stackLayers}
+      note="SLA 24/7, end-to-end — zero pasare a responsabilității între furnizori."
+    >
+      Acoperim întregul stack tehnologic — infrastructură, rețea, platforme și software — cu accent
+      deosebit pe securitate, sub un SLA unic, end-to-end.
+    </StackTeardown>
+  </div>
 
-        {/* Card 02 — span 5 */}
-        <div
-          data-reveal
-          data-reveal-delay="100"
-          class="md:col-span-12 lg:col-span-5"
-        >
-          <ModuleCard
-            title="Networking & Security"
-            index="02"
-            body="Securitate perimetrală și end-point, identitate și operațiuni de securitate gestionate."
-            items={[
-              'Perimeter & End-point Security',
-              'Enterprise SSO / PKI',
-              'Data Leakage Prevention · WAF',
-              'Rapoarte de securitate și audit',
-              'Managed Security Operations',
-            ]}
-            cols={1}
-          >
-            <ShieldCheck slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
-          </ModuleCard>
-        </div>
-
-        {/* Card 03 — span 5 */}
-        <div
-          data-reveal
-          class="md:col-span-12 lg:col-span-5"
-        >
-          <ModuleCard
-            title="Software & Automatizare"
-            index="03"
-            body="Dezvoltare custom, modernizare aplicații și automatizare cu AI — livrare DevSecOps."
-            items={[
-              'Dezvoltare software custom & API',
-              'DevOps / DevSecOps & CI/CD',
-              'Migrare și modernizare aplicații',
-              'Automatizare cu AI / LLM',
-            ]}
-            cols={1}
-          >
-            <Code slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
-          </ModuleCard>
-        </div>
-
-        {/* Card 04 — span 7 */}
-        <div
-          data-reveal
-          data-reveal-delay="100"
-          class="md:col-span-12 lg:col-span-7"
-        >
-          <ModuleCard
-            title="Servicii Gestionate"
-            index="04"
-            body="Operăm infrastructura, rețeaua și securitatea cibernetică — service desk și suport on-site & remote."
-            items={[
-              'Service Desk Outsourcing',
-              'Managed Infrastructure Operations',
-              'Network Managed Services',
-              'Cyber Security Managed Services',
-              'Outsourced Systems Support',
-              'Cloud Based System Support',
-            ]}
-            cols={2}
-          >
-            <LifeBuoy slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
-          </ModuleCard>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {/* ── SECTION 4b — Stack Teardown (light wash) ── */}
-  <StackTeardown
-    eyebrow="Stack Teardown"
-    heading="Un singur partener, unic responsabil"
-    layers={stackLayers}
-    note="SLA 24/7, end-to-end — zero pasare a responsabilității între furnizori."
-  >
-    Acoperim întregul stack tehnologic — infrastructură, rețea, platforme și software — cu accent
-    deosebit pe securitate, sub un SLA unic, end-to-end.
-  </StackTeardown>
-
-  {/* ── SECTION 5 — Produse (DARK band) ── */}
+  {/* ── Ch3 — Products (DARK band): two connected operational worlds ── */}
   <section
     id="produse"
-    class="relative overflow-hidden bg-midnight px-6 py-[56px] sm:py-[80px] md:px-10"
+    class="sc-scene relative overflow-hidden bg-midnight px-6 py-[56px] sm:py-[80px] md:px-10"
   >
     <GridTexture dark opacity={0.8} />
+
+    {/* decorative routing: lines fanning from the console node to the two product cards */}
+    <div class="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
+      <svg class="absolute inset-0 h-full w-full" preserveAspectRatio="none" viewBox="0 0 1200 620" fill="none">
+        <path d="M600 90 L600 300" stroke="var(--sc-datum-soft)" stroke-width="1" stroke-dasharray="4 6"></path>
+        <path d="M600 300 L230 540" stroke="var(--sc-tick-dark)" stroke-width="1"></path>
+        <path d="M600 300 L970 540" stroke="var(--sc-tick-dark)" stroke-width="1"></path>
+        <circle cx="600" cy="300" r="4" fill="var(--sc-datum)"></circle>
+        <circle cx="230" cy="540" r="3" fill="var(--sc-tick-dark)"></circle>
+        <circle cx="970" cy="540" r="3" fill="var(--sc-tick-dark)"></circle>
+      </svg>
+    </div>
+
+    <span
+      class="sc-chapter-no absolute right-10 top-6 z-[1] hidden leading-none lg:block"
+      style="color:var(--sc-tick-dark)"
+      aria-hidden="true">02</span>
 
     <div class="relative z-[1] mx-auto max-w-[1180px]">
       <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
@@ -396,9 +393,12 @@ const cloudRows = [
     </div>
   </section>
 
-  {/* ── SECTION 6 — Cloud teaser (light wash, tight tier) ── */}
-  <section class="bg-page px-6 py-[44px] sm:py-[64px] md:px-10">
-    <div class="mx-auto max-w-[1180px]">
+  {/* ── Ch4 — Cloud teaser: the routing line becomes the five-stage path ── */}
+  <section class="sc-scene relative bg-page px-6 py-[44px] sm:py-[64px] md:px-10">
+    <span
+      class="sc-chapter-no absolute right-10 top-6 z-[1] hidden leading-none lg:block"
+      aria-hidden="true">03</span>
+    <div class="relative z-[1] mx-auto max-w-[1180px]">
       {/* Header split — heading left, context + CTA right */}
       <div data-reveal class="grid grid-cols-1 items-end gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">
         <SectionHeading
@@ -420,9 +420,13 @@ const cloudRows = [
         </div>
       </div>
 
-      {/* 5-stage methodology pipeline */}
+      {/* 5-stage methodology pipeline — framed on the continuing datum rail */}
       <div data-reveal class="mt-12">
-        <CloudPipeline steps={cloudSteps} />
+        <span
+          class="mx-auto block h-8 w-px"
+          style="background:var(--sc-datum-soft)"
+          aria-hidden="true"></span>
+        <CloudPipeline steps={cloudSteps} class="mt-2" />
       </div>
 
       {/* Capability cards */}
@@ -441,9 +445,12 @@ const cloudRows = [
     </div>
   </section>
 
-  {/* ── SECTION 7 — Parteneri (light marquee) ── */}
-  <section id="parteneri" class="overflow-hidden bg-surface py-16">
-    <div class="mx-auto max-w-[1180px] px-6 md:px-10">
+  {/* ── Ch5 — Partners: a calm static trust ledger ── */}
+  <section id="parteneri" class="sc-scene relative bg-surface py-16">
+    <span
+      class="sc-chapter-no absolute right-10 top-6 z-[1] hidden leading-none lg:block"
+      aria-hidden="true">04</span>
+    <div class="relative z-[1] mx-auto max-w-[1180px] px-6 md:px-10">
       <div data-reveal class="text-center">
         <Eyebrow>Parteneri tehnologici</Eyebrow>
         <p class="mx-auto mt-5 max-w-[540px] text-[15.5px] text-cool">
@@ -451,22 +458,29 @@ const cloudRows = [
           clienților noștri.
         </p>
       </div>
-    </div>
-    <div class="mt-9 [will-change:transform]">
-      <LogoMarquee items={partners} />
+      <div data-reveal class="mt-9">
+        <PartnerLedger items={partners} />
+      </div>
     </div>
   </section>
 
-  {/* ── SECTION 8 — CTA / Contact (DARK band) ── */}
-  <CtaBand
-    id="contact"
-    eyebrow="Pașii următori"
-    heading="Assessment inițial gratuit — 2 zile"
-    cta={t('cta.assessment')}
-    subject={t('subject.assessment')}
-    showContact={false}
-  >
-    Fără obligații contractuale. Identificăm împreună zona de interes prioritară și livrăm un raport de
-    recomandări la final.
-  </CtaBand>
+  {/* ── Ch6 — Closing CTA (DARK band): the routing line resolves into a terminus ── */}
+  <div class="sc-scene relative">
+    {/* datum terminus: the routing line arrives and resolves into a terminal node */}
+    <div class="pointer-events-none flex flex-col items-center bg-surface pt-2" aria-hidden="true">
+      <span class="h-10 w-px" style="background:var(--sc-datum-soft)"></span>
+      <span class="-mt-1 h-2.5 w-2.5 rounded-full" style="background:var(--sc-datum)"></span>
+    </div>
+    <CtaBand
+      id="contact"
+      eyebrow="Pașii următori"
+      heading="Assessment inițial gratuit — 2 zile"
+      cta={t('cta.assessment')}
+      subject={t('subject.assessment')}
+      showContact={false}
+    >
+      Fără obligații contractuale. Identificăm împreună zona de interes prioritară și livrăm un raport de
+      recomandări la final.
+    </CtaBand>
+  </div>
 </BaseLayout>

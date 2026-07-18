@@ -1,0 +1,83 @@
+---
+// Partner trust ledger — a calm static "system index" of partner wordmarks:
+// a bordered mono grid with hairline dividers and a coordinate tick per cell.
+// Replaces the scrolling LogoMarquee on Home (no motion, no JS). The visible
+// grid is decorative/aria-hidden; the sr-only <ul> is the single accessible
+// source (mirrors LogoMarquee.astro's sr-only pattern). Partner names verbatim.
+interface Props {
+  /** Partner names (text wordmarks — no logo images, per brand rule). */
+  items: string[];
+  class?: string;
+}
+const { items, class: extra = '' } = Astro.props;
+---
+
+<div class:list={['pl', extra]}>
+  {/* AT-readable partner list — the grid below is aria-hidden */}
+  <ul class="sr-only">
+    {items.map((name) => <li>{name}</li>)}
+  </ul>
+
+  <div class="pl-grid" aria-hidden="true">
+    {
+      items.map((name) => (
+        <div class="pl-cell">
+          <span class="pl-tick" aria-hidden="true" />
+          <span class="pl-name">{name}</span>
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .pl-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border: 1px solid var(--color-border-blue);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  @media (min-width: 640px) {
+    .pl-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 900px) {
+    .pl-grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+  .pl-cell {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 74px;
+    padding: 0 18px;
+    border-right: 1px solid var(--color-divider);
+    border-bottom: 1px solid var(--color-divider);
+    transition: background 0.3s ease;
+  }
+  .pl-cell:hover {
+    background: var(--color-hover-tint);
+  }
+  .pl-tick {
+    width: 6px;
+    height: 6px;
+    flex: none;
+    background: var(--sc-datum-soft);
+  }
+  .pl-name {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--color-cool);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+</style>

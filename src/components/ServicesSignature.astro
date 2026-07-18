@@ -1,0 +1,224 @@
+---
+// Ch1 — the services signature: the site's single long-pinned chapter. The
+// assembled system separates into four planes, a datum rail draws, and the four
+// service domains surface one at a time before locking into a usable four-route
+// atlas. All choreography is pure CSS keyed off the --p custom property written
+// by initScenes (Phase 1); this component ships NO JavaScript of its own.
+//
+// Fallback is first-class: the pin only engages when initScenes grants the
+// `is-pinned` class (>=1100px, no reduced-motion, innerHeight>=640). WITHOUT it
+// — i.e. at 768-1099px, <768px, reduced-motion, and no-JS — the outer wrapper
+// is height:auto, the stage is static, and the polished four-route atlas renders
+// with every card, heading and link visible. One semantic DOM source; content
+// is never duplicated for the two states.
+//
+// Copy (heading, lead, service titles/bodies/chevron items) is passed in
+// verbatim from the page. Atlas cards are links to the four service routes; each
+// link's accessible name comes from aria-labelledby pointing at its pillar H3.
+import ChevronList from './ChevronList.astro';
+import IconChip from './IconChip.astro';
+
+interface Service {
+  /** Mono index shown on the card (e.g. "01"). */
+  index: string;
+  title: string;
+  body: string;
+  items: string[];
+  /** Service detail route. */
+  href: string;
+  /** id on the pillar H3 — the atlas link's aria-labelledby target. */
+  headingId: string;
+  /** Lucide icon component. */
+  icon: any;
+}
+interface Props {
+  id?: string;
+  heading: string;
+  lead: string;
+  services: Service[];
+  class?: string;
+}
+const { id, heading, lead, services, class: extra = '' } = Astro.props;
+---
+
+<section id={id} data-scene class:list={['ss sc-scene', extra]}>
+  <div class="ss-outer">
+    <div class="ss-stage">
+      <div class="ss-inner mx-auto max-w-[1180px] px-6 md:px-10">
+        <span class="ss-chapter sc-chapter-no" aria-hidden="true">01</span>
+
+        <div class="ss-head">
+          <h2 class="ss-h2 text-h2 font-bold leading-[1.15] tracking-[-1px] text-navy">{heading}</h2>
+          <p class="ss-lead mt-4 text-[16.5px] text-cool">{lead}</p>
+        </div>
+
+        {/* Decorative assembly rail: four planes surface then a datum rail draws */}
+        <div class="ss-rail" aria-hidden="true">
+          <svg class="ss-rail-svg" viewBox="0 0 1000 2" preserveAspectRatio="none">
+            <line class="ss-rail-line" x1="0" y1="1" x2="1000" y2="1" pathLength="1"></line>
+          </svg>
+          {services.map((_s, i) => <span class="ss-plane" style={`--i:${i}`}></span>)}
+        </div>
+
+        <div class="ss-atlas sc-grid-12">
+          {
+            services.map((s, i) => {
+              const Icon = s.icon;
+              return (
+                <a href={s.href} aria-labelledby={s.headingId} class="ss-card" style={`--i:${i}`}>
+                  <div class="ss-card-head">
+                    <IconChip>
+                      <Icon class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+                    </IconChip>
+                    <span class="font-mono text-[12px] tracking-[2px] text-cool">{s.index}</span>
+                  </div>
+                  <h3 id={s.headingId} class="mt-4 text-[19px] font-bold tracking-[-0.3px] text-navy">
+                    {s.title}
+                  </h3>
+                  <p class="mt-2 text-[13.5px] leading-[1.5] text-cool">{s.body}</p>
+                  <ChevronList items={s.items} class="mt-4" />
+                </a>
+              );
+            })
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ── Static / non-pinned base = the polished four-route atlas ── */
+  .ss-outer {
+    position: relative;
+    padding-block: var(--sc-chapter-pad);
+  }
+  .ss-inner {
+    position: relative;
+    width: 100%;
+  }
+  .ss-chapter {
+    position: absolute;
+    top: -0.35em;
+    right: clamp(24px, 5vw, 64px);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .ss-h2 {
+    max-width: 700px;
+  }
+  .ss-lead {
+    max-width: 620px;
+  }
+  .ss-rail {
+    position: relative;
+    height: 30px;
+    margin-top: 32px;
+  }
+  .ss-rail-svg {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    width: 100%;
+    height: 2px;
+    transform: translateY(-50%);
+  }
+  .ss-rail-line {
+    stroke: var(--sc-datum);
+    stroke-width: 1.5;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    opacity: 0.55;
+  }
+  .ss-plane {
+    position: absolute;
+    top: 50%;
+    left: calc(12.5% + var(--i) * 25%);
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border-radius: var(--radius-xs);
+    border: 1.5px solid var(--sc-datum-soft);
+    background: var(--sc-plane-face);
+    transform-origin: center;
+    transform: rotateX(58deg) rotateZ(-45deg);
+  }
+  .ss-atlas {
+    margin-top: 32px;
+    row-gap: 20px;
+  }
+  .ss-card {
+    grid-column: span 12;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: 26px;
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+    transition:
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.35s ease,
+      box-shadow 0.35s ease;
+  }
+  .ss-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-border-blue);
+    box-shadow: var(--shadow-lg);
+  }
+  .ss-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+  }
+  @media (min-width: 768px) {
+    .ss-card {
+      grid-column: span 6;
+    }
+  }
+  @media (min-width: 1100px) {
+    .ss-card {
+      grid-column: span 3;
+    }
+  }
+
+  /* ── Pinned choreography (>=1100px, granted by initScenes via is-pinned) ── */
+  @media (min-width: 1100px) {
+    .ss.is-pinned .ss-outer {
+      height: 320svh;
+    }
+    .ss.is-pinned .ss-stage {
+      position: sticky;
+      top: var(--nav-offset);
+      height: var(--sc-stage-h);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* 0.12 → 0.80: the datum rail draws left→right */
+    .ss.is-pinned .ss-rail-line {
+      stroke-dashoffset: calc(1 - clamp(0, calc((var(--p, 0) - 0.12) / 0.68), 1));
+    }
+
+    /* 0 → 0.12: the four planes separate/surface (staggered), then recede */
+    .ss.is-pinned .ss-plane {
+      --app: clamp(0, calc((var(--p, 0) - var(--i) * 0.03) / 0.09), 1);
+      opacity: calc(var(--app) * (1 - clamp(0, calc((var(--p, 0) - 0.55) / 0.25), 1)));
+      transform: scale(calc(0.5 + 0.5 * var(--app))) rotateX(58deg) rotateZ(-45deg);
+    }
+
+    /* 0.12 → 0.80: pillars surface one at a time, locked by 0.80 */
+    .ss.is-pinned .ss-card {
+      --start: calc(0.12 + var(--i) * 0.17);
+      opacity: clamp(0, calc((var(--p, 0) - var(--start)) / 0.17), 1);
+      transform: translateY(calc((1 - clamp(0, calc((var(--p, 0) - var(--start)) / 0.17), 1)) * 18px));
+    }
+    .ss.is-pinned .ss-card:hover {
+      transform: translateY(-5px);
+    }
+  }
+</style>
