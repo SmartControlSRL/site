@@ -5,11 +5,11 @@
 // dots become sky (green is product-UI only), IBM Plex/Space Grotesk become the
 // site's Inter + JetBrains Mono, greys become warm-blue washes with navy-tinted
 // shadows, and body-size links render royal (AA). Four exploded isometric
-// plates (L4→L1) sync with accordion detail rows; hover previews a layer, click
-// pins it, and an ambient auto-cycle advances every 3.2s until the visitor
-// picks one (disabled under prefers-reduced-motion). Copy comes in via props so
-// RO / EN pages stay at full parity.
+// plates (L4→L1) share one progressively enhanced semantic layer list: a
+// deterministic sticky chapter at desktop and a compact accordion below it.
+// Copy comes in via props so RO / EN pages stay at full parity.
 import SectionHeading from './SectionHeading.astro';
+import GridTexture from './GridTexture.astro';
 
 interface Layer {
   /** mono level code, top of stack first (L4 … L1) */
@@ -43,32 +43,53 @@ const {
   class: extra = '',
 } = Astro.props;
 
-// Vertical anchor (px) of each plate/callout pair inside the 565px visual.
+// Vertical anchor (px) of each plate/callout pair inside the shared stack view.
 const TOPS = [118, 202, 286, 370];
 ---
 
 <section
   id={id}
   data-sctd
-  class:list={['bg-page px-6 py-[56px] sm:py-[80px] md:px-10', extra]}
+  class:list={['sctd bg-page', extra]}
 >
-  <div class="mx-auto max-w-[1180px]">
-    {/* Head split — heading left, context right (mirrors the Cloud teaser) */}
-    <div data-reveal class="grid grid-cols-1 items-end gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">
-      <SectionHeading eyebrow={eyebrow} heading={heading} headingMaxWidth="560px" />
-      <p class="text-[16px] leading-[1.6] text-cool">
-        <slot />
-      </p>
-    </div>
+  <div class="sctd-scroll">
+    <div class="sctd-stage" data-sctd-stage>
+      {/* 00-stage-bg + 10-blueprint-ruling */}
+      <GridTexture class="sctd-blueprint" />
 
-    <div data-reveal data-reveal-delay="100" class="sctd-grid mt-10">
+      {/* 20-datum-and-routing — decorative geometry shares the stage frame. */}
+      <svg
+        class="sctd-routing"
+        viewBox="0 0 1180 640"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <path data-sctd-route pathLength="1" d="M78 520H286V122H584V304H1084" />
+        <path data-sctd-route pathLength="1" d="M132 574H412V470H742V164H1118" />
+        <line x1="584" y1="82" x2="584" y2="564" />
+        <g class="sctd-ticks">
+          <path d="M72 112h18M81 103v18M1090 514h18M1099 505v18" />
+          <path d="M196 80v12M384 80v12M772 548v12M960 548v12" />
+        </g>
+      </svg>
+
+      <div class="sctd-frame">
+        {/* 40/41 foreground framing — public copy remains server rendered. */}
+        <div class="sctd-intro" data-sctd-intro>
+          <SectionHeading eyebrow={eyebrow} heading={heading} headingMaxWidth="560px" />
+          <p class="sctd-lead">
+            <slot />
+          </p>
+        </div>
+
+        <div class="sctd-grid">
       {/* ══ Exploded isometric stack ══ */}
       <div class="sctd-visual">
         <div class="sctd-spine" aria-hidden="true"></div>
 
         {
           layers.map((layer, i) => (
-            <div class="sctd-callout" data-layer={i} style={`--top:${TOPS[i]}px`}>
+            <div class="sctd-callout" data-layer={i} style={`--top:${TOPS[i]}px`} aria-hidden="true">
               <span class="sctd-code">{layer.code}</span>
               <span class="sctd-dash" />
             </div>
@@ -76,12 +97,13 @@ const TOPS = [118, 202, 286, 370];
         }
 
         {/* L4 · applications & automation — app windows + CI/CD pipeline */}
-        <div
+        <button
+          type="button"
           class="sctd-plate"
+          disabled
           data-layer="0"
+          data-sctd-select
           style={`--top:${TOPS[0]}px;z-index:10`}
-          role="button"
-          tabindex="0"
           aria-expanded="false"
           aria-label={layers[0].aria}
         >
@@ -104,15 +126,16 @@ const TOPS = [118, 202, 286, 370];
             <rect class="sctd-h" x="200" y="184" width="24" height="24" rx="5" stroke-width="1.5"></rect>
             <circle class="sctd-hf" cx="212" cy="196" r="4"></circle>
           </svg>
-        </div>
+        </button>
 
         {/* L3 · platforms & data — container grid + cluster + volumes */}
-        <div
+        <button
+          type="button"
           class="sctd-plate"
+          disabled
           data-layer="1"
+          data-sctd-select
           style={`--top:${TOPS[1]}px;z-index:9`}
-          role="button"
-          tabindex="0"
           aria-expanded="false"
           aria-label={layers[1].aria}
         >
@@ -147,15 +170,16 @@ const TOPS = [118, 202, 286, 370];
             <line class="sctd-i" x1="215" y1="114" x2="215" y2="200" stroke-width="1.3" stroke-dasharray="3 4"></line>
             <line class="sctd-i" x1="174" y1="202" x2="211" y2="202" stroke-width="1.3" stroke-dasharray="3 4"></line>
           </svg>
-        </div>
+        </button>
 
         {/* L2 · network & connectivity — mesh topology */}
-        <div
+        <button
+          type="button"
           class="sctd-plate"
+          disabled
           data-layer="2"
+          data-sctd-select
           style={`--top:${TOPS[2]}px;z-index:8`}
-          role="button"
-          tabindex="0"
           aria-expanded="false"
           aria-label={layers[2].aria}
         >
@@ -183,15 +207,16 @@ const TOPS = [118, 202, 286, 370];
             <circle class="sctd-hf" cx="140" cy="140" r="8"></circle>
             <circle class="sctd-hf" cx="97" cy="140" r="3.5"></circle>
           </svg>
-        </div>
+        </button>
 
         {/* L1 · physical infrastructure — floor plan: racks + aisle + PDU */}
-        <div
+        <button
+          type="button"
           class="sctd-plate"
+          disabled
           data-layer="3"
+          data-sctd-select
           style={`--top:${TOPS[3]}px;z-index:7`}
-          role="button"
-          tabindex="0"
           aria-expanded="false"
           aria-label={layers[3].aria}
         >
@@ -225,119 +250,250 @@ const TOPS = [118, 202, 286, 370];
             <line class="sctd-i" x1="200" y1="186" x2="220" y2="186" stroke-width="1.3"></line>
             <line class="sctd-i" x1="200" y1="198" x2="220" y2="198" stroke-width="1.3"></line>
           </svg>
-        </div>
+        </button>
       </div>
 
-      {/* ══ Per-layer detail rows ══ */}
-      <div class="sctd-rows">
-        {
-          layers.map((layer, i) => (
-            <div class="sctd-row" data-layer={i} role="button" tabindex="0" aria-expanded="false">
-              <div class="sctd-rowhead">
-                <span class="sctd-code">{layer.code}</span>
-                <div>
-                  <div class="sctd-name">{layer.name}</div>
-                  <div class="sctd-desc">{layer.desc}</div>
-                </div>
-              </div>
-              {/* ships inert — collapsed content must not be tabbable (WCAG
-                  2.4.7); apply() lifts it on the active row */}
-              <div class="sctd-more" inert>
-                <div>
-                  <div class="sctd-chips">
-                    {layer.chips.map((chip) => (
-                      <span>{chip}</span>
-                    ))}
+      {/* ══ One semantic layer list: normal-flow accordion below 1100px,
+          finite narrative rail in the enhanced desktop chapter. ══ */}
+      <div class="sctd-story" data-sctd-story>
+        <div class="sctd-list-viewport" data-sctd-viewport>
+          <ol class="sctd-list" data-sctd-list role="list">
+            {
+              layers.map((layer, i) => (
+                <li class="sctd-row" data-sctd-item data-layer={i}>
+                  <h3>
+                    <button
+                      type="button"
+                      class="sctd-rowhead"
+                      disabled
+                      data-sctd-select
+                      data-sctd-accordion
+                      aria-expanded="true"
+                      aria-controls={`${id}-layer-${i}`}
+                    >
+                      <span class="sctd-code">{layer.code}</span>
+                      <span class="sctd-name">{layer.name}</span>
+                    </button>
+                  </h3>
+                  {/* Visible and focusable in SSR. Enhancement may collapse
+                      inactive compact panels only after initialization. */}
+                  <div class="sctd-more" id={`${id}-layer-${i}`} data-sctd-panel>
+                    <p class="sctd-desc">{layer.desc}</p>
+                    <div class="sctd-chips">
+                      {layer.chips.map((chip) => (
+                        <span>{chip}</span>
+                      ))}
+                    </div>
+                    <a class="sctd-link" data-sctd-link href={layer.href}>
+                      {layer.linkLabel} <span aria-hidden="true">›</span>
+                    </a>
                   </div>
-                  <a class="sctd-link" href={layer.href}>
-                    {layer.linkLabel} <span aria-hidden="true">›</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          ))
-        }
-        <div class="sctd-note"><i class="sctd-dot sctd-dot--ops"></i>{note}</div>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+
+        <div class="sctd-note" data-sctd-note>
+          <i class="sctd-dot sctd-dot--ops" aria-hidden="true"></i>{note}
+        </div>
+
+        {/* Hidden until enhancement succeeds, so no-JS never ships dead UI.
+            Accessible names reuse the reviewed layer names/labels. */}
+        <div class="sctd-controls" data-sctd-controls hidden>
+          <button type="button" class="sctd-arrow" data-sctd-prev aria-label={layers[0].aria} disabled>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="m15 18-6-6 6-6M9 12h10" />
+            </svg>
+          </button>
+
+          <div class="sctd-position" aria-live="polite" aria-atomic="true">
+            <span data-sctd-position-code>{layers[0].code}</span>
+            <span aria-hidden="true">·</span>
+            <span data-sctd-position-name>{layers[0].name}</span>
+          </div>
+
+          <button type="button" class="sctd-arrow" data-sctd-next aria-label={layers[1].aria}>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="m9 18 6-6-6-6M5 12h10" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  .sctd-grid {
+  .sctd {
+    position: relative;
+    isolation: isolate;
+    padding: 56px 24px;
+    --sctd-lift-0: 0px;
+    --sctd-lift-1: 0px;
+    --sctd-lift-2: 0px;
+    --sctd-lift-3: 0px;
+    --sctd-alpha-0: 1;
+    --sctd-alpha-1: 1;
+    --sctd-alpha-2: 1;
+    --sctd-alpha-3: 1;
+  }
+  .sctd-scroll,
+  .sctd-stage,
+  .sctd-frame {
+    position: relative;
+  }
+  .sctd-stage {
+    background: var(--color-page);
+  }
+  .sctd-blueprint {
+    z-index: 0;
+    opacity: 0.7;
+  }
+  .sctd-routing {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+    fill: none;
+    stroke: color-mix(in srgb, var(--color-royal) 20%, transparent);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+  .sctd-routing [data-sctd-route] {
+    stroke-dasharray: 1;
+    stroke-dashoffset: var(--sctd-route-offset, 0.68);
+  }
+  .sctd-routing .sctd-ticks {
+    stroke: color-mix(in srgb, var(--color-bright) 35%, transparent);
+  }
+  .sctd-frame {
+    z-index: 2;
+    width: 100%;
+    max-width: 1180px;
+    margin-inline: auto;
+  }
+  .sctd-intro {
     display: grid;
-    grid-template-columns: 1.05fr 0.95fr;
-    gap: 48px;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .sctd-lead {
+    max-width: 580px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--color-cool);
+  }
+  .sctd-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
     align-items: start;
+    margin-top: 40px;
   }
 
-  /* ── visual ── */
+  /* 30-operational-stack */
   .sctd-visual {
     position: relative;
-    height: 565px;
+    height: 520px;
+    min-width: 0;
+    overflow: visible;
+    transform: scale(var(--sctd-camera-scale, 1));
+    transform-origin: 52% 52%;
   }
   .sctd-spine {
     position: absolute;
     left: 56%;
     top: 74px;
-    height: 444px;
-    width: 0;
-    border-left: 1px dashed color-mix(in srgb, var(--color-bright) 60%, transparent);
-    opacity: 0.5;
     z-index: 12;
+    width: 0;
+    height: 414px;
+    border-left: 1px dashed color-mix(in srgb, var(--color-bright) 60%, transparent);
+    opacity: var(--sctd-route-opacity, 0.5);
     pointer-events: none;
   }
   .sctd-callout {
     position: absolute;
     left: 0;
     right: 54%;
-    top: var(--top);
+    top: calc(var(--top) + var(--sctd-layer-lift, 0px));
+    z-index: 1;
     display: flex;
     align-items: center;
     gap: 10px;
-    z-index: 1;
+    opacity: var(--sctd-layer-alpha, 1);
     pointer-events: none;
     transform: translateY(-50%);
-    transition: all 0.45s cubic-bezier(0.22, 0.8, 0.36, 1);
+    transition:
+      top 0.32s cubic-bezier(0.22, 0.8, 0.36, 1),
+      opacity 0.24s ease;
   }
   .sctd-code {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.08em;
+    flex: none;
     padding: 4px 8px;
+    border: 1px solid var(--color-border-blue);
     border-radius: var(--radius-sm);
     background: var(--color-surface);
     color: var(--color-cool);
-    border: 1px solid var(--color-border-blue);
-    transition: all 0.3s;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
   }
   .sctd-dash {
     flex: 1;
     border-top: 1px dashed var(--color-border-blue);
-    transition: all 0.3s;
+    transition: border-color 0.2s ease;
   }
   .sctd-plate {
     position: absolute;
     left: 56%;
     top: var(--top);
-    width: 280px;
-    height: 280px;
-    border-radius: var(--radius-lg);
-    cursor: pointer;
+    width: clamp(220px, 66vw, 280px);
+    height: clamp(220px, 66vw, 280px);
+    padding: 0;
     border: 1.5px solid var(--color-border-blue);
-    background: rgba(255, 255, 255, 0.72);
-    box-shadow: 0 18px 34px -24px rgba(14, 31, 91, 0.28);
-    transform: translate(-50%, -50%) rotateX(58deg) rotateZ(-45deg);
-    transition: all 0.45s cubic-bezier(0.22, 0.8, 0.36, 1);
-    --ink: rgba(14, 31, 91, 0.26);
-    --hot: rgba(14, 31, 91, 0.42);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--color-surface) 86%, transparent);
+    box-shadow: 0 18px 34px -24px color-mix(in srgb, var(--color-navy) 28%, transparent);
+    color: inherit;
+    cursor: pointer;
+    opacity: var(--sctd-layer-alpha, 1);
+    transform:
+      translate(-50%, -50%)
+      translateY(var(--sctd-layer-lift, 0px))
+      rotateX(58deg)
+      rotateZ(-45deg);
+    transition:
+      transform 0.32s cubic-bezier(0.22, 0.8, 0.36, 1),
+      opacity 0.24s ease,
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+    --ink: color-mix(in srgb, var(--color-navy) 26%, transparent);
+    --hot: color-mix(in srgb, var(--color-navy) 42%, transparent);
+  }
+  .sctd-plate:focus-visible {
+    outline-offset: 5px;
+  }
+  .sctd-plate:disabled {
+    cursor: default;
   }
   .sctd-inner {
     position: absolute;
     inset: 12px;
+    border: 1px dashed color-mix(in srgb, var(--color-navy) 16%, transparent);
     border-radius: var(--radius-md);
-    border: 1px dashed rgba(14, 31, 91, 0.16);
-    transition: all 0.3s;
+    transition: border-color 0.2s ease;
   }
   .sctd-plate svg {
     position: absolute;
@@ -345,33 +501,35 @@ const TOPS = [118, 202, 286, 370];
     width: 100%;
     height: 100%;
   }
-  .sctd-i {
-    stroke: var(--ink);
-  }
-  .sctd-h {
-    stroke: var(--hot);
-  }
-  .sctd-if {
-    fill: var(--ink);
-  }
-  .sctd-hf {
-    fill: var(--hot);
-  }
+  .sctd-i { stroke: var(--ink); }
+  .sctd-h { stroke: var(--hot); }
+  .sctd-if { fill: var(--ink); }
+  .sctd-hf { fill: var(--hot); }
 
-  /* ── states (classes toggled by the script below) ── */
-  .sctd-plate.is-above {
-    transform: translate(-50%, -50%) translateY(-32px) rotateX(58deg) rotateZ(-45deg);
-    opacity: 0.35;
+  .sctd [data-layer='0'] {
+    --sctd-layer-lift: var(--sctd-lift-0);
+    --sctd-layer-alpha: var(--sctd-alpha-0);
+  }
+  .sctd [data-layer='1'] {
+    --sctd-layer-lift: var(--sctd-lift-1);
+    --sctd-layer-alpha: var(--sctd-alpha-1);
+  }
+  .sctd [data-layer='2'] {
+    --sctd-layer-lift: var(--sctd-lift-2);
+    --sctd-layer-alpha: var(--sctd-alpha-2);
+  }
+  .sctd [data-layer='3'] {
+    --sctd-layer-lift: var(--sctd-lift-3);
+    --sctd-layer-alpha: var(--sctd-alpha-3);
   }
   .sctd-plate.is-active {
-    transform: translate(-50%, -50%) translateY(-6px) rotateX(58deg) rotateZ(-45deg);
     border-color: var(--color-bright);
     background:
       linear-gradient(
         color-mix(in srgb, var(--color-bright) 11%, transparent),
         color-mix(in srgb, var(--color-bright) 11%, transparent)
       ),
-      rgba(255, 255, 255, 0.85);
+      color-mix(in srgb, var(--color-surface) 92%, transparent);
     box-shadow: 0 26px 48px -22px color-mix(in srgb, var(--color-bright) 50%, transparent);
     --ink: color-mix(in srgb, var(--color-bright) 60%, transparent);
     --hot: var(--color-bright);
@@ -379,212 +537,404 @@ const TOPS = [118, 202, 286, 370];
   .sctd-plate.is-active .sctd-inner {
     border-color: color-mix(in srgb, var(--color-bright) 50%, transparent);
   }
-  .sctd-callout.is-above {
-    top: calc(var(--top) - 32px);
-    opacity: 0.45;
-  }
-  .sctd-callout.is-active {
-    top: calc(var(--top) - 6px);
-  }
   .sctd-callout.is-active .sctd-code,
   .sctd-row.is-active .sctd-code {
-    background: var(--color-bright);
-    color: #fff;
     border-color: var(--color-bright);
+    background: var(--color-bright);
+    color: var(--color-surface);
   }
   .sctd-callout.is-active .sctd-dash {
     border-color: color-mix(in srgb, var(--color-bright) 55%, transparent);
   }
 
-  /* ── note dot ── */
-  .sctd-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    display: inline-block;
-    flex-shrink: 0;
+  /* 41-foreground-right: SSR list first, enhanced accordion/rail second. */
+  .sctd-story,
+  .sctd-list-viewport {
+    min-width: 0;
   }
-  .sctd-dot--ops {
-    background: var(--color-sky);
-  }
-
-  /* ── detail rows ── */
-  .sctd-rows {
-    display: flex;
-    flex-direction: column;
+  .sctd-list {
+    display: grid;
     gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
   .sctd-row {
-    background: var(--color-surface);
-    border-radius: var(--radius-md);
+    min-width: 0;
     padding: 16px 18px;
-    cursor: pointer;
     border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
     box-shadow: var(--shadow-xs);
-    transition: all 0.3s;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
   }
   .sctd-row.is-active {
     border-color: var(--color-bright);
     box-shadow: 0 14px 34px -20px color-mix(in srgb, var(--color-bright) 40%, transparent);
   }
+  .sctd-row h3 {
+    margin: 0;
+  }
   .sctd-rowhead {
     display: flex;
+    width: 100%;
     align-items: baseline;
     gap: 12px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
   }
-  .sctd-rowhead > div {
-    flex: 1;
+  .sctd-rowhead:disabled {
+    cursor: default;
   }
   .sctd-name {
+    min-width: 0;
+    color: var(--color-navy);
     font-size: 16.5px;
     font-weight: 700;
-    color: var(--color-navy);
+  }
+  .sctd-more[hidden] {
+    display: none;
   }
   .sctd-desc {
-    font-size: 13.5px;
+    margin: 10px 0 0 43px;
     color: var(--color-cool);
-    margin-top: 2px;
-  }
-  .sctd-more {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.35s ease;
-  }
-  .sctd-more > div {
-    overflow: hidden;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .sctd-row.is-active .sctd-more {
-    grid-template-rows: 1fr;
-  }
-  .sctd-row.is-active .sctd-more > div {
-    opacity: 1;
+    font-size: 13.5px;
+    line-height: 1.55;
   }
   .sctd-chips {
     display: flex;
     flex-wrap: wrap;
     gap: 7px;
     padding-top: 14px;
+    padding-left: 43px;
   }
   .sctd-chips span {
-    font-family: var(--font-mono);
-    font-size: 11.5px;
-    color: var(--color-royal);
-    background: var(--color-blue-wash);
     padding: 4px 9px;
     border-radius: var(--radius-sm);
+    background: var(--color-blue-wash);
+    color: var(--color-royal);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
   }
   .sctd-link {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
     margin-top: 12px;
+    margin-left: 43px;
+    color: var(--color-royal);
     font-family: var(--font-mono);
     font-size: 12px;
     font-weight: 500;
-    color: var(--color-royal);
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-color: var(--color-bright);
+    text-underline-offset: 4px;
   }
   .sctd-link:hover {
     color: var(--color-navy);
-    text-decoration: underline;
-    text-decoration-color: var(--color-bright);
   }
   .sctd-note {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 9px;
-    padding: 4px 4px 0;
+    max-width: 620px;
+    padding: 18px 4px 0;
+    color: var(--color-cool);
     font-family: var(--font-mono);
     font-size: 12px;
-    color: var(--color-cool);
+    line-height: 1.55;
   }
-  .sctd-note .sctd-dot--ops {
+  .sctd-dot {
+    display: inline-block;
     width: 7px;
     height: 7px;
+    margin-top: 5px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--color-sky);
+  }
+  .sctd-controls[hidden] {
+    display: none;
+  }
+  .sctd-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 18px;
+  }
+  .sctd-arrow {
+    display: inline-grid;
+    width: 42px;
+    height: 42px;
+    flex: none;
+    place-items: center;
+    padding: 0;
+    border: 1px solid var(--color-border-blue);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    color: var(--color-navy);
+    cursor: pointer;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      color 0.15s ease;
+  }
+  .sctd-arrow:hover:not(:disabled) {
+    border-color: var(--color-bright);
+    background: var(--color-blue-wash);
+  }
+  .sctd-arrow:disabled {
+    color: var(--color-faint);
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+  .sctd-arrow svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .sctd-position {
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+    color: var(--color-navy);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    line-height: 1.4;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  /* ── responsive ── */
-  @media (max-width: 1020px) {
-    .sctd-grid {
-      grid-template-columns: 1fr;
-      gap: 24px;
+  @media (min-width: 640px) {
+    .sctd { padding-block: 80px; }
+  }
+  @media (min-width: 768px) {
+    .sctd { padding-inline: 40px; }
+    .sctd-intro {
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: end;
+      gap: 48px;
+    }
+    .sctd-plate {
+      width: 280px;
+      height: 280px;
     }
   }
-  @media (max-width: 560px) {
+
+  /* Compact enhanced mode remains in normal flow. */
+  .sctd[data-sctd-mode='compact'] .sctd-row:not(.is-active) {
+    background: color-mix(in srgb, var(--color-surface) 78%, var(--color-page));
+  }
+  .sctd[data-sctd-mode='compact'] .sctd-controls {
+    max-width: 560px;
+    margin-inline: auto;
+  }
+
+  /* Desktop cinematic mode: a section-local, nav-aware sticky chapter. */
+  @media (min-width: 1100px) {
+    .sctd[data-sctd-mode='cinematic'] {
+      padding: 0;
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-scroll {
+      height: calc(3400px + 100vh - var(--nav-offset));
+      height: calc(3400px + 100dvh - var(--nav-offset));
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-stage {
+      position: sticky;
+      top: var(--nav-offset);
+      height: calc(100vh - var(--nav-offset));
+      height: calc(100svh - var(--nav-offset));
+      height: calc(100dvh - var(--nav-offset));
+      overflow: clip;
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-frame {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(24px, 4vh, 42px) 40px 18px;
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-intro {
+      position: relative;
+      z-index: 4;
+      flex: none;
+      opacity: var(--sctd-intro-opacity, 1);
+      transform: translateY(var(--sctd-intro-y, 0px));
+      pointer-events: none;
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-grid {
+      position: relative;
+      grid-template-columns: minmax(0, 1.12fr) minmax(360px, 0.88fr);
+      align-items: center;
+      min-height: 0;
+      flex: 1;
+      gap: 48px;
+      margin: clamp(12px, 2vh, 22px) 0 0;
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-visual {
+      height: 100%;
+      max-height: 560px;
+      overflow: visible;
+      transition: none;
+      will-change: transform;
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-plate,
+    .sctd[data-sctd-mode='cinematic'] .sctd-callout {
+      transition:
+        border-color 0.16s ease,
+        background-color 0.16s ease,
+        box-shadow 0.16s ease;
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-plate {
+      width: clamp(232px, 31dvh, 270px);
+      height: clamp(232px, 31dvh, 270px);
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-visual [data-layer='0'] {
+      --top: 80px !important;
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-visual [data-layer='1'] {
+      --top: 150px !important;
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-visual [data-layer='2'] {
+      --top: 220px !important;
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-visual [data-layer='3'] {
+      --top: 290px !important;
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-spine {
+      top: 50px;
+      height: min(400px, calc(100% - 64px));
+      opacity: var(--sctd-route-opacity, 0.5);
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-story {
+      position: relative;
+      align-self: center;
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-list-viewport {
+      margin: -28px -14px -34px;
+      padding: 28px 14px 34px;
+      overflow: clip;
+      opacity: var(--sctd-story-opacity, 0);
+      transform: translateY(var(--sctd-story-y, 14px));
+      will-change: opacity, transform;
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-list {
+      display: flex;
+      gap: 0;
+      transform: translate3d(var(--sctd-rail-x, 0%), 0, 0);
+      will-change: transform;
+    }
+    .sctd[data-sctd-mode='cinematic'][data-sctd-beat='catalog'] .sctd-list {
+      transition: transform 0.34s cubic-bezier(0.22, 0.8, 0.36, 1);
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-row {
+      display: flex;
+      min-height: 286px;
+      flex: 0 0 100%;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 24px 26px;
+      opacity: 1;
+      transition:
+        border-color 0.16s ease,
+        box-shadow 0.16s ease;
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-rowhead {
+      cursor: default;
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-desc {
+      margin-top: 18px;
+      margin-left: 0;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-chips {
+      padding-top: 18px;
+      padding-left: 0;
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-link {
+      margin-top: auto;
+      margin-left: 0;
+      padding-top: 20px;
+    }
+    .sctd[data-sctd-mode='cinematic'][data-sctd-beat='catalog'] .sctd-row {
+      position: relative;
+    }
+    .sctd[data-sctd-mode='cinematic'][data-sctd-beat='catalog'] .sctd-link {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      align-items: flex-end;
+      margin: 0;
+      padding: 24px 26px;
+      border-radius: var(--radius-md);
+    }
+    .sctd[data-sctd-mode='cinematic'][data-sctd-beat='catalog'] .sctd-link:focus-visible {
+      outline-offset: -3px;
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-note {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      padding: 22px 24px;
+      border-left: 2px solid var(--color-bright);
+      border-radius: var(--radius-sm);
+      background: color-mix(in srgb, var(--color-blue-wash) 88%, transparent);
+      opacity: var(--sctd-note-opacity, 0);
+      transform: translateY(calc(-50% + var(--sctd-note-y, 12px)));
+      pointer-events: none;
+    }
+    .sctd[data-sctd-mode='cinematic'] .sctd-controls {
+      margin-top: 22px;
+      opacity: var(--sctd-controls-opacity, 0);
+      transform: translateY(var(--sctd-controls-y, 10px));
+    }
+  }
+
+  @media (max-width: 480px) {
     .sctd-visual {
-      height: 460px;
-      transform: scale(0.78);
-      transform-origin: top center;
-      margin-bottom: -100px;
+      height: 470px;
+    }
+    .sctd-callout {
+      right: 51%;
+    }
+    .sctd-plate {
+      left: 50%;
+      width: 220px;
+      height: 220px;
+    }
+    .sctd-spine {
+      left: 50%;
+      height: 390px;
+    }
+    .sctd-row {
+      padding: 16px;
+    }
+    .sctd-desc,
+    .sctd-chips,
+    .sctd-link {
+      margin-left: 0;
+      padding-left: 0;
+    }
+    .sctd-chips span {
+      font-size: 10.5px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sctd-routing [data-sctd-route] {
+      stroke-dashoffset: 0;
     }
   }
 </style>
-
-<script>
-  // Layer sync: hover previews, click/Enter pins (stops the ambient cycle),
-  // auto-advance every 3.2s until the visitor interacts. Reduced motion: no
-  // auto-cycle (transitions are already killed globally in global.css).
-  const initStackTeardown = () => {
-    document.querySelectorAll<HTMLElement>('[data-sctd]').forEach((root) => {
-      if (root.dataset.sctdInit) return;
-      root.dataset.sctdInit = '1';
-      const els = Array.from(root.querySelectorAll<HTMLElement>('[data-layer]'));
-      const count = new Set(els.map((el) => el.dataset.layer)).size;
-      let active = 0;
-      let hover = false;
-      let picked = false;
-      const apply = () => {
-        els.forEach((el) => {
-          const i = Number(el.dataset.layer);
-          const isActive = i === active;
-          el.classList.toggle('is-active', isActive);
-          el.classList.toggle('is-above', i < active);
-          // role="button" plates + rows expose expanded state to AT; collapsed
-          // row content leaves the tab order via inert (WCAG 2.4.7).
-          if (el.getAttribute('role') === 'button') el.setAttribute('aria-expanded', String(isActive));
-          const more = el.querySelector('.sctd-more');
-          if (more) more.toggleAttribute('inert', !isActive);
-        });
-      };
-      const set = (i: number, byUser: boolean) => {
-        if (byUser) picked = true;
-        if (i !== active) {
-          active = i;
-          apply();
-        }
-      };
-      els.forEach((el) => {
-        const i = Number(el.dataset.layer);
-        el.addEventListener('mouseenter', () => set(i, false));
-        el.addEventListener('click', () => set(i, true));
-        el.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            set(i, true);
-          }
-        });
-      });
-      root.addEventListener('mouseenter', () => {
-        hover = true;
-      });
-      root.addEventListener('mouseleave', () => {
-        hover = false;
-      });
-      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        const timer = window.setInterval(() => {
-          if (!root.isConnected) {
-            window.clearInterval(timer);
-            return;
-          }
-          if (!hover && !picked) {
-            active = (active + 1) % count;
-            apply();
-          }
-        }, 3200);
-      }
-      apply();
-    });
-  };
-  document.addEventListener('astro:page-load', initStackTeardown);
-  initStackTeardown();
-</script>

@@ -96,12 +96,15 @@ const ogLocaleAlt = lang === 'en' ? 'ro_RO' : 'en_US';
         initCounters,
         initStepper,
         initConsole,
+        initStackTeardown,
       } from '../scripts/motion.js';
 
       type Cleanup = () => void;
       let cleanups: Cleanup[] = [];
 
       function wire() {
+        // Defensive idempotence: page-load can be re-fired by ClientRouter.
+        teardown();
         const doc = document;
 
         // Emails first (also fills the obfuscated text), then chrome + scene.
@@ -123,6 +126,9 @@ const ogLocaleAlt = lang === 'en' ? 'ro_RO' : 'en_US';
           cleanups.push(initConsole(container));
         });
 
+        doc.querySelectorAll<HTMLElement>('[data-sctd]').forEach((container) => {
+          cleanups.push(initStackTeardown(container));
+        });
       }
 
       function teardown() {
