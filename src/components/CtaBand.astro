@@ -1,7 +1,4 @@
 ---
-// Closing CTA band: dark midnight full-bleed section with a blueprint-grid
-// texture, centered eyebrow + H2 + lead slot, and a single mailto button
-// (NO email input — RESOLUTIONS §15) plus a mono contact line.
 import SectionHeading from './SectionHeading.astro';
 import GridTexture from './GridTexture.astro';
 import MailtoLink from './MailtoLink.astro';
@@ -11,11 +8,8 @@ interface Props {
   id?: string;
   eyebrow?: string;
   heading?: string;
-  /** mailto button label. */
   cta: string;
-  /** Email subject appended to the mailto. */
   subject?: string;
-  /** Render the mono contact line under the button (default true). */
   showContact?: boolean;
   class?: string;
 }
@@ -26,27 +20,107 @@ const { id, eyebrow, heading, cta, subject, showContact = true, class: extra = '
 <section
   id={id}
   aria-label={!heading ? cta : undefined}
-  class:list={['relative overflow-hidden bg-midnight px-6 py-[56px] sm:px-10 sm:py-[80px]', extra]}
+  class:list={['control-cta', extra]}
+  data-control-scene
+  data-scene-kind="cta"
 >
-  <GridTexture dark opacity={0.7} />
+  <GridTexture dark opacity={0.5} />
+  <svg class="control-cta__routing" viewBox="0 0 1440 420" preserveAspectRatio="none" aria-hidden="true">
+    <path pathLength="1" d="M0 330h240V92h282v164h398V130h260v200h260" />
+    <path d="M142 0v420M720 0v420M1298 0v420" />
+    <circle cx="522" cy="256" r="6" /><circle cx="920" cy="256" r="6" />
+  </svg>
 
-  <div class="relative z-[1] mx-auto max-w-[760px] text-center">
-    <div data-reveal>
+  <div class="container control-cta__frame">
+    <div class="control-cta__narrative">
       {heading && (
-        <SectionHeading eyebrow={eyebrow} heading={heading} variant="dark" size="cta" rule={false} center>
+        <SectionHeading eyebrow={eyebrow} heading={heading} variant="dark" size="cta" rule={false}>
           <slot />
         </SectionHeading>
       )}
+    </div>
 
-      <div class:list={[heading && 'mt-9', 'flex justify-center']}>
-        <MailtoLink variant="button" dark subject={subject}>{cta}</MailtoLink>
-      </div>
-
+    <div class="control-cta__action">
+      <div class="control-cta__coordinate" aria-hidden="true"><span>SC / HANDOFF</span><span>→</span></div>
+      <MailtoLink variant="button" dark subject={subject}>{cta}</MailtoLink>
       {showContact && (
-        <p class="mt-6 font-mono text-[13px] text-[rgba(226,233,245,0.55)]">
-          <span data-email-user={EMAIL_USER} data-email-domain={EMAIL_DOMAIN}></span> · www.smartcontrol.ro
+        <p>
+          <span data-email-user={EMAIL_USER} data-email-domain={EMAIL_DOMAIN}>
+            <span>{EMAIL_USER}</span><span>@</span><span>{EMAIL_DOMAIN}</span>
+          </span>
+          <span aria-hidden="true"> · </span>www.smartcontrol.ro
         </p>
       )}
     </div>
   </div>
 </section>
+
+<style>
+  .control-cta {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    background: var(--color-midnight);
+  }
+  .control-cta::after {
+    position: absolute;
+    inset: auto 0 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-sky) 45%, transparent), transparent);
+    content: '';
+  }
+  .control-cta__routing {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: color-mix(in srgb, var(--color-sky) 14%, transparent);
+    stroke-width: 1;
+  }
+  .control-cta__routing path:first-child {
+    stroke: color-mix(in srgb, var(--color-sky) 34%, transparent);
+    stroke-dasharray: 1;
+    stroke-dashoffset: calc(1 - var(--scene-progress, 1));
+  }
+  .control-cta__routing circle { fill: var(--color-sky); stroke: none; }
+  .control-cta__frame {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    min-height: 360px;
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.65fr);
+    align-items: center;
+    gap: clamp(48px, 8vw, 120px);
+    padding-block: 68px;
+  }
+  .control-cta__narrative { min-width: 0; }
+  .control-cta__action {
+    position: relative;
+    display: grid;
+    min-height: 180px;
+    align-content: center;
+    justify-items: start;
+    padding: 34px;
+    border: 1px solid color-mix(in srgb, var(--color-sky) 20%, transparent);
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--color-navy) 28%, transparent);
+  }
+  .control-cta__coordinate {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    color: rgba(226, 233, 245, 0.44);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+  }
+  .control-cta__action :global(a) { min-width: min(100%, 220px); }
+  .control-cta__action p { margin-top: 18px; color: rgba(226, 233, 245, 0.52); font-family: var(--font-mono); font-size: 11px; line-height: 1.5; }
+
+  @media (max-width: 767px) {
+    .control-cta__frame { min-height: 0; grid-template-columns: 1fr; gap: 34px; padding-block: 58px; }
+    .control-cta__action { min-height: 0; padding: 26px 22px; }
+  }
+</style>

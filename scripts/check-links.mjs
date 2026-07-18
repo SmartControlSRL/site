@@ -31,6 +31,9 @@ const resolves = (path) => {
 for (const fp of pages) {
   const html = readFileSync(fp, 'utf8');
   const route = routeOf(fp);
+  // /404.html is one deliberately bilingual, noindex document used for every
+  // unknown RO or EN URL. It has no duplicate /en/404 route and is not indexed.
+  const isBilingualErrorPage = route === '/404';
 
   // anchors with ids for fragment checking
   const ids = new Set([...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]));
@@ -47,8 +50,10 @@ for (const fp of pages) {
   }
 
   // hreflang alternates must resolve
-  for (const m of html.matchAll(/hreflang="(?:ro|en|x-default)" href="https:\/\/smartcontrol\.ro([^"]*)"/g)) {
-    if (!resolves(m[1] || '/')) errors.push(`${route}: hreflang target missing ${m[1]}`);
+  if (!isBilingualErrorPage) {
+    for (const m of html.matchAll(/hreflang="(?:ro|en|x-default)" href="https:\/\/smartcontrol\.ro([^"]*)"/g)) {
+      if (!resolves(m[1] || '/')) errors.push(`${route}: hreflang target missing ${m[1]}`);
+    }
   }
 }
 
@@ -56,11 +61,13 @@ for (const fp of pages) {
 const routes = new Set(pages.map(routeOf));
 const map = { '/confidentialitate/': '/en/privacy/' };
 for (const r of routes) {
+  if (r === '/404') continue;
   if (r.startsWith('/en/')) continue;
   const en = map[r] || ('/en' + r);
   if (!routes.has(en)) errors.push(`parity: ${r} has no EN twin ${en}`);
 }
 for (const r of routes) {
+  if (r === '/404') continue;
   if (!r.startsWith('/en/')) continue;
   const roFromMap = Object.entries(map).find(([, v]) => v === r)?.[0];
   const ro = roFromMap || r.replace(/^\/en/, '') || '/';
@@ -70,6 +77,7 @@ for (const r of routes) {
 // sitemap coverage
 const sm = readFileSync(join(DIST, 'sitemap-0.xml'), 'utf8');
 for (const r of routes) {
+  if (r === '/404') continue;
   if (!sm.includes(`https://smartcontrol.ro${r}`)) errors.push(`sitemap: missing ${r}`);
 }
 
@@ -78,4 +86,4 @@ if (errors.length) {
   console.log(`\nFAIL: ${errors.length} problems`);
   process.exit(1);
 }
-console.log(`OK: ${pages.length} pages, all internal links/fragments/hreflang/parity/sitemap verified`);
+console.log(`OK: ${pages.length} pages; links/fragments/hreflang/parity/sitemap verified (single bilingual noindex 404 excluded from locale/index checks)`);

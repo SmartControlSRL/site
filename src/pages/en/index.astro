@@ -1,30 +1,9 @@
 ---
-// Home (EN) — /en/
-// Faithful EN translation of the RO Home (src/pages/index.astro), same structure
-// and motion wiring. RESOLUTIONS rulings applied identically: ISO 27701 stripped,
-// legal frameworks excluded from marketing copy, Asset Management stripped (SEKNET ↔ S-VPN),
-// years computed, no email inputs, AA link colors.
+// Home (EN) — /en/ — cinematic Control Plane composition.
+// All approved copy, metadata, routes and mail subjects remain unchanged.
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Eyebrow from '../../components/Eyebrow.astro';
-import SectionHeading from '../../components/SectionHeading.astro';
-import GridTexture from '../../components/GridTexture.astro';
-import CtaBand from '../../components/CtaBand.astro';
-import ModuleCard from '../../components/ModuleCard.astro';
-import MonoPill from '../../components/MonoPill.astro';
-import IconChip from '../../components/IconChip.astro';
-import LogoMarquee from '../../components/LogoMarquee.astro';
-import TextLink from '../../components/TextLink.astro';
-import MailtoLink from '../../components/MailtoLink.astro';
-import SeknetConsole from '../../components/SeknetConsole.astro';
-import CloudPipeline from '../../components/CloudPipeline.astro';
-import StackTeardown from '../../components/StackTeardown.astro';
-import {
-  getLangFromUrl,
-  useTranslations,
-  localizedPath,
-  yearsInBusiness,
-} from '../../i18n/ui';
-import { Server, ShieldCheck, Code, LifeBuoy, Shield, Lock } from '@lucide/astro';
+import HomeExperience from '../../components/HomeExperience.astro';
+import { getLangFromUrl, useTranslations, localizedPath, yearsInBusiness } from '../../i18n/ui';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -34,7 +13,6 @@ const years = yearsInBusiness(new Date().getUTCFullYear());
 const title = 'Smart Control — Trusted Service Delivery Partner';
 const description = 'Enterprise infrastructure, networking, security and software, with 100% in-house execution and four ISO certifications.';
 
-// — JSON-LD: Organization (EN description) —
 const org = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
@@ -42,8 +20,7 @@ const org = {
   url: 'https://smartcontrol.ro',
   logo: 'https://smartcontrol.ro/smartcontrol-mark.png',
   foundingDate: '2003',
-  description:
-    'Romanian enterprise IT services and cybersecurity company — infrastructure, security and software delivered by an in-house team.',
+  description: 'Romanian enterprise IT services and cybersecurity company — infrastructure, security and software delivered by an in-house team.',
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Intrarea Aviator Teodor Iliescu 37',
@@ -53,416 +30,167 @@ const org = {
   },
 };
 
-const isoBadges = ['ISO 9001', 'ISO 27001', 'ISO 14001', 'ISO 45001'];
-
-const partners = [
-  'Hitachi Vantara',
-  'Commvault',
-  'Fortinet',
-  'Cisco',
-  'Juniper',
-  'Lenovo',
-  'VMware',
-  'Fujitsu',
-  'Oracle',
-  'Microsoft',
-  'Palo Alto',
-  'Hanasis',
-  'IBM',
-  'HPE',
-  'DELL',
-];
-
-const consoleMetrics = [
-  { label: 'Visibility', value: 'Active' },
-  { label: 'Protection', value: 'Continuous', accent: true },
-  { label: 'Control', value: 'Centralized' },
-];
-const consoleLog = [
-  { time: '08:14:02', msg: 'Infrastructure status updated', blocked: false },
-  { time: '08:14:05', msg: 'Operational event analyzed' },
-  { time: '08:14:09', msg: 'Response coordinated from the central view', blocked: false },
-  { time: '08:14:12', msg: 'Organization context synchronized' },
-];
-
-
-// Stack Teardown — 4 operational layers, top of the stack (L4) first.
-// EN mirror of the RO copy from the "Design originality recommendations" handoff.
-const stackLayers = [
-  {
-    code: 'L4',
-    name: 'Applications & Automation',
-    desc: 'Custom software, APIs and AI / LLM automation.',
-    chips: ['Custom dev & API', 'App modernization', 'AI / LLM automation', 'CI/CD & DevSecOps'],
-    href: p('/servicii/software'),
-    linkLabel: 'Software & Automation',
-    aria: 'Layer L4 — Applications and Automation',
+const content = {
+  hero: {
+    eyebrow: 'Trusted Service Delivery Partner',
+    title: 'Infrastructure. Security. Software.',
+    accent: 'Execution 100% in-house.',
+    leadBefore: `Smart Control has been building and operating complex IT infrastructure for over ${years} years, for local and international clients. We work exclusively with our `,
+    leadStrong: 'in-house team of experts',
+    leadAfter: ", in a consultative approach: every recommendation starts from measurements taken in the client's own infrastructure.",
+    cta: 'Schedule a free assessment',
+    servicesLink: 'See services',
+    isoBadges: ['ISO 9001', 'ISO 27001', 'ISO 14001', 'ISO 45001'],
   },
-  {
-    code: 'L3',
-    name: 'Platforms & Data',
-    desc: 'Virtualization, private / hybrid cloud, containers and storage.',
-    chips: ['VMware · K8s / OpenShift', 'Private / Hybrid Cloud', 'Storage & backup', 'Disaster Recovery'],
+  services: {
+    heading: 'An integrated portfolio of enterprise services',
+    lead: 'Four service pillars, backed by 50 in-house specialists with over 500 cumulative years of experience — on-site and remote, the same level of quality.',
+    items: [
+      {
+        index: '01',
+        title: 'Infrastructure & Cloud',
+        body: 'We design and consolidate data centers, virtualize and operate private, hybrid and cloud environments.',
+        items: ['Data Center Design & Implementation', 'Consolidation & Virtualization', 'Private & Hybrid Cloud', 'Business Continuity & DR', 'Storage & Information Management', 'Infrastructure Management'],
+        href: p('/servicii/cloud'),
+      },
+      {
+        index: '02',
+        title: 'Networking & Security',
+        body: 'Perimeter and endpoint security, identity and managed security operations.',
+        items: ['Perimeter & End-point Security', 'Enterprise SSO / PKI', 'Data Leakage Prevention · WAF', 'Security and audit reporting', 'Managed Security Operations'],
+        href: p('/servicii/securitate'),
+      },
+      {
+        index: '03',
+        title: 'Software & Automation',
+        body: 'Custom development, application modernization and AI automation — DevSecOps delivery.',
+        items: ['Custom software development & APIs', 'DevOps / DevSecOps & CI/CD', 'Application migration and modernization', 'AI / LLM automation'],
+        href: p('/servicii/software'),
+      },
+      {
+        index: '04',
+        title: 'Managed Services',
+        body: 'We operate your infrastructure, network and cybersecurity — service desk and support, on-site & remote.',
+        items: ['Service Desk Outsourcing', 'Managed Infrastructure Operations', 'Network Managed Services', 'Cyber Security Managed Services', 'Outsourced Systems Support', 'Cloud Based System Support'],
+        href: p('/servicii/managed'),
+      },
+    ],
+  },
+  accountability: {
+    eyebrow: 'Stack Teardown',
+    heading: 'One partner, single point of accountability',
+    lead: 'We cover the entire technology stack — infrastructure, network, platforms and software — with a particular focus on security, under a single end-to-end SLA.',
+    note: '24/7 SLA, end-to-end — zero hand-offs of responsibility between vendors.',
+    layers: [
+      {
+        code: 'L4',
+        name: 'Applications & Automation',
+        desc: 'Custom software, APIs and AI / LLM automation.',
+        chips: ['Custom dev & API', 'App modernization', 'AI / LLM automation', 'CI/CD & DevSecOps'],
+        href: p('/servicii/software'),
+        linkLabel: 'Software & Automation',
+        aria: 'Layer L4 — Applications and Automation',
+      },
+      {
+        code: 'L3',
+        name: 'Platforms & Data',
+        desc: 'Virtualization, private / hybrid cloud, containers and storage.',
+        chips: ['VMware · K8s / OpenShift', 'Private / Hybrid Cloud', 'Storage & backup', 'Disaster Recovery'],
+        href: p('/servicii/cloud'),
+        linkLabel: 'Infrastructure & Cloud',
+        aria: 'Layer L3 — Platforms and Data',
+      },
+      {
+        code: 'L2',
+        name: 'Network & Connectivity',
+        desc: 'Core networking, SD-WAN and secure remote access.',
+        chips: ['LAN / WAN core', 'SD-WAN', 'Secure remote access', 'Load balancing'],
+        href: p('/servicii/managed'),
+        linkLabel: 'Network Managed Services',
+        aria: 'Layer L2 — Network and Connectivity',
+      },
+      {
+        code: 'L1',
+        name: 'Physical infrastructure',
+        desc: 'Data center, compute, power and structured cabling.',
+        chips: ['DC design & build', 'Compute & storage', 'Power & cooling', 'Structured cabling'],
+        href: p('/servicii/cloud'),
+        linkLabel: 'Infrastructure & Cloud',
+        aria: 'Layer L1 — Physical infrastructure',
+      },
+    ],
+  },
+  products: {
+    eyebrow: 'Proprietary products',
+    heading: 'Proprietary products for security and protected access',
+    lead: 'SEKNET and S-VPN support organizations that need control, visibility, and secure access. Technical details are available through a commercial discussion.',
+    primaryLink: 'Explore SEKNET',
+    secondaryLink: 'Explore S-VPN',
+    statusTitle: 'SEKNET · OPERATIONAL VISIBILITY',
+    metrics: [
+      { label: 'Visibility', value: 'Active' },
+      { label: 'Protection', value: 'Continuous' },
+      { label: 'Control', value: 'Centralized' },
+    ],
+    signals: [
+      { time: '08:14:02', msg: 'Infrastructure status updated' },
+      { time: '08:14:05', msg: 'Operational event analyzed' },
+      { time: '08:14:09', msg: 'Response coordinated from the central view' },
+      { time: '08:14:12', msg: 'Organization context synchronized' },
+    ],
+    items: [
+      {
+        name: 'SEKNET',
+        body: 'A proprietary product for monitoring and protecting IT environments. Capability and integration details are available on request.',
+        href: p('/solutii/seknet'),
+        linkLabel: 'Explore SEKNET',
+        artifact: 'seknet' as const,
+      },
+      {
+        name: 'S-VPN',
+        body: 'A proprietary product for secure remote access. Capability and integration details are available on request.',
+        href: p('/solutii/s-vpn'),
+        linkLabel: 'Explore S-VPN',
+        artifact: 'svpn' as const,
+      },
+    ],
+  },
+  cloud: {
+    eyebrow: 'Cloud & Modernization',
+    heading: 'Optimizing budgets by shifting from hardware dependency to intelligent architecture',
+    contextBefore: 'Prices for critical components are rising under demand for AI infrastructure, and refresh budgets no longer stretch far enough. Re-architecture becomes the primary strategy, delivered through a ',
+    contextStrong: '5-stage',
+    contextAfter: ' workflow.',
+    linkLabel: 'Explore Cloud & Modernization',
     href: p('/servicii/cloud'),
-    linkLabel: 'Infrastructure & Cloud',
-    aria: 'Layer L3 — Platforms and Data',
+    steps: [
+      { title: 'Assessment', sub: '2-day assessment' },
+      { title: 'Re-architecture', sub: 'target design' },
+      { title: 'Containerization', sub: 'K8s / OpenShift' },
+      { title: 'Migration', sub: 'zero-downtime' },
+      { title: 'ROI validation', sub: '90-day report' },
+    ],
+    rows: [
+      { tag: 'CAPEX→OPEX', body: 'Shifting hardware spend toward cloud or hybrid models, with predictable costs.' },
+      { tag: 'K8S-READY', body: 'Containerization and migration to Kubernetes / OpenShift / AKS / GKE, with zero downtime.' },
+      { tag: 'ROI 90 DAYS', body: 'Validating the investment through a performance report measured after 90 days in production.' },
+    ],
   },
-  {
-    code: 'L2',
-    name: 'Network & Connectivity',
-    desc: 'Core networking, SD-WAN and secure remote access.',
-    chips: ['LAN / WAN core', 'SD-WAN', 'Secure remote access', 'Load balancing'],
-    href: p('/servicii/managed'),
-    linkLabel: 'Network Managed Services',
-    aria: 'Layer L2 — Network and Connectivity',
+  partners: {
+    eyebrow: 'Technology partners',
+    lead: "We work directly with technology vendors and use their products every day in our clients' projects.",
+    items: ['Hitachi Vantara', 'Commvault', 'Fortinet', 'Cisco', 'Juniper', 'Lenovo', 'VMware', 'Fujitsu', 'Oracle', 'Microsoft', 'Palo Alto', 'Hanasis', 'IBM', 'HPE', 'DELL'],
   },
-  {
-    code: 'L1',
-    name: 'Physical infrastructure',
-    desc: 'Data center, compute, power and structured cabling.',
-    chips: ['DC design & build', 'Compute & storage', 'Power & cooling', 'Structured cabling'],
-    href: p('/servicii/cloud'),
-    linkLabel: 'Infrastructure & Cloud',
-    aria: 'Layer L1 — Physical infrastructure',
+  cta: {
+    eyebrow: 'Next steps',
+    heading: 'Free initial assessment — 2 days',
+    lead: 'No contractual obligations. Together we identify the priority area of interest and deliver a recommendations report at the end.',
+    label: t('cta.assessment'),
   },
-];
-
-// Cloud & Modernization — 5-stage methodology, teaser pipeline.
-const cloudSteps = [
-  { title: 'Assessment', sub: '2-day assessment' },
-  { title: 'Re-architecture', sub: 'target design' },
-  { title: 'Containerization', sub: 'K8s / OpenShift' },
-  { title: 'Migration', sub: 'zero-downtime' },
-  { title: 'ROI validation', sub: '90-day report' },
-];
-
-const cloudRows = [
-  {
-    tag: 'CAPEX→OPEX',
-    body: 'Shifting hardware spend toward cloud or hybrid models, with predictable costs.',
-  },
-  {
-    tag: 'K8S-READY',
-    body: 'Containerization and migration to Kubernetes / OpenShift / AKS / GKE, with zero downtime.',
-  },
-  {
-    tag: 'ROI 90 DAYS',
-    body: 'Validating the investment through a performance report measured after 90 days in production.',
-  },
-];
+};
 ---
 
 <BaseLayout title={title} description={description}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(org)} />
-
-  {/* ── Hero (light) ── */}
-  <header
-    class="relative overflow-hidden"
-    style="background:var(--sc-gradient-hero-light)"
-  >
-    <GridTexture fade />
-
-    <div
-      class="relative z-[1] mx-auto max-w-[1180px] px-6 pb-[80px] pt-[120px] md:px-10 md:pt-[140px]"
-    >
-      <Eyebrow class="hero-in">
-        Trusted Service Delivery Partner
-      </Eyebrow>
-
-      <h1
-        class="hero-in-2 mt-7 max-w-[860px] text-[clamp(2.4rem,1.6rem+3.6vw,4rem)] font-extrabold leading-[1.08] tracking-[-2px] text-midnight"
-      >
-        Infrastructure. Security. Software.<br />
-        <span class="text-bright">Execution 100% in-house.</span>
-      </h1>
-
-      <p
-        class="hero-in-3 mt-7 max-w-[600px] text-[18px] leading-[1.7] text-slate"
-      >
-        Smart Control has been building and operating complex IT infrastructure for over {years}{' '}
-        years, for local and international clients. We work exclusively with our{' '}
-        <strong class="font-semibold text-navy">in-house team of experts</strong>, in a consultative
-        approach: every recommendation starts from measurements taken in the client's own
-        infrastructure.
-      </p>
-
-      <div class="hero-in-4 mt-[38px] flex flex-wrap items-center gap-[18px]">
-        <MailtoLink variant="button" subject={t('subject.assessment')}>
-          Schedule a free assessment
-        </MailtoLink>
-        <TextLink href="#servicii">See services</TextLink>
-      </div>
-
-      <div class="hero-in-4 mt-10 flex flex-wrap gap-2.5">
-        {isoBadges.map((b) => <MonoPill class="!text-[13px] !px-3.5 !py-2 !tracking-[0.6px]">{b}</MonoPill>)}
-      </div>
-    </div>
-  </header>
-
-  {/* ── Services (bento, light) ── */}
-  <section id="servicii" class="px-6 py-[56px] sm:py-[80px] md:px-10">
-    <div class="mx-auto max-w-[1180px]">
-      <div data-reveal>
-        <SectionHeading
-          heading="An integrated portfolio of enterprise services"
-          headingMaxWidth="700px"
-        >
-          Four service pillars, backed by 50 in-house specialists with over 500 cumulative years of
-          experience — on-site and remote, the same level of quality.
-        </SectionHeading>
-      </div>
-
-      <div class="mt-10 grid grid-cols-1 gap-5 md:grid-cols-12">
-        {/* Card 01 — span 7 */}
-        <div
-          data-reveal
-          class="md:col-span-12 lg:col-span-7"
-        >
-          <ModuleCard
-            title="Infrastructure & Cloud"
-            index="01"
-            body="We design and consolidate data centers, virtualize and operate private, hybrid and cloud environments."
-            items={[
-              'Data Center Design & Implementation',
-              'Consolidation & Virtualization',
-              'Private & Hybrid Cloud',
-              'Business Continuity & DR',
-              'Storage & Information Management',
-              'Infrastructure Management',
-            ]}
-            cols={2}
-          >
-            <Server slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
-          </ModuleCard>
-        </div>
-
-        {/* Card 02 — span 5 */}
-        <div
-          data-reveal
-          data-reveal-delay="100"
-          class="md:col-span-12 lg:col-span-5"
-        >
-          <ModuleCard
-            title="Networking & Security"
-            index="02"
-            body="Perimeter and endpoint security, identity and managed security operations."
-            items={[
-              'Perimeter & End-point Security',
-              'Enterprise SSO / PKI',
-              'Data Leakage Prevention · WAF',
-              'Security and audit reporting',
-              'Managed Security Operations',
-            ]}
-            cols={1}
-          >
-            <ShieldCheck slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
-          </ModuleCard>
-        </div>
-
-        {/* Card 03 — span 5 */}
-        <div
-          data-reveal
-          class="md:col-span-12 lg:col-span-5"
-        >
-          <ModuleCard
-            title="Software & Automation"
-            index="03"
-            body="Custom development, application modernization and AI automation — DevSecOps delivery."
-            items={[
-              'Custom software development & APIs',
-              'DevOps / DevSecOps & CI/CD',
-              'Application migration and modernization',
-              'AI / LLM automation',
-            ]}
-            cols={1}
-          >
-            <Code slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
-          </ModuleCard>
-        </div>
-
-        {/* Card 04 — span 7 */}
-        <div
-          data-reveal
-          data-reveal-delay="100"
-          class="md:col-span-12 lg:col-span-7"
-        >
-          <ModuleCard
-            title="Managed Services"
-            index="04"
-            body="We operate your infrastructure, network and cybersecurity — service desk and support, on-site & remote."
-            items={[
-              'Service Desk Outsourcing',
-              'Managed Infrastructure Operations',
-              'Network Managed Services',
-              'Cyber Security Managed Services',
-              'Outsourced Systems Support',
-              'Cloud Based System Support',
-            ]}
-            cols={2}
-          >
-            <LifeBuoy slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
-          </ModuleCard>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {/* ── Stack Teardown (light wash) ── */}
-  <StackTeardown
-    eyebrow="Stack Teardown"
-    heading="One partner, single point of accountability"
-    layers={stackLayers}
-    note="24/7 SLA, end-to-end — zero hand-offs of responsibility between vendors."
-  >
-    We cover the entire technology stack — infrastructure, network, platforms and software — with a
-    particular focus on security, under a single end-to-end SLA.
-  </StackTeardown>
-
-  {/* ── Products (DARK band) ── */}
-  <section
-    id="produse"
-    class="relative overflow-hidden bg-midnight px-6 py-[56px] sm:py-[80px] md:px-10"
-  >
-    <GridTexture dark opacity={0.8} />
-
-    <div class="relative z-[1] mx-auto max-w-[1180px]">
-      <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
-        <div data-reveal>
-          <SectionHeading
-            eyebrow="Proprietary products"
-            heading="Proprietary products for security and protected access"
-            variant="dark"
-          >
-            SEKNET and S-VPN support organizations that need control, visibility, and secure access. Technical details are available through a commercial discussion.
-          </SectionHeading>
-          <div class="mt-7 flex flex-wrap items-center gap-5">
-            <a
-              href={p('/solutii/seknet')}
-              class="inline-flex items-center gap-2 rounded-md bg-surface px-6 py-3 text-[14.5px] font-semibold text-navy transition-all hover:bg-blue-wash"
-            >
-              Explore SEKNET <span aria-hidden="true">›</span>
-            </a>
-            <TextLink href={p('/solutii/s-vpn')} dark>Explore S-VPN</TextLink>
-          </div>
-
-        </div>
-        <div data-reveal data-reveal-delay="120">
-          <SeknetConsole title="SEKNET · OPERATIONAL VISIBILITY" metrics={consoleMetrics} log={consoleLog} />
-        </div>
-      </div>
-
-      {/* Bottom dual cards — SEKNET ↔ S-VPN (Asset Management stripped) */}
-      <div data-reveal class="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2">
-        <a
-          href={p('/solutii/seknet')}
-          class="flex items-start gap-[18px] rounded-lg border border-[rgba(122,180,232,0.18)] bg-[rgba(255,255,255,0.03)] px-7 py-6 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-[rgba(68,135,220,0.55)]"
-        >
-          <IconChip variant="dark" size={40} class="shrink-0">
-            <Shield class="h-5 w-5 text-sky" stroke-width={1.5} />
-          </IconChip>
-          <div>
-            <div class="text-[15.5px] font-bold text-white">SEKNET</div>
-            <p class="mt-1.5 text-[13.5px] leading-[1.6] text-[rgba(226,233,245,0.6)]">
-              A proprietary product for monitoring and protecting IT environments. Capability and integration details are available on request.
-            </p>
-            <span class="mt-2.5 inline-block text-[13px] font-semibold text-sky"
-              >Explore SEKNET ›</span
-            >
-          </div>
-        </a>
-
-        <a
-          href={p('/solutii/s-vpn')}
-          class="flex items-start gap-[18px] rounded-lg border border-[rgba(122,180,232,0.18)] bg-[rgba(255,255,255,0.03)] px-7 py-6 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-[rgba(68,135,220,0.55)]"
-        >
-          <IconChip variant="dark" size={40} class="shrink-0">
-            <Lock class="h-5 w-5 text-sky" stroke-width={1.5} />
-          </IconChip>
-          <div>
-            <div class="text-[15.5px] font-bold text-white">S-VPN</div>
-            <p class="mt-1.5 text-[13.5px] leading-[1.6] text-[rgba(226,233,245,0.6)]">
-              A proprietary product for secure remote access. Capability and integration details are available on request.
-            </p>
-            <span class="mt-2.5 inline-block text-[13px] font-semibold text-sky"
-              >Explore S-VPN ›</span
-            >
-          </div>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  {/* ── Cloud teaser (light wash, tight tier) ── */}
-  <section class="bg-page px-6 py-[44px] sm:py-[64px] md:px-10">
-    <div class="mx-auto max-w-[1180px]">
-      {/* Header split — heading left, context + CTA right */}
-      <div data-reveal class="grid grid-cols-1 items-end gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">
-        <SectionHeading
-          eyebrow="Cloud & Modernization"
-          heading="Optimizing budgets by shifting from hardware dependency to intelligent architecture"
-        />
-        <div>
-          <p class="text-[16px] leading-[1.6] text-cool">
-            Prices for critical components are rising under demand for AI infrastructure, and refresh
-            budgets no longer stretch far enough. Re-architecture becomes the primary strategy,
-            delivered through a <strong class="font-semibold text-navy">5-stage</strong> workflow.
-          </p>
-          <a
-            href={p('/servicii/cloud')}
-            class="mt-5 inline-flex items-center gap-2 rounded-md bg-navy px-6 py-3 text-[14.5px] font-semibold text-white transition-all hover:bg-midnight hover:[box-shadow:0_6px_20px_rgba(14,31,91,0.25)]"
-          >
-            Explore Cloud & Modernization <span aria-hidden="true">›</span>
-          </a>
-        </div>
-      </div>
-
-      {/* 5-stage methodology pipeline */}
-      <div data-reveal class="mt-12">
-        <CloudPipeline steps={cloudSteps} />
-      </div>
-
-      {/* Capability cards */}
-      <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-        {
-          cloudRows.map(({ tag, body }) => (
-            <div class="rounded-lg border border-border bg-surface p-[26px] shadow-sm transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[2px] hover:border-border-blue hover:shadow-lg">
-              <span class="mb-3.5 inline-block rounded-sm bg-blue-wash px-2.5 py-1 font-mono text-[11.5px] tracking-[0.5px] text-royal">
-                {tag}
-              </span>
-              <p class="text-[14.5px] leading-[1.55] text-slate">{body}</p>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  {/* ── Partners (light marquee) ── */}
-  <section id="parteneri" class="overflow-hidden bg-surface py-16">
-    <div class="mx-auto max-w-[1180px] px-6 md:px-10">
-      <div data-reveal class="text-center">
-        <Eyebrow>Technology partners</Eyebrow>
-        <p class="mx-auto mt-5 max-w-[540px] text-[15.5px] text-cool">
-          We work directly with technology vendors and use their products every day in our
-          clients' projects.
-        </p>
-      </div>
-    </div>
-    <div class="mt-9 [will-change:transform]">
-      <LogoMarquee items={partners} />
-    </div>
-  </section>
-
-  {/* ── CTA / Contact (DARK band) ── */}
-  <CtaBand
-    id="contact"
-    eyebrow="Next steps"
-    heading="Free initial assessment — 2 days"
-    cta={t('cta.assessment')}
-    subject={t('subject.assessment')}
-    showContact={false}
-  >
-    No contractual obligations. Together we identify the priority area of interest and deliver a recommendations
-    report at the end.
-  </CtaBand>
+  <HomeExperience content={content} assessmentSubject={t('subject.assessment')} />
 </BaseLayout>

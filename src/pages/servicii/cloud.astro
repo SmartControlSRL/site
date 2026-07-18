@@ -1,23 +1,14 @@
 ---
-// /servicii/cloud — Cloud & Modernization (RO). Template B flagship: light hero
-// → "De ce acum" 3-card reasons grid → #flux 5-stage scroll stepper (wash band)
-// → "Ce livrăm" capabilities bento → dark CtaBand (#contact). Copy verbatim from
-// docs/build-specs/cloud.md; motion via data-attributes auto-wired by BaseLayout.
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import GridTexture from '../../components/GridTexture.astro';
-import Eyebrow from '../../components/Eyebrow.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
-import ChevronList from '../../components/ChevronList.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import MailtoLink from '../../components/MailtoLink.astro';
 import TextLink from '../../components/TextLink.astro';
+import RouteHero from '../../components/RouteHero.astro';
+import ControlArtifact from '../../components/ControlArtifact.astro';
+import ControlLane from '../../components/ControlLane.astro';
 import { getLangFromUrl, useTranslations } from '../../i18n/ui';
-import {
-  Container,
-  GitBranch,
-  Cloud,
-  Gauge,
-} from '@lucide/astro';
+import { Container, GitBranch, Cloud, Gauge } from '@lucide/astro';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -26,7 +17,6 @@ const pageTitle = 'Cloud & Modernizare — Re-arhitecturare și optimizare aplic
 const pageDescription =
   'Hardware-ul se scumpește. Propunem o abordare de re-arhitecturare, containerizare și migrare selectivă în cloud pentru performanță și costuri predictibile.';
 
-// SECTION 4 — #flux 5-stage methodology (number / title / pill / body, verbatim).
 const steps = [
   {
     title: 'Propunere de re-arhitecturare',
@@ -55,51 +45,29 @@ const steps = [
   },
 ];
 
-// SECTION 5 — Capabilities bento (icon / title / 3 bullets, verbatim).
 const capabilities = [
   {
     Icon: Container,
     title: 'Containerizare & orchestrare',
-    items: [
-      'Prioritizarea aplicațiilor',
-      'Migrare controlată',
-      'Rollback planificat',
-    ],
-    reveal: { 'data-reveal': true },
+    items: ['Prioritizarea aplicațiilor', 'Migrare controlată', 'Rollback planificat'],
   },
   {
     Icon: GitBranch,
     title: 'DevSecOps & CI/CD',
-    items: [
-      'Pipeline-uri de livrare',
-      'Testare automată în staging',
-      'Infrastructure-as-Code',
-    ],
-    reveal: { 'data-reveal': true },
+    items: ['Pipeline-uri de livrare', 'Testare automată în staging', 'Infrastructure-as-Code'],
   },
   {
     Icon: Cloud,
     title: 'Integrare hibridă',
-    items: [
-      'Integrare on-premise și cloud',
-      'Migrare selectivă',
-      'Costuri predictibile',
-    ],
-    reveal: { 'data-reveal': true },
+    items: ['Integrare on-premise și cloud', 'Migrare selectivă', 'Costuri predictibile'],
   },
   {
     Icon: Gauge,
     title: 'Monitorizare & suport',
-    items: [
-      'Suport proactiv',
-      'Monitorizare continuă',
-      'Urmărirea indicatorilor propuși',
-    ],
-    reveal: { 'data-reveal': true },
+    items: ['Suport proactiv', 'Monitorizare continuă', 'Urmărirea indicatorilor propuși'],
   },
 ];
 
-// JSON-LD: Service (Cloud & Modernization, provider Smart Control).
 const SITE = 'https://smartcontrol.ro';
 const serviceLd = {
   '@context': 'https://schema.org',
@@ -122,129 +90,95 @@ const serviceLd = {
 <BaseLayout title={pageTitle} description={pageDescription}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(serviceLd)} />
 
-  {/* ============ SECTION 2 — HERO (light) ============ */}
-  <header
-    class="relative overflow-hidden"
-    style="background:var(--sc-gradient-hero-light)"
-  >
-    <GridTexture fade />
+  <RouteHero eyebrow="Cloud &amp; Modernization" artifact="cloud" index="02">
+    <h1 slot="title">
+      Hardware-ul se scumpește.<br /><span class="accent">Propunem următoarea abordare.</span>
+    </h1>
+    <p slot="lead">
+      Prețurile componentelor critice cresc sub presiunea cererii pentru infrastructură AI, iar bugetele de refresh nu mai ajung.
+      <strong>Re-arhitecturarea și optimizarea aplicațiilor</strong> devin strategia principală — obții mai multă performanță din infrastructura existentă, înainte să cumperi una nouă.
+    </p>
+    <Fragment slot="actions">
+      <MailtoLink variant="button" subject={t('subject.assessment')}>
+        Programează assessment-ul gratuit
+      </MailtoLink>
+      <TextLink href="#flux">Vezi fluxul în 5 etape</TextLink>
+    </Fragment>
+  </RouteHero>
 
-    <div class="container relative pb-[72px] pt-[120px] md:pt-[120px]">
-      <Eyebrow variant="light" class="hero-in">Cloud &amp; Modernization</Eyebrow>
-
-      <h1
-        class="hero-in-2 mt-6 max-w-[860px] text-[clamp(2.25rem,1.6rem+2.8vw,3.625rem)] font-extrabold leading-[1.1] tracking-[-1.8px] text-midnight"
-      >
-        Hardware-ul se scumpește.<br /><span class="text-bright">Propunem următoarea abordare.</span>
-      </h1>
-
-      <p class="hero-in-3 mt-6 max-w-[640px] text-[18px] leading-[1.7] text-slate">
-        Prețurile componentelor critice cresc sub presiunea cererii pentru
-        infrastructură AI, iar bugetele de refresh nu mai ajung.
-        <span class="font-semibold text-navy">Re-arhitecturarea și optimizarea aplicațiilor</span>
-        devin strategia principală — obții mai multă performanță din
-        infrastructura existentă, înainte să cumperi una nouă.
-      </p>
-
-      <div class="hero-in-4 mt-[38px] flex flex-wrap items-center gap-4">
-        <MailtoLink variant="button" subject={t('subject.assessment')}>
-          Programează assessment-ul gratuit
-        </MailtoLink>
-        <TextLink href="#flux">Vezi fluxul în 5 etape</TextLink>
-      </div>
-
-    </div>
-  </header>
-
-  {/* ============ SECTION 4 — FLUX 5 ETAPE (#flux, scroll stepper, wash band) ============ */}
-  <section id="flux" class="bg-page">
-    <div class="container py-[64px] sm:py-[88px]">
-      <div data-reveal>
+  <section id="flux" class="cloud-corridor scroll-mt-24" aria-labelledby="cloud-corridor-title">
+    <div class="container">
+      <div class="cloud-corridor__heading" data-reveal>
         <SectionHeading
           eyebrow="Abordare"
           heading="Propunem 5 etape"
           headingMaxWidth="700px"
+          headingId="cloud-corridor-title"
         />
       </div>
 
-      {/* Page-local stepper composite — matches the initStepper data-contract
-          (data-stepper / data-stepper-fill / data-step / -dot / -body) so
-          BaseLayout auto-wires it. Spec dot = 52px, rail at 25px, with a mono
-          pill the shared <Stepper> can't render yet (see sharedChangeRequests). */}
-      <div class="relative mt-10" data-stepper>
-        <div class="absolute left-[25px] top-7 bottom-7 w-[2px] bg-border-blue" aria-hidden="true">
-          <div
-            data-stepper-fill
-            class="absolute left-0 top-0 w-full"
-            style="height:0;background:linear-gradient(180deg,#4487DC,#7AB4E8)"
-          >
+      <div
+        class="cloud-corridor__system"
+        data-control-chapter
+        data-scene-kind="cloud"
+        data-stepper
+      >
+        <div class="cloud-corridor__artifact" data-chapter-artifact aria-hidden="true">
+          <div class="cloud-corridor__artifact-frame">
+            <ControlArtifact variant="cloud" compact />
           </div>
         </div>
 
-        <ol class="relative">
-          {
-            steps.map((s, i) => (
-              <li
-                data-step
-                class="relative grid grid-cols-[52px_1fr] gap-5 py-[26px] md:gap-8"
-              >
-                <span
-                  data-step-dot
-                  class="flex h-[52px] w-[52px] items-center justify-center rounded-[12px] border border-border-blue bg-surface font-mono text-[15px] font-semibold text-cool transition-[border-color,color,box-shadow,background] duration-[400ms]"
-                >
-                  {String(i + 1).padStart(2, '0')}
+        <div class="cloud-corridor__route">
+          <span class="cloud-corridor__rail" aria-hidden="true">
+            <span data-stepper-fill></span>
+          </span>
+          <ol class="cloud-corridor__steps">
+            {steps.map((step, index) => (
+              <li data-step data-chapter-step>
+                <span class="cloud-corridor__number" data-step-dot>
+                  {String(index + 1).padStart(2, '0')}
                 </span>
-                <div
-                  data-step-body
-                  class="max-w-[760px] transition-opacity duration-[400ms]"
-                  style="opacity:0.45"
-                >
-                  <div class="flex flex-wrap items-baseline gap-3.5">
-                    <h3 class="text-[20px] font-bold tracking-[-0.3px] text-navy">{s.title}</h3>
-                    <span class="rounded-full border border-border-blue bg-surface px-2.5 py-[3px] font-mono text-[11px] uppercase tracking-[1px] text-royal">
-                      {s.pill}
-                    </span>
+                <article class="cloud-corridor__stage" data-step-body>
+                  <div class="cloud-corridor__stage-heading">
+                    <h3>{step.title}</h3>
+                    <span>{step.pill}</span>
                   </div>
-                  <p class="mt-2.5 text-[14.5px] leading-[1.7] text-cool">{s.body}</p>
-                </div>
+                  <p>{step.body}</p>
+                </article>
               </li>
-            ))
-          }
-        </ol>
+            ))}
+          </ol>
+        </div>
       </div>
     </div>
   </section>
 
-  {/* ============ SECTION 5 — STACK / CE LIVRĂM (light) ============ */}
-  <section aria-labelledby="ce-livram" class="bg-surface">
-    <div class="container py-[44px] sm:py-[64px]">
-      <div data-reveal>
+  <section class="cloud-output" aria-labelledby="ce-livram">
+    <div class="container cloud-output__grid">
+      <div class="cloud-output__heading" data-reveal>
         <SectionHeading
           heading="Ce livrăm concret"
           headingMaxWidth="700px"
           headingId="ce-livram"
         />
       </div>
-
-      <div class="mt-9 grid gap-5 md:grid-cols-2">
-        {
-          capabilities.map(({ Icon, title, items, reveal }) => (
-            <div {...reveal}>
-              <article class="box-border h-full rounded-xl border border-border bg-surface px-[34px] py-[30px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[4px] hover:border-border-blue hover:shadow-lg">
-                <div class="flex items-center gap-3">
-                  <Icon class="h-5 w-5 text-bright" stroke-width={1.5} />
-                  <h3 class="text-[17px] font-bold text-navy">{title}</h3>
-                </div>
-                <ChevronList items={items} cols={1} class="mt-4 gap-y-[9px]" />
-              </article>
-            </div>
-          ))
-        }
-      </div>
+      <ol class="cloud-output__lanes" role="list">
+        {capabilities.map(({ Icon, title, items }, index) => (
+          <li>
+            <ControlLane
+              index={String(index + 1).padStart(2, '0')}
+              title={title}
+              items={items}
+            >
+              <Icon slot="icon" class="h-5 w-5" stroke-width={1.5} />
+            </ControlLane>
+          </li>
+        ))}
+      </ol>
     </div>
   </section>
 
-  {/* ============ SECTION 6 — CTA (#contact, dark band) ============ */}
   <CtaBand
     id="contact"
     heading="Cât te costă infrastructura actuală și cât ai putea economisi"
@@ -254,3 +188,147 @@ const serviceLd = {
     Assessment-ul gratuit de 2 zile cartografiază infrastructura actuală și estimează economia posibilă prin re-arhitecturare.
   </CtaBand>
 </BaseLayout>
+
+<style>
+  .cloud-corridor {
+    position: relative;
+    overflow: clip;
+    padding-block: clamp(72px, 9vw, 112px);
+    background: var(--color-page);
+  }
+  .cloud-corridor::before {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent 49.95%, color-mix(in srgb, var(--color-border-blue) 60%, transparent) 50%, transparent 50.05%);
+    content: '';
+    pointer-events: none;
+  }
+  .cloud-corridor__heading { position: relative; z-index: 1; }
+  .cloud-corridor__system {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(320px, 0.82fr) minmax(0, 1.18fr);
+    gap: clamp(48px, 7vw, 96px);
+    margin-top: clamp(42px, 6vw, 72px);
+  }
+  .cloud-corridor__artifact { min-width: 0; }
+  .cloud-corridor__artifact-frame {
+    position: sticky;
+    top: calc(var(--nav-offset) + 34px);
+    padding: clamp(18px, 2.5vw, 30px);
+    border: 1px solid var(--color-border-blue);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+    box-shadow: 0 30px 70px -55px color-mix(in srgb, var(--color-navy) 46%, transparent);
+  }
+  .cloud-corridor__route { position: relative; }
+  .cloud-corridor__rail {
+    position: absolute;
+    inset: 30px auto 30px 29px;
+    width: 2px;
+    background: var(--color-border-blue);
+  }
+  .cloud-corridor__rail > span {
+    display: block;
+    width: 100%;
+    height: 0;
+    background: linear-gradient(180deg, var(--color-bright), var(--color-sky));
+  }
+  .cloud-corridor__steps { margin: 0; padding: 0; list-style: none; }
+  .cloud-corridor__steps > li {
+    position: relative;
+    display: grid;
+    min-height: 320px;
+    grid-template-columns: 60px minmax(0, 1fr);
+    align-items: center;
+    gap: 24px;
+  }
+  .cloud-corridor__number {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    width: 60px;
+    height: 60px;
+    place-items: center;
+    border: 1px solid var(--color-border-blue);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    color: var(--color-royal);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 12px 28px -24px var(--color-navy);
+  }
+  .cloud-corridor__stage {
+    position: relative;
+    padding: 30px clamp(24px, 3.5vw, 42px);
+    border-block: 1px solid var(--color-border-blue);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--color-surface) 92%, transparent), transparent);
+  }
+  .cloud-corridor__stage::before {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: var(--color-bright);
+    content: '';
+    opacity: 0.55;
+  }
+  .cloud-corridor__stage-heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px 16px; }
+  .cloud-corridor__stage h3 {
+    color: var(--color-navy);
+    font-size: clamp(1.12rem, 1.02rem + 0.5vw, 1.4rem);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .cloud-corridor__stage-heading span {
+    padding: 4px 9px;
+    border: 1px solid var(--color-border-blue);
+    border-radius: 999px;
+    background: var(--color-surface);
+    color: var(--color-royal);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .cloud-corridor__stage p { margin-top: 12px; color: var(--color-cool); font-size: 14.5px; line-height: 1.72; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .cloud-corridor__system[data-scene-step] .cloud-corridor__stage {
+      transition: background-color 320ms ease, transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .cloud-corridor__system[data-scene-step] li[data-current] .cloud-corridor__stage {
+      background-color: color-mix(in srgb, var(--color-blue-wash) 72%, transparent);
+      transform: translateX(6px);
+    }
+  }
+
+  .cloud-output {
+    padding-block: clamp(64px, 8vw, 100px);
+    background: var(--color-surface);
+  }
+  .cloud-output__grid {
+    display: grid;
+    grid-template-columns: minmax(250px, 0.58fr) minmax(0, 1.42fr);
+    align-items: start;
+    gap: clamp(44px, 7vw, 92px);
+  }
+  .cloud-output__heading { position: sticky; top: calc(var(--nav-offset) + 32px); }
+  .cloud-output__lanes { margin: 0; padding: 0; list-style: none; }
+
+  @media (max-width: 899px) {
+    .cloud-corridor__system,
+    .cloud-output__grid { grid-template-columns: 1fr; }
+    .cloud-corridor__artifact-frame,
+    .cloud-output__heading { position: static; }
+    .cloud-corridor__artifact { max-width: 560px; }
+    .cloud-corridor__steps > li { min-height: 250px; }
+  }
+  @media (max-width: 560px) {
+    .cloud-corridor__steps > li { min-height: 0; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; padding-block: 24px; }
+    .cloud-corridor__number { width: 44px; height: 44px; border-radius: var(--radius-sm); }
+    .cloud-corridor__rail { left: 21px; }
+    .cloud-corridor__stage { padding: 24px 18px; }
+  }
+</style>

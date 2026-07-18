@@ -7,8 +7,15 @@ import MailtoLink from '../components/MailtoLink.astro';
   title="Politica de confidențialitate — Smart Control"
   description="Politica de confidențialitate a site-ului Smart Control SRL — cum colectăm, utilizăm și protejăm datele cu caracter personal."
 >
-  <div class="container privacy-content">
-    <article>
+  <div class="legal-page" data-legal-reader>
+    <div class="legal-progress" aria-hidden="true">
+      <span data-legal-progress></span>
+    </div>
+
+    <div class="container legal-shell">
+      <header class="legal-header">
+        <div class="legal-header__datum" aria-hidden="true"><span></span></div>
+
       <p class="translation-notice" role="note">
         Aceasta este versiunea oficială în limba română. O{' '}
         <a href="/en/privacy" class="notice-link">traducere în limba engleză</a>{' '}
@@ -16,19 +23,27 @@ import MailtoLink from '../components/MailtoLink.astro';
       </p>
 
       <h1>Politică de confidențialitate</h1>
+      </header>
 
-      <nav class="toc" aria-label="Cuprins">
-        <p class="toc-title">Cuprins</p>
-        <ol>
-          <li><a href="#informatii-colectam">Ce informații colectăm și cum le utilizăm</a></li>
-          <li><a href="#minori">Datele cu caracter personal ale minorilor sub 16 ani</a></li>
-          <li><a href="#informatii-transmitem">Informațiile pe care le transmitem</a></li>
-          <li><a href="#linkuri">Link-uri către alte pagini</a></li>
-          <li><a href="#securitate">Securitate</a></li>
-          <li><a href="#drepturi">Drepturile dumneavoastră în legătură cu datele cu caracter personal</a></li>
-          <li><a href="#actualizare">Actualizarea politicii de confidențialitate</a></li>
-        </ol>
-      </nav>
+      <div class="legal-layout">
+        <aside class="legal-index">
+          <details class="toc" data-legal-toc open>
+            <summary class="toc-title">Cuprins</summary>
+            <nav aria-label="Cuprins">
+              <ol>
+                <li><a href="#informatii-colectam">Ce informații colectăm și cum le utilizăm</a></li>
+                <li><a href="#minori">Datele cu caracter personal ale minorilor sub 16 ani</a></li>
+                <li><a href="#informatii-transmitem">Informațiile pe care le transmitem</a></li>
+                <li><a href="#linkuri">Link-uri către alte pagini</a></li>
+                <li><a href="#securitate">Securitate</a></li>
+                <li><a href="#drepturi">Drepturile dumneavoastră în legătură cu datele cu caracter personal</a></li>
+                <li><a href="#actualizare">Actualizarea politicii de confidențialitate</a></li>
+              </ol>
+            </nav>
+          </details>
+        </aside>
+
+        <article class="legal-article" data-legal-article>
 
       <p>
         Această politică („Politica de confidențialitate”) descrie practicile cu privire la datele
@@ -60,7 +75,7 @@ import MailtoLink from '../components/MailtoLink.astro';
         Site, sunteți de acord cu termenii și condițiile acestei Politici.
       </p>
 
-      <h2 id="informatii-colectam">Ce informații colectăm și cum le utilizăm</h2>
+      <h2 id="informatii-colectam" data-legal-section tabindex="-1">Ce informații colectăm și cum le utilizăm</h2>
 
       <p>În cadrul acestui Site ne furnizați următoarele date cu caracter personal:</p>
 
@@ -87,7 +102,7 @@ import MailtoLink from '../components/MailtoLink.astro';
         corespunzătoare din prezenta politică de confidențialitate.
       </p>
 
-      <h2 id="minori">Datele cu caracter personal ale minorilor sub 16 ani</h2>
+      <h2 id="minori" data-legal-section tabindex="-1">Datele cu caracter personal ale minorilor sub 16 ani</h2>
 
       <p>
         Minorii cu vârsta de până la 16 ani nu ar trebui să transmită niciun fel de date cu caracter
@@ -107,7 +122,7 @@ import MailtoLink from '../components/MailtoLink.astro';
         sub 16 ani.
       </p>
 
-      <h2 id="informatii-transmitem">Informațiile pe care le transmitem</h2>
+      <h2 id="informatii-transmitem" data-legal-section tabindex="-1">Informațiile pe care le transmitem</h2>
 
       <p>
         Nu vom transmite către terțe părți datele dumneavoastră cu caracter personal, cu următoarele
@@ -143,7 +158,7 @@ import MailtoLink from '../components/MailtoLink.astro';
         </li>
       </ul>
 
-      <h2 id="linkuri">Link-uri către alte pagini</h2>
+      <h2 id="linkuri" data-legal-section tabindex="-1">Link-uri către alte pagini</h2>
 
       <p>
         Nu uitați că atunci când folosiți un link pentru a ajunge de pe Site-ul nostru pe o altă
@@ -154,7 +169,7 @@ import MailtoLink from '../components/MailtoLink.astro';
         lor de colectare, utilizare și dezvăluire a datelor cu caracter personal.
       </p>
 
-      <h2 id="securitate">Securitate</h2>
+      <h2 id="securitate" data-legal-section tabindex="-1">Securitate</h2>
 
       <p>
         Securitatea datelor cu caracter personal este importantă pentru noi. Păstrăm măsuri adecvate
@@ -164,7 +179,7 @@ import MailtoLink from '../components/MailtoLink.astro';
         prelucrare a datelor cu caracter personal aflate în posesia noastră.
       </p>
 
-      <h2 id="drepturi">Drepturile dumneavoastră în legătură cu datele cu caracter personal</h2>
+      <h2 id="drepturi" data-legal-section tabindex="-1">Drepturile dumneavoastră în legătură cu datele cu caracter personal</h2>
 
       <p>
         În conformitate cu dispozițiile Regulamentului UE nr. 679/2016, persoanele înregistrate, în
@@ -192,7 +207,7 @@ import MailtoLink from '../components/MailtoLink.astro';
         .
       </p>
 
-      <h2 id="actualizare">Actualizarea politicii de confidențialitate</h2>
+      <h2 id="actualizare" data-legal-section tabindex="-1">Actualizarea politicii de confidențialitate</h2>
 
       <p>
         Instituția noastră își rezervă dreptul de a schimba, modifica sau actualiza politica de
@@ -205,134 +220,353 @@ import MailtoLink from '../components/MailtoLink.astro';
         confidențialitate și protecția datelor cu caracter personal. Vom actualiza periodic politica
         de confidențialitate și vom afișa noutățile pe această pagină.
       </p>
-    </article>
+        </article>
+      </div>
+    </div>
   </div>
 </BaseLayout>
 
 <style>
-  .privacy-content {
-    padding-block: clamp(3.5rem, 7vw, 5.5rem) clamp(3.5rem, 7vw, 5rem);
-    max-width: 780px;
+  .legal-page {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+    overflow: clip;
+    background: var(--sc-gradient-hero-light);
+  }
+
+  .legal-page::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(to right, color-mix(in srgb, var(--color-royal) 5%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--color-royal) 5%, transparent) 1px, transparent 1px);
+    background-size: 56px 56px;
+    content: '';
+    -webkit-mask-image: linear-gradient(to bottom, black, transparent 34rem);
+    mask-image: linear-gradient(to bottom, black, transparent 34rem);
+  }
+
+  .legal-progress {
+    position: fixed;
+    inset: var(--nav-offset) 0 auto;
+    z-index: 45;
+    height: 2px;
+    background: color-mix(in srgb, var(--color-border-blue) 72%, transparent);
+    pointer-events: none;
+  }
+
+  .legal-progress span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: var(--color-bright);
+    transform: scaleX(var(--legal-progress, 0));
+    transform-origin: left center;
+    will-change: transform;
+  }
+
+  .legal-shell {
+    position: relative;
+    padding-block: clamp(4rem, 8vw, 7rem) clamp(5rem, 9vw, 8rem);
+  }
+
+  .legal-header,
+  .legal-layout {
+    display: grid;
+    grid-template-columns: minmax(190px, 240px) minmax(0, 70ch);
+    column-gap: clamp(2.5rem, 6vw, 5.5rem);
+  }
+
+  .legal-header {
+    position: relative;
+    align-items: end;
+    padding-block-end: clamp(2.5rem, 5vw, 4.5rem);
+    border-bottom: 1px solid var(--color-border-blue);
+  }
+
+  .legal-header__datum {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: stretch;
+    position: relative;
+    min-height: 10rem;
+    border-left: 1px solid var(--color-border-blue);
+  }
+
+  .legal-header__datum::before,
+  .legal-header__datum::after,
+  .legal-header__datum span::before,
+  .legal-header__datum span::after {
+    position: absolute;
+    background: var(--color-bright);
+    content: '';
+  }
+
+  .legal-header__datum::before {
+    top: 0;
+    left: -5px;
+    width: 9px;
+    height: 1px;
+  }
+
+  .legal-header__datum::after {
+    bottom: 0;
+    left: -5px;
+    width: 9px;
+    height: 1px;
+  }
+
+  .legal-header__datum span::before {
+    top: 50%;
+    left: -5px;
+    width: 9px;
+    height: 1px;
+  }
+
+  .legal-header__datum span::after {
+    top: calc(50% - 4px);
+    left: -1px;
+    width: 1px;
+    height: 9px;
   }
 
   .translation-notice {
-    font-size: 0.875rem;
+    grid-column: 2;
+    max-width: 62ch;
+    margin: 0 0 2rem;
+    padding: 0.7rem 0.9rem;
+    border-left: 2px solid var(--color-bright);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    background: color-mix(in srgb, var(--color-blue-wash) 82%, transparent);
     color: var(--color-slate);
-    background: var(--color-blue-wash);
-    border-left: 3px solid var(--color-bright);
-    padding: 0.75rem 1rem;
-    border-radius: 0 6px 6px 0;
-    margin-block-end: 2rem;
-    line-height: 1.5;
+    font-size: 0.875rem;
+    line-height: 1.55;
   }
 
   .notice-link {
     color: var(--color-royal);
     font-weight: 600;
     text-decoration: underline;
-    text-underline-offset: 2px;
+    text-decoration-color: var(--color-bright);
+    text-underline-offset: 3px;
   }
 
   .notice-link:hover {
     color: var(--color-navy);
   }
 
+  .legal-header h1 {
+    grid-column: 2;
+    max-width: 15ch;
+    margin: 0;
+    color: var(--color-midnight);
+    font-size: clamp(2.5rem, 1.9rem + 2.6vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+
+  .legal-layout {
+    align-items: start;
+    padding-block-start: clamp(2.5rem, 5vw, 4.75rem);
+  }
+
+  .legal-index {
+    grid-column: 1;
+    min-width: 0;
+    position: sticky;
+    top: calc(var(--nav-offset) + 2rem);
+  }
+
   .toc {
-    background: var(--color-blue-wash);
-    border: 1px solid var(--color-border-blue);
-    border-radius: 14px;
-    padding: 1.25rem 1.5rem;
-    margin-block: 0 2.5rem;
+    overflow: hidden;
+    margin: 0;
+    border-top: 2px solid var(--color-bright);
+    border-bottom: 1px solid var(--color-border-blue);
+    background: color-mix(in srgb, var(--color-surface) 76%, transparent);
   }
 
   .toc-title {
+    position: relative;
+    margin: 0;
+    padding: 1rem 2rem 1rem 0;
+    color: var(--color-navy);
+    cursor: pointer;
     font-family: var(--font-mono, ui-monospace, monospace);
     font-size: 0.75rem;
     font-weight: 600;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.13em;
+    list-style: none;
     text-transform: uppercase;
-    color: var(--color-slate);
-    margin: 0 0 0.75rem;
+  }
+
+  .toc-title::-webkit-details-marker {
+    display: none;
+  }
+
+  .toc-title::after {
+    position: absolute;
+    top: 50%;
+    right: 0.25rem;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-right: 1.5px solid var(--color-royal);
+    border-bottom: 1.5px solid var(--color-royal);
+    content: '';
+    transform: translateY(-70%) rotate(45deg);
+    transition: transform 180ms ease;
+  }
+
+  .toc[open] .toc-title::after {
+    transform: translateY(-30%) rotate(225deg);
+  }
+
+  .toc nav {
+    padding-block: 0.2rem 1.25rem;
   }
 
   .toc ol {
-    margin: 0;
-    padding-inline-start: 1.25rem;
     display: grid;
-    gap: 0.4rem;
+    gap: 0.45rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: legal-index;
   }
 
   .toc li {
-    font-size: 0.9375rem;
-    line-height: 1.5;
-    color: var(--color-slate);
-    margin-block-end: 0;
+    position: relative;
+    margin: 0;
+    counter-increment: legal-index;
   }
 
   .toc a {
-    color: var(--color-royal);
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.65rem minmax(0, 1fr);
+    gap: 0.25rem;
+    padding-block: 0.25rem;
+    color: var(--color-slate);
+    font-size: 0.8125rem;
+    line-height: 1.45;
     text-decoration: none;
     text-underline-offset: 3px;
-    transition: color 0.15s ease;
+    transition: color 150ms ease;
   }
 
-  .toc a:hover {
+  .toc a::before {
+    color: var(--color-cool);
+    content: counter(legal-index, decimal-leading-zero);
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.625rem;
+    letter-spacing: 0.04em;
+    line-height: 1.9;
+    transition: color 150ms ease;
+  }
+
+  .toc a:hover,
+  .toc a[aria-current='location'],
+  .toc a[data-current],
+  .toc a.is-current,
+  .toc a.is-active {
     color: var(--color-navy);
-    text-decoration: underline;
-    text-decoration-color: var(--color-bright);
   }
 
-  article h1 {
-    font-size: clamp(2rem, 4vw, 2.5rem);
-    font-weight: 700;
-    color: var(--color-navy);
-    margin-block-end: 1.75rem;
-    line-height: 1.2;
+  .toc a:hover::before,
+  .toc a[aria-current='location']::before,
+  .toc a[data-current]::before,
+  .toc a.is-current::before,
+  .toc a.is-active::before {
+    color: var(--color-bright);
   }
 
-  article h2 {
-    font-size: clamp(1.125rem, 2.5vw, 1.375rem);
-    font-weight: 700;
-    color: var(--color-navy);
-    margin-block-start: 3rem;
-    margin-block-end: 1rem;
-    padding-block-end: 0.5rem;
-    border-bottom: 2px solid var(--color-border-blue);
-    line-height: 1.3;
-    scroll-margin-top: 6rem;
-  }
-
-  article h3 {
-    font-size: 1.0625rem;
+  .toc a[aria-current='location'],
+  .toc a[data-current],
+  .toc a.is-current,
+  .toc a.is-active {
     font-weight: 600;
+  }
+
+  .legal-article {
+    grid-column: 2;
+    width: 100%;
+    max-width: 70ch;
+    min-width: 0;
+  }
+
+  .legal-article > p:first-child {
     color: var(--color-navy);
-    margin-block-start: 1.5rem;
-    margin-block-end: 0.5rem;
+    font-size: 1.0625rem;
+    line-height: 1.75;
   }
 
-  article p,
-  article li {
-    font-size: 1rem;
-    line-height: 1.7;
+  .legal-article h2 {
+    position: relative;
+    margin-block: clamp(3.5rem, 7vw, 5.25rem) 1.25rem;
+    padding-block: 0 0.8rem;
+    border-bottom: 1px solid var(--color-border-blue);
+    color: var(--color-midnight);
+    font-size: clamp(1.35rem, 1.18rem + 0.72vw, 1.75rem);
+    font-weight: 700;
+    line-height: 1.25;
+    scroll-margin-top: calc(var(--nav-offset) + 2rem);
+    text-wrap: balance;
+  }
+
+  .legal-article h2::before {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 3.5rem;
+    height: 2px;
+    background: var(--color-bright);
+    content: '';
+  }
+
+  .legal-article h2:target {
+    background: linear-gradient(90deg, color-mix(in srgb, var(--color-blue-wash) 72%, transparent), transparent 82%);
+  }
+
+  .legal-article h3 {
+    margin-block: 1.75rem 0.6rem;
+    color: var(--color-navy);
+    font-size: 1.0625rem;
+    font-weight: 650;
+    line-height: 1.4;
+  }
+
+  .legal-article p,
+  .legal-article li {
     color: var(--color-slate);
+    font-size: 1rem;
+    line-height: 1.78;
   }
 
-  article p {
-    margin-block-end: 1rem;
+  .legal-article p {
+    margin-block-end: 1.15rem;
   }
 
-  article ul,
-  article ol {
-    margin-block: 0.5rem 1rem;
+  .legal-article ul,
+  .legal-article ol {
+    margin-block: 0.65rem 1.35rem;
     padding-inline-start: 1.5rem;
   }
 
-  article li {
-    margin-block-end: 0.4rem;
+  .legal-article li {
+    margin-block-end: 0.45rem;
+    padding-inline-start: 0.2rem;
   }
 
-  article li > ol {
-    margin-block-start: 0.4rem;
+  .legal-article li::marker {
+    color: var(--color-royal);
+    font-family: var(--font-mono, ui-monospace, monospace);
+  }
+
+  .legal-article li > ol {
+    margin-block-start: 0.45rem;
   }
 
   .ext-link {
@@ -356,5 +590,149 @@ import MailtoLink from '../components/MailtoLink.astro';
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border: 0;
+  }
+
+  @media (max-width: 860px) {
+    .legal-shell {
+      padding-block: clamp(3.25rem, 10vw, 5rem) clamp(4rem, 12vw, 6rem);
+    }
+
+    .legal-header,
+    .legal-layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .legal-header {
+      padding-inline-start: 1.25rem;
+    }
+
+    .legal-header__datum {
+      position: absolute;
+      inset: 0 auto 2.5rem 0;
+      display: block;
+      min-height: 0;
+    }
+
+    .translation-notice,
+    .legal-header h1,
+    .legal-index,
+    .legal-article {
+      grid-column: 1;
+    }
+
+    .legal-index {
+      position: static;
+    }
+
+    .legal-layout {
+      padding-block-start: 2rem;
+    }
+
+    .toc {
+      margin-block-end: 2.5rem;
+      padding-inline: 1rem;
+      border: 1px solid var(--color-border-blue);
+      border-top: 2px solid var(--color-bright);
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
+      box-shadow: var(--shadow-xs);
+    }
+
+    .toc nav {
+      padding-block-end: 1rem;
+    }
+
+    .toc a {
+      font-size: 0.875rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .toc-title::after,
+    .toc a {
+      transition: none;
+    }
+  }
+
+  @media print {
+    .legal-page {
+      min-height: 0;
+      overflow: visible;
+      background: var(--color-surface);
+    }
+
+    .legal-page::before,
+    .legal-progress,
+    .legal-header__datum,
+    .legal-index {
+      display: none;
+    }
+
+    .legal-shell {
+      max-width: none;
+      padding: 0;
+    }
+
+    .legal-header,
+    .legal-layout {
+      display: block;
+    }
+
+    .legal-header {
+      padding-block-end: 1.5rem;
+      border-bottom: 1px solid var(--color-faint);
+    }
+
+    .legal-header h1 {
+      max-width: none;
+      color: var(--color-ink);
+      font-size: 28pt;
+    }
+
+    .translation-notice {
+      max-width: none;
+      margin-block-end: 1rem;
+      border-left-color: var(--color-cool);
+      background: none;
+      color: var(--color-ink);
+    }
+
+    .legal-layout {
+      padding-block-start: 1.5rem;
+    }
+
+    .legal-article {
+      max-width: none;
+    }
+
+    .legal-article p,
+    .legal-article li,
+    .legal-article > p:first-child {
+      color: var(--color-ink);
+      font-size: 10.5pt;
+      line-height: 1.55;
+    }
+
+    .legal-article h2 {
+      break-after: avoid;
+      color: var(--color-ink);
+      font-size: 16pt;
+      page-break-after: avoid;
+    }
+
+    .legal-article h3 {
+      break-after: avoid;
+      color: var(--color-ink);
+      page-break-after: avoid;
+    }
+
+    .legal-article h2::before {
+      background: var(--color-cool);
+    }
+
+    .notice-link,
+    .ext-icon {
+      color: var(--color-ink);
+    }
   }
 </style>

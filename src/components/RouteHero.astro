@@ -1,0 +1,202 @@
+---
+import Eyebrow from './Eyebrow.astro';
+import GridTexture from './GridTexture.astro';
+import ControlArtifact from './ControlArtifact.astro';
+
+type ControlArtifactVariant =
+  | 'stack'
+  | 'atlas'
+  | 'cloud'
+  | 'security'
+  | 'software'
+  | 'managed'
+  | 'solutions'
+  | 'seknet'
+  | 'svpn'
+  | 'missing';
+
+interface Props {
+  eyebrow: string;
+  artifact: ControlArtifactVariant;
+  index?: string;
+  dark?: boolean;
+  compact?: boolean;
+  class?: string;
+}
+
+const {
+  eyebrow,
+  artifact,
+  index = '00',
+  dark = false,
+  compact = false,
+  class: extra = '',
+} = Astro.props;
+---
+
+<header
+  class:list={['route-hero', dark && 'route-hero--dark', compact && 'route-hero--compact', extra]}
+  data-control-scene
+  data-scene-kind={artifact}
+>
+  <GridTexture dark={dark} fade={!dark} opacity={dark ? 0.58 : 0.72} />
+  <div class="route-hero__rail" aria-hidden="true"></div>
+
+  <div class="container route-hero__grid">
+    <div class="route-hero__narrative">
+      <div class="route-hero__context">
+        <span>{index}</span>
+        <span aria-hidden="true"></span>
+        <Eyebrow variant={dark ? 'dark' : 'hero'} rule={false}>{eyebrow}</Eyebrow>
+      </div>
+
+      <div class="route-hero__title"><slot name="title" /></div>
+      <div class="route-hero__lead"><slot name="lead" /></div>
+
+      {Astro.slots.has('actions') && <div class="route-hero__actions"><slot name="actions" /></div>}
+      {Astro.slots.has('meta') && <div class="route-hero__meta"><slot name="meta" /></div>}
+    </div>
+
+    <div class="route-hero__artifact">
+      <div class="route-hero__coordinate" aria-hidden="true">
+        <span>SC / {index}</span><span>1180</span>
+      </div>
+      <ControlArtifact variant={artifact} dark={dark} compact={compact} />
+    </div>
+  </div>
+</header>
+
+<style>
+  .route-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    background: var(--sc-gradient-hero-light);
+  }
+  .route-hero--dark { background: var(--color-midnight); }
+  .route-hero__rail {
+    position: absolute;
+    inset: 0 auto 0 max(24px, calc((100vw - 1180px) / 2 + 40px));
+    z-index: 1;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, var(--color-border-blue) 18%, var(--color-bright) 76%, transparent);
+    opacity: 0.75;
+  }
+  .route-hero--dark .route-hero__rail {
+    background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--color-sky) 30%, transparent) 18%, var(--color-sky) 76%, transparent);
+    opacity: 0.5;
+  }
+  .route-hero__grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    min-height: min(780px, calc(100svh - var(--nav-offset)));
+    grid-template-columns: minmax(0, 1.02fr) minmax(420px, 0.98fr);
+    align-items: center;
+    gap: clamp(48px, 7vw, 96px);
+    padding-block: clamp(76px, 10vh, 116px);
+  }
+  .route-hero--compact .route-hero__grid {
+    min-height: 580px;
+    padding-block: 72px;
+  }
+  .route-hero__narrative { min-width: 0; }
+  .route-hero__context {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--color-royal);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+  }
+  .route-hero--dark .route-hero__context { color: var(--color-sky); }
+  .route-hero__context > span:nth-child(2) {
+    width: 42px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.55;
+  }
+  .route-hero__title :global(h1) {
+    max-width: 880px;
+    margin-top: 26px;
+    color: var(--color-midnight);
+    font-size: clamp(2.5rem, 1.72rem + 3vw, 4rem);
+    font-weight: 800;
+    line-height: 1.07;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+  .route-hero--dark .route-hero__title :global(h1) { color: var(--color-surface); }
+  .route-hero__title :global(.accent) { color: var(--color-bright); }
+  .route-hero--dark .route-hero__title :global(.accent) { color: var(--color-sky); }
+  .route-hero__lead :global(p) {
+    max-width: 680px;
+    margin-top: 25px;
+    color: var(--color-slate);
+    font-size: 17px;
+    line-height: 1.72;
+  }
+  .route-hero--dark .route-hero__lead :global(p) { color: rgba(226, 233, 245, 0.78); }
+  .route-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 22px;
+    margin-top: 34px;
+  }
+  .route-hero__meta { margin-top: 34px; }
+  .route-hero__artifact {
+    position: relative;
+    min-width: 0;
+    padding: 24px;
+    border: 1px solid color-mix(in srgb, var(--color-royal) 12%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--color-surface) 72%, transparent);
+    box-shadow: 0 30px 70px -52px color-mix(in srgb, var(--color-navy) 44%, transparent);
+  }
+  .route-hero--dark .route-hero__artifact {
+    border-color: color-mix(in srgb, var(--color-sky) 18%, transparent);
+    background: color-mix(in srgb, var(--color-navy) 18%, transparent);
+    box-shadow: 0 38px 88px -56px color-mix(in srgb, var(--color-bright) 60%, transparent);
+  }
+  .route-hero__coordinate {
+    position: absolute;
+    inset: 12px 16px auto;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    color: var(--color-cool);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+  }
+  .route-hero--dark .route-hero__coordinate { color: rgba(226, 233, 245, 0.42); }
+
+  @media (max-width: 1099px) {
+    .route-hero__grid {
+      min-height: auto;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 0.74fr);
+      gap: 36px;
+      padding-block: 80px;
+    }
+    .route-hero__title :global(h1) { font-size: clamp(2.35rem, 5.4vw, 3.5rem); }
+  }
+  @media (max-width: 767px) {
+    .route-hero__rail { left: 24px; }
+    .route-hero__grid {
+      grid-template-columns: 1fr;
+      gap: 34px;
+      padding-block: 62px 54px;
+    }
+    .route-hero__title :global(h1) { margin-top: 22px; font-size: clamp(2.2rem, 10vw, 3.15rem); }
+    .route-hero__lead :global(p) { font-size: 16px; }
+    .route-hero__artifact { order: -1; padding: 12px; }
+    .route-hero__narrative { order: 1; }
+    .route-hero--compact .route-hero__artifact { order: initial; }
+    .route-hero--compact .route-hero__narrative { order: initial; }
+  }
+  @media (max-height: 700px) and (min-width: 1100px) {
+    .route-hero__grid { min-height: 620px; padding-block: 58px; }
+  }
+</style>

@@ -39,7 +39,7 @@ async function serveDir(dir, port) {
   return server;
 }
 
-const ROUTES = (args.routes || '/,/servicii/,/servicii/cloud/,/servicii/securitate/,/servicii/software/,/servicii/managed/,/solutii/,/solutii/seknet/,/solutii/s-vpn/,/confidentialitate/,/en/,/en/servicii/,/en/servicii/cloud/,/en/servicii/securitate/,/en/servicii/software/,/en/servicii/managed/,/en/solutii/,/en/solutii/seknet/,/en/solutii/s-vpn/,/en/privacy/').split(',');
+const ROUTES = (args.routes || '/,/servicii/,/servicii/cloud/,/servicii/securitate/,/servicii/software/,/servicii/managed/,/solutii/,/solutii/seknet/,/solutii/s-vpn/,/confidentialitate/,/en/,/en/servicii/,/en/servicii/cloud/,/en/servicii/securitate/,/en/servicii/software/,/en/servicii/managed/,/en/solutii/,/en/solutii/seknet/,/en/solutii/s-vpn/,/en/privacy/,/404.html').split(',');
 
 const contrastFn = () => {
   const parse = (c) => { const m = c.match(/rgba?\(([^)]+)\)/); if (!m) return null; const a = m[1].split(',').map((x) => parseFloat(x)); return { r: a[0], g: a[1], b: a[2], a: a[3] === undefined ? 1 : a[3] }; };

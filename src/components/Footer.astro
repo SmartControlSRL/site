@@ -1,13 +1,10 @@
 ---
-// Export 4-col footer (RESOLUTIONS §17), ALWAYS light. Cols: brand / Servicii /
-// Soluții / Contact. NO "Termeni", NO "Cookies", NO "Asset Management". Privacy
-// → /confidentialitate (/en/privacy). © year computed. Email obfuscated.
-import { getLangFromUrl, useTranslations, localizedPath, EMAIL_USER, EMAIL_DOMAIN } from '../i18n/ui';
+import { getLangFromUrl, useTranslations, localizedPath } from '../i18n/ui';
+import MailtoLink from './MailtoLink.astro';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const p = (path: string) => localizedPath(lang, path);
-
 const privacyHref = lang === 'en' ? '/en/privacy' : '/confidentialitate';
 const year = new Date().getUTCFullYear();
 
@@ -23,56 +20,131 @@ const solutions = [
 ];
 ---
 
-<footer class="border-t border-border bg-surface px-6 pb-10 pt-16 md:px-10">
-  <div class="mx-auto max-w-[1180px]">
-    <div class="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
-      <!-- Col 1 — brand -->
-      <div>
-        <a href={p('/')} class="flex items-center gap-[11px]" aria-label="Smart Control — home">
-          <img src="/smartcontrol-mark-96.png" alt="" width="34" height="34" class="h-[34px] w-[34px]" loading="lazy" decoding="async" />
-          <span class="text-[17px] font-bold tracking-[-0.3px] text-navy">Smart<span class="text-bright">Control</span></span>
+<footer class="system-footer">
+  <div class="system-footer__datum" aria-hidden="true"></div>
+  <div class="container">
+    <div class="system-footer__mast">
+      <div class="system-footer__brand">
+        <a href={p('/')} aria-label={t('a11y.home')}>
+          <img src="/smartcontrol-mark-96.png" alt="" width="40" height="40" loading="lazy" decoding="async" />
+          <span>Smart<span>Control</span></span>
         </a>
-        <p class="mt-3.5 text-[13.5px] italic text-cool">{t('footer.tagline')}</p>
-        <p class="mt-4 max-w-xs text-[13px] leading-[1.7] text-cool">{t('footer.blurb')}</p>
+        <p><i>{t('footer.tagline')}</i></p>
       </div>
-
-      <!-- Col 2 — Servicii -->
-      <div>
-        <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-cool">{t('footer.col.services')}</h2>
-        <ul class="mt-4 grid gap-2.5">
-          {services.map((l) => (
-            <li><a href={l.href} class="text-[13.5px] text-slate transition-colors hover:text-royal">{l.label}</a></li>
-          ))}
-        </ul>
-      </div>
-
-      <!-- Col 3 — Soluții -->
-      <div>
-        <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-cool">{t('footer.col.solutions')}</h2>
-        <ul class="mt-4 grid gap-2.5">
-          {solutions.map((l) => (
-            <li><a href={l.href} class="text-[13.5px] text-slate transition-colors hover:text-royal">{l.label}</a></li>
-          ))}
-        </ul>
-      </div>
-
-      <!-- Col 4 — Contact -->
-      <div>
-        <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-cool">{t('footer.col.contact')}</h2>
-        <div class="mt-4 grid gap-2.5">
-          <a data-email-user={EMAIL_USER} data-email-domain={EMAIL_DOMAIN} href="#" class="text-[13.5px] text-slate transition-colors hover:text-royal"></a>
-          <span class="text-[13.5px] text-slate">{t('footer.website')}</span>
-          <span class="text-[13.5px] leading-[1.6] text-cool">
-            {t('company.address.l1')}<br />{t('company.address.l2')}
-          </span>
-        </div>
-      </div>
+      <p class="system-footer__blurb">{t('footer.blurb')}</p>
+      <div class="system-footer__coordinate" aria-hidden="true"><span>SC / SYSTEM INDEX</span><span>2003—{year}</span></div>
     </div>
 
-    <!-- Bottom bar -->
-    <div class="mt-12 flex flex-col items-start gap-4 border-t border-divider pt-6 sm:flex-row sm:items-center sm:justify-between">
-      <span class="text-[12.5px] text-cool">© {year} {t('company.name')}. {t('footer.rights')}</span>
-      <a href={privacyHref} class="text-[12.5px] text-cool transition-colors hover:text-royal">{t('footer.privacy')}</a>
+    <div class="system-footer__index">
+      <section>
+        <div class="system-footer__heading"><span aria-hidden="true">01</span><h2>{t('footer.col.services')}</h2></div>
+        <ul role="list">
+          {services.map((link, index) => <li><a href={link.href}><span aria-hidden="true">01.{index + 1}</span>{link.label}</a></li>)}
+        </ul>
+      </section>
+
+      <section>
+        <div class="system-footer__heading"><span aria-hidden="true">02</span><h2>{t('footer.col.solutions')}</h2></div>
+        <ul role="list">
+          {solutions.map((link, index) => <li><a href={link.href}><span aria-hidden="true">02.{index + 1}</span>{link.label}</a></li>)}
+        </ul>
+      </section>
+
+      <section>
+        <div class="system-footer__heading"><span aria-hidden="true">03</span><h2>{t('footer.col.contact')}</h2></div>
+        <div class="system-footer__contact">
+          <MailtoLink variant="plain" />
+          <span>{t('footer.website')}</span>
+          <span>{t('company.address.l1')}<br />{t('company.address.l2')}</span>
+        </div>
+      </section>
+    </div>
+
+    <div class="system-footer__base">
+      <span>© {year} {t('company.name')}. {t('footer.rights')}</span>
+      <a href={privacyHref}>{t('footer.privacy')}</a>
     </div>
   </div>
 </footer>
+
+<style>
+  .system-footer {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    border-top: 1px solid var(--color-border-blue);
+    background: var(--color-surface);
+    padding-block: 54px 28px;
+  }
+  .system-footer__datum {
+    position: absolute;
+    inset: 0 auto 0 max(24px, calc((100vw - 1180px) / 2 + 40px));
+    width: 1px;
+    background: linear-gradient(180deg, var(--color-bright), var(--color-border-blue) 32%, transparent 90%);
+  }
+  .system-footer__mast {
+    display: grid;
+    grid-template-columns: minmax(230px, 0.9fr) minmax(300px, 1.1fr) auto;
+    align-items: end;
+    gap: 36px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid var(--color-border-blue);
+  }
+  .system-footer__brand > a { display: inline-flex; min-height: 44px; align-items: center; gap: 12px; color: var(--color-navy); text-decoration: none; }
+  .system-footer__brand img { width: 40px; height: 40px; }
+  .system-footer__brand a > span { font-size: 19px; font-weight: 700; letter-spacing: -0.35px; }
+  .system-footer__brand a > span span { color: var(--color-bright); }
+  .system-footer__brand p { margin-top: 9px; color: var(--color-cool); font-size: 13px; }
+  .system-footer__blurb { max-width: 520px; color: var(--color-cool); font-size: 13.5px; line-height: 1.7; }
+  .system-footer__coordinate { display: grid; gap: 7px; justify-items: end; color: var(--color-faint); font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.13em; }
+  .system-footer__index {
+    display: grid;
+    grid-template-columns: 1.15fr 0.8fr 1fr;
+    border-bottom: 1px solid var(--color-divider);
+  }
+  .system-footer__index > section { padding: 34px 32px 34px 0; }
+  .system-footer__index > section + section { padding-left: 32px; border-left: 1px solid var(--color-divider); }
+  .system-footer__heading { display: flex; align-items: center; gap: 12px; }
+  .system-footer__heading > span { color: var(--color-bright); font-family: var(--font-mono); font-size: 9px; }
+  .system-footer__heading h2 { color: var(--color-cool); font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; }
+  .system-footer ul { display: grid; gap: 1px; margin: 13px 0 0; padding: 0; list-style: none; }
+  .system-footer li a {
+    display: grid;
+    min-height: 38px;
+    grid-template-columns: 40px 1fr;
+    align-items: center;
+    color: var(--color-slate);
+    font-size: 13px;
+    text-decoration: none;
+    transition: color 160ms ease, background-color 160ms ease;
+  }
+  .system-footer li a span { color: var(--color-faint); font-family: var(--font-mono); font-size: 8px; }
+  .system-footer li a:hover { color: var(--color-navy); }
+  .system-footer__contact { display: grid; gap: 2px; margin-top: 13px; }
+  .system-footer__contact > :global(*) { min-height: 38px; align-content: center; color: var(--color-slate); font-size: 13px; line-height: 1.6; }
+  .system-footer__contact :global(a) { display: flex; align-items: center; text-decoration: none; }
+  .system-footer__contact :global(a:hover) { color: var(--color-navy); }
+  .system-footer__base { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: 24px; color: var(--color-cool); font-size: 12px; }
+  .system-footer__base a { min-height: 44px; align-content: center; color: var(--color-cool); text-decoration: none; }
+  .system-footer__base a:hover { color: var(--color-navy); }
+
+  @media (max-width: 900px) {
+    .system-footer__mast { grid-template-columns: 1fr 1fr; }
+    .system-footer__coordinate { display: none; }
+    .system-footer__index { grid-template-columns: 1fr 1fr; }
+    .system-footer__index > section:nth-child(3) { grid-column: 1 / -1; padding-left: 0; border-top: 1px solid var(--color-divider); border-left: 0; }
+  }
+  @media (max-width: 767px) {
+    .system-footer { padding-top: 42px; }
+    .system-footer__datum { left: 24px; }
+    .system-footer__mast { grid-template-columns: 1fr; gap: 20px; }
+    .system-footer__index { grid-template-columns: 1fr; }
+    .system-footer__index > section,
+    .system-footer__index > section + section,
+    .system-footer__index > section:nth-child(3) { grid-column: auto; padding: 26px 0; border-top: 1px solid var(--color-divider); border-left: 0; }
+    .system-footer__index > section:first-child { border-top: 0; }
+    .system-footer li a,
+    .system-footer__contact > :global(*) { min-height: 44px; }
+    .system-footer__base { align-items: flex-start; flex-direction: column; gap: 8px; }
+  }
+</style>

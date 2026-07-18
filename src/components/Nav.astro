@@ -1,10 +1,4 @@
 ---
-// Export nav (RESOLUTIONS §16): fixed top, ALWAYS light (logo on white), logo +
-// links + assessment CTA (obfuscated mailto) + RO/EN switch. Active-page
-// underline by pathname. initNavShrink (wired in BaseLayout) tightens padding +
-// adds a hairline/shadow past 24px scroll — it targets [data-nav-shrink].
-// Mobile (<768px): hamburger toggles a light slide-down panel (aria-expanded,
-// ESC closes, body scroll-lock while open).
 import { ChevronDown, Menu, X } from '@lucide/astro';
 import { getLangFromUrl, useTranslations, localizedPath, altLocalePath } from '../i18n/ui';
 import MailtoLink from './MailtoLink.astro';
@@ -13,11 +7,9 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const p = (path: string) => localizedPath(lang, path);
 
-// Two dropdown groups (parent links to the hub/index, panel lists the child
-// pages) + a plain Contact anchor. This surfaces every service/solution page
-// one hover/tap deep and gives /servicii + /solutii their entry points.
 const navItems = [
   {
+    code: '01',
     href: p('/servicii'),
     label: t('nav.services'),
     children: [
@@ -28,6 +20,7 @@ const navItems = [
     ],
   },
   {
+    code: '02',
     href: p('/solutii'),
     label: t('nav.products'),
     children: [
@@ -35,283 +28,355 @@ const navItems = [
       { href: p('/solutii/s-vpn'), label: t('nav.svpn') },
     ],
   },
-  { href: p('/#contact'), label: t('nav.contact') },
+  { code: '03', href: p('/#contact'), label: t('nav.contact') },
 ];
 
-// Active-page underline: compare against the current pathname (ignore anchors).
 const here = Astro.url.pathname.replace(/\/$/, '') || '/';
 const cleanPath = (href: string) => href.split('#')[0].replace(/\/$/, '') || '/';
-// Exact match — for leaf links (children, Contact).
 const isActive = (href: string) => {
   const clean = cleanPath(href);
-  return clean !== '/' && clean !== p('/') && here === clean;
+  return clean !== '/' && clean !== cleanPath(p('/')) && here === clean;
 };
-// Tree match — a parent is active on its hub page or any descendant page.
 const inTree = (href: string) => {
   const clean = cleanPath(href);
-  if (clean === '/' || clean === p('/')) return false;
-  return here === clean || here.startsWith(clean + '/');
+  if (clean === '/' || clean === cleanPath(p('/'))) return false;
+  return here === clean || here.startsWith(`${clean}/`);
 };
-
-// Language switch → the alternate-locale version of this page.
-const path = Astro.url.pathname;
-const altHref = altLocalePath(path);
+// The single bilingual 404 has no duplicate /en/404 route; its locale escape
+// returns to the real EN homepage instead of emitting a dead destination.
+const altHref = Astro.url.pathname.startsWith('/404') ? '/en/' : altLocalePath(Astro.url.pathname);
 ---
 
-<header class="fixed inset-x-0 top-0 z-50">
-  <nav
-    data-nav-shrink
-    aria-label={t('a11y.nav')}
-    class="border-b border-transparent bg-surface px-10 py-[18px] transition-[padding,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
-  >
-    <div class="mx-auto flex max-w-[1180px] items-center justify-between gap-8">
-      <!-- Logo -->
-      <a href={p('/')} class="flex shrink-0 items-center gap-[11px]" aria-label={t('a11y.home')}>
-        <img src="/smartcontrol-mark-96.png" alt="" width="34" height="34" class="h-[34px] w-[34px]" decoding="async" />
-        <span class="flex flex-col leading-none">
-          <span class="text-[17px] font-bold tracking-[-0.3px] text-navy">Smart<span class="text-bright">Control</span></span>
-          <span class="mt-[3px] flex items-center gap-1.5" aria-hidden="true">
-            <span class="h-px w-4 shrink-0 bg-bright"></span>
-            <span class="font-mono text-[9px] font-semibold uppercase tracking-[2px] text-royal">DIN 2003</span>
-          </span>
+<header class="site-header" data-site-header>
+  <nav data-nav-shrink aria-label={t('a11y.nav')} class="site-nav">
+    <div class="site-nav__inner">
+      <a href={p('/')} class="site-brand" aria-label={t('a11y.home')}>
+        <img src="/smartcontrol-mark-96.png" alt="" width="36" height="36" decoding="async" />
+        <span class="site-brand__wordmark">
+          <span>Smart<span>Control</span></span>
+          <span aria-hidden="true"><i></i><b>DIN 2003</b></span>
         </span>
       </a>
 
-      <!-- Desktop links -->
-      <ul class="hidden items-center gap-7 md:flex">
-        {
-          navItems.map((item) =>
-            item.children ? (
-              <li class="group relative">
-                <a
-                  href={item.href}
-                  aria-current={inTree(item.href) ? 'page' : undefined}
-                  class:list={[
-                    'inline-flex items-center gap-[5px] border-b-2 pb-[3px] text-[13.5px] no-underline transition-colors hover:border-bright hover:text-navy',
-                    inTree(item.href)
-                      ? 'border-bright font-semibold text-navy'
-                      : 'border-transparent font-medium text-slate',
-                  ]}
-                >
-                  {item.label}
-                  <ChevronDown
-                    class="h-[13px] w-[13px] transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180"
-                    stroke-width={1.5}
-                    aria-hidden="true"
-                  />
-                </a>
-                {/* Dropdown panel — pt-3 is a hover bridge over the gap to the trigger */}
-                <div
-                  data-nav-dropdown
-                  class="invisible absolute left-1/2 top-full z-10 -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100"
-                >
-                  <ul class="min-w-[232px] rounded-xl border border-border bg-surface p-2 [box-shadow:0_12px_32px_rgba(14,31,91,0.16)]">
-                    {item.children.map((c) => (
-                      <li>
-                        <a
-                          href={c.href}
-                          aria-current={isActive(c.href) ? 'page' : undefined}
-                          class:list={[
-                            'block rounded-md px-3 py-2.5 text-[13.5px] no-underline transition-colors hover:bg-blue-wash hover:text-navy',
-                            isActive(c.href) ? 'font-semibold text-navy' : 'font-medium text-slate',
-                          ]}
-                        >
-                          {c.label}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </li>
-            ) : (
-              <li>
-                <a
-                  href={item.href}
-                  aria-current={isActive(item.href) ? 'page' : undefined}
-                  class:list={[
-                    'border-b-2 pb-[3px] text-[13.5px] no-underline transition-colors hover:border-bright hover:text-navy',
-                    isActive(item.href)
-                      ? 'border-bright font-semibold text-navy'
-                      : 'border-transparent font-medium text-slate',
-                  ]}
-                >
-                  {item.label}
-                </a>
-              </li>
-            )
-          )
-        }
-      </ul>
-
-      <!-- Right cluster -->
-      <div class="flex items-center gap-3">
-        <a
-          href={altHref}
-          class="text-[13.5px] font-semibold text-cool transition-colors hover:text-navy"
-          aria-label={t('lang.switch.aria')}
-        >
-          {t('lang.switch')}
-        </a>
-        <MailtoLink
-          variant="button"
-          subject={t('subject.assessment')}
-          class="!hidden !px-[18px] !py-[9px] !text-[13.5px] md:!inline-flex"
-        >
-          {t('cta.assessment')}
-        </MailtoLink>
-
-        <!-- Mobile hamburger -->
-        <button
-          type="button"
-          data-nav-toggle
-          aria-expanded="false"
-          aria-controls="nav-mobile-panel"
-          aria-label={t('nav.menu.open')}
-          data-label-open={t('nav.menu.open')}
-          data-label-close={t('nav.menu.close')}
-          class="flex h-10 w-10 items-center justify-center rounded-md text-navy transition-colors hover:bg-blue-wash md:hidden"
-        >
-          <Menu data-nav-icon-open class="h-[22px] w-[22px]" stroke-width={1.5} aria-hidden="true" />
-          <X data-nav-icon-close class="hidden h-[22px] w-[22px]" stroke-width={1.5} aria-hidden="true" />
-        </button>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Mobile slide-down panel -->
-  <div
-    id="nav-mobile-panel"
-    data-nav-panel
-    hidden
-    class="max-h-[calc(100dvh_-_var(--nav-offset))] overflow-y-auto border-b border-border bg-surface shadow-md md:hidden"
-  >
-    <ul class="mx-auto flex max-w-[1180px] flex-col gap-1 px-6 py-4">
-      {
-        navItems.map((item) =>
-          item.children ? (
-            <li>
-              <a
-                href={item.href}
-                aria-current={inTree(item.href) ? 'page' : undefined}
-                class:list={[
-                  'block rounded-md px-3 py-3 text-[15px] transition-colors hover:bg-blue-wash',
-                  inTree(item.href) ? 'font-semibold text-navy' : 'font-medium text-slate',
-                ]}
-              >
-                {item.label}
-              </a>
-              <ul class="mb-1 ml-3 flex flex-col gap-0.5 border-l border-divider pl-3">
-                {item.children.map((c) => (
+      <ul class="site-command" role="list">
+        {navItems.map((item) => item.children ? (
+          <li class="site-command__group">
+            <a
+              href={item.href}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+              class:list={['site-command__link', inTree(item.href) && 'is-active']}
+            >
+              <span aria-hidden="true">{item.code}</span>{item.label}
+              <ChevronDown aria-hidden="true" stroke-width={1.5} />
+            </a>
+            <div class="site-command__panel" data-nav-dropdown>
+              <ul role="list">
+                {item.children.map((child, index) => (
                   <li>
                     <a
-                      href={c.href}
-                      aria-current={isActive(c.href) ? 'page' : undefined}
-                      class:list={[
-                        'block rounded-md px-3 py-2.5 text-[14px] transition-colors hover:bg-blue-wash hover:text-navy',
-                        isActive(c.href) ? 'font-semibold text-navy' : 'font-medium text-cool',
-                      ]}
+                      href={child.href}
+                      aria-current={isActive(child.href) ? 'page' : undefined}
+                      class:list={[isActive(child.href) && 'is-active']}
                     >
-                      {c.label}
+                      <span aria-hidden="true">{item.code}.{index + 1}</span>
+                      {child.label}
                     </a>
                   </li>
                 ))}
               </ul>
-            </li>
-          ) : (
-            <li>
-              <a
-                href={item.href}
-                aria-current={isActive(item.href) ? 'page' : undefined}
-                class:list={[
-                  'block rounded-md px-3 py-3 text-[15px] transition-colors hover:bg-blue-wash',
-                  isActive(item.href) ? 'font-semibold text-navy' : 'font-medium text-slate',
-                ]}
-              >
-                {item.label}
-              </a>
-            </li>
-          )
-        )
-      }
-      <li class="mt-2 px-3">
-        <MailtoLink variant="button" subject={t('subject.assessment')} class="w-full">
+            </div>
+          </li>
+        ) : (
+          <li>
+            <a href={item.href} class="site-command__link">
+              <span aria-hidden="true">{item.code}</span>{item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <div class="site-nav__actions">
+        <a href={altHref} class="site-nav__locale" aria-label={t('lang.switch.aria')}>
+          {t('lang.switch')}
+        </a>
+        <MailtoLink variant="button" subject={t('subject.assessment')} class="site-nav__cta">
           {t('cta.assessment')}
         </MailtoLink>
-      </li>
-    </ul>
-  </div>
+
+        <details class="mobile-command" data-mobile-nav>
+          <summary
+            aria-label={t('nav.menu.open')}
+            data-label-open={t('nav.menu.open')}
+            data-label-close={t('nav.menu.close')}
+          >
+            <Menu class="mobile-command__open" stroke-width={1.5} aria-hidden="true" />
+            <X class="mobile-command__close" stroke-width={1.5} aria-hidden="true" />
+          </summary>
+          <div class="mobile-command__panel">
+            <div class="mobile-command__datum" aria-hidden="true"><span>SC / INDEX</span><span>03</span></div>
+            <ul role="list">
+              {navItems.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    aria-current={item.children ? (isActive(item.href) ? 'page' : undefined) : undefined}
+                    class:list={[item.children && inTree(item.href) && 'is-active']}
+                  >
+                    <span aria-hidden="true">{item.code}</span>{item.label}
+                  </a>
+                  {item.children && (
+                    <ul role="list">
+                      {item.children.map((child, index) => (
+                        <li>
+                          <a
+                            href={child.href}
+                            aria-current={isActive(child.href) ? 'page' : undefined}
+                            class:list={[isActive(child.href) && 'is-active']}
+                          >
+                            <span aria-hidden="true">{item.code}.{index + 1}</span>{child.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+              <li class="mobile-command__cta">
+                <MailtoLink variant="button" subject={t('subject.assessment')}>
+                  {t('cta.assessment')}
+                </MailtoLink>
+              </li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+  </nav>
 </header>
 
+<style>
+  .site-header { position: fixed; inset: 0 0 auto; z-index: 50; }
+  .site-nav {
+    border-bottom: 1px solid transparent;
+    background: var(--color-surface);
+    transition: padding 240ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 240ms ease, border-color 240ms ease;
+  }
+  .site-nav__inner {
+    display: grid;
+    width: 100%;
+    max-width: 1180px;
+    min-height: var(--nav-offset);
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: clamp(20px, 3vw, 40px);
+    margin-inline: auto;
+    padding-inline: 40px;
+    transition: min-height 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .site-nav[data-shrunk] .site-nav__inner { min-height: 66px; }
+  .site-brand { display: inline-flex; align-items: center; gap: 11px; min-height: 44px; text-decoration: none; }
+  .site-brand img { width: 36px; height: 36px; }
+  .site-brand__wordmark { display: flex; flex-direction: column; color: var(--color-navy); line-height: 1; }
+  .site-brand__wordmark > span:first-child { font-size: 19px; font-weight: 700; letter-spacing: -0.3px; }
+  .site-brand__wordmark > span:first-child span { color: var(--color-bright); }
+  .site-brand__wordmark > span:last-child { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+  .site-brand__wordmark i { width: 15px; height: 1px; background: var(--color-bright); }
+  .site-brand__wordmark b { color: var(--color-royal); font-family: var(--font-mono); font-size: 8px; font-weight: 600; letter-spacing: 0.18em; }
+  .site-command { display: flex; justify-content: center; gap: clamp(16px, 2.3vw, 30px); margin: 0; padding: 0; list-style: none; }
+  .site-command__group { position: relative; }
+  .site-command__link {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 7px;
+    border-bottom: 2px solid transparent;
+    color: var(--color-slate);
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: border-color 180ms ease, color 180ms ease;
+  }
+  .site-command__link > span,
+  .site-command__panel a > span {
+    color: var(--color-faint);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+  }
+  .site-command__link svg { width: 13px; height: 13px; transition: transform 180ms ease; }
+  .site-command__link:hover,
+  .site-command__link.is-active,
+  .site-command__link:focus-visible { border-color: var(--color-bright); color: var(--color-navy); }
+  .site-command__group:hover .site-command__link svg,
+  .site-command__group:focus-within .site-command__link svg { transform: rotate(180deg); }
+  .site-command__panel {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 268px;
+    padding-top: 8px;
+    visibility: hidden;
+    opacity: 0;
+    transform: translate(-50%, 5px);
+    transition: opacity 180ms ease, transform 180ms ease, visibility 180ms;
+  }
+  .site-command__group:hover .site-command__panel,
+  .site-command__group:focus-within .site-command__panel { visibility: visible; opacity: 1; transform: translate(-50%, 0); }
+  .site-command__panel ul {
+    margin: 0;
+    padding: 8px;
+    border: 1px solid var(--color-border-blue);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-lg);
+    list-style: none;
+  }
+  .site-command__panel a {
+    display: grid;
+    min-height: 44px;
+    grid-template-columns: 38px 1fr;
+    align-items: center;
+    padding: 0 12px;
+    border-radius: var(--radius-sm);
+    color: var(--color-slate);
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 160ms ease, color 160ms ease;
+  }
+  .site-command__panel a:hover,
+  .site-command__panel a:focus-visible,
+  .site-command__panel a.is-active { background: var(--color-blue-wash); color: var(--color-navy); }
+  .site-nav__actions { display: flex; align-items: center; gap: 12px; }
+  .site-nav__locale { display: grid; min-width: 44px; min-height: 44px; place-items: center; color: var(--color-cool); font-size: 13px; font-weight: 700; text-decoration: none; }
+  .site-nav__locale:hover { color: var(--color-navy); }
+  :global(.site-nav__cta) { min-height: 44px !important; padding: 8px 17px !important; font-size: 13px !important; }
+  .mobile-command { display: none; }
+
+  @media (max-width: 900px) {
+    .site-command { display: none; }
+    .site-nav__inner { grid-template-columns: auto 1fr; }
+    .site-nav__actions { justify-self: end; }
+    :global(.site-nav__cta) { display: none !important; }
+    .mobile-command { display: block; }
+    .mobile-command summary {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border-radius: var(--radius-sm);
+      color: var(--color-navy);
+      cursor: pointer;
+      list-style: none;
+    }
+    .mobile-command summary::-webkit-details-marker { display: none; }
+    .mobile-command summary:hover { background: var(--color-blue-wash); }
+    .mobile-command summary svg { grid-area: 1 / 1; width: 22px; height: 22px; }
+    .mobile-command__close { display: none; }
+    .mobile-command[open] .mobile-command__open { display: none; }
+    .mobile-command[open] .mobile-command__close { display: block; }
+    .mobile-command__panel {
+      position: fixed;
+      inset: var(--nav-offset) 0 auto;
+      max-height: calc(100dvh - var(--nav-offset));
+      overflow-y: auto;
+      border-block: 1px solid var(--color-border-blue);
+      background: var(--color-surface);
+      box-shadow: var(--shadow-lg);
+    }
+    .mobile-command__datum {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 24px;
+      border-bottom: 1px solid var(--color-divider);
+      color: var(--color-cool);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.14em;
+    }
+    .mobile-command__panel > ul { margin: 0; padding: 10px 24px 24px; list-style: none; }
+    .mobile-command__panel > ul > li { border-bottom: 1px solid var(--color-divider); }
+    .mobile-command__panel a {
+      display: grid;
+      min-height: 52px;
+      grid-template-columns: 42px 1fr;
+      align-items: center;
+      color: var(--color-slate);
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .mobile-command__panel a > span { color: var(--color-faint); font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; }
+    .mobile-command__panel a.is-active { color: var(--color-navy); }
+    .mobile-command__panel li ul { margin: 0 0 8px 20px; padding: 0 0 0 14px; border-left: 1px solid var(--color-border-blue); list-style: none; }
+    .mobile-command__panel li li a { min-height: 46px; grid-template-columns: 42px 1fr; color: var(--color-cool); font-size: 13.5px; font-weight: 500; }
+    .mobile-command__cta { padding-block: 16px 0; border: 0 !important; }
+    .mobile-command__cta a { display: inline-flex; width: 100%; color: var(--color-surface); }
+  }
+  @media (max-width: 767px) {
+    .site-nav__inner { padding-inline: 24px; }
+    .site-brand__wordmark > span:last-child { display: none; }
+  }
+</style>
+
 <script>
-  // Mobile menu: toggle the slide-down panel, swap icon, lock body scroll, ESC
-  // closes. Re-bound on every View Transition page load. Idempotent: each run
-  // aborts the previous run's listeners (incl. the document keydown) via an
-  // AbortController before re-wiring against the fresh DOM.
-  let mobileNavAborter: AbortController | undefined;
-  function wireMobileNav() {
-    mobileNavAborter?.abort();
-    const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
-    const panel = document.querySelector<HTMLElement>('[data-nav-panel]');
-    if (!toggle || !panel) return;
-    mobileNavAborter = new AbortController();
-    const { signal } = mobileNavAborter;
-    const iconOpen = toggle.querySelector<SVGElement>('[data-nav-icon-open]');
-    const iconClose = toggle.querySelector<SVGElement>('[data-nav-icon-close]');
+  let navController: AbortController | undefined;
 
-    let open = false;
-    const set = (next: boolean) => {
-      open = next;
-      toggle.setAttribute('aria-expanded', String(open));
-      const label = open ? toggle.dataset.labelClose : toggle.dataset.labelOpen;
-      if (label) toggle.setAttribute('aria-label', label);
-      panel.hidden = !open;
-      iconOpen?.classList.toggle('hidden', open);
-      iconClose?.classList.toggle('hidden', !open);
-      document.body.style.overflow = open ? 'hidden' : '';
+  function wireCommandNav() {
+    navController?.abort();
+    navController = new AbortController();
+    const { signal } = navController;
+    const details = document.querySelector<HTMLDetailsElement>('[data-mobile-nav]');
+    if (!details) return;
+    const summary = details.querySelector<HTMLElement>('summary');
+    const panel = details.querySelector<HTMLElement>('.mobile-command__panel');
+    const desktop = window.matchMedia('(min-width: 901px)');
+
+    const focusables = () => panel ? [...panel.querySelectorAll<HTMLElement>('a[href],button:not([disabled])')] : [];
+    const close = (restore = false) => {
+      details.open = false;
+      document.body.style.overflow = '';
+      if (summary) {
+        summary.setAttribute('aria-label', summary.dataset.labelOpen || '');
+        if (restore) summary.focus();
+      }
     };
-    set(false);
 
-    toggle.addEventListener('click', () => set(!open), { signal });
-    panel
-      .querySelectorAll('a')
-      .forEach((a) => a.addEventListener('click', () => set(false), { signal }));
-    document.addEventListener(
-      'keydown',
-      (e) => {
-        if (e.key === 'Escape' && open) {
-          set(false);
-          toggle.focus();
-        }
-      },
-      { signal }
-    );
+    details.addEventListener('toggle', () => {
+      document.body.style.overflow = details.open ? 'hidden' : '';
+      summary?.setAttribute('aria-label', details.open ? summary.dataset.labelClose || '' : summary.dataset.labelOpen || '');
+      if (details.open) requestAnimationFrame(() => focusables()[0]?.focus());
+    }, { signal });
+    panel?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => close(false), { signal }));
+    document.addEventListener('keydown', (event) => {
+      if (!details.open) return;
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        close(true);
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      const items = focusables();
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        summary?.focus();
+      } else if (event.shiftKey && document.activeElement === summary) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === summary) {
+        event.preventDefault();
+        first.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        summary?.focus();
+      }
+    }, { signal });
+    desktop.addEventListener('change', (event) => { if (event.matches) close(false); }, { signal });
+    document.addEventListener('astro:before-swap', () => close(false), { signal, once: true });
   }
 
-  document.addEventListener('astro:page-load', wireMobileNav);
-
-  // Desktop dropdowns: Escape dismisses an open panel (WCAG 1.4.13). Focus case
-  // → blur collapses :focus-within; hover case → inline-hide the panel until
-  // the pointer leaves the trigger group. Registered ONCE at module scope with
-  // event-time element resolution, so it survives View Transition swaps.
-  document.addEventListener('keydown', (e) => {
-    if (e.key !== 'Escape') return;
-    document.querySelectorAll<HTMLElement>('[data-nav-dropdown]').forEach((panel) => {
-      const group = panel.closest<HTMLElement>('li');
-      if (!group) return;
-      const focused = document.activeElement instanceof HTMLElement && group.contains(document.activeElement);
-      if (focused) (document.activeElement as HTMLElement).blur();
-      if (group.matches(':hover')) {
-        panel.style.visibility = 'hidden';
-        panel.style.opacity = '0';
-        group.addEventListener(
-          'mouseleave',
-          () => {
-            panel.style.visibility = '';
-            panel.style.opacity = '';
-          },
-          { once: true }
-        );
-      }
-    });
-  });
+  document.addEventListener('astro:page-load', wireCommandNav);
 </script>

@@ -4,6 +4,7 @@
 // homepages. Chrome (Nav/Footer) resolves RO via getLangFromUrl('/404').
 // noindex: error pages have no business in the index.
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ControlArtifact from '../components/ControlArtifact.astro';
 import Eyebrow from '../components/Eyebrow.astro';
 import TextLink from '../components/TextLink.astro';
 ---
@@ -13,33 +14,218 @@ import TextLink from '../components/TextLink.astro';
   description="Pagina căutată nu există sau a fost mutată. / The page you are looking for does not exist or has moved."
   noindex
 >
-  <section class="px-6 md:px-10" style="background:var(--sc-gradient-hero-light)">
-    <div class="mx-auto max-w-[1180px] py-[110px] text-center md:py-[150px]">
-      <Eyebrow>Eroare 404 — Not Found</Eyebrow>
+  <section class="missing-route" data-control-scene data-scene-kind="missing">
+    <div class="missing-route__grid" aria-hidden="true"></div>
 
-      <p
-        class="mt-8 font-mono text-[clamp(4.5rem,3rem+6vw,7rem)] font-bold leading-none tracking-[-2px] text-navy"
-        aria-hidden="true"
-      >
-        404
-      </p>
+    <div class="container missing-route__layout">
+      <div class="missing-route__content">
+        <Eyebrow>Eroare 404 — Not Found</Eyebrow>
 
-      <h1 class="mt-6 text-[clamp(1.75rem,1.45rem+1.3vw,2.375rem)] font-bold leading-[1.15] text-midnight">
-        Pagina nu a fost găsită
-      </h1>
+        <p class="missing-route__code" aria-hidden="true">404</p>
 
-      <p class="mx-auto mt-5 max-w-[560px] leading-[1.7] text-slate">
-        Pagina căutată nu există sau a fost mutată. Verificați adresa sau
-        continuați din pagina principală.
-      </p>
-      <p class="mx-auto mt-2 max-w-[560px] leading-[1.7] text-cool" lang="en">
-        The page you are looking for does not exist or has moved.
-      </p>
+        <h1>Pagina nu a fost găsită</h1>
 
-      <div class="mt-10 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
-        <TextLink href="/">Pagina principală</TextLink>
-        <TextLink href="/en/">English homepage</TextLink>
+        <p class="missing-route__lead">
+          Pagina căutată nu există sau a fost mutată. Verificați adresa sau
+          continuați din pagina principală.
+        </p>
+        <p class="missing-route__translation" lang="en">
+          The page you are looking for does not exist or has moved.
+        </p>
+
+        <div class="missing-route__links">
+          <TextLink href="/">Pagina principală</TextLink>
+          <TextLink href="/en/">English homepage</TextLink>
+        </div>
+      </div>
+
+      <div class="missing-route__blueprint" aria-hidden="true">
+        <span class="missing-route__corner missing-route__corner--a"></span>
+        <span class="missing-route__corner missing-route__corner--b"></span>
+        <ControlArtifact variant="missing" compact />
       </div>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .missing-route {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    background: var(--sc-gradient-hero-light);
+  }
+
+  .missing-route__grid {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(to right, color-mix(in srgb, var(--color-royal) 6%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--color-royal) 6%, transparent) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: linear-gradient(90deg, black, transparent 88%);
+    mask-image: linear-gradient(90deg, black, transparent 88%);
+  }
+
+  .missing-route__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(360px, 0.8fr);
+    align-items: center;
+    gap: clamp(3rem, 8vw, 7.5rem);
+    min-height: min(720px, calc(100svh - var(--nav-offset)));
+    padding-block: clamp(5rem, 11vw, 8rem);
+  }
+
+  .missing-route__content {
+    min-width: 0;
+  }
+
+  .missing-route__code {
+    margin: clamp(1.5rem, 4vw, 2.75rem) 0 0;
+    color: var(--color-navy);
+    font-family: var(--font-mono);
+    font-size: clamp(4.25rem, 2.7rem + 6vw, 7rem);
+    font-weight: 700;
+    letter-spacing: -0.06em;
+    line-height: 0.88;
+  }
+
+  .missing-route h1 {
+    max-width: 15ch;
+    margin: clamp(1.5rem, 4vw, 2.25rem) 0 0;
+    color: var(--color-midnight);
+    font-size: clamp(2rem, 1.55rem + 1.8vw, 3rem);
+    font-weight: 750;
+    letter-spacing: -0.035em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+
+  .missing-route__lead,
+  .missing-route__translation {
+    max-width: 36rem;
+    line-height: 1.72;
+  }
+
+  .missing-route__lead {
+    margin: 1.35rem 0 0;
+    color: var(--color-slate);
+  }
+
+  .missing-route__translation {
+    margin: 0.45rem 0 0;
+    color: var(--color-cool);
+  }
+
+  .missing-route__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem clamp(2rem, 5vw, 3.5rem);
+    margin-block-start: 2.25rem;
+    padding-block-start: 1.25rem;
+    border-top: 1px solid var(--color-border-blue);
+  }
+
+  .missing-route__blueprint {
+    position: relative;
+    min-width: 0;
+    padding: clamp(1rem, 3vw, 2rem);
+    border: 1px solid var(--color-border-blue);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--color-surface) 82%, transparent);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .missing-route__blueprint::before,
+  .missing-route__blueprint::after {
+    position: absolute;
+    z-index: 1;
+    content: '';
+    pointer-events: none;
+  }
+
+  .missing-route__blueprint::before {
+    inset: 50% -1.5rem auto;
+    height: 1px;
+    background: linear-gradient(90deg, var(--color-bright) 0 2rem, transparent 2rem calc(100% - 2rem), var(--color-bright) calc(100% - 2rem));
+  }
+
+  .missing-route__blueprint::after {
+    inset: -1.5rem auto -1.5rem 50%;
+    width: 1px;
+    background: linear-gradient(180deg, var(--color-bright) 0 2rem, transparent 2rem calc(100% - 2rem), var(--color-bright) calc(100% - 2rem));
+  }
+
+  .missing-route__corner {
+    position: absolute;
+    z-index: 2;
+    width: 0.7rem;
+    height: 0.7rem;
+    pointer-events: none;
+  }
+
+  .missing-route__corner--a {
+    top: -1px;
+    left: -1px;
+    border-top: 2px solid var(--color-bright);
+    border-left: 2px solid var(--color-bright);
+  }
+
+  .missing-route__corner--b {
+    right: -1px;
+    bottom: -1px;
+    border-right: 2px solid var(--color-bright);
+    border-bottom: 2px solid var(--color-bright);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .missing-route__content {
+      animation: missing-route-enter 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .missing-route__blueprint {
+      animation: missing-blueprint-enter 720ms cubic-bezier(0.16, 1, 0.3, 1) 90ms both;
+    }
+  }
+
+  @keyframes missing-route-enter {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
+
+  @keyframes missing-blueprint-enter {
+    from {
+      opacity: 0;
+      transform: translateX(14px);
+    }
+  }
+
+  @media (max-width: 820px) {
+    .missing-route__layout {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 3.5rem;
+      min-height: auto;
+      padding-block: clamp(4rem, 13vw, 6rem);
+    }
+
+    .missing-route__blueprint {
+      width: min(100%, 30rem);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .missing-route__links {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .missing-route__blueprint {
+      padding: 0.5rem;
+    }
+  }
+</style>

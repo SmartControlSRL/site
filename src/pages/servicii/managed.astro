@@ -1,6 +1,252 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro'; import SectionHeading from '../../components/SectionHeading.astro'; import Eyebrow from '../../components/Eyebrow.astro'; import ModuleCard from '../../components/ModuleCard.astro'; import MailtoLink from '../../components/MailtoLink.astro'; import TextLink from '../../components/TextLink.astro'; import CtaBand from '../../components/CtaBand.astro'; import IconChip from '../../components/IconChip.astro'; import { getLangFromUrl,useTranslations,localizedPath } from '../../i18n/ui'; import { Headset,Server,Network,ShieldCheck,Wrench,Cloud,Bot } from '@lucide/astro'; const lang=getLangFromUrl(Astro.url); const t=useTranslations(lang); const p=(x:string)=>localizedPath(lang,x);
-const description='Servicii IT gestionate pentru service desk, infrastructură, rețea, securitate, suport cloud și automatizare software, cu SLA contractual.'; const jsonLd={'@context':'https://schema.org','@type':'Service',name:'Servicii Gestionate — Smart Control',description,url:'https://smartcontrol.ro/servicii/managed/',provider:{'@type':'Organization',name:'Smart Control SRL',url:'https://smartcontrol.ro'},serviceType:'Managed IT Services'};
-const caps=[{title:'Service Desk Outsourcing',body:'Operarea completă a suportului pentru utilizatori, cu ținte contractuale de răspuns și rezolvare.',items:['Suport utilizatori L1 / L2 / L3','SLA contractual','Raportare de performanță'],Icon:Headset},{title:'Managed Infrastructure Operations',body:'Operarea și mentenanța proactive ale infrastructurii critice.',items:['Monitorizare continuă','Patch management','Backup și recovery'],Icon:Server},{title:'Network Managed Services',body:'Operarea rețelei cu vizibilitate asupra traficului și incidentelor.',items:['Monitorizarea disponibilității','Gestionarea echipamentelor','Politici de acces'],Icon:Network},{title:'Cyber Security Managed Services',body:'Monitorizare continuă de securitate, detectarea amenințărilor și răspuns la incidente.',items:['Monitorizarea evenimentelor de securitate','Răspuns la incidente','Rapoarte de securitate și audit'],Icon:ShieldCheck},{title:'Outsourced Systems Support',body:'Asistență tehnică on-site și remote în limitele SLA agreat.',items:['Intervenție on-site','Acces remote securizat pentru intervenții','Documentația configurațiilor'],Icon:Wrench},{title:'Cloud Based System Support',body:'Operarea și optimizarea continuă a mediilor cloud.',items:['Operațiuni cloud','Optimizarea resurselor','Suport pentru migrare'],Icon:Cloud},{title:'Software Automation',body:'Automatizarea proceselor repetitive, a integrărilor și a raportării.',items:['Automatizarea fluxurilor','Integrări între sisteme','Procesarea documentelor'],Icon:Bot}];
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import MailtoLink from '../../components/MailtoLink.astro';
+import TextLink from '../../components/TextLink.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import RouteHero from '../../components/RouteHero.astro';
+import ControlLane from '../../components/ControlLane.astro';
+import { getLangFromUrl, useTranslations, localizedPath } from '../../i18n/ui';
+import { Headset, Server, Network, ShieldCheck, Wrench, Cloud, Bot } from '@lucide/astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const p = (path: string) => localizedPath(lang, path);
+
+const description = 'Servicii IT gestionate pentru service desk, infrastructură, rețea, securitate, suport cloud și automatizare software, cu SLA contractual.';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Servicii Gestionate — Smart Control',
+  description,
+  url: 'https://smartcontrol.ro/servicii/managed/',
+  provider: { '@type': 'Organization', name: 'Smart Control SRL', url: 'https://smartcontrol.ro' },
+  serviceType: 'Managed IT Services',
+};
+
+const caps = [
+  {
+    title: 'Service Desk Outsourcing',
+    body: 'Operarea completă a suportului pentru utilizatori, cu ținte contractuale de răspuns și rezolvare.',
+    items: ['Suport utilizatori L1 / L2 / L3', 'SLA contractual', 'Raportare de performanță'],
+    Icon: Headset,
+  },
+  {
+    title: 'Managed Infrastructure Operations',
+    body: 'Operarea și mentenanța proactive ale infrastructurii critice.',
+    items: ['Monitorizare continuă', 'Patch management', 'Backup și recovery'],
+    Icon: Server,
+  },
+  {
+    title: 'Network Managed Services',
+    body: 'Operarea rețelei cu vizibilitate asupra traficului și incidentelor.',
+    items: ['Monitorizarea disponibilității', 'Gestionarea echipamentelor', 'Politici de acces'],
+    Icon: Network,
+  },
+  {
+    title: 'Cyber Security Managed Services',
+    body: 'Monitorizare continuă de securitate, detectarea amenințărilor și răspuns la incidente.',
+    items: ['Monitorizarea evenimentelor de securitate', 'Răspuns la incidente', 'Rapoarte de securitate și audit'],
+    Icon: ShieldCheck,
+  },
+  {
+    title: 'Outsourced Systems Support',
+    body: 'Asistență tehnică on-site și remote în limitele SLA agreat.',
+    items: ['Intervenție on-site', 'Acces remote securizat pentru intervenții', 'Documentația configurațiilor'],
+    Icon: Wrench,
+  },
+  {
+    title: 'Cloud Based System Support',
+    body: 'Operarea și optimizarea continuă a mediilor cloud.',
+    items: ['Operațiuni cloud', 'Optimizarea resurselor', 'Suport pentru migrare'],
+    Icon: Cloud,
+  },
+  {
+    title: 'Software Automation',
+    body: 'Automatizarea proceselor repetitive, a integrărilor și a raportării.',
+    items: ['Automatizarea fluxurilor', 'Integrări între sisteme', 'Procesarea documentelor'],
+    Icon: Bot,
+  },
+];
+
+const products = [
+  {
+    name: 'SEKNET',
+    body: 'Produs proprietar pentru monitorizarea și protejarea mediilor IT, disponibil ca opțiune în proiectele relevante.',
+    href: '/solutii/seknet',
+    Icon: ShieldCheck,
+  },
+  {
+    name: 'S-VPN',
+    body: 'Produs proprietar pentru acces remote securizat, disponibil ca opțiune în proiectele relevante.',
+    href: '/solutii/s-vpn',
+    Icon: Network,
+  },
+];
 ---
-<BaseLayout title="Servicii Gestionate — Smart Control" description={description}><script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)}/><header class="bg-page"><div class="container pb-[64px] pt-[120px] md:pt-[120px]"><Eyebrow>Servicii Gestionate</Eyebrow><h1 class="mt-6 text-[clamp(2.5rem,1.7rem+3vw,3.75rem)] font-extrabold leading-[1.1] text-midnight">Infrastructura ta, <span class="text-bright">operată de echipa noastră.</span></h1><p class="mt-6 max-w-[680px] text-[18px] leading-[1.7] text-cool">Preluăm operarea, monitorizarea și securizarea infrastructurii tale IT, cu SLA contractual și experiență în livrarea serviciilor enterprise.</p><div class="mt-9 flex gap-4"><MailtoLink variant="button" subject={t('subject.assessment')}>{t('cta.assessment')}</MailtoLink><TextLink href="#capabilities">Vezi capabilitățile</TextLink></div></div></header><section id="capabilities" class="bg-surface py-[56px] sm:py-[80px]"><div class="container"><SectionHeading eyebrow="Capabilități" heading="Ce acoperă serviciile Smart Control"/><div class="mt-9 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{caps.map((c,i)=><ModuleCard title={c.title} index={String(i+1).padStart(2,'0')} body={c.body} items={c.items}><c.Icon slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5}/></ModuleCard>)}</div></div></section><section class="bg-page py-[48px] sm:py-[72px]"><div class="container"><SectionHeading heading="Produse proprii pentru contexte de operare gestionată">SEKNET și S-VPN pot completa serviciile gestionate Smart Control. Potrivirea și configurația se stabilesc după analiza mediului clientului.</SectionHeading><div class="mt-10 grid gap-5 md:grid-cols-2">{[{name:'SEKNET',body:'Produs proprietar pentru monitorizarea și protejarea mediilor IT, disponibil ca opțiune în proiectele relevante.',href:'/solutii/seknet',Icon:ShieldCheck},{name:'S-VPN',body:'Produs proprietar pentru acces remote securizat, disponibil ca opțiune în proiectele relevante.',href:'/solutii/s-vpn',Icon:Network}].map(x=><article class="rounded-xl bg-surface p-8 shadow-sm"><div class="flex items-center gap-3"><IconChip><x.Icon class="h-5 w-5 text-navy" stroke-width={1.5}/></IconChip><h3 class="text-[19px] font-bold text-navy">{x.name}</h3></div><p class="mt-4 text-[14px] leading-[1.65] text-cool">{x.body}</p><div class="mt-5"><TextLink href={p(x.href)}>Explorează {x.name}</TextLink></div></article>)}</div></div></section><CtaBand cta={t('cta.assessment')} subject={t('subject.assessment')} showContact={false}/></BaseLayout>
+
+<BaseLayout title="Servicii Gestionate — Smart Control" description={description}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <RouteHero eyebrow="Servicii Gestionate" artifact="managed" index="05">
+    <h1 slot="title">Infrastructura ta, <span class="accent">operată de echipa noastră.</span></h1>
+    <p slot="lead">
+      Preluăm operarea, monitorizarea și securizarea infrastructurii tale IT, cu SLA contractual și experiență în livrarea serviciilor enterprise.
+    </p>
+    <Fragment slot="actions">
+      <MailtoLink variant="button" subject={t('subject.assessment')}>{t('cta.assessment')}</MailtoLink>
+      <TextLink href="#capabilities">Vezi capabilitățile</TextLink>
+    </Fragment>
+  </RouteHero>
+
+  <section id="capabilities" class="managed-envelope scroll-mt-24" aria-labelledby="managed-envelope-title">
+    <div class="container">
+      <div class="managed-envelope__heading" data-reveal>
+        <SectionHeading
+          eyebrow="Capabilități"
+          heading="Ce acoperă serviciile Smart Control"
+          headingId="managed-envelope-title"
+        />
+      </div>
+
+      <div class="managed-envelope__frame" data-control-chapter data-scene-kind="managed">
+        <span class="managed-envelope__route managed-envelope__route--start" aria-hidden="true"></span>
+        <span class="managed-envelope__route managed-envelope__route--end" aria-hidden="true"></span>
+        <ol class="managed-envelope__lanes" role="list">
+          {caps.map(({ title, body, items, Icon }, index) => (
+            <li data-chapter-step>
+              <ControlLane
+                index={String(index + 1).padStart(2, '0')}
+                title={title}
+                body={body}
+                items={items}
+              >
+                <Icon slot="icon" class="h-[21px] w-[21px]" stroke-width={1.5} />
+              </ControlLane>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="managed-products" aria-labelledby="managed-products-title">
+    <div class="container managed-products__grid">
+      <div class="managed-products__heading" data-reveal>
+        <SectionHeading
+          heading="Produse proprii pentru contexte de operare gestionată"
+          headingId="managed-products-title"
+        >
+          SEKNET și S-VPN pot completa serviciile gestionate Smart Control. Potrivirea și configurația se stabilesc după analiza mediului clientului.
+        </SectionHeading>
+      </div>
+
+      <div class="managed-products__endpoints">
+        <span class="managed-products__link" aria-hidden="true"></span>
+        <ol role="list">
+          {products.map(({ name, body, href, Icon }, index) => (
+            <li>
+              <ControlLane
+                index={String(index + 1).padStart(2, '0')}
+                title={name}
+                body={body}
+                href={p(href)}
+                linkLabel={`Explorează ${name}`}
+              >
+                <Icon slot="icon" class="h-[21px] w-[21px]" stroke-width={1.5} />
+              </ControlLane>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand cta={t('cta.assessment')} subject={t('subject.assessment')} showContact={false} />
+</BaseLayout>
+
+<style>
+  .managed-envelope {
+    position: relative;
+    overflow: clip;
+    padding-block: clamp(72px, 9vw, 116px);
+    background: var(--color-surface);
+  }
+  .managed-envelope::before {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--color-blue-wash) 76%, transparent), transparent 26%);
+    content: '';
+    pointer-events: none;
+  }
+  .managed-envelope__heading,
+  .managed-envelope__frame { position: relative; z-index: 1; }
+  .managed-envelope__frame {
+    margin-top: clamp(46px, 6vw, 76px);
+    padding: clamp(24px, 4vw, 52px) clamp(20px, 5vw, 66px);
+    border: 1px solid var(--color-border-blue);
+    border-radius: 28px;
+    background: color-mix(in srgb, var(--color-page) 66%, transparent);
+    box-shadow: inset 0 0 0 10px color-mix(in srgb, var(--color-surface) 58%, transparent);
+  }
+  .managed-envelope__lanes { position: relative; z-index: 1; margin: 0; padding: 0; list-style: none; }
+  .managed-envelope__lanes > li { position: relative; }
+  .managed-envelope__lanes > li:nth-child(even) { margin-inline: clamp(0px, 4vw, 56px); }
+  .managed-envelope__lanes > li::after {
+    position: absolute;
+    top: 34px;
+    right: 100%;
+    width: clamp(20px, 4vw, 58px);
+    height: 1px;
+    background: var(--color-border-blue);
+    content: '';
+  }
+  .managed-envelope__lanes > li:nth-child(even)::after { right: auto; left: 100%; }
+  .managed-envelope__route {
+    position: absolute;
+    top: clamp(24px, 4vw, 52px);
+    bottom: clamp(24px, 4vw, 52px);
+    width: 1px;
+    background: linear-gradient(180deg, transparent, var(--color-bright) 10%, var(--color-royal) 90%, transparent);
+  }
+  .managed-envelope__route--start { left: clamp(20px, 5vw, 66px); }
+  .managed-envelope__route--end { right: clamp(20px, 5vw, 66px); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .managed-envelope__frame[data-scene-step] .managed-envelope__lanes > li {
+      transition: opacity 320ms ease, transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .managed-envelope__frame[data-scene-step] .managed-envelope__lanes > li:not([data-active]) { opacity: 0.54; }
+    .managed-envelope__frame[data-scene-step] .managed-envelope__lanes > li[data-current] { transform: translateX(7px); }
+  }
+
+  .managed-products { padding-block: clamp(64px, 8vw, 104px); background: var(--color-page); }
+  .managed-products__grid {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.22fr);
+    align-items: start;
+    gap: clamp(46px, 7vw, 92px);
+  }
+  .managed-products__heading { position: sticky; top: calc(var(--nav-offset) + 32px); }
+  .managed-products__endpoints { position: relative; }
+  .managed-products__endpoints ol { position: relative; z-index: 1; margin: 0; padding: 0; list-style: none; }
+  .managed-products__endpoints li + li { margin-top: 24px; }
+  .managed-products__link {
+    position: absolute;
+    inset: 34px auto 34px 30px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--color-bright), var(--color-royal));
+  }
+
+  @media (max-width: 899px) {
+    .managed-products__grid { grid-template-columns: 1fr; }
+    .managed-products__heading { position: static; }
+  }
+  @media (max-width: 767px) {
+    .managed-envelope__frame { padding-inline: 18px; border-radius: var(--radius-lg); }
+    .managed-envelope__lanes > li:nth-child(even) { margin-inline: 0; }
+    .managed-envelope__route--start { left: 18px; }
+    .managed-envelope__route--end { display: none; }
+    .managed-envelope__lanes > li::after { display: none; }
+  }
+</style>

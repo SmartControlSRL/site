@@ -1,0 +1,63 @@
+---
+interface Entry {
+  title: string;
+  body: string;
+}
+
+interface Props {
+  entries: Entry[];
+  dark?: boolean;
+  class?: string;
+}
+
+const { entries, dark = false, class: extra = '' } = Astro.props;
+---
+
+<ol class:list={['proof-ledger', dark && 'proof-ledger--dark', extra]} role="list">
+  {entries.map((entry, index) => (
+    <li>
+      <span class="proof-ledger__index">{String(index + 1).padStart(2, '0')}</span>
+      <div>
+        <h3>{entry.title}</h3>
+        <p>{entry.body}</p>
+      </div>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .proof-ledger {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--color-border-blue);
+    list-style: none;
+  }
+  li {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 14px;
+    padding: 22px 18px 23px 0;
+    border-bottom: 1px solid var(--color-border-blue);
+  }
+  .proof-ledger--dark,
+  .proof-ledger--dark li { border-color: color-mix(in srgb, var(--color-sky) 20%, transparent); }
+  .proof-ledger__index {
+    color: var(--color-royal);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+  }
+  .proof-ledger--dark .proof-ledger__index { color: var(--color-sky); }
+  h3 { color: var(--color-navy); font-size: 15px; font-weight: 700; line-height: 1.35; }
+  .proof-ledger--dark h3 { color: var(--color-surface); }
+  p { margin-top: 7px; color: var(--color-cool); font-size: 13.5px; line-height: 1.62; }
+  .proof-ledger--dark p { color: var(--color-on-dark); }
+  @media (min-width: 768px) {
+    .proof-ledger { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    li:nth-child(odd) { border-right: 1px solid var(--color-border-blue); }
+    .proof-ledger--dark li:nth-child(odd) { border-color: color-mix(in srgb, var(--color-sky) 20%, transparent); }
+    li { padding: 26px 26px 27px 0; }
+    li:nth-child(even) { padding-left: 26px; }
+  }
+</style>

@@ -1,316 +1,447 @@
-# Handover prompt — implement the cinematic Stack Teardown in a review PR
+# Handover prompt — reimagine the complete Smart Control website in a review PR
 
-You are the senior frontend and motion-systems engineer responsible for this
-implementation. Work in the existing repository and deliver a focused pull
-request against `main` with a working Vercel preview for owner review.
+You are the senior product designer, frontend architect, and motion-systems
+engineer responsible for this implementation. Work in the existing repository
+and deliver a materially redesigned, production-quality pull request against
+`main` with a working Vercel preview for owner review.
 
 ## Required outcome
 
-Implement the homepage cinematic UI/UX described in:
+Implement the full-site UI/UX reimagination specified in:
 
 - `docs/cinematic-build-brief/PROJECT_BRIEF.md`
 
-The result is a homepage-only, scroll-driven cinematic chapter centred on the
-existing `StackTeardown` section. It must preserve the current Smart Control
-brand and all reviewed Romanian and English copy. The owner will review the
-result through the PR's Vercel preview.
+Redesign every public route and shared page family while preserving the reviewed
+copy and recognizable Smart Control brand. This is **not** a StackTeardown
+enhancement and not a request to add animation to the existing layouts.
+
+The existing StackTeardown animation may be retained, replaced, or refined as
+one homepage chapter. It is not the project scope or the primary acceptance
+target. A homepage-only, single-section, or animation-only diff is incomplete.
+
+The owner must be able to review the complete reimagination through the PR's
+Vercel preview.
+
+## Authority and stopping point
 
 You are authorized to:
 
-- create a feature branch;
-- edit the in-scope repository files;
-- add focused implementation documentation when useful;
-- run the full local validation suite;
-- make logical commits;
-- push the feature branch to `origin`;
-- open a pull request against `main`;
-- wait for and inspect PR checks and the Vercel preview;
-- update the branch and PR to fix defects found during verification.
+- inspect the repository and existing remote branch/PR state;
+- create or continue the appropriate feature branch;
+- refactor or replace presentational components, page layouts, CSS architecture,
+  and motion code across `src/`;
+- add reusable UI/scene components and focused design documentation;
+- run local and preview validation;
+- make logical commits, push the feature branch, and open or update a PR;
+- wait for Vercel, inspect the final preview, and fix defects before handoff.
 
-Do **not** merge the PR, deploy to production, point a production domain at
-Vercel, or change production infrastructure. Stop after the reviewable PR and
-preview are complete.
+Do not merge the PR, deploy to production, change a production domain, or alter
+production infrastructure. Stop only after the complete PR and final-HEAD
+preview are ready for owner review, or after clearly reporting a genuine
+external blocker such as unavailable GitHub authorization.
 
-## Read before editing
+## Preflight — repository and existing PR
 
-Read these files completely and resolve them in this order:
+1. Inspect `git status`, current branch, remotes, recent history, and all existing
+   user changes. Preserve untracked/user-authored files; never reset or clean
+   them away.
+2. Verify access early:
 
-1. Current implementation under `src/` — source of truth for approved public
-   copy, disclosure level, and the current visual direction.
-2. `docs/cinematic-build-brief/PROJECT_BRIEF.md` — implementation scope,
-   cinematic scene contract, copy lock, timeline, responsive behavior, and
-   acceptance criteria.
-3. Root `CLAUDE.md` — repository, product, brand, legal, and safety rules.
-4. `docs/build-specs/RESOLUTIONS.md` — binding technical and content rulings.
-5. `docs/build-specs/execution-qa.md` — motion and render-correctness checks.
-6. `docs/SMC Web/ds/README.md` and `src/styles/global.css` — current brand
-   foundations and implemented tokens.
-7. `src/components/StackTeardown.astro`, `src/scripts/motion.js`,
-   `src/layouts/BaseLayout.astro`, `src/pages/index.astro`, and
-   `src/pages/en/index.astro` — current behavior and integration points.
+   ```bash
+   git ls-remote origin
+   gh auth status
+   ```
 
-Older design documents contain motion effects and public claims that were
-deliberately removed. Do not restore node graphs, radial glow, parallax drift,
-word-fill animation, removed stats, compliance pills, detailed product specs,
-or generic AI-SaaS decoration.
+3. Inspect whether the previous narrow implementation already has a branch or
+   open PR, especially `feat/cinematic-stack-teardown`:
 
-## Non-negotiable product constraints
+   ```bash
+   gh pr list --state open --head feat/cinematic-stack-teardown
+   ```
 
-- This is a UI/UX and motion task. **Do not change any reviewed copy.**
-- Preserve current RO/EN strings, metadata, labels, chips, links, CTA wording,
-  mailto subjects, aria-labels, reading order, and route parity.
+4. If that PR exists and is the owner's current review PR, continue on its branch
+   and broaden/supersede the narrow implementation. Update its title, body, and
+   preview. Do not open a duplicate PR merely to correct scope.
+5. If the remote branch exists without a usable PR, inspect it before deciding
+   whether to continue it or create `feat/cinematic-site-reimagination` from the
+   latest `origin/main`.
+6. If no previous work is reusable, fetch `origin` without disturbing the
+   working tree and create `feat/cinematic-site-reimagination` from current
+   `origin/main`.
+7. Never use destructive Git commands, `git clean`, hard reset, or force-push.
+8. If GitHub authentication is unavailable, continue safe local implementation,
+   commits, and validation, but do not claim a PR or preview exists without real
+   URLs. Report the external blocker exactly.
+
+The user-authored files under `docs/cinematic-build-brief/` are part of the
+project context. Preserve and include the current project brief in the PR.
+
+## Read and inventory before editing
+
+Read completely:
+
+1. `docs/cinematic-build-brief/PROJECT_BRIEF.md`
+2. root `CLAUDE.md`
+3. `docs/build-specs/RESOLUTIONS.md`
+4. `docs/build-specs/execution-qa.md`
+5. `docs/SMC Web/ds/README.md`
+6. `src/styles/global.css`
+7. every file under `src/pages/**`, `src/components/**`, `src/layouts/**`, and
+   `src/scripts/**`
+8. `src/i18n/ui.ts`, `astro.config.mjs`, `vercel.json`, and the repository QA
+   scripts
+
+Treat current `src/` as the public-copy/disclosure source of truth. Older design
+exports and briefs are references only where they do not conflict with current
+copy, the project brief, or binding resolutions.
+
+Before changing source files, produce a concise working plan containing:
+
+- complete route and page-family inventory;
+- current shared-component and lifecycle map;
+- copy-lock baseline for both locales;
+- proposed shared tokens, primitives, scene grammar, nav/footer, and route
+  transition;
+- component refactor/replacement map;
+- page-family composition concepts;
+- route-by-route motion map with one dominant idea per route;
+- responsive, reduced-motion, no-JavaScript, and accessibility plan;
+- performance risks and payload budget;
+- expected files and logical commit phases.
+
+Do not pause merely to request approval of that plan. Continue autonomously
+unless a genuine conflict would materially change the owner's requested scope.
+
+## Baseline evidence
+
+Before editing, build the current site and capture uncommitted baseline evidence
+for every unique page family at desktop and mobile widths. At minimum capture:
+
+- Home
+- Services hub
+- Cloud
+- Security
+- Software
+- Managed services
+- Solutions hub
+- SEKNET
+- S-VPN
+- Privacy
+- 404
+
+Use the baseline for direct before/after comparison. Never commit raw captures,
+`dist/`, audit JSON, Playwright output, logs, or temporary artifacts. Deliver
+curated visual evidence through PR-uploaded assets or CI artifacts when the
+available client supports them. If neither mechanism is available, commit only
+an optimized, review-specific evidence set under
+`docs/cinematic-build-brief/review/` (WebP, sensible dimensions, descriptive
+filenames, no sensitive data, and a total budget of 5 MB) and explain why in the
+PR. Raw evidence stays outside the repository.
+
+## Non-negotiable content and product rules
+
+- This is a UI/UX redesign. Public copy is locked.
+- Preserve reviewed RO/EN copy, facts, claims, CTA labels/destinations, mailto
+  subjects, metadata, structured data, route mapping, anchors, and locale parity.
+- Visual order, grouping, markup, and component boundaries may change when
+  semantic meaning remains intact.
+- UI-only accessibility/control labels may be added or corrected when necessary;
+  localize and report them.
 - Preserve exactly two products and four ISO certifications.
-- Keep the fixed nav and footer light. Do not add a dark homepage hero or a new
-  dark section.
-- Keep the existing products band and closing CTA unchanged except for any
-  strictly necessary, invisible integration fix.
-- Preserve the current palette, Inter/JetBrains Mono typography, 1180 px grid,
-  breakpoint system, logo treatment, and blueprint-ruling motif.
-- Use code-native HTML/CSS/SVG and the existing inline layer diagrams. Do not
-  generate or add photography, raster scenes, video, fake screenshots, or a
-  full-page canvas.
-- Add no dependency. Do not add GSAP, ScrollTrigger, Lenis, Three.js, WebGL,
-  React, Svelte, Lottie, or a carousel library.
-- Do not modify `package.json`, `package-lock.json`, `astro.config.mjs`,
+- Keep years computed from 2003.
+- Do not restore removed stats, compliance pills, detailed product claims,
+  throughput/tunnel counts, module specs, integrations, or fake operational data.
+- No new content, claims, clients, routes, forms, phone, map, portal, e-commerce,
+  CMS, blog, careers, analytics, or cookie banner.
+- Keep obfuscated email behavior and page-specific CTA subjects.
+
+## Brand and art-direction rules
+
+- Implement the project brief's “The Control Plane” concept across the entire
+  site.
+- Preserve the logo, blue-led identity, Inter/JetBrains Mono, light-first rhythm,
+  compliance-teal restriction, and AA-safe light-surface links.
+- Keep nav and footer light.
+- Keep dark zones limited to product-detail heroes, the homepage products world,
+  and closing CTA bands.
+- Current tokens and the 1180 px grid are a foundation. Controlled evolution of
+  derived tints, spacing, type scale, grid proportions, radii, shadows, and
+  composition is allowed when documented.
+- Use code-native HTML/CSS/SVG architectural visuals. No photography, generated
+  raster scenes, video, fake UI, full-page canvas, WebGL, particles, neon hacker
+  aesthetics, grain, glassmorphism, or generic AI-SaaS decoration.
+- Do not merely keep the current hero/card layouts and add reveals.
+
+## Technical constraints
+
+- Keep Astro static SSG and progressive enhancement.
+- Add no dependency.
+- Do not edit `package.json`, `package-lock.json`, `astro.config.mjs`,
   `tsconfig.json`, or `vercel.json`.
+- Do not add GSAP, ScrollTrigger, Lenis, Three.js, WebGL frameworks, React,
+  Svelte, Lottie, carousel packages, remote font/icon scripts, or smooth-scroll
+  interception.
 - Preserve `vercel.json`'s `X-Robots-Tag: noindex` preview protection.
-- No forms, phone, map, analytics, cookie banner, client names, or invented
-  claims.
+- Reuse named tokens. Do not scatter hardcoded colors when a token exists.
+- Prefer data-driven shared components over duplicated locale markup or motion
+  logic.
+- Content and navigation must remain visible and usable before JavaScript runs.
 
-## Git and branch workflow
+## Implementation phases
 
-1. Inspect `git status`, the active branch, remotes, and recent history before
-   editing. Existing changes and untracked files belong to the user; preserve
-   them.
-2. Check repository access early with `git ls-remote origin` and, when using the
-   GitHub CLI, `gh auth status`. Do not assume push/PR access works. If
-   authentication is unavailable, continue safe local implementation and
-   validation, but report that PR and Vercel-preview delivery remain externally
-   blocked; never claim either without its real URL.
-3. Fetch `origin` without changing the working tree.
-4. Create a new branch from current `origin/main`, preferably:
-   `feat/cinematic-stack-teardown`. If it already exists, use a clear unique
-   suffix. Never overwrite or delete an existing branch.
-5. Do not use destructive Git commands, `git clean`, hard reset, or force-push.
-6. Keep the diff focused. Do not reformat unrelated files or include generated
-   `dist/`, `.astro/`, screenshots, audit output/JSON, logs, or temporary
-   artifacts in commits.
-7. Use one or more logical commits. Suggested final commit subject:
-   `feat(home): add cinematic stack teardown`.
+Use logical phases and commits so the large visual change stays reviewable.
 
-The existing `docs/cinematic-build-brief/PROJECT_BRIEF.md` is user-authored
-project documentation. Preserve it and include it in the PR if it is currently
-untracked. This handover file may also be included for traceability, but it must
-not substitute for implementation documentation in the PR body.
+### Phase 1 — foundations and shared shell
 
-## Plan before implementation
+- Establish the full-site layout/scene primitives and any controlled token
+  evolution.
+- Materially redesign the fixed light nav, dropdown/route context, mobile menu,
+  focus/hover states, and light footer while preserving all destinations/copy.
+- Establish shared route-header, chapter, diagram-frame, routing/datum, proof,
+  cross-sell, and CTA compositions.
+- Implement a restrained native Astro route transition with correct focus,
+  history, and reduced-motion behavior.
+- Refactor the motion lifecycle so all scenes initialize on initial load and
+  `astro:page-load`, and clean up listeners/observers/timers/frames on
+  `astro:before-swap`.
 
-Before changing source files, produce a concise internal plan containing:
+### Phase 2 — Home
 
-- current component and event-lifecycle map;
-- five-beat scene/timeline map;
-- DOM/SVG layer map (`00` through `50` from the brief);
-- files expected to change;
-- desktop, tablet/mobile, reduced-motion, and no-JavaScript behavior;
-- likely performance and accessibility risks.
+- Recompose the entire Home journey, not only StackTeardown.
+- Create the assembled-system hero and hero-to-services signature chapter.
+- Integrate the current service content and StackTeardown into one coherent
+  architecture ending in a usable route atlas.
+- Reimagine the dark products world, Cloud route, partners presentation, and CTA
+  framing using current content.
+- Preserve one long pinned Home chapter at most; the rest stays normal flow.
 
-Where browser tooling is available, capture an uncommitted baseline of `/` and
-`/en/` at desktop and mobile widths before editing. Use it for direct before /
-after comparison; do not rely on memory of the current design.
+### Phase 3 — services family
 
-Do not pause for approval unless you find a real conflict that materially
-changes scope. Otherwise make the safest in-scope decision, implement it, and
-document the decision in the PR.
+- Redesign the Services hub as a system atlas.
+- Redesign Cloud around its five-stage modernization corridor and capability
+  outcome.
+- Redesign Security around a restrained control-perimeter model.
+- Redesign Software around a commit-to-operation delivery spine.
+- Redesign Managed Services around a service-envelope/operating model.
+- Use shared system rules without giving all five pages the same layout or
+  animation.
 
-## Implementation expectations
+### Phase 4 — solutions and products family
 
-### Architecture
+- Redesign the Solutions hub as a light dual-product bay.
+- Redesign SEKNET's dark hero and light body around generic signal convergence.
+- Redesign S-VPN's dark hero and light body around a secure access corridor.
+- Recompose capabilities, contexts, associated services, audiences, cross-sells,
+  and CTA frames using existing copy only.
+- Make the two product pages related but visibly distinct.
 
-- Use progressive enhancement. All content and links must be present, readable,
-  and correctly ordered in server-rendered HTML before JavaScript runs.
-- Scope scroll progress to the cinematic section; never derive it from global
-  page progress.
-- Use a deterministic, reversible timeline with readable scene constants and
-  small helpers such as `clamp`, `lerp`, `smoothstep`, and segmented progress.
-- Event listeners should only request a render. Render through
-  `requestAnimationFrame`, write a small set of CSS custom properties, and let
-  CSS own final transforms and opacity.
-- Cache stable geometry and remeasure on resize. Do not repeatedly force layout
-  in the frame loop. Stop frames when values converge or the section is
-  offscreen.
+### Phase 5 — privacy and 404
+
+- Redesign both privacy routes as premium legal reading experiences with
+  generated sticky TOC/current-section state, reading progress, accessible
+  anchors, print-friendly typography, and restrained motion.
+- Redesign 404 as a small light missing-route blueprint with current bilingual
+  copy and recovery links.
+
+### Phase 6 — full-system refinement
+
+- Remove residual generic card-grid grammar where it undermines the new system.
+- Ensure all locales/routes use the shared system without visual regressions.
+- Tune responsive composition, motion, reduced motion, focus, contrast, payload,
+  lifecycle cleanup, and route transitions.
+- Compare every page family against its baseline. Fix any page that merely looks
+  animated rather than redesigned.
+
+Suggested logical commit subjects:
+
+- `feat(ui): establish cinematic control-plane system`
+- `feat(home): reimagine complete homepage journey`
+- `feat(services): redesign service page family`
+- `feat(products): redesign solutions and product pages`
+- `feat(site): refine legal, error, responsive and accessibility UX`
+
+A single squashed final commit is not required. Keep commits coherent and avoid
+unrelated formatting churn.
+
+## Motion and lifecycle quality
+
+- Use four tiers only: route transition; Home/Cloud signature chapters; short
+  route-specific explanatory states; micro-interactions.
+- One dominant motion idea per route. Do not repeat a long pinned scene across
+  every page.
+- Derive progress locally from each scene, never global document scroll.
+- Timelines are deterministic and reversible in both directions.
+- Scroll/resize/pointer listeners request frames; rendering occurs through
+  `requestAnimationFrame` and a small set of CSS custom properties.
+- Cache geometry; do not alternate repeated layout reads/writes in the frame
+  loop. Pause offscreen and while the document is hidden.
+- At most one render loop per active scene.
 - Prefer explicit transition properties over `transition: all` in touched code.
-- Keep the implementation local and understandable; do not build a generic
-  animation framework.
+- Do not intercept wheel/touch scrolling or trap page scroll.
+- Repeated View Transition navigation must not duplicate initialization.
 
-### Astro lifecycle
+## Responsive and reduced-motion requirements
 
-- Refactor the current component-local StackTeardown behavior as needed so all
-  listeners, timers, observers, and animation frames have explicit cleanup.
-- Initialize reliably on initial load and `astro:page-load`.
-- Tear down on `astro:before-swap`.
-- Repeated navigation away from and back to `/` or `/en/` must not duplicate
-  listeners, intervals, observers, or animation loops.
-- The current 3.2-second ambient cycle must not compete with scroll control.
-  Disable it in desktop cinematic mode. Retain appropriate direct interaction
-  in the final state and compact fallback.
+- `>=1100px`: full architectural scenes. Long pinning is allowed only for Home's
+  main chapter and Cloud's methodology.
+- `768–1099px`: use stepped split layouts or short sticky artifacts rather than
+  desktop pins.
+- `<768px`: normal-flow composition, artifact above copy, 24 px gutters, no
+  desktop crop, and no hover-dependent information.
+- At 200% zoom or insufficient height, sticky layouts fall back safely.
+- Reduced motion disables pinning, inertia, parallax, route sweeps, path drawing,
+  auto-advance, and ambient loops while retaining polished static composition.
+- No-JavaScript mode preserves every meaningful content item, route, and action.
 
-### Desktop cinematic mode
+## Accessibility and interaction
 
-- Activate the sticky cinematic chapter at `>=1100px` only.
-- Use `100svh`/`100dvh`-aware sizing with a robust fallback and account for the
-  fixed light nav.
-- Follow the brief's five beats and checkpoint targets:
-  `0.00`, `0.18`, `0.27`, `0.44`, `0.58`, `0.74`, `0.90`, and `1.00`.
-- Keep the stack anchored. Use restrained scale, plate separation, connector
-  progress, opacity, and small translation—no large fly-ins, blur, bounce,
-  particle field, or decorative continuous loop.
-- Reverse scroll must reverse every visual state smoothly and deterministically.
-- The final four-item rail is finite, not infinite. It requires semantic
-  previous/next controls, correct disabled states, visible position feedback,
-  keyboard support, touch/swipe support, and real destination links.
-- Continued scrolling must unpin cleanly into the existing products band with no
-  jump, blank frame, overlapping section, or trapped scroll.
-
-### Tablet, mobile, reduced motion, and no JavaScript
-
-- Below `1100px`, do not use the long pinned experience. Present the same copy,
-  diagrams, chips, and links in readable normal flow using the compact
-  interactive stack/accordion described in the brief.
-- At `390px`, preserve 24 px gutters, avoid scaled text, and prevent document
-  overflow, clipped controls, or overlapping cards.
-- For `prefers-reduced-motion: reduce`, disable pinning, automatic cycling,
-  inertial smoothing, connector drawing, pointer effects, and large transforms.
-  Keep a complete static composition and every interaction/content destination.
-- With JavaScript unavailable or initialization failing, meaningful content must
-  remain visible and navigable.
-
-### Semantics and interaction
-
-- Prefer native buttons and links over `div role="button"` when refactoring.
-- Do not nest interactive elements. If a layer selector reveals a real link,
-  keep the selector and link as distinct valid controls.
-- Preserve focus visibly. Ensure hidden/collapsed content is removed from tab
-  order and restored correctly when active.
-- Support keyboard operation without trapping focus or scroll.
-- Mark decorative SVG geometry `aria-hidden`; communicate the layer model with
-  semantic headings/lists and existing copy.
-- Verify browser zoom at 200%.
+- Use native headings, lists, buttons, links, landmarks, and disclosures.
+- Do not nest interactive controls or use dead card affordances.
+- Decorative SVG is `aria-hidden`; copy remains semantic HTML.
+- Preserve visible focus, logical tab order, correct disabled states, 44 px touch
+  targets, keyboard operation, and route-transition focus restoration.
+- No focus trap except the correctly managed mobile navigation while open; ESC
+  closes it and focus returns to its trigger.
+- Validate contrast, 200% zoom, keyboard-only use, touch, reduced motion,
+  screen-reader reading meaning, and print behavior for privacy.
 
 ## Copy-lock verification
 
-Before committing, compare the rendered/public strings on `/` and `/en/`
-against the base branch. Markup may change, but text content must not.
+Compare every route against `origin/main`. Markup and component boundaries may
+change; public strings may not.
 
-At minimum verify that there are no unintended changes to:
+Verify all:
 
-- headings, paragraphs, layer titles/descriptions, chips, notes, and link labels;
-- CTA labels and obfuscated mailto subjects;
-- metadata and structured data;
-- aria-labels and language parity.
+- headings, paragraphs, labels, chips, notes, lists, and link text;
+- CTAs, mailto subjects, routes, anchors, canonical/hreflang, metadata, and
+  structured data;
+- product disclosure level and ISO count;
+- RO/EN equivalence;
+- UI-only accessibility labels added by the redesign.
 
-Report any unavoidable accessibility-only string change explicitly; do not make
-one silently.
+Any unavoidable accessibility-only string adjustment must be localized and
+called out explicitly in the PR.
 
-## Required local validation
+## Local validation
 
-Use Node 22+. Install with `npm ci` only if dependencies are not already
-available. Before pushing, run:
+Use Node 22+. Install with `npm ci` only when dependencies are unavailable.
+
+Run at minimum:
 
 ```bash
 npm run check
 npm run build
 node scripts/check-links.mjs
+node scripts/overlap-check.mjs --dir dist --width 390
+node scripts/audit.mjs --dir dist --out /tmp/smc-cinematic-audit.json
 ```
 
-Where the environment supports Playwright browsers, also run focused visual and
-runtime checks for `/` and `/en/`:
+Where Playwright is available, capture after screenshots for every page family
+at `1280`, `768`, and `390`, plus focused `1440×900` and `1280×720` inspection of
+Home and Cloud:
 
 ```bash
-node scripts/screenshot.mjs --dir dist --routes "/,/en/" --out /tmp/smc-cinematic-shots --widths 1280,768,390
-node scripts/overlap-check.mjs --dir dist --routes "/,/en/" --width 390
-node scripts/audit.mjs --dir dist --routes "/,/en/" --out /tmp/smc-cinematic-audit.json
+node scripts/screenshot.mjs --dir dist --routes "/,/servicii/,/servicii/cloud/,/servicii/securitate/,/servicii/software/,/servicii/managed/,/solutii/,/solutii/seknet/,/solutii/s-vpn/,/confidentialitate/,/en/,/en/servicii/,/en/servicii/cloud/,/en/servicii/securitate/,/en/servicii/software/,/en/servicii/managed/,/en/solutii/,/en/solutii/seknet/,/en/solutii/s-vpn/,/en/privacy/,/404.html" --out /tmp/smc-cinematic-after --widths 1280,768,390
 ```
 
-Do not commit `/tmp` output or generated reports. If the environment cannot run
-Playwright, report the exact blocker and complete equivalent browser inspection
-on the Vercel preview.
+Do not commit generated evidence. If Playwright cannot run locally, report the
+exact limitation and perform equivalent browser inspection on the Vercel
+preview.
 
-### Manual visual/runtime matrix
+### Manual route matrix
 
-Inspect both `/` and `/en/` at minimum at:
+Inspect every generated route at least once. Perform deeper review on both
+locales for:
 
-- `1440×900` and `1280×720` — full cinematic mode;
-- `1024×768` and `768×1024` — normal-flow tablet mode;
-- `390×844` — mobile mode;
-- desktop and mobile with reduced motion;
-- 200% browser zoom.
+- Home
+- Services hub
+- Cloud, Security, Software, and Managed Services individually
+- Solutions hub
+- SEKNET and S-VPN
+- Privacy
+- 404
+
+Test at `1440×900`, `1280×720`, `1024×768`, `768×1024`, and `390×844`, plus
+reduced motion and 200% zoom.
 
 Verify:
 
-- every timeline checkpoint in both scroll directions;
-- refresh at the top, middle, and final state of the cinematic chapter;
-- resize across the `1100px` mode boundary;
-- touch/swipe, mouse, keyboard, and focus order;
-- no transparent holes, empty edges, text collisions, clipped focus rings,
-  layout jumps, or horizontal document overflow;
-- no duplicate initialization after View Transition navigation;
-- no console errors or warnings attributable to the change;
-- payload remains inside the budget in the project brief.
+- deliberate composition before any animation runs;
+- forward and reverse scroll through signature chapters;
+- direct load and refresh at top/middle/end scene positions;
+- resize/orientation across the `1100px` mode boundary;
+- navigation away/back through Astro View Transitions;
+- mouse, touch/swipe, keyboard, focus order, and mobile menu;
+- no empty edges, cropping, text collisions, clipped focus, trapped scroll,
+  overflow, layout jumps, or stale scene state;
+- no new console/network errors;
+- no disruptive CLS and proportionate transfer/JS growth.
 
-Fix defects before opening the PR. Do not describe known, fixable visual defects
-as limitations.
+Fix all in-scope defects before handoff. Do not relabel fixable visual defects as
+“known limitations.”
 
-## Pull request and Vercel preview
+## PR and Vercel workflow
 
-After local validation:
+1. Review the complete diff against `origin/main` for scope, copy, secrets,
+   generated files, dependency churn, and unintended content changes.
+2. Confirm the diff materially changes shared chrome and every page family. A
+   diff centred on `StackTeardown.astro` or `motion.js` fails.
+3. Commit logical changes and push without force.
+4. Open or update the PR against `main`. Suggested title:
+   `Cinematic full-site UI/UX reimagination`.
+5. Do not merge.
+6. Wait for PR checks and the existing Vercel Git integration.
+7. Confirm the preview deployment is built from the PR's final HEAD commit and
+   obtain its exact URL.
+8. Verify `X-Robots-Tag: noindex` on the preview.
+9. Inspect all 21 generated routes on the actual preview, including every RO/EN
+   service detail and `/404.html`. Repeat deeper Home/Cloud motion, mobile,
+   reduced-motion, navigation, and console checks there.
+10. Fix preview-only defects, push, wait for the new final-HEAD deployment, and
+    recheck it.
 
-1. Review `git diff` carefully for scope, copy, generated files, and secrets.
-2. Commit the focused changes and push the feature branch to `origin` without a
-   force push.
-3. Open a PR against `main`. Suggested title:
-   `Cinematic Stack Teardown homepage experience`.
-4. Do not merge it.
-5. Wait for PR checks and the existing Vercel Git integration. Confirm the
-   preview deployment succeeds and obtain its exact URL from the deployment
-   check/comment.
-6. Confirm the deployment is for the PR's final HEAD commit, not an earlier
-   preview, then open it and repeat the focused `/` and `/en/` smoke tests.
-   Verify the preview response retains `X-Robots-Tag: noindex`.
-7. If the Vercel integration is missing or cannot create a preview, do not alter
-   `vercel.json`, connect a production domain, or deploy production manually.
-   Report the external blocker clearly in the PR and final handoff.
+If Vercel integration or permissions are missing, do not edit `vercel.json`,
+link another project, use production credentials, or deploy manually. Report the
+external blocker truthfully.
 
-The PR description must contain:
+## PR description requirements
 
-- summary of the UI/UX outcome;
-- scope and non-goals;
-- scene/timeline map;
+Include:
+
+- full-site outcome and concept summary;
+- explicit statement that the previous narrow animation scope was superseded;
+- shared UI/design-system changes;
+- page-family composition map;
+- route-by-route motion map;
 - responsive and reduced-motion behavior;
-- accessibility and keyboard behavior;
-- copy-lock verification result;
-- performance/payload result;
-- exact commands run and results;
-- manual viewport matrix completed;
-- files changed;
-- Vercel preview URL;
-- screenshots or review notes for desktop and mobile when the tooling permits;
-- known limitations or external blockers, if any.
+- accessibility/keyboard/no-JS behavior;
+- copy-lock and locale-parity result;
+- validation command table with truthful pass/fail/not-run status;
+- payload/JS delta;
+- files changed and commit structure;
+- before/after desktop/mobile evidence for every page family;
+- short recordings of Home and Cloud motion when tooling permits;
+- final commit SHA;
+- final-HEAD Vercel preview URL;
+- true limitations or external blockers only.
 
-Use a checklist so incomplete verification is visible. Do not claim a test was
-performed when it was not.
+Use a visible checklist. Do not claim a browser, viewport, assistive mode, or
+script was tested when it was not.
 
 ## Final handoff
 
-Return to the owner with:
+Return:
 
 1. PR URL.
-2. Vercel preview URL.
+2. Final-HEAD Vercel preview URL.
 3. Branch name and commit SHA(s).
-4. Concise implementation summary.
-5. Validation and manual-review results.
-6. Copy-lock confirmation.
-7. Any true remaining limitation or external blocker.
+4. Full-site implementation summary.
+5. Page-family redesign summary.
+6. Validation and visual-review results.
+7. Copy-lock and RO/EN parity confirmation.
+8. Payload/performance result.
+9. Any true external blocker or remaining limitation.
 
-The task is complete only when the PR is open, the preview is reachable, the
-cinematic behavior has been checked on the preview, and the PR is ready for
-owner review. Do not merge it.
+The task is complete only when the full-site redesign is present across all 21
+routes, the PR is open or updated, the final preview is reachable and inspected,
+and the work is ready for owner review. Do not merge it.

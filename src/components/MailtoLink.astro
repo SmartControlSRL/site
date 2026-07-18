@@ -28,9 +28,15 @@ const {
   domain = EMAIL_DOMAIN,
 } = Astro.props;
 
+// A functional no-JS baseline without exposing the literal address as one
+// contiguous string in the HTML source. initEmails still normalizes the href
+// and visible fallback after navigation.
+const encodedAddress = `${encodeURIComponent(user)}%40${encodeURIComponent(domain)}`;
+const fallbackHref = `mailto:${encodedAddress}${subject ? `?subject=${encodeURIComponent(subject)}` : ''}`;
+
 const base =
   variant === 'button'
-    ? 'inline-flex items-center justify-center rounded-md px-[22px] py-[11px] text-[14.5px] font-semibold transition-all'
+    ? 'inline-flex min-h-11 items-center justify-center rounded-md px-[22px] py-[11px] text-[14.5px] font-semibold transition-[background-color,color,box-shadow,border-color] duration-200'
     : variant === 'link'
       ? 'font-semibold transition-colors'
       : 'transition-colors';
@@ -48,11 +54,17 @@ const tone =
 ---
 
 <a
-  href="#"
+  href={fallbackHref}
   data-email-user={user}
   data-email-domain={domain}
   data-email-subject={subject}
   class:list={[base, tone, extra]}
 >
-  <slot />
+  {
+    Astro.slots.has('default') ? (
+      <slot />
+    ) : (
+      <><span>{user}</span><span>@</span><span>{domain}</span></>
+    )
+  }
 </a>

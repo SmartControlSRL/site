@@ -55,9 +55,9 @@ const ogLocaleAlt = lang === 'en' ? 'ro_RO' : 'en_US';
     {noindex && <meta name="robots" content="noindex" />}
     <meta name="theme-color" content={themeColor} />
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="ro" href={roHref} />
-    <link rel="alternate" hreflang="en" href={enHref} />
-    <link rel="alternate" hreflang="x-default" href={roHref} />
+    {!noindex && <link rel="alternate" hreflang="ro" href={roHref} />}
+    {!noindex && <link rel="alternate" hreflang="en" href={enHref} />}
+    {!noindex && <link rel="alternate" hreflang="x-default" href={roHref} />}
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Smart Control" />
     <meta property="og:locale" content={ogLocale} />
@@ -79,7 +79,7 @@ const ogLocaleAlt = lang === 'en' ? 'ro_RO' : 'en_US';
   <body>
     <a href="#main" class="sr-only focus:not-sr-only">{t('a11y.skip')}</a>
     <Nav />
-    <main id="main">
+    <main id="main" tabindex="-1">
       <slot />
     </main>
     <Footer />
@@ -95,16 +95,16 @@ const ogLocaleAlt = lang === 'en' ? 'ro_RO' : 'en_US';
         initReveals,
         initCounters,
         initStepper,
-        initConsole,
-        initStackTeardown,
       } from '../scripts/motion.js';
 
       type Cleanup = () => void;
       let cleanups: Cleanup[] = [];
+      let generation = 0;
 
       function wire() {
         // Defensive idempotence: page-load can be re-fired by ClientRouter.
         teardown();
+        const activeGeneration = generation;
         const doc = document;
 
         // Emails first (also fills the obfuscated text), then chrome + scene.
@@ -122,16 +122,27 @@ const ogLocaleAlt = lang === 'en' ? 'ro_RO' : 'en_US';
           if (fill) cleanups.push(initStepper(container, fill, { dark: container.hasAttribute('data-stepper-dark') }));
         });
 
-        doc.querySelectorAll<HTMLElement>('[data-console]').forEach((container) => {
-          cleanups.push(initConsole(container));
-        });
-
-        doc.querySelectorAll<HTMLElement>('[data-sctd]').forEach((container) => {
-          cleanups.push(initStackTeardown(container));
+        // Route scene and legal behavior are split into focused chunks. Guard
+        // async completion so a fast View Transition cannot initialize stale
+        // nodes after astro:before-swap.
+        if (doc.querySelector('[data-control-scene],[data-control-chapter]')) {
+          import('../scripts/control-scenes.js').then(({ initControlScenes }) => {
+            const cleanup = initControlScenes(doc);
+            if (generation === activeGeneration) cleanups.push(cleanup);
+            else cleanup();
+          });
+        }
+        doc.querySelectorAll<HTMLElement>('[data-legal-reader]').forEach((reader) => {
+          import('../scripts/legal-reader.js').then(({ initLegalReader }) => {
+            const cleanup = initLegalReader(reader);
+            if (generation === activeGeneration) cleanups.push(cleanup);
+            else cleanup();
+          });
         });
       }
 
       function teardown() {
+        generation += 1;
         cleanups.forEach((fn) => {
           try { fn(); } catch { /* noop */ }
         });

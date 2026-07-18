@@ -1,0 +1,334 @@
+---
+/**
+ * Decorative, code-native artifacts for the Control Plane system.
+ *
+ * Every variant shares the same viewBox, datum, path and depth grammar. Public
+ * meaning always remains in adjacent semantic HTML; this SVG is intentionally
+ * hidden from assistive technology. The shared scene lifecycle only adjusts
+ * CSS custom properties on the wrapping route scene.
+ */
+type ControlArtifactVariant =
+  | 'stack'
+  | 'atlas'
+  | 'cloud'
+  | 'security'
+  | 'software'
+  | 'managed'
+  | 'solutions'
+  | 'seknet'
+  | 'svpn'
+  | 'missing';
+
+interface Props {
+  variant: ControlArtifactVariant;
+  dark?: boolean;
+  compact?: boolean;
+  class?: string;
+}
+
+const { variant, dark = false, compact = false, class: extra = '' } = Astro.props;
+---
+
+<div
+  class:list={[
+    'control-artifact',
+    dark && 'control-artifact--dark',
+    compact && 'control-artifact--compact',
+    extra,
+  ]}
+  data-artifact={variant}
+  aria-hidden="true"
+>
+  <svg viewBox="0 0 560 440" fill="none" role="presentation">
+    <g class="control-artifact__blueprint">
+      <path d="M34 72H526M34 220H526M34 368H526" />
+      <path d="M76 36V404M280 36V404M484 36V404" />
+      <path d="M28 64h12M34 58v12M520 360h12M526 354v12" />
+      <path d="M126 67v10M178 67v10M382 363v10M434 363v10" />
+    </g>
+
+    <path class="control-artifact__datum" pathLength="1" d="M34 334H126V106H280V220H526" />
+
+    {variant === 'stack' && (
+      <g class="artifact-stack">
+        <path class="plane plane--4" d="m116 115 164-68 164 68-164 68z" />
+        <path class="plane plane--3" d="m116 177 164-68 164 68-164 68z" />
+        <path class="plane plane--2" d="m116 239 164-68 164 68-164 68z" />
+        <path class="plane plane--1" d="m116 301 164-68 164 68-164 68z" />
+        <g class="artifact-stack__routes">
+          <path d="M164 112h58l18-18h82l18 18h57" />
+          <path d="M161 177h55l22-17h82l22 17h57" />
+          <path d="M164 240h45l32-20h78l32 20h45" />
+          <path d="M168 301h50l24-17h76l24 17h50" />
+        </g>
+        <path class="artifact-stack__spine" d="M280 61v268" />
+        <circle class="node node--hot" cx="280" cy="115" r="7" />
+        <circle class="node" cx="280" cy="177" r="6" />
+        <circle class="node" cx="280" cy="239" r="6" />
+        <circle class="node" cx="280" cy="301" r="6" />
+      </g>
+    )}
+
+    {variant === 'atlas' && (
+      <g class="artifact-atlas">
+        <path class="route" d="M280 220 154 123M280 220l126-97M280 220 154 317M280 220l126 97" />
+        <rect class="slab slab--1" x="78" y="76" width="152" height="92" rx="10" />
+        <rect class="slab slab--2" x="330" y="76" width="152" height="92" rx="10" />
+        <rect class="slab slab--3" x="78" y="272" width="152" height="92" rx="10" />
+        <rect class="slab slab--4" x="330" y="272" width="152" height="92" rx="10" />
+        <path class="slab-detail" d="M98 106h72m-72 20h105m147-20h72m-72 20h105M98 302h72m-72 20h105m147-20h72m-72 20h105" />
+        <rect class="core" x="238" y="178" width="84" height="84" rx="12" />
+        <circle class="node node--hot" cx="280" cy="220" r="8" />
+      </g>
+    )}
+
+    {variant === 'cloud' && (
+      <g class="artifact-cloud">
+        <g class="artifact-cloud__legacy">
+          <rect class="slab" x="54" y="112" width="128" height="206" rx="10" />
+          <path class="slab-detail" d="M76 143h84M76 173h84M76 203h84M76 233h84M76 263h84M76 293h84" />
+        </g>
+        <path class="route route--strong" pathLength="1" d="M182 215h70v-72h78v154h72v-77h102" />
+        <g class="artifact-cloud__containers">
+          <rect class="slab slab--1" x="237" y="112" width="92" height="62" rx="8" />
+          <rect class="slab slab--2" x="237" y="266" width="92" height="62" rx="8" />
+          <rect class="slab slab--3" x="388" y="112" width="116" height="78" rx="10" />
+          <rect class="slab slab--4" x="388" y="250" width="116" height="78" rx="10" />
+          <path class="slab-detail" d="M257 133h52m-52 18h34m-34 136h52m-52 18h34m151-167h72m-72 20h48m-48 118h72m-72 20h48" />
+        </g>
+        <circle class="node" cx="252" cy="215" r="7" />
+        <circle class="node node--hot" cx="330" cy="215" r="8" />
+        <circle class="node" cx="402" cy="220" r="7" />
+      </g>
+    )}
+
+    {variant === 'security' && (
+      <g class="artifact-security">
+        <rect class="perimeter perimeter--outer" x="66" y="58" width="428" height="324" rx="28" />
+        <rect class="perimeter perimeter--middle" x="116" y="96" width="328" height="248" rx="22" />
+        <rect class="perimeter perimeter--inner" x="176" y="140" width="208" height="160" rx="18" />
+        <path class="route" d="M66 142h50m328 0h50M66 298h50m328 0h50M222 96V58m116 38V58M222 382v-38m116 38v-38" />
+        <path class="core" d="m280 166 66 38v76l-66 38-66-38v-76z" />
+        <circle class="node node--hot" cx="280" cy="242" r="12" />
+        <circle class="node" cx="116" cy="142" r="7" />
+        <circle class="node" cx="444" cy="142" r="7" />
+        <circle class="node" cx="116" cy="298" r="7" />
+        <circle class="node" cx="444" cy="298" r="7" />
+      </g>
+    )}
+
+    {variant === 'software' && (
+      <g class="artifact-software">
+        <path class="route route--strong" pathLength="1" d="M54 220h452" />
+        <g class="artifact-software__nodes">
+          <rect class="slab slab--1" x="54" y="156" width="80" height="128" rx="10" />
+          <rect class="slab slab--2" x="150" y="176" width="72" height="88" rx="10" />
+          <rect class="slab slab--3" x="238" y="140" width="84" height="160" rx="10" />
+          <rect class="slab slab--4" x="338" y="176" width="72" height="88" rx="10" />
+          <rect class="slab slab--5" x="426" y="156" width="80" height="128" rx="10" />
+        </g>
+        <path class="slab-detail" d="M75 185h38m-38 22h38m-38 22h24m72-26h30m-30 22h30m58-52h42m-42 24h42m-42 24h42m-42 24h26m75-42h30m-30 22h30m58-44h38m-38 22h38m-38 22h24" />
+        <circle class="node" cx="134" cy="220" r="6" />
+        <circle class="node" cx="222" cy="220" r="6" />
+        <circle class="node node--hot" cx="322" cy="220" r="7" />
+        <circle class="node" cx="410" cy="220" r="6" />
+      </g>
+    )}
+
+    {variant === 'managed' && (
+      <g class="artifact-managed">
+        <rect class="envelope" x="58" y="64" width="444" height="312" rx="24" />
+        <path class="route route--strong" d="M100 106v228h360V106" />
+        <path class="lane lane--1" d="M100 116h360" />
+        <path class="lane lane--2" d="M100 151h360" />
+        <path class="lane lane--3" d="M100 186h360" />
+        <path class="lane lane--4" d="M100 221h360" />
+        <path class="lane lane--5" d="M100 256h360" />
+        <path class="lane lane--6" d="M100 291h360" />
+        <path class="lane lane--7" d="M100 326h360" />
+        <circle class="node node--hot" cx="100" cy="116" r="7" />
+        <circle class="node" cx="460" cy="151" r="6" />
+        <circle class="node" cx="100" cy="186" r="6" />
+        <circle class="node" cx="460" cy="221" r="6" />
+        <circle class="node" cx="100" cy="256" r="6" />
+        <circle class="node" cx="460" cy="291" r="6" />
+        <circle class="node" cx="100" cy="326" r="6" />
+        <rect class="core" x="234" y="188" width="92" height="64" rx="10" />
+      </g>
+    )}
+
+    {variant === 'solutions' && (
+      <g class="artifact-solutions">
+        <rect class="bay bay--signals" x="48" y="74" width="218" height="292" rx="16" />
+        <rect class="bay bay--corridor" x="294" y="74" width="218" height="292" rx="16" />
+        <path class="route" d="M70 130h56l42 48h64M70 220h162M70 310h56l42-48h64" />
+        <circle class="node" cx="70" cy="130" r="6" />
+        <circle class="node" cx="70" cy="220" r="6" />
+        <circle class="node" cx="70" cy="310" r="6" />
+        <rect class="core" x="198" y="174" width="46" height="92" rx="8" />
+        <path class="corridor" d="M326 155h154v130H326zM350 177h106v86H350z" />
+        <path class="route route--strong" d="M310 220h186" />
+        <circle class="node node--hot" cx="326" cy="220" r="7" />
+        <circle class="node" cx="480" cy="220" r="7" />
+        <path class="artifact-solutions__join" d="M266 220h28" />
+      </g>
+    )}
+
+    {variant === 'seknet' && (
+      <g class="artifact-seknet">
+        <path class="route" d="M50 92h92l92 92M50 174h116l68 32M50 266h116l68-32M50 348h92l92-92" />
+        <path class="route" d="M510 92h-92l-92 92M510 174H394l-68 32M510 266H394l-68-32M510 348h-92l-92-92" />
+        <circle class="node" cx="50" cy="92" r="6" />
+        <circle class="node" cx="50" cy="174" r="6" />
+        <circle class="node" cx="50" cy="266" r="6" />
+        <circle class="node" cx="50" cy="348" r="6" />
+        <circle class="node" cx="510" cy="92" r="6" />
+        <circle class="node" cx="510" cy="174" r="6" />
+        <circle class="node" cx="510" cy="266" r="6" />
+        <circle class="node" cx="510" cy="348" r="6" />
+        <rect class="core" x="220" y="152" width="120" height="136" rx="14" />
+        <rect class="core core--inner" x="242" y="174" width="76" height="92" rx="9" />
+        <circle class="node node--hot" cx="280" cy="220" r="10" />
+      </g>
+    )}
+
+    {variant === 'svpn' && (
+      <g class="artifact-svpn">
+        <path class="corridor corridor--outer" d="M112 116h336l62 104-62 104H112L50 220z" />
+        <path class="corridor corridor--inner" d="M148 150h264l42 70-42 70H148l-42-70z" />
+        <path class="route route--strong" pathLength="1" d="M50 220h460" />
+        <path class="route" d="M112 116v208M448 116v208M148 150v140M412 150v140" />
+        <circle class="node node--hot" cx="50" cy="220" r="9" />
+        <circle class="node" cx="112" cy="220" r="7" />
+        <circle class="node" cx="148" cy="220" r="7" />
+        <circle class="node" cx="412" cy="220" r="7" />
+        <circle class="node" cx="448" cy="220" r="7" />
+        <circle class="node node--hot" cx="510" cy="220" r="9" />
+        <rect class="core" x="244" y="180" width="72" height="80" rx="10" />
+      </g>
+    )}
+
+    {variant === 'missing' && (
+      <g class="artifact-missing">
+        <path class="route route--strong" d="M58 220h142l44-44" />
+        <path class="route route--strong route--broken" d="m316 264 44-44h142" />
+        <circle class="node" cx="58" cy="220" r="8" />
+        <circle class="node" cx="200" cy="220" r="7" />
+        <circle class="node" cx="360" cy="220" r="7" />
+        <circle class="node" cx="502" cy="220" r="8" />
+        <path class="missing-bracket" d="M230 138h-28v164h28M330 138h28v164h-28" />
+        <path class="missing-cross" d="m254 194 52 52m0-52-52 52" />
+      </g>
+    )}
+  </svg>
+</div>
+
+<style>
+  .control-artifact {
+    width: 100%;
+    color: var(--color-navy);
+    --artifact-line: color-mix(in srgb, var(--color-royal) 42%, transparent);
+    --artifact-faint: color-mix(in srgb, var(--color-royal) 15%, transparent);
+    --artifact-surface: color-mix(in srgb, var(--color-surface) 92%, var(--color-blue-wash));
+    --artifact-hot: var(--color-bright);
+  }
+  .control-artifact--dark {
+    color: var(--color-sky);
+    --artifact-line: color-mix(in srgb, var(--color-sky) 54%, transparent);
+    --artifact-faint: color-mix(in srgb, var(--color-sky) 16%, transparent);
+    --artifact-surface: color-mix(in srgb, var(--color-royal) 34%, transparent);
+    --artifact-hot: var(--color-sky);
+  }
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .control-artifact__blueprint {
+    stroke: var(--artifact-faint);
+    stroke-width: 1;
+  }
+  .control-artifact__datum,
+  .route {
+    stroke: var(--artifact-line);
+    stroke-width: 1.5;
+  }
+  .control-artifact__datum,
+  .route--strong {
+    stroke: var(--artifact-hot);
+    stroke-dasharray: 1;
+    stroke-dashoffset: calc(1 - var(--scene-progress, 1));
+  }
+  .control-artifact__datum {
+    opacity: 0.34;
+  }
+  .plane,
+  .slab,
+  .perimeter,
+  .envelope,
+  .bay,
+  .corridor,
+  .core {
+    stroke: var(--artifact-line);
+    stroke-width: 1.5;
+    fill: var(--artifact-surface);
+  }
+  .plane {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .plane--4 { transform: translateY(calc(-12px * var(--scene-progress, 1))); }
+  .plane--3 { transform: translateY(calc(-4px * var(--scene-progress, 1))); }
+  .plane--2 { transform: translateY(calc(4px * var(--scene-progress, 1))); }
+  .plane--1 { transform: translateY(calc(12px * var(--scene-progress, 1))); }
+  .artifact-stack__routes,
+  .artifact-stack__spine,
+  .slab-detail,
+  .lane,
+  .artifact-solutions__join,
+  .missing-bracket,
+  .missing-cross {
+    stroke: var(--artifact-line);
+    stroke-width: 1.4;
+  }
+  .slab-detail { opacity: 0.6; }
+  .node {
+    fill: var(--artifact-surface);
+    stroke: var(--artifact-line);
+    stroke-width: 1.5;
+  }
+  .node--hot {
+    fill: var(--artifact-hot);
+    stroke: color-mix(in srgb, var(--artifact-hot) 60%, var(--color-surface));
+  }
+  .core {
+    stroke: var(--artifact-hot);
+    fill: color-mix(in srgb, var(--artifact-hot) 10%, var(--artifact-surface));
+  }
+  .core--inner { fill: transparent; }
+  .perimeter--outer { opacity: 0.45; }
+  .perimeter--middle { opacity: 0.68; }
+  .perimeter--inner { opacity: 0.9; }
+  .lane {
+    transform-box: fill-box;
+    transform-origin: left;
+    transform: scaleX(calc(0.7 + var(--scene-progress, 1) * 0.3));
+  }
+  .artifact-managed .lane:nth-of-type(even) { transform-origin: right; }
+  .route--broken { stroke-dasharray: 7 12; }
+  .missing-cross { stroke: var(--artifact-hot); stroke-width: 2; }
+  .control-artifact--compact svg { max-height: 300px; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .plane,
+    .slab,
+    .core,
+    .node,
+    .lane {
+      transition: transform 520ms cubic-bezier(0.16, 1, 0.3, 1), opacity 420ms ease;
+    }
+  }
+</style>

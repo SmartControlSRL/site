@@ -1,5 +1,314 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro'; import GridTexture from '../../../components/GridTexture.astro'; import Eyebrow from '../../../components/Eyebrow.astro'; import SectionHeading from '../../../components/SectionHeading.astro'; import ChevronList from '../../../components/ChevronList.astro'; import CtaBand from '../../../components/CtaBand.astro'; import MailtoLink from '../../../components/MailtoLink.astro'; import TextLink from '../../../components/TextLink.astro'; import { getLangFromUrl,useTranslations } from '../../../i18n/ui'; import { Container,GitBranch,Cloud,Gauge } from '@lucide/astro'; const lang=getLangFromUrl(Astro.url); const t=useTranslations(lang);
-const description='Hardware is getting more expensive. We propose an application re-architecture, containerization and selective cloud migration approach for performance and predictable costs.'; const steps=[{title:'Re-architecture proposal',pill:'Fast Track',body:'For established clients, we use our knowledge of the existing infrastructure to identify critical points and propose modernization based on real data.'},{title:'Initial assessment & quick wins',pill:'2 days · free',body:'Infrastructure inventory, performance analysis and gap assessment.'},{title:'Refactoring plan',pill:'Technical plan',body:'A technical roadmap with application prioritization, staging tests and a rollback plan.'},{title:'Agile implementation & knowledge transfer',pill:'DevSecOps',body:'Containerization and migration, delivery pipelines, hybrid integration, technical workshops and documentation.'},{title:'Continuous monitoring and optimization',pill:'Proposed indicators',body:'Proactive monitoring and optimization to achieve the proposed indicators.'}]; const caps=[{title:'Containerization & orchestration',items:['Application prioritization','Controlled migration','Planned rollback'],Icon:Container},{title:'DevSecOps & CI/CD',items:['Delivery pipelines','Automated staging tests','Infrastructure-as-Code'],Icon:GitBranch},{title:'Hybrid integration',items:['On-premise and cloud integration','Selective migration','Predictable costs'],Icon:Cloud},{title:'Monitoring & support',items:['Proactive support','Continuous monitoring','Tracking proposed indicators'],Icon:Gauge}]; const ld={'@context':'https://schema.org','@type':'Service',name:'Cloud & Modernization',serviceType:'Cloud modernization & application re-architecture',url:'https://smartcontrol.ro/en/servicii/cloud/',description:'Application re-architecture and optimization, containerization, DevSecOps and selective cloud migration through a five-stage approach.',provider:{'@type':'Organization',name:'Smart Control SRL',url:'https://smartcontrol.ro'}};
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SectionHeading from '../../../components/SectionHeading.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import MailtoLink from '../../../components/MailtoLink.astro';
+import TextLink from '../../../components/TextLink.astro';
+import RouteHero from '../../../components/RouteHero.astro';
+import ControlArtifact from '../../../components/ControlArtifact.astro';
+import ControlLane from '../../../components/ControlLane.astro';
+import { getLangFromUrl, useTranslations } from '../../../i18n/ui';
+import { Container, GitBranch, Cloud, Gauge } from '@lucide/astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const description = 'Hardware is getting more expensive. We propose an application re-architecture, containerization and selective cloud migration approach for performance and predictable costs.';
+
+const steps = [
+  {
+    title: 'Re-architecture proposal',
+    pill: 'Fast Track',
+    body: 'For established clients, we use our knowledge of the existing infrastructure to identify critical points and propose modernization based on real data.',
+  },
+  {
+    title: 'Initial assessment & quick wins',
+    pill: '2 days · free',
+    body: 'Infrastructure inventory, performance analysis and gap assessment.',
+  },
+  {
+    title: 'Refactoring plan',
+    pill: 'Technical plan',
+    body: 'A technical roadmap with application prioritization, staging tests and a rollback plan.',
+  },
+  {
+    title: 'Agile implementation & knowledge transfer',
+    pill: 'DevSecOps',
+    body: 'Containerization and migration, delivery pipelines, hybrid integration, technical workshops and documentation.',
+  },
+  {
+    title: 'Continuous monitoring and optimization',
+    pill: 'Proposed indicators',
+    body: 'Proactive monitoring and optimization to achieve the proposed indicators.',
+  },
+];
+
+const caps = [
+  {
+    title: 'Containerization & orchestration',
+    items: ['Application prioritization', 'Controlled migration', 'Planned rollback'],
+    Icon: Container,
+  },
+  {
+    title: 'DevSecOps & CI/CD',
+    items: ['Delivery pipelines', 'Automated staging tests', 'Infrastructure-as-Code'],
+    Icon: GitBranch,
+  },
+  {
+    title: 'Hybrid integration',
+    items: ['On-premise and cloud integration', 'Selective migration', 'Predictable costs'],
+    Icon: Cloud,
+  },
+  {
+    title: 'Monitoring & support',
+    items: ['Proactive support', 'Continuous monitoring', 'Tracking proposed indicators'],
+    Icon: Gauge,
+  },
+];
+
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Cloud & Modernization',
+  serviceType: 'Cloud modernization & application re-architecture',
+  url: 'https://smartcontrol.ro/en/servicii/cloud/',
+  description: 'Application re-architecture and optimization, containerization, DevSecOps and selective cloud migration through a five-stage approach.',
+  provider: { '@type': 'Organization', name: 'Smart Control SRL', url: 'https://smartcontrol.ro' },
+};
 ---
-<BaseLayout title="Cloud & Modernization — Application re-architecture and optimization | Smart Control" description={description}><script is:inline type="application/ld+json" set:html={JSON.stringify(ld)}/><header class="relative overflow-hidden bg-page"><GridTexture fade/><div class="container relative pb-[64px] pt-[120px] md:pt-[120px]"><Eyebrow>Cloud &amp; Modernization</Eyebrow><h1 class="mt-6 max-w-[900px] text-[clamp(2.4rem,1.6rem+3vw,3.75rem)] font-extrabold leading-[1.1] text-midnight">Hardware is getting more expensive.<br/><span class="text-bright">We propose the following approach.</span></h1><p class="mt-6 max-w-[680px] text-[18px] leading-[1.7] text-cool">Critical component prices are rising under pressure from AI infrastructure demand. Application re-architecture and optimization help you obtain more performance from existing infrastructure before buying new hardware.</p><div class="mt-9 flex gap-4"><MailtoLink variant="button" subject={t('subject.assessment')}>Schedule the free assessment</MailtoLink><TextLink href="#workflow">See the 5 stages</TextLink></div></div></header><section id="workflow" class="bg-page py-[56px] sm:py-[80px]"><div class="container"><SectionHeading eyebrow="Approach" heading="We propose 5 stages"/><div class="relative mt-12" data-stepper><div class="absolute bottom-7 left-[25px] top-7 w-[2px] bg-border-blue"><div data-stepper-fill class="h-0 w-full bg-bright"/></div><ol class="relative">{steps.map((s,i)=><li data-step class="grid grid-cols-[52px_1fr] gap-5 py-6"><span data-step-dot class="flex h-[52px] w-[52px] items-center justify-center rounded-[12px] border border-border-blue bg-surface font-mono text-royal">{String(i+1).padStart(2,'0')}</span><div data-step-body><div class="flex flex-wrap items-center gap-3"><h3 class="text-[20px] font-bold text-navy">{s.title}</h3><span class="rounded-full border border-border-blue px-3 py-1 font-mono text-[11px] text-royal">{s.pill}</span></div><p class="mt-2 text-[14.5px] leading-[1.7] text-cool">{s.body}</p></div></li>)}</ol></div></div></section><section class="bg-surface py-[48px] sm:py-[72px]"><div class="container"><SectionHeading heading="What we deliver"/><div class="mt-10 grid gap-5 md:grid-cols-2">{caps.map(c=><article class="rounded-xl bg-surface p-8 shadow-sm"><div class="flex items-center gap-3"><c.Icon class="h-5 w-5 text-bright" stroke-width={1.5}/><h3 class="text-[18px] font-bold text-navy">{c.title}</h3></div><ChevronList items={c.items} class="mt-4"/></article>)}</div></div></section><CtaBand heading="What does your current infrastructure cost and how much could you save" cta={t('cta.assessment')} subject={t('subject.assessment')}>The free 2-day assessment maps your current infrastructure and estimates the potential savings from re-architecture.</CtaBand></BaseLayout>
+
+<BaseLayout title="Cloud & Modernization — Application re-architecture and optimization | Smart Control" description={description}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(ld)} />
+
+  <RouteHero eyebrow="Cloud &amp; Modernization" artifact="cloud" index="02">
+    <h1 slot="title">
+      Hardware is getting more expensive.<br /><span class="accent">We propose the following approach.</span>
+    </h1>
+    <p slot="lead">
+      Critical component prices are rising under pressure from AI infrastructure demand. Application re-architecture and optimization help you obtain more performance from existing infrastructure before buying new hardware.
+    </p>
+    <Fragment slot="actions">
+      <MailtoLink variant="button" subject={t('subject.assessment')}>Schedule the free assessment</MailtoLink>
+      <TextLink href="#workflow">See the 5 stages</TextLink>
+    </Fragment>
+  </RouteHero>
+
+  <section id="workflow" class="cloud-corridor scroll-mt-24" aria-labelledby="cloud-corridor-title">
+    <div class="container">
+      <div class="cloud-corridor__heading" data-reveal>
+        <SectionHeading
+          eyebrow="Approach"
+          heading="We propose 5 stages"
+          headingId="cloud-corridor-title"
+        />
+      </div>
+
+      <div
+        class="cloud-corridor__system"
+        data-control-chapter
+        data-scene-kind="cloud"
+        data-stepper
+      >
+        <div class="cloud-corridor__artifact" data-chapter-artifact aria-hidden="true">
+          <div class="cloud-corridor__artifact-frame">
+            <ControlArtifact variant="cloud" compact />
+          </div>
+        </div>
+
+        <div class="cloud-corridor__route">
+          <span class="cloud-corridor__rail" aria-hidden="true">
+            <span data-stepper-fill></span>
+          </span>
+          <ol class="cloud-corridor__steps">
+            {steps.map((step, index) => (
+              <li data-step data-chapter-step>
+                <span class="cloud-corridor__number" data-step-dot>
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <article class="cloud-corridor__stage" data-step-body>
+                  <div class="cloud-corridor__stage-heading">
+                    <h3>{step.title}</h3>
+                    <span>{step.pill}</span>
+                  </div>
+                  <p>{step.body}</p>
+                </article>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cloud-output" aria-labelledby="cloud-output-title">
+    <div class="container cloud-output__grid">
+      <div class="cloud-output__heading" data-reveal>
+        <SectionHeading heading="What we deliver" headingId="cloud-output-title" />
+      </div>
+      <ol class="cloud-output__lanes" role="list">
+        {caps.map(({ Icon, title, items }, index) => (
+          <li>
+            <ControlLane
+              index={String(index + 1).padStart(2, '0')}
+              title={title}
+              items={items}
+            >
+              <Icon slot="icon" class="h-5 w-5" stroke-width={1.5} />
+            </ControlLane>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <CtaBand
+    heading="What does your current infrastructure cost and how much could you save"
+    cta={t('cta.assessment')}
+    subject={t('subject.assessment')}
+  >
+    The free 2-day assessment maps your current infrastructure and estimates the potential savings from re-architecture.
+  </CtaBand>
+</BaseLayout>
+
+<style>
+  .cloud-corridor {
+    position: relative;
+    overflow: clip;
+    padding-block: clamp(72px, 9vw, 112px);
+    background: var(--color-page);
+  }
+  .cloud-corridor::before {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent 49.95%, color-mix(in srgb, var(--color-border-blue) 60%, transparent) 50%, transparent 50.05%);
+    content: '';
+    pointer-events: none;
+  }
+  .cloud-corridor__heading { position: relative; z-index: 1; }
+  .cloud-corridor__system {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(320px, 0.82fr) minmax(0, 1.18fr);
+    gap: clamp(48px, 7vw, 96px);
+    margin-top: clamp(42px, 6vw, 72px);
+  }
+  .cloud-corridor__artifact { min-width: 0; }
+  .cloud-corridor__artifact-frame {
+    position: sticky;
+    top: calc(var(--nav-offset) + 34px);
+    padding: clamp(18px, 2.5vw, 30px);
+    border: 1px solid var(--color-border-blue);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+    box-shadow: 0 30px 70px -55px color-mix(in srgb, var(--color-navy) 46%, transparent);
+  }
+  .cloud-corridor__route { position: relative; }
+  .cloud-corridor__rail {
+    position: absolute;
+    inset: 30px auto 30px 29px;
+    width: 2px;
+    background: var(--color-border-blue);
+  }
+  .cloud-corridor__rail > span {
+    display: block;
+    width: 100%;
+    height: 0;
+    background: linear-gradient(180deg, var(--color-bright), var(--color-sky));
+  }
+  .cloud-corridor__steps { margin: 0; padding: 0; list-style: none; }
+  .cloud-corridor__steps > li {
+    position: relative;
+    display: grid;
+    min-height: 320px;
+    grid-template-columns: 60px minmax(0, 1fr);
+    align-items: center;
+    gap: 24px;
+  }
+  .cloud-corridor__number {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    width: 60px;
+    height: 60px;
+    place-items: center;
+    border: 1px solid var(--color-border-blue);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    color: var(--color-royal);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 12px 28px -24px var(--color-navy);
+  }
+  .cloud-corridor__stage {
+    position: relative;
+    padding: 30px clamp(24px, 3.5vw, 42px);
+    border-block: 1px solid var(--color-border-blue);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--color-surface) 92%, transparent), transparent);
+  }
+  .cloud-corridor__stage::before {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: var(--color-bright);
+    content: '';
+    opacity: 0.55;
+  }
+  .cloud-corridor__stage-heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px 16px; }
+  .cloud-corridor__stage h3 {
+    color: var(--color-navy);
+    font-size: clamp(1.12rem, 1.02rem + 0.5vw, 1.4rem);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .cloud-corridor__stage-heading span {
+    padding: 4px 9px;
+    border: 1px solid var(--color-border-blue);
+    border-radius: 999px;
+    background: var(--color-surface);
+    color: var(--color-royal);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .cloud-corridor__stage p { margin-top: 12px; color: var(--color-cool); font-size: 14.5px; line-height: 1.72; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .cloud-corridor__system[data-scene-step] .cloud-corridor__stage {
+      transition: background-color 320ms ease, transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .cloud-corridor__system[data-scene-step] li[data-current] .cloud-corridor__stage {
+      background-color: color-mix(in srgb, var(--color-blue-wash) 72%, transparent);
+      transform: translateX(6px);
+    }
+  }
+
+  .cloud-output {
+    padding-block: clamp(64px, 8vw, 100px);
+    background: var(--color-surface);
+  }
+  .cloud-output__grid {
+    display: grid;
+    grid-template-columns: minmax(250px, 0.58fr) minmax(0, 1.42fr);
+    align-items: start;
+    gap: clamp(44px, 7vw, 92px);
+  }
+  .cloud-output__heading { position: sticky; top: calc(var(--nav-offset) + 32px); }
+  .cloud-output__lanes { margin: 0; padding: 0; list-style: none; }
+
+  @media (max-width: 899px) {
+    .cloud-corridor__system,
+    .cloud-output__grid { grid-template-columns: 1fr; }
+    .cloud-corridor__artifact-frame,
+    .cloud-output__heading { position: static; }
+    .cloud-corridor__artifact { max-width: 560px; }
+    .cloud-corridor__steps > li { min-height: 250px; }
+  }
+  @media (max-width: 560px) {
+    .cloud-corridor__steps > li { min-height: 0; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; padding-block: 24px; }
+    .cloud-corridor__number { width: 44px; height: 44px; border-radius: var(--radius-sm); }
+    .cloud-corridor__rail { left: 21px; }
+    .cloud-corridor__stage { padding: 24px 18px; }
+  }
+</style>

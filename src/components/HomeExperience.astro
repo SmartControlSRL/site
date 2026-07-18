@@ -1,0 +1,351 @@
+---
+import RouteHero from './RouteHero.astro';
+import ControlArtifact from './ControlArtifact.astro';
+import ControlLane from './ControlLane.astro';
+import SectionHeading from './SectionHeading.astro';
+import MonoPill from './MonoPill.astro';
+import TextLink from './TextLink.astro';
+import MailtoLink from './MailtoLink.astro';
+import CtaBand from './CtaBand.astro';
+import GridTexture from './GridTexture.astro';
+
+interface ServiceItem {
+  index: string;
+  title: string;
+  body: string;
+  items: string[];
+  href: string;
+}
+interface StackLayer {
+  code: string;
+  name: string;
+  desc: string;
+  chips: string[];
+  href: string;
+  linkLabel: string;
+  aria: string;
+}
+interface ProductItem {
+  name: string;
+  body: string;
+  href: string;
+  linkLabel: string;
+  artifact: 'seknet' | 'svpn';
+}
+interface HomeContent {
+  hero: {
+    eyebrow: string;
+    title: string;
+    accent: string;
+    leadBefore: string;
+    leadStrong: string;
+    leadAfter: string;
+    cta: string;
+    servicesLink: string;
+    isoBadges: string[];
+  };
+  services: { heading: string; lead: string; items: ServiceItem[] };
+  accountability: { eyebrow: string; heading: string; lead: string; note: string; layers: StackLayer[] };
+  products: {
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    primaryLink: string;
+    secondaryLink: string;
+    statusTitle: string;
+    metrics: { label: string; value: string }[];
+    signals: { time: string; msg: string }[];
+    items: ProductItem[];
+  };
+  cloud: {
+    eyebrow: string;
+    heading: string;
+    contextBefore: string;
+    contextStrong: string;
+    contextAfter: string;
+    linkLabel: string;
+    href: string;
+    steps: { title: string; sub: string }[];
+    rows: { tag: string; body: string }[];
+  };
+  partners: { eyebrow: string; lead: string; items: string[] };
+  cta: { eyebrow: string; heading: string; lead: string; label: string };
+}
+
+interface Props {
+  content: HomeContent;
+  assessmentSubject: string;
+}
+
+const { content, assessmentSubject } = Astro.props;
+---
+
+<RouteHero eyebrow={content.hero.eyebrow} artifact="stack" index="00">
+  <h1 slot="title">{content.hero.title}<br /><span class="accent">{content.hero.accent}</span></h1>
+  <p slot="lead">
+    {content.hero.leadBefore}<strong class="font-semibold text-navy">{content.hero.leadStrong}</strong>{content.hero.leadAfter}
+  </p>
+  <Fragment slot="actions">
+    <MailtoLink variant="button" subject={assessmentSubject}>{content.hero.cta}</MailtoLink>
+    <TextLink href="#servicii">{content.hero.servicesLink}</TextLink>
+  </Fragment>
+  <div slot="meta" class="home-iso-ledger">
+    {content.hero.isoBadges.map((badge, index) => (
+      <MonoPill class="home-iso-ledger__item"><span aria-hidden="true">0{index + 1}</span>{badge}</MonoPill>
+    ))}
+  </div>
+</RouteHero>
+
+<section id="servicii" class="control-section home-system">
+  <div class="container">
+    <div class="control-section__head">
+      <SectionHeading heading={content.services.heading} headingMaxWidth="700px" />
+      <p>{content.services.lead}</p>
+    </div>
+
+    <div class="home-system__chapter" data-control-chapter>
+      <div class="home-system__artifact">
+        <div class="home-system__coordinate control-coordinate" aria-hidden="true"><span>SC / SERVICE PLANE</span><span>04</span></div>
+        <ControlArtifact variant="atlas" />
+      </div>
+      <div class="control-spine home-system__lanes">
+        {content.services.items.map((service) => (
+          <div data-chapter-step>
+            <ControlLane
+              index={service.index}
+              title={service.title}
+              body={service.body}
+              items={service.items}
+              titleHref={service.href}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stack" class="control-section control-section--wash home-accountability" data-control-scene data-scene-kind="stack">
+  <GridTexture opacity={0.5} />
+  <div class="container home-accountability__inner">
+    <div class="home-accountability__head">
+      <SectionHeading
+        eyebrow={content.accountability.eyebrow}
+        heading={content.accountability.heading}
+        headingMaxWidth="620px"
+      />
+      <p>{content.accountability.lead}</p>
+    </div>
+    <div class="home-accountability__grid">
+      <div class="home-accountability__artifact">
+        <ControlArtifact variant="stack" />
+        <p class="home-accountability__note"><span aria-hidden="true"></span>{content.accountability.note}</p>
+      </div>
+      <ol class="home-stack-ledger" role="list">
+        {content.accountability.layers.map((layer) => (
+          <li aria-label={layer.aria}>
+            <div class="home-stack-ledger__head"><span>{layer.code}</span><h3>{layer.name}</h3></div>
+            <p>{layer.desc}</p>
+            <ul role="list">{layer.chips.map((chip) => <li>{chip}</li>)}</ul>
+            <TextLink href={layer.href}>{layer.linkLabel}</TextLink>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section id="produse" class="home-products" data-control-scene data-scene-kind="solutions">
+  <GridTexture dark opacity={0.6} />
+  <div class="container home-products__inner">
+    <div class="home-products__head">
+      <SectionHeading eyebrow={content.products.eyebrow} heading={content.products.heading} variant="dark">
+        {content.products.lead}
+      </SectionHeading>
+      <div class="home-products__routes">
+        <a href={content.products.items[0].href}>{content.products.primaryLink}<span aria-hidden="true">›</span></a>
+        <TextLink href={content.products.items[1].href} dark>{content.products.secondaryLink}</TextLink>
+      </div>
+    </div>
+
+    <div class="home-product-bays">
+      {content.products.items.map((product, index) => (
+        <article class="home-product-bay">
+          <div class="home-product-bay__context control-coordinate" aria-hidden="true"><span>0{index + 1}</span><span>{product.name}</span></div>
+          <ControlArtifact variant={product.artifact} dark compact />
+          <div class="home-product-bay__copy">
+            <h3>{product.name}</h3>
+            <p>{product.body}</p>
+            <TextLink href={product.href} dark>{product.linkLabel}</TextLink>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="home-signal-ledger">
+      <div class="home-signal-ledger__head"><span>{content.products.statusTitle}</span></div>
+      <dl>
+        {content.products.metrics.map((metric) => <div><dt>{metric.label}</dt><dd>{metric.value}</dd></div>)}
+      </dl>
+      <ol role="list">
+        {content.products.signals.map((signal) => <li><time>{signal.time}</time><span>{signal.msg}</span></li>)}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="control-section control-section--wash home-cloud" data-control-scene data-scene-kind="cloud">
+  <div class="container">
+    <div class="control-section__head">
+      <SectionHeading eyebrow={content.cloud.eyebrow} heading={content.cloud.heading} />
+      <div>
+        <p>{content.cloud.contextBefore}<strong>{content.cloud.contextStrong}</strong>{content.cloud.contextAfter}</p>
+        <a class="home-cloud__link" href={content.cloud.href}>{content.cloud.linkLabel}<span aria-hidden="true">›</span></a>
+      </div>
+    </div>
+
+    <div class="home-cloud__corridor">
+      <div class="home-cloud__artifact"><ControlArtifact variant="cloud" /></div>
+      <ol class="home-cloud__steps" role="list">
+        {content.cloud.steps.map((step, index) => (
+          <li><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{step.title}</h3><p>{step.sub}</p></div></li>
+        ))}
+      </ol>
+    </div>
+    <div class="home-cloud__outputs">
+      {content.cloud.rows.map((row) => <article><span>{row.tag}</span><p>{row.body}</p></article>)}
+    </div>
+  </div>
+</section>
+
+<section id="parteneri" class="control-section home-partners">
+  <div class="container">
+    <div class="home-partners__head">
+      <SectionHeading eyebrow={content.partners.eyebrow} heading={content.partners.lead} headingMaxWidth="620px" />
+      <span class="control-coordinate" aria-hidden="true">SC / TRUST LEDGER</span>
+    </div>
+    <ul class="home-partners__ledger" role="list">
+      {content.partners.items.map((partner, index) => <li><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>{partner}</li>)}
+    </ul>
+  </div>
+</section>
+
+<CtaBand
+  id="contact"
+  eyebrow={content.cta.eyebrow}
+  heading={content.cta.heading}
+  cta={content.cta.label}
+  subject={assessmentSubject}
+  showContact={false}
+>
+  {content.cta.lead}
+</CtaBand>
+
+<style>
+  .home-iso-ledger { display: flex; flex-wrap: wrap; gap: 8px; }
+  .home-iso-ledger :global(.home-iso-ledger__item) { display: inline-flex; align-items: center; gap: 9px; padding-block: 8px; font-size: 12px; }
+  .home-iso-ledger :global(.home-iso-ledger__item > span) { color: var(--color-bright); font-size: 9px; }
+  .home-system { overflow: clip; }
+  .home-system__chapter { display: grid; grid-template-columns: minmax(340px, 0.86fr) minmax(0, 1.14fr); align-items: start; gap: clamp(50px, 8vw, 112px); }
+  .home-system__artifact { position: sticky; top: calc(var(--nav-offset) + 28px); min-width: 0; padding: 22px; border: 1px solid var(--color-border-blue); border-radius: var(--radius-lg); background: var(--color-page); }
+  .home-system__coordinate { display: flex; justify-content: space-between; margin: 0 4px -4px; }
+  .home-system__lanes > div { opacity: calc(0.62 + var(--scene-progress, 1) * 0.38); }
+  .home-system__lanes > div[data-current] { opacity: 1; }
+  .home-accountability { overflow: clip; }
+  .home-accountability__inner { position: relative; z-index: 1; }
+  .home-accountability__head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 0.75fr); align-items: end; gap: 56px; }
+  .home-accountability__head > p { color: var(--color-cool); font-size: 15.5px; line-height: 1.7; }
+  .home-accountability__grid { display: grid; grid-template-columns: minmax(330px, 0.9fr) minmax(0, 1.1fr); align-items: start; gap: clamp(48px, 7vw, 92px); margin-top: 52px; }
+  .home-accountability__artifact { position: sticky; top: calc(var(--nav-offset) + 28px); }
+  .home-accountability__note { display: flex; align-items: flex-start; gap: 10px; margin: 18px 14px 0; padding: 17px 19px; border-left: 2px solid var(--color-bright); background: var(--color-blue-wash); color: var(--color-slate); font-family: var(--font-mono); font-size: 11.5px; line-height: 1.6; }
+  .home-accountability__note span { width: 7px; height: 7px; margin-top: 5px; flex: none; border-radius: 50%; background: var(--color-sky); }
+  .home-stack-ledger { margin: 0; padding: 0; border-top: 1px solid var(--color-border-blue); list-style: none; }
+  .home-stack-ledger > li { padding: 24px 0 26px; border-bottom: 1px solid var(--color-border-blue); }
+  .home-stack-ledger__head { display: grid; grid-template-columns: 44px 1fr; align-items: center; gap: 12px; }
+  .home-stack-ledger__head > span { color: var(--color-royal); font-family: var(--font-mono); font-size: 11px; }
+  .home-stack-ledger h3 { color: var(--color-navy); font-size: 17px; font-weight: 700; }
+  .home-stack-ledger > li > p { margin: 9px 0 0 56px; color: var(--color-cool); font-size: 13.5px; line-height: 1.6; }
+  .home-stack-ledger ul { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 0 56px; padding: 0; list-style: none; }
+  .home-stack-ledger ul li { padding: 5px 8px; border-radius: var(--radius-xs); background: var(--color-surface); color: var(--color-royal); font-family: var(--font-mono); font-size: 10px; }
+  .home-stack-ledger :global(a) { margin: 16px 0 0 56px; font-size: 12px; }
+  .home-products { position: relative; isolation: isolate; overflow: clip; background: var(--color-midnight); padding-block: var(--control-section-space); }
+  .home-products__inner { position: relative; z-index: 1; }
+  .home-products__head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 42px; }
+  .home-products__routes { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
+  .home-products__routes > a:first-child { display: inline-flex; min-height: 44px; align-items: center; gap: 9px; padding: 10px 20px; border-radius: var(--radius-sm); background: var(--color-surface); color: var(--color-navy); font-size: 14px; font-weight: 700; text-decoration: none; }
+  .home-product-bays { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 48px; }
+  .home-product-bay { position: relative; overflow: clip; border: 1px solid var(--control-dark-line); border-radius: var(--radius-lg); background: color-mix(in srgb, var(--color-navy) 24%, transparent); }
+  .home-product-bay__context { display: flex; justify-content: space-between; padding: 16px 18px 0; color: rgba(226,233,245,.44); }
+  .home-product-bay :global(.control-artifact) { padding: 0 12px; }
+  .home-product-bay__copy { padding: 0 26px 28px; }
+  .home-product-bay h3 { color: var(--color-surface); font-size: 21px; font-weight: 700; }
+  .home-product-bay p { margin-top: 10px; color: var(--color-on-dark); font-size: 13.5px; line-height: 1.65; }
+  .home-product-bay__copy :global(a) { margin-top: 17px; }
+  .home-signal-ledger { display: grid; grid-template-columns: 180px 0.9fr 1.35fr; align-items: stretch; margin-top: 20px; border: 1px solid var(--control-dark-line); border-radius: var(--radius-md); }
+  .home-signal-ledger__head { display: grid; align-content: center; padding: 20px; border-right: 1px solid var(--control-dark-line); color: var(--color-sky); font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; }
+  .home-signal-ledger dl { display: grid; grid-template-columns: repeat(3, 1fr); margin: 0; border-right: 1px solid var(--control-dark-line); }
+  .home-signal-ledger dl > div { display: grid; align-content: center; gap: 6px; padding: 16px; }
+  .home-signal-ledger dt { color: rgba(226,233,245,.5); font-family: var(--font-mono); font-size: 9px; }
+  .home-signal-ledger dd { margin: 0; color: var(--color-surface); font-size: 13px; }
+  .home-signal-ledger ol { display: grid; gap: 7px; margin: 0; padding: 16px 18px; list-style: none; }
+  .home-signal-ledger li { display: grid; grid-template-columns: 72px 1fr; gap: 10px; color: rgba(226,233,245,.62); font-family: var(--font-mono); font-size: 9.5px; }
+  .home-signal-ledger time { color: var(--color-sky); }
+  .home-cloud__corridor { display: grid; grid-template-columns: minmax(340px, .9fr) minmax(0, 1.1fr); gap: 60px; align-items: center; padding: 28px; border: 1px solid var(--color-border-blue); border-radius: var(--radius-lg); background: var(--color-surface); }
+  .home-cloud__steps { margin: 0; padding: 0; border-top: 1px solid var(--color-border-blue); list-style: none; }
+  .home-cloud__steps li { display: grid; grid-template-columns: 48px 1fr; gap: 13px; padding: 15px 0; border-bottom: 1px solid var(--color-border-blue); }
+  .home-cloud__steps li > span { color: var(--color-royal); font-family: var(--font-mono); font-size: 10px; }
+  .home-cloud__steps h3 { color: var(--color-navy); font-size: 14px; font-weight: 700; }
+  .home-cloud__steps p { margin-top: 4px; color: var(--color-cool); font-family: var(--font-mono); font-size: 10px; }
+  .home-cloud .control-section__head > div > p { color: var(--color-cool); font-size: 15px; line-height: 1.7; }
+  .home-cloud .control-section__head strong { color: var(--color-navy); font-weight: 700; }
+  .home-cloud__link { display: inline-flex; min-height: 44px; align-items: center; gap: 9px; margin-top: 18px; padding: 10px 18px; border-radius: var(--radius-sm); background: var(--color-navy); color: var(--color-surface); font-size: 13.5px; font-weight: 700; text-decoration: none; }
+  .home-cloud__outputs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 18px; border-top: 1px solid var(--color-border-blue); border-bottom: 1px solid var(--color-border-blue); }
+  .home-cloud__outputs article { padding: 24px; }
+  .home-cloud__outputs article + article { border-left: 1px solid var(--color-border-blue); }
+  .home-cloud__outputs span { color: var(--color-royal); font-family: var(--font-mono); font-size: 10px; }
+  .home-cloud__outputs p { margin-top: 10px; color: var(--color-slate); font-size: 13.5px; line-height: 1.6; }
+  .home-partners__head { display: flex; align-items: end; justify-content: space-between; gap: 28px; }
+  .home-partners__ledger { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 42px 0 0; padding: 0; border-top: 1px solid var(--color-border-blue); border-left: 1px solid var(--color-border-blue); list-style: none; }
+  .home-partners__ledger li { display: grid; min-height: 84px; grid-template-columns: 30px 1fr; align-items: center; gap: 7px; padding: 12px; border-right: 1px solid var(--color-border-blue); border-bottom: 1px solid var(--color-border-blue); color: var(--color-slate); font-family: var(--font-mono); font-size: 11px; }
+  .home-partners__ledger li span { color: var(--color-faint); font-size: 8px; }
+
+  @media (max-width: 1099px) {
+    .home-system__chapter,
+    .home-accountability__grid,
+    .home-cloud__corridor { grid-template-columns: minmax(280px, .72fr) minmax(0, 1.28fr); gap: 36px; }
+    .home-system__artifact,
+    .home-accountability__artifact { top: calc(var(--nav-offset) + 20px); }
+    .home-signal-ledger { grid-template-columns: 150px 1fr; }
+    .home-signal-ledger ol { grid-column: 1 / -1; border-top: 1px solid var(--control-dark-line); }
+    .home-signal-ledger dl { border-right: 0; }
+    .home-partners__ledger { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (max-width: 767px) {
+    .home-system__chapter,
+    .home-accountability__head,
+    .home-accountability__grid,
+    .home-products__head,
+    .home-cloud__corridor { grid-template-columns: 1fr; }
+    .home-system__artifact,
+    .home-accountability__artifact { position: relative; top: auto; }
+    .home-system__lanes > div { opacity: 1; }
+    .home-accountability__head { gap: 22px; }
+    .home-stack-ledger > li > p,
+    .home-stack-ledger ul,
+    .home-stack-ledger :global(a) { margin-left: 0; }
+    .home-product-bays { grid-template-columns: 1fr; }
+    .home-signal-ledger { grid-template-columns: 1fr; }
+    .home-signal-ledger__head,
+    .home-signal-ledger dl { border-right: 0; border-bottom: 1px solid var(--control-dark-line); }
+    .home-signal-ledger ol { grid-column: auto; border-top: 0; }
+    .home-cloud__artifact { order: -1; }
+    .home-cloud__outputs { grid-template-columns: 1fr; }
+    .home-cloud__outputs article + article { border-top: 1px solid var(--color-border-blue); border-left: 0; }
+    .home-partners__head { display: grid; }
+    .home-partners__ledger { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 430px) {
+    .home-partners__ledger { grid-template-columns: 1fr; }
+    .home-signal-ledger li { grid-template-columns: 64px 1fr; }
+  }
+</style>

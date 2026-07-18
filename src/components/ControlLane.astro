@@ -1,0 +1,132 @@
+---
+import ChevronList from './ChevronList.astro';
+import TextLink from './TextLink.astro';
+
+interface Props {
+  index: string;
+  title: string;
+  body?: string;
+  items?: string[];
+  href?: string;
+  linkLabel?: string;
+  titleHref?: string;
+  dark?: boolean;
+  class?: string;
+}
+
+const {
+  index,
+  title,
+  body,
+  items = [],
+  href,
+  linkLabel,
+  titleHref,
+  dark = false,
+  class: extra = '',
+} = Astro.props;
+---
+
+<article class:list={['control-lane', dark && 'control-lane--dark', extra]} data-control-lane>
+  <div class="control-lane__index">{index}</div>
+  <div class="control-lane__content">
+    <div class="control-lane__heading">
+      {Astro.slots.has('icon') && <span class="control-lane__icon"><slot name="icon" /></span>}
+      <h3>{titleHref ? <a href={titleHref}>{title}</a> : title}</h3>
+    </div>
+    {body && <p>{body}</p>}
+    {items.length > 0 && <ChevronList items={items} cols={items.length > 4 ? 2 : 1} dark={dark} class="control-lane__list" />}
+    {href && linkLabel && <TextLink href={href} dark={dark} class="control-lane__link">{linkLabel}</TextLink>}
+    <slot />
+  </div>
+  <span class="control-lane__node" aria-hidden="true"></span>
+</article>
+
+<style>
+  .control-lane {
+    position: relative;
+    display: grid;
+    min-width: 0;
+    grid-template-columns: 54px minmax(0, 1fr);
+    gap: 22px;
+    padding: 26px 28px 28px 0;
+    border-top: 1px solid var(--color-border-blue);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--color-blue-wash) 52%, transparent), transparent 72%);
+  }
+  .control-lane:last-child { border-bottom: 1px solid var(--color-border-blue); }
+  .control-lane--dark {
+    border-color: color-mix(in srgb, var(--color-sky) 20%, transparent);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--color-royal) 18%, transparent), transparent 72%);
+  }
+  .control-lane__index {
+    padding-top: 4px;
+    color: var(--color-royal);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+  }
+  .control-lane--dark .control-lane__index { color: var(--color-sky); }
+  .control-lane__heading { display: flex; align-items: center; gap: 12px; }
+  .control-lane__icon {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: none;
+    place-items: center;
+    border: 1px solid var(--color-border-blue);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    color: var(--color-navy);
+  }
+  .control-lane--dark .control-lane__icon {
+    border-color: color-mix(in srgb, var(--color-sky) 24%, transparent);
+    background: color-mix(in srgb, var(--color-royal) 22%, transparent);
+    color: var(--color-sky);
+  }
+  h3 {
+    color: var(--color-navy);
+    font-size: clamp(1.05rem, 0.98rem + 0.35vw, 1.25rem);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  h3 a { color: inherit; text-decoration-color: var(--color-bright); text-underline-offset: 4px; }
+  h3 a:hover { color: var(--color-royal); }
+  .control-lane--dark h3 { color: var(--color-surface); }
+  p {
+    max-width: 760px;
+    margin-top: 9px;
+    color: var(--color-cool);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .control-lane--dark p { color: var(--color-on-dark); }
+  :global(.control-lane__list) { margin-top: 15px; }
+  :global(.control-lane__link) { margin-top: 17px; }
+  .control-lane__node {
+    position: absolute;
+    top: -5px;
+    left: 51px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid var(--color-surface);
+    border-radius: 50%;
+    background: var(--color-bright);
+    box-shadow: 0 0 0 1px var(--color-bright);
+  }
+  .control-lane--dark .control-lane__node { border-color: var(--color-midnight); background: var(--color-sky); box-shadow: 0 0 0 1px var(--color-sky); }
+
+  @media (min-width: 768px) {
+    .control-lane {
+      grid-template-columns: 64px minmax(0, 1fr);
+      gap: 26px;
+      padding: 30px 34px 32px 0;
+    }
+    .control-lane__node { left: 61px; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .control-lane {
+      transition: background-color 180ms ease, border-color 180ms ease;
+    }
+    .control-lane:hover { background-color: color-mix(in srgb, var(--color-blue-wash) 44%, transparent); }
+  }
+</style>

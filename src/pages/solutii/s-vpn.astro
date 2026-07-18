@@ -1,17 +1,388 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro'; import Eyebrow from '../../components/Eyebrow.astro'; import SectionHeading from '../../components/SectionHeading.astro'; import ModuleCard from '../../components/ModuleCard.astro'; import ChevronList from '../../components/ChevronList.astro'; import CtaBand from '../../components/CtaBand.astro'; import MailtoLink from '../../components/MailtoLink.astro'; import GridTexture from '../../components/GridTexture.astro';
-import { getLangFromUrl,useTranslations } from '../../i18n/ui'; import { KeyRound,SlidersHorizontal,Network } from '@lucide/astro';
-const lang=getLangFromUrl(Astro.url); const t=useTranslations(lang);
-const description='S-VPN este soluția Smart Control pentru acces remote securizat, administrare simplificată și adaptare la cerințele organizației.';
-const productLd={'@context':'https://schema.org','@type':'Product',name:'S-VPN',url:'https://smartcontrol.ro/solutii/s-vpn/',brand:{'@type':'Brand',name:'Smart Control'},manufacturer:{'@type':'Organization',name:'Smart Control SRL'},category:'Soluție de acces remote securizat',description};
-const cards=[{title:'Acces sigur',body:'Conectarea utilizatorilor la resursele necesare, conform politicilor organizației.',Icon:KeyRound},{title:'Administrare simplificată',body:'Control centralizat și vizibilitate operațională pentru echipa IT.',Icon:SlidersHorizontal},{title:'Integrare în mediul existent',body:'Configurare adaptată infrastructurii, proceselor și cerințelor de securitate existente.',Icon:Network}];
-const includedItems=['Analiză inițială și configurare','Integrare în mediul existent','Asistență tehnică','Mentenanță și actualizări'];
-const audiences=[['ORGANIZAȚII','Organizații care au nevoie de acces remote securizat și administrat coerent.'],['ECHIPE IT','Echipe care urmăresc să simplifice administrarea accesului utilizatorilor.'],['MEDII REGLEMENTATE','Organizații cu cerințe ridicate de control, audit și guvernanță.'],['MEDII DISTRIBUITE','Organizații cu utilizatori și locații distribuite.']];
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RouteHero from '../../components/RouteHero.astro';
+import ControlArtifact from '../../components/ControlArtifact.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import ChevronList from '../../components/ChevronList.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import MailtoLink from '../../components/MailtoLink.astro';
+import IconChip from '../../components/IconChip.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/ui';
+import { KeyRound, SlidersHorizontal, Network } from '@lucide/astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const description = 'S-VPN este soluția Smart Control pentru acces remote securizat, administrare simplificată și adaptare la cerințele organizației.';
+const productLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: 'S-VPN',
+  url: 'https://smartcontrol.ro/solutii/s-vpn/',
+  brand: { '@type': 'Brand', name: 'Smart Control' },
+  manufacturer: { '@type': 'Organization', name: 'Smart Control SRL' },
+  category: 'Soluție de acces remote securizat',
+  description,
+};
+
+const cards = [
+  {
+    title: 'Acces sigur',
+    body: 'Conectarea utilizatorilor la resursele necesare, conform politicilor organizației.',
+    Icon: KeyRound,
+  },
+  {
+    title: 'Administrare simplificată',
+    body: 'Control centralizat și vizibilitate operațională pentru echipa IT.',
+    Icon: SlidersHorizontal,
+  },
+  {
+    title: 'Integrare în mediul existent',
+    body: 'Configurare adaptată infrastructurii, proceselor și cerințelor de securitate existente.',
+    Icon: Network,
+  },
+];
+
+const includedItems = [
+  'Analiză inițială și configurare',
+  'Integrare în mediul existent',
+  'Asistență tehnică',
+  'Mentenanță și actualizări',
+];
+
+const audiences = [
+  ['ORGANIZAȚII', 'Organizații care au nevoie de acces remote securizat și administrat coerent.'],
+  ['ECHIPE IT', 'Echipe care urmăresc să simplifice administrarea accesului utilizatorilor.'],
+  ['MEDII REGLEMENTATE', 'Organizații cu cerințe ridicate de control, audit și guvernanță.'],
+  ['MEDII DISTRIBUITE', 'Organizații cu utilizatori și locații distribuite.'],
+];
 ---
+
 <BaseLayout title="S-VPN — Acces remote sigur, integrat | Smart Control" description={description}>
- <script is:inline type="application/ld+json" set:html={JSON.stringify(productLd)}/>
- <header class="relative overflow-hidden bg-midnight"><GridTexture dark/><div class="container relative pb-[72px] pt-[120px] md:pt-[120px]"><Eyebrow variant="dark">Produs proprietar · Acces remote securizat</Eyebrow><h1 class="mt-6 text-[clamp(2.5rem,1.7rem+3vw,4rem)] font-extrabold leading-[1.08] tracking-[-1.8px] text-white">S-VPN. <span class="text-sky">Acces remote sigur.</span></h1><p class="mt-6 max-w-[650px] text-[18px] leading-[1.7] text-[rgba(226,233,245,.78)]">S-VPN oferă organizațiilor o modalitate sigură și ușor de administrat pentru conectarea utilizatorilor la resursele de lucru, adaptată infrastructurii și politicilor existente.</p><div class="mt-9"><MailtoLink variant="button" dark subject={t('subject.demo.svpn')}>{t('cta.demo.svpn')}</MailtoLink></div></div></header>
- <section class="bg-surface py-[56px] sm:py-[80px]"><div class="container"><SectionHeading eyebrow="S-VPN" heading="Acces remote adaptat organizației">O abordare unitară pentru conectarea sigură a utilizatorilor și administrarea accesului, configurată în funcție de mediul și cerințele fiecărei organizații.</SectionHeading><div class="mt-9 grid gap-5 md:grid-cols-3">{cards.map(({title,body,Icon})=><ModuleCard kicker="S-VPN" title={title} body={body}><Icon slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5}/></ModuleCard>)}</div></div></section>
- <section class="bg-page py-[48px] sm:py-[72px]"><div class="container grid gap-12 lg:grid-cols-2"><div><SectionHeading eyebrow="Servicii asociate" heading="Asistență pe parcursul implementării și operării">Echipa Smart Control asigură serviciile necesare pentru configurarea, integrarea și utilizarea soluției în mediul organizației.</SectionHeading><ChevronList items={includedItems} class="mt-7"/></div><div class="grid gap-4 sm:grid-cols-2">{audiences.map(([title,body])=><article class="rounded-xl bg-surface p-6 shadow-sm"><h3 class="font-mono text-[11px] tracking-[1.5px] text-royal">{title}</h3><p class="mt-3 text-[14px] leading-[1.65] text-cool">{body}</p></article>)}</div></div></section>
- <CtaBand heading="Discută cu noi despre S-VPN" cta={t('cta.demo.svpn')} subject={t('subject.demo.svpn')}>Evaluăm contextul organizației tale și îți prezentăm modul în care S-VPN poate susține accesul remote securizat.</CtaBand>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(productLd)} />
+
+  <RouteHero eyebrow="Produs proprietar · Acces remote securizat" artifact="svpn" index="09" dark>
+    <h1 slot="title">S-VPN. <span class="accent">Acces remote sigur.</span></h1>
+    <p slot="lead">S-VPN oferă organizațiilor o modalitate sigură și ușor de administrat pentru conectarea utilizatorilor la resursele de lucru, adaptată infrastructurii și politicilor existente.</p>
+    <MailtoLink slot="actions" variant="button" dark subject={t('subject.demo.svpn')}>{t('cta.demo.svpn')}</MailtoLink>
+  </RouteHero>
+
+  <section class="corridor-section" aria-labelledby="corridor-heading">
+    <div class="container">
+      <SectionHeading eyebrow="S-VPN" headingId="corridor-heading" heading="Acces remote adaptat organizației">
+        O abordare unitară pentru conectarea sigură a utilizatorilor și administrarea accesului, configurată în funcție de mediul și cerințele fiecărei organizații.
+      </SectionHeading>
+
+      <div class="corridor-path" data-control-scene data-scene-kind="svpn">
+        <div class="corridor-path__artifact">
+          <ControlArtifact variant="svpn" compact />
+        </div>
+
+        <ol class="corridor-path__stages" role="list">
+          {cards.map(({ title, body, Icon }, index) => (
+            <li>
+              <div class="corridor-path__station">
+                <IconChip><Icon class="h-[21px] w-[21px] text-navy" stroke-width={1.5} aria-hidden="true" /></IconChip>
+                <span><b>S-VPN</b> 0{index + 1}</span>
+              </div>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="implementation-section" aria-labelledby="implementation-heading">
+    <div class="container implementation-section__grid">
+      <div class="implementation-section__narrative">
+        <SectionHeading
+          eyebrow="Servicii asociate"
+          headingId="implementation-heading"
+          heading="Asistență pe parcursul implementării și operării"
+        >
+          Echipa Smart Control asigură serviciile necesare pentru configurarea, integrarea și utilizarea soluției în mediul organizației.
+        </SectionHeading>
+
+        <div class="implementation-section__list">
+          <ChevronList items={includedItems} />
+        </div>
+      </div>
+
+      <div class="audience-matrix">
+        {audiences.map(([title, body], index) => (
+          <article>
+            <span class="audience-matrix__index">0{index + 1}</span>
+            <h3>{title}</h3>
+            <p>{body}</p>
+          </article>
+        ))}
+        <span class="audience-matrix__axis audience-matrix__axis--x" aria-hidden="true"></span>
+        <span class="audience-matrix__axis audience-matrix__axis--y" aria-hidden="true"></span>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    heading="Discută cu noi despre S-VPN"
+    cta={t('cta.demo.svpn')}
+    subject={t('subject.demo.svpn')}
+  >
+    Evaluăm contextul organizației tale și îți prezentăm modul în care S-VPN poate susține accesul remote securizat.
+  </CtaBand>
 </BaseLayout>
+
+<style>
+  .corridor-section {
+    overflow: clip;
+    padding-block: clamp(68px, 8vw, 104px);
+    background: var(--color-surface);
+  }
+
+  .corridor-path {
+    position: relative;
+    margin-top: 46px;
+    border-block: 1px solid var(--color-border-blue);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--color-blue-wash) 52%, transparent), transparent 65%);
+  }
+
+  .corridor-path__artifact {
+    width: min(780px, 82%);
+    margin-inline: auto;
+    padding: 10px 0 4px;
+  }
+
+  .corridor-path__stages {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--color-border-blue);
+    list-style: none;
+  }
+
+  .corridor-path__stages::before {
+    position: absolute;
+    top: -1px;
+    right: 0;
+    left: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-bright) 12%, var(--color-bright) 88%, transparent);
+    opacity: 0.68;
+    content: '';
+  }
+
+  .corridor-path__stages li {
+    position: relative;
+    min-width: 0;
+    padding: 29px clamp(20px, 3vw, 34px) 34px;
+  }
+
+  .corridor-path__stages li + li {
+    border-left: 1px solid var(--color-border-blue);
+  }
+
+  .corridor-path__stages li::before {
+    position: absolute;
+    top: -5px;
+    left: clamp(20px, 3vw, 34px);
+    width: 9px;
+    height: 9px;
+    border: 2px solid var(--color-surface);
+    border-radius: 50%;
+    background: var(--color-bright);
+    box-shadow: 0 0 0 1px var(--color-bright);
+    content: '';
+  }
+
+  .corridor-path__station {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .corridor-path__station > span {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--color-royal);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+  }
+
+  .corridor-path__station b {
+    font-weight: 500;
+  }
+
+  .corridor-path__stages h3 {
+    margin-top: 19px;
+    color: var(--color-navy);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  .corridor-path__stages p {
+    margin-top: 10px;
+    color: var(--color-cool);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .implementation-section {
+    padding-block: clamp(64px, 7.5vw, 96px);
+    background: var(--color-page);
+  }
+
+  .implementation-section__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.88fr) minmax(420px, 1.12fr);
+    align-items: start;
+    gap: clamp(52px, 8vw, 108px);
+  }
+
+  .implementation-section__narrative {
+    min-width: 0;
+  }
+
+  .implementation-section__list {
+    position: relative;
+    margin-top: 30px;
+    padding: 24px 22px 24px 34px;
+    border-block: 1px solid var(--color-border-blue);
+    background: color-mix(in srgb, var(--color-surface) 64%, transparent);
+  }
+
+  .implementation-section__list::before {
+    position: absolute;
+    inset: 0 auto 0 12px;
+    width: 1px;
+    background: var(--color-bright);
+    opacity: 0.55;
+    content: '';
+  }
+
+  .audience-matrix {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    min-width: 0;
+    border-block: 1px solid var(--color-border-blue);
+    background: color-mix(in srgb, var(--color-surface) 72%, transparent);
+  }
+
+  .audience-matrix article {
+    position: relative;
+    min-height: 184px;
+    padding: 26px 27px 30px;
+  }
+
+  .audience-matrix article:nth-child(odd) {
+    border-right: 1px solid var(--color-border-blue);
+  }
+
+  .audience-matrix article:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--color-border-blue);
+  }
+
+  .audience-matrix__index {
+    position: absolute;
+    top: 15px;
+    right: 17px;
+    color: var(--color-royal);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.13em;
+  }
+
+  .audience-matrix h3 {
+    max-width: calc(100% - 28px);
+    color: var(--color-royal);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    line-height: 1.45;
+  }
+
+  .audience-matrix p {
+    margin-top: 18px;
+    color: var(--color-cool);
+    font-size: 14px;
+    line-height: 1.68;
+  }
+
+  .audience-matrix__axis {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 11px;
+    height: 11px;
+    border: 3px solid var(--color-page);
+    border-radius: 50%;
+    background: var(--color-bright);
+    box-shadow: 0 0 0 1px var(--color-bright);
+  }
+
+  .audience-matrix__axis--x {
+    top: 50%;
+    left: -5px;
+    transform: translateY(-50%);
+  }
+
+  .audience-matrix__axis--y {
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  @media (max-width: 900px) {
+    .implementation-section__grid {
+      grid-template-columns: 1fr;
+      gap: 46px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .corridor-path__artifact {
+      width: 100%;
+    }
+
+    .corridor-path__stages {
+      grid-template-columns: 1fr;
+    }
+
+    .corridor-path__stages li + li {
+      border-top: 1px solid var(--color-border-blue);
+      border-left: 0;
+    }
+
+    .corridor-path__stages li::before {
+      left: 0;
+    }
+
+    .audience-matrix {
+      grid-template-columns: 1fr;
+    }
+
+    .audience-matrix article {
+      min-height: 0;
+      padding-inline: 20px;
+    }
+
+    .audience-matrix article:nth-child(odd) {
+      border-right: 0;
+    }
+
+    .audience-matrix article:nth-child(-n + 3) {
+      border-bottom: 1px solid var(--color-border-blue);
+    }
+
+    .audience-matrix__axis--y {
+      left: 0;
+    }
+  }
+</style>

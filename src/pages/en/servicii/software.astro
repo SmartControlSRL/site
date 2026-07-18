@@ -1,5 +1,227 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro'; import Eyebrow from '../../../components/Eyebrow.astro'; import SectionHeading from '../../../components/SectionHeading.astro'; import ModuleCard from '../../../components/ModuleCard.astro'; import CtaBand from '../../../components/CtaBand.astro'; import MailtoLink from '../../../components/MailtoLink.astro'; import TextLink from '../../../components/TextLink.astro'; import { getLangFromUrl,useTranslations } from '../../../i18n/ui'; import { Code,GitBranch,Layers,Bot,Users,FileCode as FileCode2,Gauge,MessageSquare } from '@lucide/astro'; const lang=getLangFromUrl(Astro.url); const t=useTranslations(lang);
-const description='End-to-end software development: custom applications, DevSecOps, modernization and AI automation, from architecture to deployment and support.'; const jsonLd={'@context':'https://schema.org','@type':'Service',name:'Software & Automation',description,provider:{'@type':'Organization',name:'Smart Control SRL',url:'https://smartcontrol.ro'},url:'https://smartcontrol.ro/en/servicii/software/',areaServed:['RO','EU'],serviceType:['Custom Software Development','DevOps','DevSecOps','Application Modernization','AI Automation','Architecture Consulting','Staff Augmentation']}; const caps=[{title:'Custom software & API development',body:'Applications and integrations adapted to existing processes and systems.',Icon:Code},{title:'DevOps / DevSecOps & CI/CD',body:'Automated delivery flows, testing and integrated security controls.',Icon:GitBranch},{title:'Application migration & modernization',body:'Refactoring, re-platforming and controlled evolution of existing applications.',Icon:Layers},{title:'AI / LLM automation',body:'Automation for document processing, reporting and operational assistance.',Icon:Bot},{title:'Consulting & Staff Augmentation',body:'Architecture, prioritization and specialists integrated into client teams, with an SLA backed by guaranteed metrics.',Icon:Users}];
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SectionHeading from '../../../components/SectionHeading.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import MailtoLink from '../../../components/MailtoLink.astro';
+import TextLink from '../../../components/TextLink.astro';
+import RouteHero from '../../../components/RouteHero.astro';
+import ControlLane from '../../../components/ControlLane.astro';
+import ProofLedger from '../../../components/ProofLedger.astro';
+import { getLangFromUrl, useTranslations } from '../../../i18n/ui';
+import { Code, GitBranch, Layers, Bot, Users } from '@lucide/astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const description = 'End-to-end software development: custom applications, DevSecOps, modernization and AI automation, from architecture to deployment and support.';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Software & Automation',
+  description,
+  provider: { '@type': 'Organization', name: 'Smart Control SRL', url: 'https://smartcontrol.ro' },
+  url: 'https://smartcontrol.ro/en/servicii/software/',
+  areaServed: ['RO', 'EU'],
+  serviceType: ['Custom Software Development', 'DevOps', 'DevSecOps', 'Application Modernization', 'AI Automation', 'Architecture Consulting', 'Staff Augmentation'],
+};
+
+const caps = [
+  {
+    title: 'Custom software & API development',
+    body: 'Applications and integrations adapted to existing processes and systems.',
+    Icon: Code,
+  },
+  {
+    title: 'DevOps / DevSecOps & CI/CD',
+    body: 'Automated delivery flows, testing and integrated security controls.',
+    Icon: GitBranch,
+  },
+  {
+    title: 'Application migration & modernization',
+    body: 'Refactoring, re-platforming and controlled evolution of existing applications.',
+    Icon: Layers,
+  },
+  {
+    title: 'AI / LLM automation',
+    body: 'Automation for document processing, reporting and operational assistance.',
+    Icon: Bot,
+  },
+  {
+    title: 'Consulting & Staff Augmentation',
+    body: 'Architecture, prioritization and specialists integrated into client teams, with an SLA backed by guaranteed metrics.',
+    Icon: Users,
+  },
+];
+
+const guarantees = [
+  {
+    title: 'Access to source code',
+    body: 'Source code and documentation are available at delivery.',
+  },
+  {
+    title: 'SLA with guaranteed metrics',
+    body: 'Timelines, availability and relevant indicators are explicitly defined.',
+  },
+  {
+    title: 'Consultative approach',
+    body: 'Architecture and priorities start from real requirements.',
+  },
+];
 ---
-<BaseLayout title="Software & Automation — Smart Control" description={description}><script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)}/><header class="bg-page"><div class="container pb-[64px] pt-[120px] md:pt-[120px]"><Eyebrow>Software &amp; Automation</Eyebrow><h1 class="mt-6 text-[clamp(2.5rem,1.7rem+3vw,3.75rem)] font-extrabold leading-[1.1] text-midnight">End-to-end <span class="text-bright">software development</span></h1><p class="mt-6 max-w-[680px] text-[18px] leading-[1.7] text-cool">From initial architecture to production deployment: custom development, DevSecOps, modernization and AI automation, with responsibility across the entire delivery lifecycle.</p><div class="mt-9 flex gap-4"><MailtoLink variant="button" subject={t('subject.assessment')}>{t('cta.assessment')}</MailtoLink><TextLink href="#capabilities">View capabilities</TextLink></div></div></header><section class="bg-surface py-[48px] sm:py-[72px]"><div class="container"><SectionHeading heading="End-to-end software delivery">We take responsibility from architecture definition through deployment, support and application evolution, with one point of contact and clear deliverables at every stage.</SectionHeading><div class="mt-9 grid gap-5 md:grid-cols-3">{[{title:'Access to source code',body:'Source code and documentation are available at delivery.',Icon:FileCode2},{title:'SLA with guaranteed metrics',body:'Timelines, availability and relevant indicators are explicitly defined.',Icon:Gauge},{title:'Consultative approach',body:'Architecture and priorities start from real requirements.',Icon:MessageSquare}].map(({title,body,Icon})=><ModuleCard title={title} body={body}><Icon slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5}/></ModuleCard>)}</div></div></section><section id="capabilities" class="bg-page py-[56px] sm:py-[80px]"><div class="container"><SectionHeading eyebrow="Capabilities" heading="Five delivery domains"/><div class="mt-9 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{caps.map((c,i)=><ModuleCard title={c.title} index={String(i+1).padStart(2,'0')} body={c.body}><c.Icon slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5}/></ModuleCard>)}</div></div></section><CtaBand heading="Let’s discuss your project architecture and constraints" cta={t('cta.assessment')} subject={t('subject.assessment')}>We clarify architecture, integrations and constraints, with source-code access and documented handover.</CtaBand></BaseLayout>
+
+<BaseLayout title="Software & Automation — Smart Control" description={description}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <RouteHero eyebrow="Software &amp; Automation" artifact="software" index="04">
+    <h1 slot="title">End-to-end <span class="accent">software development</span></h1>
+    <p slot="lead">
+      From initial architecture to production deployment: custom development, DevSecOps, modernization and AI automation, with responsibility across the entire delivery lifecycle.
+    </p>
+    <Fragment slot="actions">
+      <MailtoLink variant="button" subject={t('subject.assessment')}>{t('cta.assessment')}</MailtoLink>
+      <TextLink href="#capabilities">View capabilities</TextLink>
+    </Fragment>
+  </RouteHero>
+
+  <section class="software-contract" aria-labelledby="software-contract-title">
+    <div class="container software-contract__grid">
+      <div class="software-contract__heading" data-reveal>
+        <SectionHeading heading="End-to-end software delivery" headingId="software-contract-title">
+          We take responsibility from architecture definition through deployment, support and application evolution, with one point of contact and clear deliverables at every stage.
+        </SectionHeading>
+      </div>
+      <div class="software-contract__ledger">
+        <ProofLedger entries={guarantees} />
+      </div>
+    </div>
+  </section>
+
+  <section id="capabilities" class="software-spine scroll-mt-24" aria-labelledby="software-spine-title">
+    <div class="container">
+      <div class="software-spine__heading" data-reveal>
+        <SectionHeading eyebrow="Capabilities" heading="Five delivery domains" headingId="software-spine-title" />
+      </div>
+
+      <div class="software-spine__frame" data-control-chapter data-scene-kind="software">
+        <span class="software-spine__datum" aria-hidden="true"></span>
+        <ol class="software-spine__stages" role="list">
+          {caps.map(({ title, body, Icon }, index) => (
+            <li data-chapter-step>
+              <div class="software-spine__lane">
+                <ControlLane
+                  index={String(index + 1).padStart(2, '0')}
+                  title={title}
+                  body={body}
+                >
+                  <Icon slot="icon" class="h-[21px] w-[21px]" stroke-width={1.5} />
+                </ControlLane>
+              </div>
+              <span class="software-spine__commit" aria-hidden="true"></span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand heading="Let’s discuss your project architecture and constraints" cta={t('cta.assessment')} subject={t('subject.assessment')}>
+    We clarify architecture, integrations and constraints, with source-code access and documented handover.
+  </CtaBand>
+</BaseLayout>
+
+<style>
+  .software-contract { padding-block: clamp(64px, 8vw, 102px); background: var(--color-surface); }
+  .software-contract__grid {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.22fr);
+    align-items: start;
+    gap: clamp(46px, 7vw, 92px);
+  }
+  .software-contract__heading { position: sticky; top: calc(var(--nav-offset) + 32px); }
+  .software-contract__ledger { border-inline-start: 2px solid var(--color-bright); padding-inline-start: clamp(18px, 3vw, 34px); }
+
+  .software-spine {
+    position: relative;
+    overflow: clip;
+    padding-block: clamp(72px, 9vw, 116px);
+    background: var(--color-page);
+  }
+  .software-spine::before {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, transparent 49.95%, color-mix(in srgb, var(--color-royal) 16%, transparent) 50%, transparent 50.05%),
+      linear-gradient(180deg, color-mix(in srgb, var(--color-blue-wash) 62%, transparent), transparent 28%);
+    content: '';
+    pointer-events: none;
+  }
+  .software-spine__heading,
+  .software-spine__frame { position: relative; z-index: 1; }
+  .software-spine__frame { margin-top: clamp(48px, 7vw, 80px); }
+  .software-spine__datum {
+    position: absolute;
+    inset: 0 auto 0 50%;
+    width: 2px;
+    background: linear-gradient(180deg, var(--color-bright), var(--color-royal));
+    transform: translateX(-1px);
+  }
+  .software-spine__stages { margin: 0; padding: 0; list-style: none; }
+  .software-spine__stages > li {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr);
+    align-items: center;
+    min-height: 190px;
+  }
+  .software-spine__lane { grid-column: 1; padding-right: 32px; }
+  .software-spine__stages > li:nth-child(even) .software-spine__lane { grid-column: 3; padding-right: 0; padding-left: 32px; }
+  .software-spine__commit {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: 15px;
+    height: 15px;
+    grid-column: 2;
+    grid-row: 1;
+    place-self: center;
+    border: 3px solid var(--color-page);
+    border-radius: 50%;
+    background: var(--color-bright);
+    box-shadow: 0 0 0 1px var(--color-bright);
+  }
+  .software-spine__stages > li::before {
+    position: absolute;
+    top: 50%;
+    width: 32px;
+    height: 1px;
+    background: var(--color-border-blue);
+    content: '';
+  }
+  .software-spine__stages > li:nth-child(odd)::before { right: 50%; }
+  .software-spine__stages > li:nth-child(even)::before { left: 50%; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .software-spine__frame[data-scene-step] .software-spine__stages > li {
+      transition: opacity 320ms ease;
+    }
+    .software-spine__frame[data-scene-step] .software-spine__stages > li:not([data-active]) { opacity: 0.52; }
+    .software-spine__frame[data-scene-step] li[data-current] .software-spine__commit {
+      transform: scale(1.45);
+      transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  }
+
+  @media (max-width: 899px) {
+    .software-contract__grid { grid-template-columns: 1fr; }
+    .software-contract__heading { position: static; }
+  }
+  @media (max-width: 767px) {
+    .software-spine__datum { left: 15px; }
+    .software-spine__stages > li { display: block; min-height: 0; padding: 12px 0 12px 42px; }
+    .software-spine__lane,
+    .software-spine__stages > li:nth-child(even) .software-spine__lane { padding: 0; }
+    .software-spine__commit { position: absolute; top: 42px; left: 8px; }
+    .software-spine__stages > li::before,
+    .software-spine__stages > li:nth-child(even)::before { top: 49px; right: auto; left: 15px; width: 27px; }
+  }
+</style>

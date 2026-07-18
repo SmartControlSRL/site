@@ -1,260 +1,466 @@
-# Smart Control — Cinematic Website Project Brief
+# Smart Control — Cinematic Full-Site Reimagination Brief
 
-> Project-specific brief adapted from the MIT-licensed
-> [Cinematic Scroll Prompt Kit project brief](https://github.com/amirmushichge/cinematic-scroll-prompt-kit/blob/main/examples/PROJECT_BRIEF.example.md).
-> Use this file with the kit's stable
-> [`PROMPT.txt`](https://github.com/amirmushichge/cinematic-scroll-prompt-kit/blob/main/PROMPT.txt)
-> implementation contract.
+> Full-site project brief adapted from the MIT-licensed
+> [Cinematic Scroll Prompt Kit](https://github.com/amirmushichge/cinematic-scroll-prompt-kit).
+> This document supersedes the earlier StackTeardown-only brief.
 >
-> **Scope assumption:** create one homepage-only cinematic signature chapter,
-> centred on the existing `StackTeardown` section. Preserve the normal document
-> flow, all interior routes, the existing products band, Cloud teaser, partner
-> marquee, closing CTA, and footer. Do not turn every page into a pinned
-> microsite.
-
-## Agent mandate
-
-Inspect the repository, current homepage, current Git history, and the references
-listed below before changing files. Treat the current `src/` implementation as
-the visual and public-copy source of truth. Some older design/build documents
-describe motion, claims, and components that were deliberately removed; do not
-restore them by accident.
-
-The existing Romanian and English copy has already been reviewed and approved.
-Treat every visible string as locked. This is a UI/UX and motion task, not a
-copywriting task.
-
-First return a concise scene map, layer map, responsive plan, and list of files
-you expect to change. Then implement the approved experience, run it, inspect
-every timeline checkpoint in both scroll directions, fix visible defects, and
-report verification results.
+> **Scope directive:** Reimagine the complete Smart Control public website as
+> one cohesive cinematic UI/UX system: all Romanian and English routes, shared
+> navigation/footer/layout, homepage, services hub and four service pages,
+> solutions hub and two product pages, privacy pages, and 404. Preserve the
+> reviewed copy, facts, routes, CTA destinations, localization, and recognizable
+> brand identity. Existing layouts and presentational components are inputs, not
+> visual constraints. A PR limited to StackTeardown, homepage motion, or a
+> single animated section is incomplete.
 
 ## Project
 
-- Project name: `Smart Control — One accountable technology stack`
-- Subject, destination, or brand: `Smart Control SRL, a Romanian enterprise IT services, cloud, networking, cybersecurity, software, and managed-services company founded in 2003`
+- Project name: `Smart Control — The Control Plane`
+- Subject or brand: `Smart Control SRL, a Romanian enterprise IT, cloud, networking, cybersecurity, software, and managed-services company founded in 2003`
 - Audience: `CIOs, CISOs, CTOs, IT directors, infrastructure leaders, procurement stakeholders, and regulated-enterprise buyers in Romania and international markets`
-- Existing repository or project path: `/Users/claude/code/site`
-- Existing stack: `Astro 5.18 static SSG, Tailwind CSS 4.1 via Vite, TypeScript, Astro View Transitions, static @lucide/astro icons, self-hosted Inter Variable and JetBrains Mono Variable, and a small vanilla-JavaScript motion layer in src/scripts/motion.js`
-- Required launch or delivery date: `Not specified; deliver as a production-ready, reviewable iteration without weakening the acceptance criteria`
-- Implementation scope: `Romanian and English homepages only (/ and /en/), plus the smallest shared-component or motion changes required. Preserve all other routes, page templates, content order, and approved copy.`
+- Repository: `/Users/claude/code/site`
+- Existing stack: `Astro 5.18 static SSG, Tailwind CSS 4.1 via Vite, TypeScript, Astro View Transitions, @lucide/astro, self-hosted Inter Variable and JetBrains Mono Variable, and vanilla JavaScript motion utilities`
+- Delivery target: `A production-quality pull request with a reviewable Vercel preview; no production deployment or merge`
+- Implementation scope: `All 21 generated routes and the shared UI system. Redesign and recompose the global shell, navigation, footer, page heroes, section architecture, grids, cards, CTA presentation, diagrams, interaction states, responsive behavior, and motion language across every page family. Maintain full RO/EN parity.`
+
+### Route inventory
+
+- Home: `/`, `/en/`
+- Services hub: `/servicii`, `/en/servicii`
+- Cloud: `/servicii/cloud`, `/en/servicii/cloud`
+- Security: `/servicii/securitate`, `/en/servicii/securitate`
+- Software: `/servicii/software`, `/en/servicii/software`
+- Managed services: `/servicii/managed`, `/en/servicii/managed`
+- Solutions hub: `/solutii`, `/en/solutii`
+- SEKNET: `/solutii/seknet`, `/en/solutii/seknet`
+- S-VPN: `/solutii/s-vpn`, `/en/solutii/s-vpn`
+- Privacy: `/confidentialitate`, `/en/privacy`
+- Error page: `/404.html`
 
 ## Goal
 
-Primary message: `Use the existing page promise “Infrastructură. Securitate. Software. Execuție 100% in-house.” and the existing StackTeardown heading “Un singur partener, unic responsabil.” verbatim. Do not add a new proposition, tagline, proof point, or explanatory sentence.`
+Create a visibly new, premium enterprise website experience—not animation added
+to the current website. Establish a site-wide cinematic visual language rooted
+in Smart Control's precision-engineering brand, then express it differently
+across homepage, hub, service, product, legal, and error-page contexts. A
+reviewer must recognize the reimagination from the first viewport and continue
+to see it throughout the site.
 
-Desired user response: `Understand how the four operational layers connect, trust Smart Control as an accountable delivery partner, and choose the relevant service route. The experience should make technical breadth easier to grasp, not merely make the page more animated.`
+Primary message: `Smart Control operates as one accountable, technically rigorous delivery partner across infrastructure, security, software, products, cloud modernization, and managed operation. Use the current approved copy to communicate this; add no new marketing proposition.`
 
-Final interaction or CTA: `An accessible four-item service rail built from the existing StackTeardown data, with real links to the existing service pages. Do not add a competing conversion CTA inside the chapter: the fixed nav and existing closing CtaBand retain the primary “Solicită assessment” mailto action with subject “Evaluare gratuită”.`
+Desired user response: `Understand the service and product architecture quickly, feel the depth and operational discipline of the company, navigate confidently to the relevant route, and use the existing assessment or product-demo CTA.`
+
+Interaction principle: `Use a small number of purposeful page-level cinematic moments plus refined transitions and micro-interactions. Do not make every section sticky or sacrifice readability for spectacle.`
+
+### Definition of “reimagined”
+
+- Shared navigation, footer, page framing, spacing rhythm, and route transitions
+  are materially redesigned.
+- The homepage becomes an authored end-to-end journey, not the existing section
+  stack with reveal animations.
+- Every page family receives a deliberate composition and a route-relevant
+  technical visual language.
+- Repetitive `hero → card grid → card grid → CTA` layouts are replaced with
+  connected diagrams, architectural slabs, split narratives, indexed chapters,
+  route rails, ledgers, and page-specific signature interactions.
+- An existing `ModuleCard` grid may remain only when it is materially recomposed,
+  is demonstrably the clearest information structure, and is justified in the
+  PR. No page may retain its current `hero → grids → CTA` structure unchanged.
+- Layout, hierarchy, component boundaries, styling, and interactions may change
+  substantially while the brand and content remain recognizable.
+- A page is not redesigned merely because it has reveal animations. If it still
+  reads as the current headers and generic cards with motion attached, it fails
+  acceptance.
 
 ## Copy lock — non-negotiable
 
-- Reuse the current strings from `src/pages/index.astro`,
-  `src/pages/en/index.astro`, and `src/i18n/ui.ts` verbatim.
-- Do not rewrite, shorten, expand, translate, merge, split semantically, or
-  invent headings, paragraphs, labels, chips, CTAs, aria-labels, metadata, or
-  claims.
-- Copy may be wrapped in semantic spans or moved between visual containers only
-  when its text content, reading order, meaning, and localized parity remain
-  unchanged.
-- Do not remove copy to make the cinematic layout easier. Adapt the layout to
-  the approved content.
-- Avoid duplicate visible or assistive-technology copy when the sticky and
-  normal-flow states share content.
-- Review the implementation with a string diff. Any changed public string is a
-  defect unless required for a purely technical accessibility fix and explicitly
-  reported.
+The Romanian and English copy has already been reviewed and approved.
+
+- Preserve public marketing copy, facts, claims, CTA labels and destinations,
+  mailto subjects, metadata, structured data, and translations verbatim.
+- Do not add, remove, shorten, combine, embellish, or retranslate public copy.
+- Visual order, grouping, markup, and component boundaries may change. Preserve
+  semantic relationships and do not reorder information in a way that changes
+  its meaning.
+- Copy may be wrapped or distributed across new semantic containers when its
+  text content and accessible reading meaning remain intact.
+- UI-only accessibility/control labels may be added or adjusted when necessary;
+  localize them in both languages and report them in the PR.
+- Do not duplicate visible or screen-reader content to support sticky/static
+  variants. Use one semantic content source whenever possible.
+- Verify the final implementation with a route-wide string/content diff.
 
 ## Visual direction
 
-- Overall style: `Precision-engineering editorial design expressed as a code-native 2.5D infrastructure cutaway. Evolve the existing exploded StackTeardown plates, blueprint ruling, mono layer codes, hard-edged geometry, and restrained white cards. The result should feel specific to an enterprise delivery architecture—not like an AI-SaaS landing page, game HUD, or sci-fi control room.`
-- Mood: `Calm, exact, accountable, assured, technical, and operational. Spatial depth is welcome; spectacle, menace, and hype are not.`
-- Time of day and lighting: `Non-photographic white-studio / technical-drawing light. Begin on the existing warm-blue page wash and white surfaces. Use navy linework and restrained bright/sky highlights. Do not simulate sunset, neon night, volumetric beams, bloom, or cinematic grain.`
-- Camera and lens character: `An architectural 40–50 mm-equivalent perspective approaching orthographic. Use a slow, shallow push and measured separation between planes. Keep vanishing points stable, verticals controlled, and the central stack anchored. Avoid fisheye distortion, extreme dolly travel, barrel rolls, or deep Z-space that exposes empty edges.`
-- Color palette: `Use existing named tokens only: midnight #040C2B, navy #0E1F5B, royal #1F3C80, mid-blue #3470C0, bright #4487DC, sky #7AB4E8, blue-wash #EDF5FC, page #F3F6FC, surface #FFFFFF, border-blue #D6E8F7, border #E5E7EB, ink #111827, slate #374151, and cool #6B7280. Royal—not bright blue—is the small-link color on light surfaces. Teal remains reserved for compliance content and is not part of this chapter.`
-- Display typeface: `Inter Variable, using the current fluid scale and current desktop maxima; no serif substitution`
-- Interface typeface: `Inter Variable for UI and body copy; JetBrains Mono Variable for eyebrows, L1–L4 codes, coordinates, compact labels, and technical chips`
-- Styles to avoid: `Photography; AI-generated raster scenes; WebGL; particle/node backgrounds; radial glows; neon cybersecurity imagery; glassmorphism; grain; texture overlays; decorative blur; generic gradients; floating random objects; morphing the Smart Control logo; transparent navigation; huge empty type; bouncy easing; per-word headline animation; constant ambient motion; fake dashboards; status red/green/amber on marketing surfaces; new colors; and animation on every card`
+### Core concept — The Control Plane
 
-### Permitted brand evolution
+Express Smart Control as a living infrastructure blueprint: one connected
+operational system rather than a collection of generic service cards. A royal or
+bright-blue datum line, precise routing geometry, indexed mono labels, and
+code-native 2.5D planes recur across routes. Light surfaces represent planning,
+architecture, and explanation. The few approved dark surfaces represent live
+products and operation.
 
-- Deepen the existing isometric plates and make their spatial relationships more
-  legible.
-- Add blueprint coordinates, datum rules, measured connector paths, and modest
-  asymmetric composition using existing colors and line weights.
-- Let one geometric wipe or stack-alignment move bridge timeline beats.
-- Slightly refine section spacing or display scale when needed to own the
-  viewport, while retaining the 1180 px grid and current type hierarchy.
-- Keep the nav and footer light. Keep the existing products band and closing CTA
-  as the only dark homepage zones.
+Cinematic means spatial choreography—assemble, separate, route, lock, validate,
+and hand off. It does not mean video, a dark cyberpunk theme, constant motion,
+or visual effects placed on top of unchanged layouts.
 
-## Narrative beats
+- Overall style: `A site-wide precision-engineering editorial system with cinematic depth: architectural framing, code-native technical diagrams, strong typographic composition, measured spatial layering, blueprint datum/routing details, and choreographed transitions.`
+- Mood: `Calm, exact, assured, accountable, technical, and operational—not aggressive, theatrical, futuristic, or playful.`
+- Lighting: `Light-first white-studio / technical-drawing clarity. Dark product environments remain deep navy rather than black. No volumetric beams, bloom, grain, or photographic lighting simulation.`
+- Camera character: `Architectural 40–50 mm-equivalent perspective approaching orthographic. Stable anchors, restrained scale, short travel, controlled verticals, and deliberate transform origins.`
+- Palette: `Retain the existing blue ladder, warm-blue washes, white surfaces, neutral ink ladder, and compliance-teal restriction. Derived alpha/tint values from existing tokens are allowed. Add no unrelated hue.`
+- Display typeface: `Inter Variable with the current 64 px desktop hero cap as a foundation; controlled responsive evolution is permitted when documented.`
+- Interface typeface: `Inter Variable for UI/body and JetBrains Mono Variable for eyebrows, coordinates, indices, technical chips, progress, and route context.`
+- Iconography: `Lucide static SVG only, 1.5 px stroke, used sparingly and never as the primary visual concept.`
 
-The following beats occur inside one continuous sticky chapter placed where the
-current `StackTeardown` section lives. The page hero and services introduction
-remain normal-flow content above it; the products band and subsequent homepage
-content remain normal-flow content below it.
+### Brand elements to preserve
 
-### Beat 1 — Hero
+- Official Smart Control mark and wordmark; never redraw, distort, recolor, or
+  animate the logo.
+- Recognizable blue-led palette and navy-tinted elevation.
+- Light nav and light footer on every page.
+- Dark zones restricted to product-detail heroes, the homepage products world,
+  and closing CTA bands.
+- Royal link text on light surfaces for WCAG AA; bright blue remains an
+  indicator, line, or large-display accent.
+- Inter / JetBrains Mono pairing and the technical eyebrow language.
+- Tight radii and hard-edged geometry. Controlled use of 4, 10, and 16 px radii.
+- Romanian-first experience with equal English execution.
 
-- Headline: `Un singur partener, unic responsabil`
-- Supporting copy: `Acoperim întregul stack tehnologic — infrastructură, rețea, platforme și software — cu accent deosebit pe securitate, sub un SLA unic, end-to-end.`
-- Visible visual layers: `The complete but compact L4→L1 stack at rest; page-wash background; existing 56 px blueprint ruling and plus marks; a faint datum spine; L1–L4 mono labels; restrained routing lines; section eyebrow “STACK TEARDOWN”. All copy remains semantic HTML.`
-- Intended motion: `Hold a complete first composition. Then let the title and supporting copy leave with a small opacity/vertical transition while the camera advances only slightly and the stack opens enough to expose the upper layers. No per-word animation and no blur.`
+### Controlled evolution allowed
 
-### Beat 2 — First narrative
+- More asymmetric editorial compositions within a disciplined 12-column grid.
+- Edge-to-edge scene frames, stronger whitespace, vertical datum rails,
+  coordinate ticks, numbered chapters, and hard section handoffs.
+- Derived blue tints/alphas, refined spacing, type scale, grid proportions,
+  component geometry, and motion timing.
+- Fewer but larger architectural slabs in place of walls of equal cards.
+- Shared route-specific SVG/DOM diagrams built from the same layer grammar.
+- A redesigned light navigation system, mobile menu, footer, CTA composition,
+  and route-transition language using current destinations and copy.
 
-- Headline: `Use the two existing layer titles in sequence—L4 “Aplicații & Automatizare”, then L3 “Platforme & Date”. Do not introduce an aggregate headline. Use the existing English counterparts on /en/.`
-- Supporting copy: `Use each layer's existing description verbatim: “Software custom, API-uri și automatizare cu AI / LLM.” and “Virtualizare, cloud privat / hibrid, containere și storage.” Use the existing English counterparts on /en/.`
-- Facts or CTA: `Use the existing L4 and L3 chips, link labels, href values, and aria-labels verbatim from each localized stackLayers array.`
-- Intended transition: `L4 and L3 separate by a measured amount and receive the active line treatment while L2 and L1 remain visible as context. Side labels move into the newly created negative space. Text enters independently with a short translate and opacity change. No element flies across the viewport.`
+### Styles to avoid
 
-### Beat 3 — World reveal
+- The current page composition with animations layered on top.
+- Generic AI-SaaS bento walls or identical rounded cards on every page.
+- Photography, generated raster scenes, stock art, video timelines, code rain,
+  hacker imagery, fake terminals, fake dashboards, or invented live status.
+- WebGL, Three.js, particle fields, randomized node backgrounds, full-page
+  canvas, excessive glow, glassmorphism, grain, texture, or permanent blur.
+- New dark sections, transparent navigation, animated logo, custom cursor,
+  preloader, scroll hijacking, smooth-scroll interception, giant zooms, per-word
+  animation, autoplay carousel, or endless ambient movement.
+- Repeating the same pinned effect on every page.
 
-- Purpose: `Show the complete stack as one connected delivery system. This is the quiet proof frame: applications, platforms, network, and physical infrastructure align around one datum spine. Display the existing note “SLA 24/7, end-to-end — zero pasare a responsabilității între furnizori.” Do not add stats or public product claims that are absent from the current homepage.`
-- Intended transition: `Return all four plates to a balanced exploded view; complete the connector paths; remove narrative panels; hold the clean technical composition long enough to read. Use stroke reveal, opacity, and small transforms only.`
+## Shared UI/UX system
 
-### Beat 4 — Second narrative
+### Global shell
 
-- Headline: `Use the two existing layer titles in sequence—L2 “Rețea & Conectivitate”, then L1 “Infrastructură fizică”. Do not introduce an aggregate headline. Use the existing English counterparts on /en/.`
-- Supporting copy: `Use each layer's existing description verbatim: “Core networking, SD-WAN și acces remote securizat.” and “Data center, compute, energie și cablare structurată.” Use the existing English counterparts on /en/.`
-- Facts or CTA: `Use the existing L2 and L1 chips, link labels, href values, and aria-labels verbatim from each localized stackLayers array.`
-- Intended transition: `Shift emphasis from the upper to the lower pair without hiding the full system. L2 and L1 separate, connector routes settle toward the lower datum, and the second text panel occupies the same controlled text region used by Beat 2. Then the world returns to the complete stack before the catalog enters.`
+- Reimagine the fixed light nav as a precise command/index bar using the current
+  logo, routes, assessment CTA, and RO/EN switch.
+- Preserve immediate navigation. Route menus may become richer light panels, but
+  every destination must remain one interaction away, keyboard accessible, and
+  usable without motion.
+- Use active-route datum/underline treatment, clear focus, 44 px mobile targets,
+  ESC-close behavior, focus management, and no delayed navigation.
+- Redesign the mobile menu as an intentional light navigation surface rather
+  than a compressed desktop menu.
+- Redesign the light footer as a calm “system index” using the current four
+  columns, contact details, links, privacy destination, and brand copy.
 
-### Beat 5 — Final catalog
+### Layout and surfaces
 
-- Catalog purpose: `Turn the four-layer explanation into four clear routes through the real Smart Control service architecture, then release scroll naturally into the existing dark products band.`
-- Card content: `Use the localized stackLayers arrays already defined in src/pages/index.astro and src/pages/en/index.astro. Preserve the current layer codes, titles, descriptions, chips, href values, and disclosure level. Do not duplicate content in a new data source unless both locales consume it safely.`
-- Card action: `Each card is a semantic link to its existing service route. The active card can also select its corresponding plate. Use a finite four-item rail—no infinite loop or cloned cards. Provide previous/next controls, keyboard operation, touch swipe, a readable position label, disabled states at both ends, and visible focus.`
-- Final CTA: `No new assessment or demo button inside the rail. The final state stays interactive, then the sticky stage unpins into the current products band. The nav and existing closing CtaBand remain the conversion surfaces.`
+- Use the current 1180 px container and breakpoint system as a foundation, not a
+  visual prison. Document any controlled change.
+- Establish shared scene containers, route headers, chapter indices, diagram
+  frames, capability lanes, proof ledgers, cross-sell bridges, and CTA frames.
+- Keep semantic HTML separate from decorative SVG/DOM layers.
+- Build data-driven components where content repeats across locales/pages; do
+  not duplicate animation math or copy.
+- Vary page composition while maintaining recognizable system rules.
 
-## Assets
+### Shared scene layer contract
 
-- Asset directory: `public/cinematic-stack/ if external SVG files are needed; prefer the existing inline SVG/DOM geometry in src/components/StackTeardown.astro and create no raster scene by default`
-- Asset manifest: `docs/cinematic-build-brief/assets.json — create before implementation if any external layer is added; record id, role, dimensions/viewBox, anchor, transform origin, depth, criticality, responsive behavior, and source`
-- Reference screencast: `None supplied. Record a short before/after capture during handoff if the local environment supports it.`
-- Reference screenshots: `Current / and /en/ pages rendered from the repository are canonical. docs/SMC Web/Home.dc.html is historical composition reference only and must not override current content or the July 2026 precision-engineering direction.`
-- Brand assets: `public/smartcontrol-mark.png, public/smartcontrol-mark-96.png, docs/SMC Web/ds/assets/smartcontrol-mark.png, and the current HTML/CSS SmartControl wordmark. Do not redraw, recolor, distort, or animate the official mark.`
-- Fonts: `Existing @fontsource-variable/inter and @fontsource-variable/jetbrains-mono packages, imported locally by BaseLayout; no external font requests`
+- `00-field` — page wash, white, or approved dark floor.
+- `10-blueprint` — ruling, coordinates, datum ticks, or quiet structural grid.
+- `20-routing` — paths, rails, connectors, and section continuity.
+- `30-artifact` — route-specific primary architectural object.
+- `40-narrative` — semantic headings, copy, lists, and actions.
+- `50-frame` — crop protection, route context, or chrome when required.
 
-### Layer contract
+All visual layers share stable viewBox/perspective rules, anchors, transform
+origins, and sufficient bleed. Text and controls remain semantic HTML and are
+never baked into artwork.
 
-Use the kit's layer numbering as a conceptual map, implemented with aligned
-DOM/SVG rather than photography:
+## Page-family experience map
 
-- `00-stage-bg` — opaque page-wash/surface background.
-- `10-blueprint-ruling` — existing static `GridTexture` geometry.
-- `20-datum-and-routing` — distant SVG rules, connector paths, and coordinate
-  ticks.
-- `30-operational-stack` — the four aligned L4→L1 plates and their internal
-  diagrams.
-- `40-foreground-left` — left-side layer codes and narrative framing.
-- `41-foreground-right` — right-side semantic narrative panel and details.
-- `50-edge-frame` — optional hard-edged crop protection only if the composition
-  needs it; never use a vignette to hide layout problems.
+### 1. Home — the complete system
 
-Every layer must share one viewBox/perspective model, stable anchors, and enough
-bleed for the maximum transform. UI copy, links, and controls remain semantic
-HTML and are never baked into SVG or images.
+Recompose the entire current journey while retaining its content groups and
+order: hero → services → StackTeardown/accountability → products → Cloud →
+partners → assessment CTA.
+
+- Hero: create a deliberate first viewport with the assembled four-layer
+  operational system beside/behind the existing headline, supporting copy, CTA,
+  secondary link, and four ISO badges.
+- Hero-to-services signature chapter: at `>=1100px`, one main pinned experience
+  may move from the assembled system into the four service domains. Existing
+  service copy appears in controlled negative space as each layer becomes active.
+- StackTeardown becomes the culmination of the service architecture, not a
+  separate animated widget or the entire project.
+- Final service state becomes a usable four-route atlas.
+- Products: transition into the existing approved dark zone. Recompose SEKNET
+  and S-VPN as two connected operational worlds; retain generic disclosure and
+  current links. The existing console may be redesigned but must not invent data.
+- Cloud: turn the same routing line into the current five-stage modernization
+  path and capability proof, rather than another standard card tier.
+- Partners: present current partner names as a calm trust ledger or refined
+  marquee with accessible static fallback.
+- Closing CTA: recompose its frame and transition while preserving current copy,
+  subject, action, and dark-zone role.
+
+Only the primary hero-to-services chapter is long-pinned. The rest of Home uses
+normal document flow with short local transitions.
+
+### 2. Services hub — the system atlas
+
+- Create a light editorial hero with a compact four-domain architectural index.
+- Replace the generic pillar grid with a connected service atlas or four
+  full-width chapters sharing a topology/spine.
+- Each domain must remain fully readable in semantic normal flow and route to
+  the existing detail page.
+- Recompose current proof and differentiators into a credential rail,
+  accountability ledger, or delivery matrix rather than additional card walls.
+- Give the page a clear beginning, exploration state, and handoff to the existing
+  assessment CTA.
+
+### 3. Cloud detail — the modernization corridor
+
+- Make the existing five stages the page's main signature cinematic journey.
+- Visually transform a rigid legacy/application block through target
+  architecture, containerization, migration routing, and validated operation.
+- Preserve all current step copy and capability copy.
+- At `>=1100px`, this may be the only other long-pinned experience on the site.
+- The final topology should persist into the capabilities/output section so the
+  page feels continuous rather than resetting to a grid.
+- Do not invent financial results, infrastructure diagrams, dashboards, or
+  claims beyond current content.
+
+### 4. Security detail — the control perimeter
+
+- Recompose the current hero and context panels around a restrained blue
+  perimeter/control schematic.
+- Map the six existing capability groups to defensive/control layers around one
+  protected core, activated by normal scrolling or selection.
+- Keep content readable without interaction and avoid fake threats, incidents,
+  red alert states, or padlock clichés.
+- Present ISO proof as a quiet assurance ledger and SEKNET cross-sell as a
+  connected system extension.
+- No long full-page pin.
+
+### 5. Software detail — commit to operation
+
+- Build a source-to-production delivery spine: architecture → code/API →
+  CI/CD/DevSecOps → modernization → automation → operated system.
+- Recompose current promises and capabilities as stages/guarantees on that path,
+  not two separate card grids.
+- Use code-native structural diagrams, not fake code, terminals, or code rain.
+- Keep normal document scrolling with short state transitions.
+
+### 6. Managed services — the service envelope
+
+- Recompose the page around a continuous operating model spanning service desk,
+  infrastructure, network, security, systems, cloud, and automation.
+- Use layered operational lanes or a restrained SLA/control circuit; do not
+  invent live status or operational metrics.
+- Connect existing SEKNET and S-VPN cross-sells as optional endpoints/modules in
+  the operating model rather than two generic cards.
+- Keep normal document scrolling and a clear assessment handoff.
+
+### 7. Solutions hub — the dual product bay
+
+- Keep the page light while turning SEKNET and S-VPN into two large blueprint
+  specimens rather than ordinary product cards.
+- SEKNET's abstract language: telemetry/routing paths converge into one control
+  plane.
+- S-VPN's abstract language: endpoints align through a protected access
+  corridor.
+- Both paths converge into the current integration rationale and CTA.
+- All information and links remain visible without hover.
+
+### 8. SEKNET detail — signal convergence
+
+- Preserve the approved dark hero/light body/dark CTA rhythm.
+- Reimagine the dark hero around generic distributed signals converging into one
+  operational control plane beside the existing copy and demo action.
+- On leaving the hero, flatten the artifact into a light capability map.
+- Recompose current capabilities and use contexts as indexed chapters around the
+  map rather than standard grids.
+- Cross-sells become deliberate next-system bridges.
+- Never invent product metrics, module specs, alerts, integrations, or fake UI.
+
+### 9. S-VPN detail — the secure corridor
+
+- Preserve the approved dark hero/light body/dark CTA rhythm.
+- Use endpoints, access planes, and protected tunnel/routing geometry as the
+  route-specific artifact.
+- Recompose current capabilities, implementation services, and audience groups
+  along the same connection path.
+- Share product-template system rules with SEKNET without making the two pages
+  visually identical.
+- Add no throughput, tunnel-count, security-method, or licensing claims.
+
+### 10. Privacy — premium reading experience
+
+- Do not force cinematic choreography onto legal content.
+- Create an editorial light header, sticky desktop table of contents derived from
+  existing headings, current-section highlight, thin reading-progress rule, and
+  a comfortable 65–75ch text measure.
+- Mobile TOC becomes a normal accessible disclosure or compact index.
+- Preserve every policy word and anchor destination; keep print behavior clean.
+- Motion is limited to state feedback.
+
+### 11. 404 — missing route
+
+- Use a small light “missing node / broken route” blueprint composition with the
+  current bilingual copy and both real recovery links.
+- One brief entrance is sufficient; no loop or long scene.
+- Keep the page fast, accessible, and noindex.
+
+## Motion language
+
+Use four tiers:
+
+1. Route transition — native Astro transition with a short datum/rule movement
+   and restrained page crossfade/translation.
+2. Signature chapters — Home hero/services and Cloud methodology only.
+3. Short explanatory state changes — service/product route diagrams.
+4. Micro-interactions — navigation, links, controls, cards/slabs, focus.
+
+Motion must explain hierarchy, sequence, connection, or state. Otherwise keep it
+static.
+
+- Use section-local deterministic progress, not global scroll position.
+- Reverse scroll reverses every timeline state cleanly.
+- Use the current vanilla stack, `requestAnimationFrame`, CSS custom properties,
+  transforms, opacity, stroke, and clip. Add no animation dependency.
+- At most one active render loop per scene; pause offscreen and in hidden tabs.
+- Suggested bounds: micro `140–220ms`; section states `420–650ms`; entrance
+  travel `<=24px`; card/plane hover travel `<=3px`; camera scale normally
+  `<=1.06`; pointer parallax `<=12px`; rotation adjustment `<=2deg`.
+- No wheel interception, custom scroll physics, global smoothing, or trapped
+  scroll.
 
 ## Responsive requirements
 
-- Desktop priority: `At ≥1100 px, use one sticky 100svh/100dvh-aware stage with a section-local deterministic timeline of approximately 3000–3600 CSS px. Compose and test at 1440×900 and 1280×720. Preserve the fixed light nav offset.`
-- Mobile priority: `Below 1100 px, prioritize comprehension over spectacle. Do not use a long pinned chapter. Render the same four layers and all copy in normal flow as a vertical interactive stack/accordion or compact step sequence. Below 768 px, disable pointer parallax and ambient cycling; keep controls reachable with one hand.`
-- Mobile crop or composition notes: `No blind desktop crop. Reframe the isometric stack above the active description, reduce plate separation, keep the active layer fully visible, preserve 24 px gutters, and prevent horizontal document overflow. The final catalog may use native horizontal scroll-snap with a visible next-card cue.`
-- Required browsers: `Current stable Safari, Chrome, Edge, and Firefox; iOS Safari and Android Chrome. Verify Astro View Transition navigation as well as direct loads.`
-- Minimum device expectations: `A normal enterprise laptop and a modern mid-range phone without discrete graphics. The chapter must not depend on WebGL, high refresh rate, hover, or a fine pointer.`
+- `>=1100px`: full architectural scenes; pin only Home's main chapter and Cloud's
+  methodology when warranted.
+- `768–1099px`: replace long pins with stepped split layouts or short sticky
+  artifacts; preserve all content in normal flow.
+- `<768px`: normal-flow scenes with artifact above copy, 24 px gutters, compact
+  depth, and native finite scroll-snap only when it improves navigation.
+- No interaction may depend on hover, fine pointer, or desktop crop rules.
+- Recompose every page family deliberately for mobile; stacking desktop columns
+  without visual review is insufficient.
+- At 200% zoom or insufficient viewport height, sticky/pinned layouts must fall
+  back safely.
+- Test at `1440×900`, `1280×720`, `1024×768`, `768×1024`, and `390×844`.
 
 ## Accessibility
 
-- Reduced-motion preference: `Render a complete static stack followed by normal-flow layer descriptions and the same service links. Disable pinning, inertial smoothing, pointer parallax, automatic cycling, large scale/translation, stroke-drawing choreography, and decorative transitions. No information may exist only at a timeline position.`
-- Keyboard requirements: `All four layer selectors and catalog controls must be native links/buttons or have equivalent semantics; support Tab, Shift+Tab, Enter, Space where appropriate, and ArrowLeft/ArrowRight for the rail. Preserve the existing visible brand focus ring. Never trap page scroll or keyboard focus.`
-- Image-description requirements: `Mark decorative blueprint/SVG layers aria-hidden with empty alternative text. Expose the four-layer relationship through headings, ordered/list semantics, descriptions, and real links—not through a verbose description of decorative geometry.`
-- Localization requirements: `Romanian is default at / and English has full parity at /en/. Reuse the current localized copy and routes. Romanian diacritics are mandatory. Keep technical terms in English. Do not bake copy into art, and do not ship a fake language switcher.`
+- Content is visible and navigable before JavaScript initializes.
+- Reduced motion presents polished static compositions with normal-flow content;
+  disable pinning, inertia, parallax, route sweeps, path drawing, auto-advance,
+  and ambient loops.
+- Use semantic headings, lists, links, buttons, and landmarks. Prefer native
+  controls; do not nest interactive elements.
+- Decorative SVG/DOM geometry is `aria-hidden`; meaningful relationships are
+  communicated by semantic content.
+- Preserve visible focus, logical tab order, disabled states, and 44 px touch
+  targets. No focus or scroll traps.
+- Validate text/link contrast, 200% zoom, keyboard operation, touch, screen-reader
+  reading order, and route-transition focus restoration.
+- Full RO/EN UI capability and localized accessibility labels are required.
 
-## Performance
+## Performance and implementation quality
 
-- Target initial transfer size: `Add no more than 12 kB gzip of homepage JavaScript for the cinematic controller and no new runtime dependency. Preserve server-rendered first content and avoid hydration-dependent first-frame shifts.`
-- Target total image transfer size: `0 kB is preferred for the chapter by reusing inline SVG/DOM. If external SVG assets are justified, keep the complete added visual payload under 150 kB compressed and reserve dimensions/viewBox to prevent layout shift.`
-- Required analytics or monitoring: `Do not add analytics; Umami is deferred until the EU instance exists. Use the browser Performance API, DevTools/Lighthouse where available, and the repository QA scripts to inspect frame stability, layout shift, overflow, console errors, and late asset loading.`
+- Keep Astro fully static and progressively enhanced.
+- Add no dependency and no remote font/icon/image request.
+- Prefer code-native SVG/DOM. Added raster payload target: `0 kB`.
+- Keep added route-specific JavaScript small and split by route. Target no more
+  than `30 kB gzip` added across the complete redesign and no more than
+  `15 kB gzip` required by any one route.
+- Cache measurements; do not mix repeated layout reads and writes in frame loops.
+- Use passive listeners, `IntersectionObserver` for scene visibility, and
+  `ResizeObserver` only when justified.
+- Initialize on initial load and `astro:page-load`; explicitly tear down every
+  listener, observer, timer, and frame on `astro:before-swap`.
+- Repeated ClientRouter visits must not duplicate state or cause first-frame
+  shifts.
+- Reserve geometry/aspect ratio to prevent CLS.
+- Keep console clean and avoid unnecessary rerenders/continuous animation.
+
+## Assets
+
+- Reuse current logo, font, icon, and inline SVG assets.
+- Prefer route-specific code-native diagrams built as shared primitives.
+- If an external asset is introduced, create
+  `docs/cinematic-build-brief/assets.json` recording role, source, dimensions or
+  viewBox, anchor, transform origin, depth, responsive variants, criticality,
+  and license.
+- Do not generate or source photography/raster artwork without separate owner
+  approval.
 
 ## Constraints
 
-- Dependencies that may be used: `Only the dependencies already present in package.json and native browser APIs: requestAnimationFrame, IntersectionObserver, ResizeObserver when justified, matchMedia, CSS custom properties, transforms, opacity, clip-path, and SVG stroke properties.`
-- Dependencies that must not be added: `GSAP, ScrollTrigger, Lenis, Three.js, WebGL frameworks, React, Svelte, Lottie, a smooth-scroll library, a carousel package, a remote icon/font script, or any package added merely for convenience.`
-- Existing components that must be preserved: `BaseLayout, Nav, Footer, GridTexture, SectionHeading, StackTeardown, ModuleCard, MailtoLink, TextLink, CtaBand, SeknetConsole, CloudPipeline, LogoMarquee, current Astro ClientRouter behavior, the existing route tree, and the current obfuscated email wiring. Refactor StackTeardown only when the result remains reusable and both locales stay in parity.`
-- Out-of-scope items: `Copywriting, translation, copy trimming, content reordering, a full-site redesign, pinned experiences on every page, changes to interior-page content, new public stats or product specifications, new products, client names or case studies, forms, phone, maps, customer login, e-commerce, CMS, blog, careers, cookie banner, analytics deployment, product UI screenshots, photography, or generated cinematic bitmaps.`
+- Allowed: `Existing package dependencies and native browser APIs only.`
+- Forbidden dependencies: `GSAP, ScrollTrigger, Lenis, Three.js, WebGL frameworks, React, Svelte, Lottie, carousel packages, remote icon/font scripts, or packages added for convenience.`
+- Existing components: `Preserve their public behavior and data contracts where useful, but refactor, replace, split, or consolidate presentational components to create a coherent reusable full-site system. Do not preserve a component merely because it exists.`
+- Preserve: `Route tree, canonical/hreflang behavior, static SSG, ClientRouter lifecycle, obfuscated email behavior, CTA destinations, privacy content, logo integrity, product/legal guardrails, Vercel noindex preview configuration, and unrelated user work.`
+- Out of scope: `Copywriting or translation, new claims/content/routes/products, forms, phone, map, portal, e-commerce, CMS, blog, careers, client names, analytics deployment, production deployment, generated decorative photography, or production-domain changes.`
+- Do not modify: `package.json, package-lock.json, astro.config.mjs, tsconfig.json, or vercel.json.`
 
-### Public-content guardrails
+## Public-content guardrails
 
-- Keep exactly two products: SEKNET and S-VPN.
-- Keep exactly four ISO certifications: 9001, 27001, 14001, and 45001.
-- Preserve computed years from the 2003 founding date.
-- Do not restore the removed homepage stats strip or removed compliance pills.
-- Do not restore old public product throughput, tunnel, module, integration, or
-  security-event claims. Current product copy is deliberately general.
-- Preserve the current CTA labels and mailto subjects from `src/i18n/ui.ts`.
-- Keep email obfuscated in static HTML. Add no form, phone number, or map.
-- No client names, emoji, or prohibited marketing register.
+- Exactly two products: SEKNET and S-VPN.
+- Exactly four ISO certifications: 9001, 27001, 14001, and 45001.
+- Years remain computed from 2003.
+- Do not restore removed homepage stats, compliance pills, detailed product
+  claims, throughput/tunnel counts, module specs, attack logs, or integrations.
+- Preserve current CTA labels, subjects, obfuscated email, and page-specific ask.
+- No client names, emoji, prohibited marketing register, forms, phone, or map.
 
 ## Acceptance criteria
 
-- `At ≥1100 px, the StackTeardown chapter reads as one polished, continuous 2.5D technical composition with five clear beats, one pinned stage, deterministic section-local progress, stable anchors, and clean reversal when scrolling upward.`
-- `Below 1100 px and with prefers-reduced-motion, every heading, layer description, chip, link, and final catalog action remains available in readable normal flow without pinning, hidden states, autoplay, or horizontal page overflow.`
-- `The implementation is recognizably the current Smart Control brand: light nav/footer, unchanged palette and logo, Inter/JetBrains Mono, blueprint ruling, restrained motion, current copy/disclosure level, four ISO badges, two products, full RO/EN parity, and no resurrected AI-SaaS tropes.`
-- `A string-level review confirms that the existing Romanian and English public copy, labels, chips, links, CTA wording, mailto subjects, aria-labels, metadata, and reading order are unchanged.`
-- `npm run check and npm run build complete with zero errors; all real links and obfuscated mailto actions work; direct loads and View Transition navigations initialize and clean up correctly; keyboard, touch, reverse scroll, 200% zoom, and console-error checks pass.`
+- `All 21 routes use the new shared UI system. Home, both hubs, Cloud, Security, Software, Managed Services, SEKNET, S-VPN, both privacy routes, and 404 each show intentional route-appropriate composition; no secondary page is accepted merely because it inherits new global CSS.`
+- `The redesign is clearly visible before the visitor reaches StackTeardown. A diff confined to StackTeardown, motion.js, a homepage section, or reveal animation fails acceptance.`
+- `Shared navigation/footer, heroes, body-section architecture, CTA framing, and responsive composition are materially redesigned.`
+- `The homepage and every page-family journey feel authored end to end. Cinematic motion supports comprehension and degrades to a polished static experience.`
+- `Existing public copy, facts, claims, routes, CTA destinations, metadata, and translations remain unchanged; RO and EN have equal UI capability.`
+- `The recognizable Smart Control brand remains intact with controlled evolution only.`
+- `Every route works at 1440, 1024, 768, and 390 px, with reduced motion, keyboard, touch, 200% zoom, no JavaScript, direct load, and View Transition navigation.`
+- `npm run check, npm run build, and link/parity checks pass; there is no horizontal overflow, broken focus, console/lifecycle error, disruptive CLS, or disproportionate payload growth.`
+- `The PR includes before/after visual evidence for every page family and recordings of the Home and Cloud signature chapters.`
+- `The final Vercel preview is generated from the PR's final HEAD and all 21 routes are inspected; deeper motion/responsive review covers every page family in both locales.`
 
-## Notes
+## Required design/verification checkpoints
 
-### Timeline checkpoints
+Before implementation, inventory every route and capture baseline screenshots.
+Define shared tokens/primitives, component refactor map, page-family compositions,
+route-by-route motion map, responsive/reduced-motion/no-JS plan, copy-lock
+baseline, and performance/accessibility risks.
 
-Treat these as tuning targets, not immutable values:
+During implementation, review each page family before proceeding. At handoff,
+provide:
 
-- `p=0.00` — complete section hero and compact full stack.
-- `p=0.18` — opening copy has exited without a pop or crop.
-- `p=0.27` — L4/L3 narrative is readable and the upper pair is emphasized.
-- `p=0.44` — clean full-stack reveal; all four layers and the SLA note are clear.
-- `p=0.58` — L2/L1 narrative is readable and the lower pair is emphasized.
-- `p=0.74` — full stack returns to focus with no transform discontinuity.
-- `p=0.90` — service rail is mostly entered and operable.
-- `p=1.00` — final interactive state is stable; continued scrolling releases
-  naturally into the existing products band.
-
-At every checkpoint inspect layer order, SVG alignment, transparent/empty edges,
-text contrast, text collisions, clipping, transform continuity, focus visibility,
-and horizontal overflow. Scroll both downward and upward.
-
-### Implementation rules
-
-- Derive progress from this chapter's own scroll range, never global document
-  progress.
-- Keep scene boundaries in one readable configuration object.
-- Request rendering through `requestAnimationFrame`; listeners only request a
-  frame. Stop scheduling frames after values converge and while the section is
-  offscreen.
-- Expose a small set of CSS custom properties and let CSS own final transforms.
-- Cache geometry and remeasure on resize; do not force layout repeatedly inside
-  the frame loop.
-- Preserve content visibility without JavaScript. Do not initialize meaningful
-  content at `opacity: 0` and hope a trigger reveals it.
-- The existing 3.2-second StackTeardown ambient cycle must not fight scroll
-  control. Disable it while the desktop cinematic mode is active; retain direct
-  click/keyboard selection in the final state and the compact fallback.
-- Initialize on `astro:page-load`, clean up on `astro:before-swap`, and prove
-  repeated View Transition visits do not duplicate listeners or animation loops.
-- Do not modify `package.json`, `astro.config.mjs`, `tsconfig.json`, or
-  `vercel.json`.
-
-### Required handoff
-
-Return:
-
-1. Implementation summary.
-2. Scene/timeline map.
-3. Asset/layer map.
-4. Files changed.
-5. Local run command.
-6. Desktop, tablet, mobile, keyboard, and reduced-motion verification.
-7. Build/check results.
-8. Known limitations and any missing production assets.
+1. Design-system and shared-component summary.
+2. Page-family composition map.
+3. Motion/scene map and lifecycle architecture.
+4. Files changed and commit structure.
+5. Before/after desktop/mobile evidence for every page family.
+6. Accessibility, reduced-motion, keyboard, zoom, and no-JS results.
+7. Copy-lock and RO/EN parity results.
+8. Build, link, overflow, console, CLS, and payload results.
+9. PR URL and final-HEAD Vercel preview URL.
+10. True remaining limitations or external blockers.
