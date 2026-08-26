@@ -6,7 +6,9 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://smartcontrol.ro',
-  integrations: [sitemap()],
+  // /en/404/ is a locale-specific server error document, not an indexable
+  // route. Astro already omits the root 404.html; exclude its EN counterpart.
+  integrations: [sitemap({ filter: (page) => !page.endsWith('/en/404/') })],
   // RO is the default locale at `/`; EN lives under `/en/`. Full parity.
   i18n: {
     defaultLocale: 'ro',

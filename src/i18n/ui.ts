@@ -54,7 +54,7 @@ export const ui = {
     'company.address.l1': 'Intrarea Aviator Teodor Iliescu 37,',
     'company.address.l2': '011672 București',
     'lang.switch': 'EN',
-    'lang.switch.aria': 'Switch language to English',
+    'lang.switch.aria': 'EN — Comută în limba engleză',
   },
   en: {
     // — Nav —
@@ -95,7 +95,7 @@ export const ui = {
     'company.address.l1': 'Intrarea Aviator Teodor Iliescu 37,',
     'company.address.l2': '011672 București',
     'lang.switch': 'RO',
-    'lang.switch.aria': 'Comută limba în română',
+    'lang.switch.aria': 'RO — Switch language to Romanian',
   },
 } as const;
 
@@ -131,28 +131,36 @@ const ROUTE_MAP: Record<string, string> = {
   '/confidentialitate': '/en/privacy',
 };
 
+const canonicalPath = (path: string) =>
+  path === '/' ? '/' : `${path.replace(/\/$/, '')}/`;
+
 /** The same page in the other locale, honoring per-locale slugs. */
 export function altLocalePath(pathname: string): string {
   const clean = pathname.replace(/\/$/, '') || '/';
+  // Error documents are deployment internals, not navigable locale twins.
+  // Their language switch recovers to the other locale's homepage instead of
+  // advertising /404 or /en/404 as a real content route.
+  if (clean === '/404') return '/en/';
+  if (clean === '/en/404') return '/';
   if (/^\/en(\/|$)/.test(clean)) {
     const ro = Object.entries(ROUTE_MAP).find(([, en]) => en === clean)?.[0];
-    if (ro) return ro;
-    return clean.replace(/^\/en(\/|$)/, '/') || '/';
+    if (ro) return canonicalPath(ro);
+    return canonicalPath(clean.replace(/^\/en(\/|$)/, '/') || '/');
   }
-  if (ROUTE_MAP[clean]) return ROUTE_MAP[clean];
-  return `/en${clean === '/' ? '' : clean}`;
+  if (ROUTE_MAP[clean]) return canonicalPath(ROUTE_MAP[clean]);
+  return canonicalPath(`/en${clean === '/' ? '' : clean}`);
 }
 
 /** RO + EN paths for the current page (for hreflang alternates). */
 export function hreflangPair(pathname: string): { ro: string; en: string } {
   const clean = pathname.replace(/\/$/, '') || '/';
-  if (/^\/en(\/|$)/.test(clean)) return { ro: altLocalePath(clean), en: clean };
-  return { ro: clean, en: altLocalePath(clean) };
+  if (/^\/en(\/|$)/.test(clean)) return { ro: altLocalePath(clean), en: canonicalPath(clean) };
+  return { ro: canonicalPath(clean), en: altLocalePath(clean) };
 }
 
-// Contact = email only (no forms, no phone). Split for the obfuscation
-// pattern: components render data-email-user / data-email-domain and
-// initEmails (motion.js) joins them + appends ?subject= at runtime.
+// Contact = email only (no forms, no phone). Keep the parts available for
+// progressive enhancement, but render a complete mailto and visible fallback
+// in static HTML so the contact path never depends on JavaScript.
 export const EMAIL_USER = 'office';
 export const EMAIL_DOMAIN = 'smartcontrol.ro';
 export const EMAIL = `${EMAIL_USER}@${EMAIL_DOMAIN}`;

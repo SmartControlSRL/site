@@ -35,7 +35,7 @@ const steps = [
   },
   {
     title: 'Assessment inițial & quick wins',
-    pill: '2 zile · gratuit',
+    pill: 'Assessment inițial',
     body: 'Inventarierea infrastructurii, analiza de performanță și evaluarea gap-urilor.',
   },
   {
@@ -146,9 +146,12 @@ const serviceLd = {
         infrastructura existentă, înainte să cumperi una nouă.
       </p>
 
-      <div class="hero-in-4 mt-[38px] flex flex-wrap items-center gap-4">
+      <div
+        data-service-hero-actions
+        class="hero-in-4 mt-[38px] flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:items-center"
+      >
         <MailtoLink variant="button" subject={t('subject.assessment')}>
-          Programează assessment-ul gratuit
+          {t('cta.assessment')}
         </MailtoLink>
         <TextLink href="#flux">Vezi fluxul în 5 etape</TextLink>
       </div>
@@ -197,7 +200,6 @@ const serviceLd = {
                 <div
                   data-step-body
                   class="max-w-[760px] transition-opacity duration-[400ms]"
-                  style="opacity:0.45"
                 >
                   <div class="flex flex-wrap items-baseline gap-3.5">
                     <h3 class="text-[20px] font-bold tracking-[-0.3px] text-navy">{s.title}</h3>
@@ -205,7 +207,7 @@ const serviceLd = {
                       {s.pill}
                     </span>
                   </div>
-                  <p class="mt-2.5 text-[14.5px] leading-[1.7] text-cool">{s.body}</p>
+                  <p class="mt-2.5 text-[14.5px] leading-[1.7] text-slate">{s.body}</p>
                 </div>
               </li>
             ))
@@ -251,6 +253,6 @@ const serviceLd = {
     cta={t('cta.assessment')}
     subject={t('subject.assessment')}
   >
-    Assessment-ul gratuit de 2 zile cartografiază infrastructura actuală și estimează economia posibilă prin re-arhitecturare.
+    Assessment-ul inițial este configurat în funcție de infrastructură, obiective și aria agreată. Livrabilele și termenii sunt confirmați înainte de începere.
   </CtaBand>
 </BaseLayout>

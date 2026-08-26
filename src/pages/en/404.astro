@@ -1,0 +1,47 @@
+---
+// English error document. nginx maps unknown /en/* requests to the built
+// output while preserving the requested URL and an HTTP 404 status. This is
+// intentionally absent from navigation, canonical metadata and the sitemap.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Eyebrow from '../../components/Eyebrow.astro';
+import TextLink from '../../components/TextLink.astro';
+---
+
+<BaseLayout
+  title="404 — Page not found | Smart Control"
+  description="The page you are looking for does not exist or has moved."
+  noindex
+  errorDocument
+>
+  <section class="px-6 md:px-10" style="background:var(--sc-gradient-hero-light)">
+    <div class="mx-auto max-w-[1180px] py-[110px] text-center md:py-[150px]">
+      <Eyebrow>Error 404</Eyebrow>
+
+      <p
+        class="mt-8 font-mono text-[clamp(4.5rem,3rem+6vw,7rem)] font-bold leading-none tracking-[-2px] text-navy"
+        aria-hidden="true"
+      >
+        404
+      </p>
+
+      <h1 class="mt-6 text-[clamp(1.75rem,1.45rem+1.3vw,2.375rem)] font-bold leading-[1.15] text-midnight">
+        Page not found
+      </h1>
+
+      <p class="mx-auto mt-5 max-w-[560px] leading-[1.7] text-slate">
+        The page you are looking for does not exist or has moved. Check the
+        address or continue from the homepage.
+      </p>
+
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
+        <a
+          href="/en/"
+          class="inline-flex items-center justify-center rounded-md bg-navy px-6 py-3 text-[14.5px] font-semibold text-white transition-all hover:bg-midnight hover:[box-shadow:0_6px_20px_rgba(14,31,91,0.25)]"
+        >
+          Back to homepage
+        </a>
+        <TextLink href="/en/servicii/">Explore our services</TextLink>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

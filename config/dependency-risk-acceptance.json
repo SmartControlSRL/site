@@ -1,0 +1,239 @@
+{
+  "schemaVersion": 1,
+  "scope": "Pinned Astro 5 build and editor toolchain for the fully static Smart Control site",
+  "owner": "Smart Control site maintainers",
+  "reviewBy": "2026-11-26",
+  "acceptedAdvisories": [
+    {
+      "id": "GHSA-j687-52p2-xcff",
+      "package": "astro",
+      "severity": "moderate",
+      "affectedPath": "astro (direct devDependency)",
+      "reachability": "Not reachable: the repository has no define:vars usage and accepts no visitor-authored script data.",
+      "exposure": "Build-time only; production is static HTML with no Astro server runtime.",
+      "rationale": "A fixed release requires a coordinated Astro/Tailwind/Vite migration; keep the tested compatibility pin until that unit passes all gates.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
+    },
+    {
+      "id": "GHSA-xr5h-phrj-8vxv",
+      "package": "astro",
+      "severity": "low",
+      "affectedPath": "astro (direct devDependency)",
+      "reachability": "Not reachable: the site has no server islands or server:defer directives.",
+      "exposure": "Build-time only; no Astro server is deployed.",
+      "rationale": "Accept temporarily under the coordinated toolchain migration plan.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
+    },
+    {
+      "id": "GHSA-jrpj-wcv7-9fh9",
+      "package": "astro",
+      "severity": "moderate",
+      "affectedPath": "astro (direct devDependency)",
+      "reachability": "Not reachable: generated attribute names are repository-authored and visitor input is not rendered.",
+      "exposure": "Build-time static generation only.",
+      "rationale": "Accept temporarily rather than bypass the tested compatibility pin with a major upgrade.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
+    },
+    {
+      "id": "GHSA-f48w-9m4c-m7f5",
+      "package": "astro",
+      "severity": "moderate",
+      "affectedPath": "astro (direct devDependency)",
+      "reachability": "Not reachable: generated attribute names are repository-authored and visitor input is not rendered.",
+      "exposure": "Build-time static generation only.",
+      "rationale": "Accept temporarily rather than bypass the tested compatibility pin with a major upgrade.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
+    },
+    {
+      "id": "GHSA-7pw4-f3q4-r2p2",
+      "package": "astro",
+      "severity": "low",
+      "affectedPath": "astro (direct devDependency)",
+      "reachability": "Not reachable: the repository does not use transition:* directive values on hydrated islands.",
+      "exposure": "Build-time static generation plus the repository-authored ClientRouter bundle.",
+      "rationale": "Accept temporarily; browser regression remains mandatory for a coordinated upgrade.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
+    },
+    {
+      "id": "GHSA-4g3v-8h47-v7g6",
+      "package": "astro",
+      "severity": "moderate",
+      "affectedPath": "astro (direct devDependency)",
+      "reachability": "Not reachable from untrusted data: transition metadata is repository-authored and the site accepts no visitor content.",
+      "exposure": "Static pages with a repository-authored ClientRouter bundle; no server rendering.",
+      "rationale": "Accept temporarily; validate ClientRouter navigation during the coordinated upgrade.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
+    },
+    {
+      "id": "GHSA-2pvr-wf23-7pc7",
+      "package": "astro",
+      "severity": "high",
+      "affectedPath": "astro (direct devDependency)",
+      "reachability": "Not reachable: production does not execute Astro request handling or consume Host headers.",
+      "exposure": "Build-time only; the generated 404 page is served as a static file.",
+      "rationale": "No deployed Astro server exists; accept until the pinned trio can move together.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
+    },
+    {
+      "id": "GHSA-8hv8-536x-4wqp",
+      "package": "astro",
+      "severity": "high",
+      "affectedPath": "astro (direct devDependency)",
+      "reachability": "Not reachable from untrusted data: slot names are fixed in repository source and no visitor content is rendered.",
+      "exposure": "Build-time static generation only.",
+      "rationale": "Accept temporarily under the coordinated toolchain migration plan.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
+    },
+    {
+      "id": "GHSA-g7r4-m6w7-qqqr",
+      "package": "esbuild",
+      "severity": "low",
+      "affectedPath": "astro > esbuild",
+      "reachability": "Not reachable in production; the advisory requires a Windows development server.",
+      "exposure": "Local development only; production is static and the supported CI/runtime line is Linux Node 22.",
+      "rationale": "The available npm remedy replaces the pinned Astro major; do not force it independently.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
+    },
+    {
+      "id": "GHSA-v2hh-gcrm-f6hx",
+      "package": "fast-uri",
+      "severity": "high",
+      "affectedPath": "@astrojs/check > @astrojs/language-server > volar-service-yaml > yaml-language-server > fast-uri",
+      "reachability": "Not reachable: only repository-authored documents enter the editor/type-check chain.",
+      "exposure": "Editor and CI type-check tooling only.",
+      "rationale": "Accept temporarily while the pinned Astro/check toolchain is evaluated as a unit.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
+    },
+    {
+      "id": "GHSA-7p8r-x3mc-p8w7",
+      "package": "fast-uri",
+      "severity": "high",
+      "affectedPath": "@astrojs/check > @astrojs/language-server > volar-service-yaml > yaml-language-server > fast-uri",
+      "reachability": "Not reachable: only repository-authored documents enter the editor/type-check chain.",
+      "exposure": "Editor and CI type-check tooling only.",
+      "rationale": "Accept temporarily while the pinned Astro/check toolchain is evaluated as a unit.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
+    },
+    {
+      "id": "GHSA-4c8g-83qw-93j6",
+      "package": "fast-uri",
+      "severity": "high",
+      "affectedPath": "@astrojs/check > @astrojs/language-server > volar-service-yaml > yaml-language-server > fast-uri",
+      "reachability": "Not reachable: only repository-authored documents enter the editor/type-check chain.",
+      "exposure": "Editor and CI type-check tooling only.",
+      "rationale": "Accept temporarily while the pinned Astro/check toolchain is evaluated as a unit.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
+    },
+    {
+      "id": "GHSA-52cp-r559-cp3m",
+      "package": "js-yaml",
+      "severity": "high",
+      "affectedPath": "astro > js-yaml",
+      "reachability": "Not reachable from visitor input; only repository-controlled build files are parsed.",
+      "exposure": "Build-time only.",
+      "rationale": "Accept temporarily; reject untrusted YAML in the build pipeline and migrate the pinned trio together.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
+    },
+    {
+      "id": "GHSA-5p4m-2wfm-xmqj",
+      "package": "js-yaml",
+      "severity": "high",
+      "affectedPath": "astro > js-yaml",
+      "reachability": "Not reachable from visitor input; only repository-controlled build files are parsed.",
+      "exposure": "Build-time only.",
+      "rationale": "Accept temporarily; reject untrusted YAML in the build pipeline and migrate the pinned trio together.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
+    },
+    {
+      "id": "GHSA-28wg-ghj8-5hjv",
+      "package": "nanoid",
+      "severity": "high",
+      "affectedPath": "@tailwindcss/vite > vite > postcss > nanoid",
+      "reachability": "Not reachable from visitor input; size parameters and CSS inputs are repository-controlled.",
+      "exposure": "Build-time CSS processing only.",
+      "rationale": "Accept temporarily because changing the Vite subtree independently would invalidate the tested compatibility pin.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
+    },
+    {
+      "id": "GHSA-2v37-7h3g-55p8",
+      "package": "nanoid",
+      "severity": "high",
+      "affectedPath": "@tailwindcss/vite > vite > postcss > nanoid",
+      "reachability": "Not reachable from visitor input; size parameters and CSS inputs are repository-controlled.",
+      "exposure": "Build-time CSS processing only.",
+      "rationale": "Accept temporarily because changing the Vite subtree independently would invalidate the tested compatibility pin.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
+    },
+    {
+      "id": "GHSA-fxqj-rqcc-2cmp",
+      "package": "postcss",
+      "severity": "moderate",
+      "affectedPath": "@tailwindcss/vite > vite > postcss",
+      "reachability": "Not reachable from visitor input; CSS and source maps are repository-controlled.",
+      "exposure": "Build-time CSS processing only.",
+      "rationale": "Accept temporarily because the Vite override is part of the tested compatibility unit.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
+    },
+    {
+      "id": "GHSA-r28c-9q8g-f849",
+      "package": "postcss",
+      "severity": "high",
+      "affectedPath": "@tailwindcss/vite > vite > postcss",
+      "reachability": "Not reachable from visitor input; CSS and source maps are repository-controlled.",
+      "exposure": "Build-time CSS processing only.",
+      "rationale": "Accept temporarily because the Vite override is part of the tested compatibility unit.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
+    },
+    {
+      "id": "GHSA-f88m-g3jw-g9cj",
+      "package": "sharp",
+      "severity": "high",
+      "affectedPath": "astro > sharp",
+      "reachability": "Not reachable from visitor input; only reviewed repository images enter the build.",
+      "exposure": "Build-time image processing only.",
+      "rationale": "The npm fix target changes the Astro major; accept until the coordinated migration passes image and route regression.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
+    },
+    {
+      "id": "GHSA-2p49-hgcm-8545",
+      "package": "svgo",
+      "severity": "high",
+      "affectedPath": "astro > svgo",
+      "reachability": "Not reachable from visitor input; only reviewed repository/package SVG assets enter the build.",
+      "exposure": "Build-time optimization only; no uploaded SVG path exists.",
+      "rationale": "Accept temporarily; prohibit untrusted SVG input and validate output during the coordinated upgrade.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
+    },
+    {
+      "id": "GHSA-48c2-rrv3-qjmp",
+      "package": "yaml",
+      "severity": "moderate",
+      "affectedPath": "@astrojs/check > @astrojs/language-server > volar-service-yaml > yaml-language-server > yaml",
+      "reachability": "Not reachable from visitor input; only repository-authored files enter the type-check/editor toolchain.",
+      "exposure": "Editor and CI type-check tooling only.",
+      "rationale": "Accept temporarily while the pinned check/toolchain combination remains under coordinated review.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
+    }
+  ]
+}

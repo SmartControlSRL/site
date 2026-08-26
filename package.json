@@ -3,13 +3,31 @@
   "type": "module",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "npm@10.9.4",
+  "engines": {
+    "node": ">=22.22.0 <23",
+    "npm": ">=10.9.0 <11"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "check:links": "node scripts/check-links.mjs",
+    "check:email": "node scripts/check-email-links.mjs",
+    "check:claims": "node scripts/check-claims.mjs",
+    "check:deployment": "node scripts/check-nginx-config.mjs",
+    "check:indexing": "node scripts/check-indexing-config.mjs",
+    "check:stack-teardown": "node scripts/check-stack-teardown.mjs",
+    "check:nav-responsive": "node scripts/check-nav-responsive.mjs",
+    "audit:dependencies": "node scripts/check-advisories.mjs",
+    "audit:site": "node scripts/audit.mjs --dir dist --policy config/site-audit-policy.json --out artifacts/site-audit.json",
+    "verify:indexing": "node scripts/verify-indexing.mjs",
+    "qa:static": "npm run check && npm run build && npm run check:links && npm run check:email && npm run check:claims && npm run check:deployment && npm run check:indexing",
+    "qa:browser": "npm run check:stack-teardown && npm run check:nav-responsive && npm run audit:site",
+    "qa": "npm run qa:static && npm run qa:browser"
   },
-  "dependencies": {
+  "devDependencies": {
     "@astrojs/check": "^0.9.9",
     "@astrojs/sitemap": "^3.7.3",
     "@fontsource-variable/inter": "^5.2.8",
@@ -18,12 +36,10 @@
     "@tailwindcss/vite": "~4.1.18",
     "astro": "~5.18.2",
     "tailwindcss": "~4.1.18",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "playwright": "^1.60.0"
   },
   "overrides": {
     "vite": "^6.4.3"
-  },
-  "devDependencies": {
-    "playwright": "^1.60.0"
   }
 }

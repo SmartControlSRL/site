@@ -3,8 +3,9 @@
 // links + assessment CTA (obfuscated mailto) + RO/EN switch. Active-page
 // underline by pathname. initNavShrink (wired in BaseLayout) tightens padding +
 // adds a hairline/shadow past 24px scroll — it targets [data-nav-shrink].
-// Mobile (<768px): hamburger toggles a light slide-down panel (aria-expanded,
-// ESC closes, body scroll-lock while open).
+// Mobile/tablet (<1024px): hamburger toggles a light slide-down panel
+// (aria-expanded, ESC closes, body scroll-lock while open). The 1024px desktop
+// threshold keeps the full EN row on one line and avoids the 768px collision.
 import { ChevronDown, Menu, X } from '@lucide/astro';
 import { getLangFromUrl, useTranslations, localizedPath, altLocalePath } from '../i18n/ui';
 import MailtoLink from './MailtoLink.astro';
@@ -56,13 +57,14 @@ const inTree = (href: string) => {
 // Language switch → the alternate-locale version of this page.
 const path = Astro.url.pathname;
 const altHref = altLocalePath(path);
+const altLang = lang === 'ro' ? 'en' : 'ro';
 ---
 
 <header class="fixed inset-x-0 top-0 z-50">
   <nav
     data-nav-shrink
     aria-label={t('a11y.nav')}
-    class="border-b border-transparent bg-surface px-10 py-[18px] transition-[padding,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+    class="border-b border-transparent bg-surface px-4 py-[18px] transition-[padding,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] sm:px-6 lg:px-10"
   >
     <div class="mx-auto flex max-w-[1180px] items-center justify-between gap-8">
       <!-- Logo -->
@@ -78,14 +80,15 @@ const altHref = altLocalePath(path);
       </a>
 
       <!-- Desktop links -->
-      <ul class="hidden items-center gap-7 md:flex">
+      <ul data-nav-desktop class="hidden items-center gap-7 lg:flex">
         {
           navItems.map((item) =>
             item.children ? (
               <li class="group relative">
                 <a
+                  data-nav-dropdown-trigger
                   href={item.href}
-                  aria-current={inTree(item.href) ? 'page' : undefined}
+                  aria-current={isActive(item.href) ? 'page' : undefined}
                   class:list={[
                     'inline-flex items-center gap-[5px] border-b-2 pb-[3px] text-[13.5px] no-underline transition-colors hover:border-bright hover:text-navy',
                     inTree(item.href)
@@ -144,9 +147,11 @@ const altHref = altLocalePath(path);
       </ul>
 
       <!-- Right cluster -->
-      <div class="flex items-center gap-3">
+      <div class="flex shrink-0 items-center gap-3">
         <a
           href={altHref}
+          lang={altLang}
+          hreflang={altLang}
           class="text-[13.5px] font-semibold text-cool transition-colors hover:text-navy"
           aria-label={t('lang.switch.aria')}
         >
@@ -155,7 +160,7 @@ const altHref = altLocalePath(path);
         <MailtoLink
           variant="button"
           subject={t('subject.assessment')}
-          class="!hidden !px-[18px] !py-[9px] !text-[13.5px] md:!inline-flex"
+          class="!hidden !px-[18px] !py-[9px] !text-[13.5px] lg:!inline-flex"
         >
           {t('cta.assessment')}
         </MailtoLink>
@@ -169,7 +174,7 @@ const altHref = altLocalePath(path);
           aria-label={t('nav.menu.open')}
           data-label-open={t('nav.menu.open')}
           data-label-close={t('nav.menu.close')}
-          class="flex h-10 w-10 items-center justify-center rounded-md text-navy transition-colors hover:bg-blue-wash md:hidden"
+          class="flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-navy transition-colors hover:bg-blue-wash lg:hidden"
         >
           <Menu data-nav-icon-open class="h-[22px] w-[22px]" stroke-width={1.5} aria-hidden="true" />
           <X data-nav-icon-close class="hidden h-[22px] w-[22px]" stroke-width={1.5} aria-hidden="true" />
@@ -183,16 +188,16 @@ const altHref = altLocalePath(path);
     id="nav-mobile-panel"
     data-nav-panel
     hidden
-    class="max-h-[calc(100dvh_-_var(--nav-offset))] overflow-y-auto border-b border-border bg-surface shadow-md md:hidden"
+    class="max-h-[calc(100dvh_-_var(--nav-offset))] overflow-y-auto border-b border-border bg-surface shadow-md lg:hidden"
   >
-    <ul class="mx-auto flex max-w-[1180px] flex-col gap-1 px-6 py-4">
+    <ul class="mx-auto flex max-w-[1180px] flex-col gap-1 px-4 py-4 sm:px-6">
       {
         navItems.map((item) =>
           item.children ? (
             <li>
               <a
                 href={item.href}
-                aria-current={inTree(item.href) ? 'page' : undefined}
+                aria-current={isActive(item.href) ? 'page' : undefined}
                 class:list={[
                   'block rounded-md px-3 py-3 text-[15px] transition-colors hover:bg-blue-wash',
                   inTree(item.href) ? 'font-semibold text-navy' : 'font-medium text-slate',
@@ -259,6 +264,7 @@ const altHref = altLocalePath(path);
     const iconClose = toggle.querySelector<SVGElement>('[data-nav-icon-close]');
 
     let open = false;
+    let desktop = window.innerWidth >= 1024;
     const set = (next: boolean) => {
       open = next;
       toggle.setAttribute('aria-expanded', String(open));
@@ -272,6 +278,11 @@ const altHref = altLocalePath(path);
     set(false);
 
     toggle.addEventListener('click', () => set(!open), { signal });
+    window.addEventListener('resize', () => {
+      const nextDesktop = window.innerWidth >= 1024;
+      if (nextDesktop !== desktop) set(false);
+      desktop = nextDesktop;
+    }, { signal });
     panel
       .querySelectorAll('a')
       .forEach((a) => a.addEventListener('click', () => set(false), { signal }));
@@ -289,28 +300,30 @@ const altHref = altLocalePath(path);
 
   document.addEventListener('astro:page-load', wireMobileNav);
 
-  // Desktop dropdowns: Escape dismisses an open panel (WCAG 1.4.13). Focus case
-  // → blur collapses :focus-within; hover case → inline-hide the panel until
-  // the pointer leaves the trigger group. Registered ONCE at module scope with
-  // event-time element resolution, so it survives View Transition swaps.
+  // Desktop dropdowns: Escape dismisses the panel and returns focus to its
+  // trigger. Inline hiding overrides :focus-within until focus/pointer leaves
+  // the group, then resets so the next interaction can open it normally.
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
     document.querySelectorAll<HTMLElement>('[data-nav-dropdown]').forEach((panel) => {
       const group = panel.closest<HTMLElement>('li');
       if (!group) return;
       const focused = document.activeElement instanceof HTMLElement && group.contains(document.activeElement);
-      if (focused) (document.activeElement as HTMLElement).blur();
-      if (group.matches(':hover')) {
+      if (focused || group.matches(':hover')) {
+        const trigger = group.querySelector<HTMLElement>('[data-nav-dropdown-trigger]');
         panel.style.visibility = 'hidden';
         panel.style.opacity = '0';
-        group.addEventListener(
-          'mouseleave',
-          () => {
-            panel.style.visibility = '';
-            panel.style.opacity = '';
-          },
-          { once: true }
-        );
+        panel.style.pointerEvents = 'none';
+        trigger?.focus({ preventScroll: true });
+        const reset = () => {
+          panel.style.visibility = '';
+          panel.style.opacity = '';
+          panel.style.pointerEvents = '';
+        };
+        group.addEventListener('focusout', (event) => {
+          if (!group.contains(event.relatedTarget as Node | null)) reset();
+        }, { once: true });
+        group.addEventListener('mouseleave', reset, { once: true });
       }
     });
   });

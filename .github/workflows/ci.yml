@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Use the repository Node version
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Report toolchain
+        run: |
+          node --version
+          npm --version
+
+      - name: Clean install
+        run: npm ci
+
+      - name: Validate dependency tree and risk register
+        run: |
+          npm ls
+          npm run audit:dependencies
+
+      - name: Install Chromium for browser QA
+        run: npx playwright install --with-deps chromium
+
+      - name: Run type, build, link, content and browser gates
+        run: npm run qa
+
+      - name: Retain browser audit reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-audit-${{ github.run_id }}
+          path: artifacts/
+          if-no-files-found: ignore
+          retention-days: 14

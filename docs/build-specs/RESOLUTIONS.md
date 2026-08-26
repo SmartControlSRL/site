@@ -47,9 +47,13 @@ Orchestrator rulings on every open question raised by the design extraction
     product hero demo CTAs → subject `Demo SEKNET` / `Demo S-VPN`. In-page
     secondary anchors (e.g. "vezi modulele") stay anchors. A product page keeps
     the export pattern: hero = demo ask, closing band = assessment ask.
-14. **Obfuscation**: use the `data-email-user/-domain` pattern + `initEmails`
-    everywhere (no raw address in static HTML). **Extend `initEmails`** to honor
-    a `data-email-subject` attribute (the one permitted motion.js change).
+14. **Resilient email links**: render a complete static `mailto:` destination
+    and a non-empty accessible name at every call site. Address-style links
+    also expose `office@smartcontrol.ro` as selectable text without JavaScript.
+    The `data-email-user/-domain/-subject` attributes and `initEmails` may stay
+    only as idempotent progressive enhancement; they must never replace or
+    regress the static fallback. The small scraper benefit of splitting the
+    address does not justify a broken no-JS contact path.
 15. **The decorative email `<input>` in CTA bands is REMOVED** (no-forms rule,
     a11y) — keep the pill shell + mailto button only.
 

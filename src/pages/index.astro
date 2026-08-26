@@ -34,7 +34,7 @@ const p = (path: string) => localizedPath(lang, path);
 const years = yearsInBusiness(new Date().getUTCFullYear());
 
 const title = 'Smart Control — Trusted Service Delivery Partner';
-const description = 'Infrastructură, networking, security și software enterprise, cu execuție 100% in-house și patru certificări ISO.';
+const description = 'Infrastructură, networking, security și software enterprise, cu livrare coordonată de echipa Smart Control și patru certificări ISO.';
 
 // — JSON-LD: Organization —
 const org = {
@@ -45,7 +45,7 @@ const org = {
   logo: 'https://smartcontrol.ro/smartcontrol-mark.png',
   foundingDate: '2003',
   description:
-    'Infrastructură, securitate și software enterprise, execuție 100% in-house.',
+    'Infrastructură, securitate și software enterprise, cu livrare coordonată de echipa Smart Control.',
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Intrarea Aviator Teodor Iliescu 37',
@@ -131,11 +131,11 @@ const stackLayers = [
 
 // Cloud & Modernization — 5-stage methodology, teaser pipeline.
 const cloudSteps = [
-  { title: 'Evaluare', sub: 'assessment 2 zile' },
+  { title: 'Evaluare', sub: 'assessment inițial' },
   { title: 'Re-arhitecturare', sub: 'design țintă' },
   { title: 'Containerizare', sub: 'K8s / OpenShift' },
-  { title: 'Migrare', sub: 'zero-downtime' },
-  { title: 'Validare ROI', sub: 'raport 90 zile' },
+  { title: 'Migrare', sub: 'plan de rollback' },
+  { title: 'Validare', sub: 'indicatori agreați' },
 ];
 
 const cloudRows = [
@@ -145,11 +145,11 @@ const cloudRows = [
   },
   {
     tag: 'K8S-READY',
-    body: 'Containerizare și migrare pe Kubernetes / OpenShift / AKS / GKE, cu zero-downtime.',
+    body: 'Containerizare și migrare pe Kubernetes / OpenShift / AKS / GKE, cu ferestre și rollback planificate.',
   },
   {
-    tag: 'ROI 90 ZILE',
-    body: 'Validarea investiției printr-un raport de performanță măsurat după 90 de zile în producție.',
+    tag: 'VALIDARE POST-LANSARE',
+    body: 'Validarea investiției prin indicatori și un interval de măsurare agreate pentru proiect.',
   },
 ];
 ---
@@ -175,22 +175,21 @@ const cloudRows = [
         class="hero-in-2 mt-7 max-w-[860px] text-[clamp(2.4rem,1.6rem+3.6vw,4rem)] font-extrabold leading-[1.08] tracking-[-2px] text-midnight"
       >
         Infrastructură. Securitate. Software.<br />
-        <span class="text-bright">Execuție 100% in-house.</span>
+        <span class="text-bright">Livrare coordonată de echipa noastră.</span>
       </h1>
 
       <p
         class="hero-in-3 mt-7 max-w-[600px] text-[18px] leading-[1.7] text-slate"
       >
         Smart Control construiește și operează infrastructuri IT complexe de peste {years} de ani,
-        pentru clienți locali și internaționali. Lucrăm exclusiv cu{' '}
-        <strong class="font-semibold text-navy">echipa proprie de experți</strong>, într-o abordare
-        consultativă: fiecare recomandare pleacă de la măsurători făcute în infrastructura
-        clientului.
+        pentru clienți locali și internaționali. Echipa Smart Control răspunde direct de livrare și
+        coordonează specialiștii și partenerii tehnologici necesari. Fiecare recomandare pleacă de
+        la măsurători făcute în infrastructura clientului.
       </p>
 
       <div class="hero-in-4 mt-[38px] flex flex-wrap items-center gap-[18px]">
         <MailtoLink variant="button" subject={t('subject.assessment')}>
-          Programează un assessment gratuit
+          {t('cta.assessment')}
         </MailtoLink>
         <TextLink href="#servicii">Vezi serviciile</TextLink>
       </div>
@@ -209,8 +208,8 @@ const cloudRows = [
           heading="Un portofoliu integrat de servicii enterprise"
           headingMaxWidth="700px"
         >
-          Patru piloni de servicii, susținuți de 50 de specialiști interni cu peste 500 de ani de
-          experiență cumulată — on-site și remote, același nivel de calitate.
+          Patru piloni de servicii, susținuți de o echipă internă multidisciplinară, disponibilă
+          on-site și remote, cu responsabilități clare pentru fiecare proiect.
         </SectionHeading>
       </div>
 
@@ -314,10 +313,10 @@ const cloudRows = [
     eyebrow="Stack Teardown"
     heading="Un singur partener, unic responsabil"
     layers={stackLayers}
-    note="SLA 24/7, end-to-end — zero pasare a responsabilității între furnizori."
+    note="Un punct de contact și responsabilități contractuale definite pentru fiecare proiect."
   >
     Acoperim întregul stack tehnologic — infrastructură, rețea, platforme și software — cu accent
-    deosebit pe securitate, sub un SLA unic, end-to-end.
+    deosebit pe securitate, cu niveluri de serviciu agreate pentru fiecare proiect.
   </StackTeardown>
 
   {/* ── SECTION 5 — Produse (DARK band) ── */}
@@ -461,12 +460,12 @@ const cloudRows = [
   <CtaBand
     id="contact"
     eyebrow="Pașii următori"
-    heading="Assessment inițial gratuit — 2 zile"
+    heading="Discutăm un assessment inițial"
     cta={t('cta.assessment')}
     subject={t('subject.assessment')}
     showContact={false}
   >
-    Fără obligații contractuale. Identificăm împreună zona de interes prioritară și livrăm un raport de
-    recomandări la final.
+    Clarificăm zona de interes prioritară, livrabilele și condițiile comerciale înainte de începerea
+    assessment-ului.
   </CtaBand>
 </BaseLayout>

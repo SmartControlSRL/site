@@ -79,7 +79,7 @@ Read `docs/SMC Web/ds/README.md` in full before building UI. The key constraints
 - **Romanian by default with mandatory diacritics** (ă â î ș ț — never ASCII fallback). EN versions carry an `_EN` suffix in the design system, but on the site they live under `/en/`.
 - Keep technical terms in English even inside RO copy (cloud, DevOps, Kubernetes, refactoring, smart contracts).
 - Reference the four service pillars by their exact Romanian names: **Infrastructură & Cloud · Securitate & Conformitate · Software & Automatizare · Servicii Gestionate**.
-- Canonical verbatim phrases: "Trusted Service Delivery Partner" (always English, italic with the logo), "echipă proprie, nu subcontractori", "cod sursă inclus", "abordare consultativă", "raport ROI la 90 de zile".
+- Canonical positioning: "Trusted Service Delivery Partner" (always English, italic with the logo) and "abordare consultativă". Delivery, source-code, SLA and ROI statements must use the scoped wording and approval status in `docs/build-specs/CLAIMS.md`; never turn them into universal guarantees.
 - Name compliance frameworks exactly ("NIS 2", "DORA", "GDPR", "ISO 27001") — never paraphrase.
 - Marketing bullets use the chevron `›` glyph, not `•` or `*`. **No emoji anywhere.**
 - Forbidden register: "soluții inovatoare", "de ultimă generație", "lider de piață", "transformare digitală" used alone, and hyping AI/blockchain without a concrete use case.
@@ -98,6 +98,6 @@ Read `docs/SMC Web/ds/README.md` in full before building UI. The key constraints
 - **"Asset Management" is a dropped product** (owner-confirmed 2026-06-12). It still appears in the design exports' footers/cross-sell cards — strip it everywhere; SEKNET cross-sells pair with S-VPN instead. Two products only: SEKNET, S-VPN.
 - **Build rulings for all open design questions live in `docs/build-specs/RESOLUTIONS.md`** — binding; it supersedes both the page specs and older lines in this file where they conflict (e.g. CTA wording is the exports' "Solicită un demo", not "Cere un demo"; export desktop sizing is canonical, not the larger web scale).
 
-## Trust stats to reuse
+## Claims and trust evidence
 
-650+ projects · 250+ clients · 25+ international · **20+ years (compute from the 2003 founding date — don't hardcode)** · 50 in-house specialists / 500+ cumulative years · **4 ISO certifications (9001 / 27001 / 14001 / 45001)** + GDPR / NIS2 / DORA (these three are regulatory frameworks, not ISO certs — render them distinct from the ISO roundels, in the reserved teal). Product spec headlines — SEKNET: 50k+ events/sec/node, <60s alerting, 99.9% uptime; S-VPN: 20 Gbps+, 10k+ IPSec tunnels, 400+ SSL, 200+ site-to-site.
+`docs/build-specs/CLAIMS.md` is the publication gate. The 2003 founding date may be used to compute years dynamically. Headcount, cumulative experience, project/client totals, commercial assessment terms, product performance figures and certification status require the evidence, scope, owner and review date recorded in that register before publication. GDPR / NIS 2 / DORA are regulatory frameworks, never certifications or ISO equivalents.

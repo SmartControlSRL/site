@@ -290,14 +290,15 @@ Props: `href`, `dark?`, `chevron?` (default true — appends `›`). Royal on li
 <MailtoLink variant="link" subject={t('subject.assessment')}>office@smartcontrol.ro</MailtoLink>
 ```
 Props: `subject?`, `variant: 'button'|'link'|'plain'`, `dark?`, `class?`,
-`user?`/`domain?` (default office@smartcontrol.ro). Emits the obfuscated
-`data-email-*` attrs; `initEmails` builds the mailto at runtime.
+`user?`/`domain?` (default office@smartcontrol.ro). Emits a complete static
+`mailto:` and visible address fallback; `data-email-*` remains available only
+for idempotent progressive enhancement.
 
 ---
 
 ## OG image
-`public/og.png` (1200×630): hero-gradient background, duotone mark, white
+`public/og-claims-safe.png` (1200×630): hero-gradient background, duotone mark, white
 "SmartControl" wordmark, sky italic "Trusted Service Delivery Partner" tagline +
-credentials line. Referenced by BaseLayout's `og:image`/`twitter:image` (absolute
+an ISO-only credentials line. Referenced by BaseLayout's `og:image`/`twitter:image` (absolute
 URL from `Astro.site`). Regenerate by rasterizing an SVG (gradient + embedded
 Inter woff2 + the duotone mark) with `sharp` — see the report; no Google CDN.

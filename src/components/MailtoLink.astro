@@ -1,9 +1,6 @@
 ---
-// Obfuscated mailto. Renders an <a> with data-email-user/-domain/-subject;
-// initEmails (wired in BaseLayout) joins them into a mailto: href + appends
-// ?subject= at runtime so no raw address sits in the static HTML (anti-scraper,
-// RESOLUTIONS §14). The visible text comes from the slot; leave the slot empty
-// to have initEmails fill the address itself.
+// Progressive-enhancement mail link. The static HTML is complete and usable;
+// data attributes remain only so initEmails can repair legacy/injected markup.
 import { EMAIL_USER, EMAIL_DOMAIN } from '../i18n/ui';
 
 interface Props {
@@ -28,6 +25,10 @@ const {
   domain = EMAIL_DOMAIN,
 } = Astro.props;
 
+const address = `${user}@${domain}`;
+const href = `mailto:${address}${subject ? `?subject=${encodeURIComponent(subject)}` : ''}`;
+const hasLabel = Astro.slots.has('default');
+
 const base =
   variant === 'button'
     ? 'inline-flex items-center justify-center rounded-md px-[22px] py-[11px] text-[14.5px] font-semibold transition-all'
@@ -48,11 +49,11 @@ const tone =
 ---
 
 <a
-  href="#"
+  href={href}
   data-email-user={user}
   data-email-domain={domain}
   data-email-subject={subject}
   class:list={[base, tone, extra]}
 >
-  <slot />
+  {hasLabel ? <slot /> : address}
 </a>

@@ -31,8 +31,8 @@ export function initCounters(root) {
 }
 
 export function initNavShrink(nav, opts={}) {
-  if (!nav) return () => {}; const big=opts.padBig||'18px 40px'; const small=opts.padSmall||'11px 40px';
-  const update=()=>{ const on=window.scrollY>24; nav.style.padding=on?small:big; nav.style.boxShadow=on?'0 2px 12px rgba(14,31,91,.08)':'none'; nav.style.borderBottomColor=on?'#E5E7EB':'transparent'; };
+  if (!nav) return () => {}; const big=opts.padBig||'18px'; const small=opts.padSmall||'11px';
+  const update=()=>{ const on=window.scrollY>24; nav.style.paddingBlock=on?small:big; nav.style.boxShadow=on?'0 2px 12px rgba(14,31,91,.08)':'none'; nav.style.borderBottomColor=on?'#E5E7EB':'transparent'; };
   window.addEventListener('scroll',update,{passive:true}); update(); return ()=>window.removeEventListener('scroll',update);
 }
 
@@ -40,13 +40,120 @@ export function initStepper(container, fill, opts={}) {
   if (!container||!fill) return ()=>{}; const dark=!!opts.dark; const steps=container.querySelectorAll('[data-step]');
   const update=()=>{ const rect=container.getBoundingClientRect(); const px=Math.max(0,Math.min(rect.height,window.innerHeight*.55-rect.top)); fill.style.height=`${px}px`;
     steps.forEach((step)=>{ const dot=step.querySelector('[data-step-dot]'); const body=step.querySelector('[data-step-body]'); const active=px>=step.offsetTop+(dot?dot.offsetTop+dot.offsetHeight/2:26)||reducedMotion();
-      if(dot){dot.style.borderColor=active?'#4487DC':(dark?'rgba(122,180,232,.25)':'#D6E8F7');dot.style.color=active?(dark?'#fff':'#0E1F5B'):(dark?'rgba(226,233,245,.45)':'#9CA3AF');dot.style.background=active?(dark?'rgba(68,135,220,.16)':'#EDF5FC'):(dark?'#040C2B':'#fff');}
-      if(body) body.style.opacity=active?'1':'.45'; }); };
+      step.dataset.stepState=active?'active':'inactive';
+      if(dot){dot.style.borderColor=active?'var(--color-bright)':(dark?'color-mix(in srgb,var(--color-sky) 55%,transparent)':'var(--color-border-blue)');dot.style.color=active?(dark?'var(--color-surface)':'var(--color-navy)'):(dark?'var(--color-on-dark)':'var(--color-royal)');dot.style.background=active?(dark?'color-mix(in srgb,var(--color-bright) 16%,transparent)':'var(--color-blue-wash)'):(dark?'var(--color-midnight)':'var(--color-surface)');dot.style.boxShadow=active?'0 0 0 3px color-mix(in srgb,var(--color-bright) 16%,transparent)':'none';}
+      if(body) body.style.removeProperty('opacity'); }); };
   window.addEventListener('scroll',update,{passive:true}); window.addEventListener('resize',update); update(); return()=>{window.removeEventListener('scroll',update);window.removeEventListener('resize',update);};
 }
 
+// StackTeardown uses one interaction model: four native disclosure buttons.
+// Tab follows document order and Enter/Space use native button behavior. The
+// decorative plates mirror state only. Ambient cycling pauses while pointer or
+// focus is inside, and any explicit selection pauses it until the user resumes.
+export function initStackTeardown(root) {
+  if (!root || root.dataset.sctdInit) return () => {};
+  root.dataset.sctdInit = '1';
+
+  const triggers = [...root.querySelectorAll('[data-sctd-trigger]')];
+  const rows = [...root.querySelectorAll('.sctd-row[data-layer]')];
+  const plates = [...root.querySelectorAll('.sctd-plate[data-layer]')];
+  const callouts = [...root.querySelectorAll('.sctd-callout[data-layer]')];
+  const cycleControl = root.querySelector('[data-sctd-cycle]');
+  const cycleLabel = cycleControl?.querySelector('[data-sctd-cycle-label]');
+  if (!triggers.length) {
+    delete root.dataset.sctdInit;
+    return () => {};
+  }
+  const cleanups = [];
+  let active = Math.max(0, triggers.findIndex((trigger) => trigger.getAttribute('aria-expanded') === 'true'));
+  let pointerInside = false;
+  let focusInside = root.contains(document.activeElement);
+  let userPaused = false;
+  let timer = 0;
+
+  const listen = (target, event, handler) => {
+    target?.addEventListener(event, handler);
+    cleanups.push(() => target?.removeEventListener(event, handler));
+  };
+  const syncCycleControl = () => {
+    if (!cycleControl || !cycleLabel) return;
+    cycleControl.setAttribute('aria-pressed', String(userPaused));
+    cycleLabel.textContent = userPaused
+      ? cycleControl.dataset.resumeLabel
+      : cycleControl.dataset.pauseLabel;
+  };
+  const apply = (next) => {
+    active = ((next % triggers.length) + triggers.length) % triggers.length;
+    for (const el of [...rows, ...plates, ...callouts]) {
+      const index = Number(el.dataset.layer);
+      el.classList.toggle('is-active', index === active);
+      el.classList.toggle('is-above', index < active);
+    }
+    triggers.forEach((trigger, index) => {
+      const expanded = index === active;
+      trigger.setAttribute('aria-expanded', String(expanded));
+      const panelId = trigger.getAttribute('aria-controls');
+      const panel = panelId ? root.querySelector(`#${CSS.escape(panelId)}`) : null;
+      if (panel) {
+        panel.hidden = !expanded;
+        panel.toggleAttribute('inert', !expanded);
+      }
+    });
+  };
+  const choose = (index) => {
+    userPaused = true;
+    const focusedPanel = document.activeElement?.closest?.('.sctd-panel');
+    if (focusedPanel && focusedPanel.id !== triggers[index]?.getAttribute('aria-controls')) {
+      triggers[index]?.focus({ preventScroll: true });
+    }
+    apply(index);
+    syncCycleControl();
+  };
+
+  triggers.forEach((trigger, index) => {
+    listen(trigger, 'click', () => choose(index));
+  });
+  listen(root, 'pointerenter', () => { pointerInside = true; });
+  listen(root, 'pointerleave', () => { pointerInside = false; });
+  listen(root, 'focusin', () => { focusInside = true; });
+  listen(root, 'focusout', (event) => { focusInside = root.contains(event.relatedTarget); });
+  listen(cycleControl, 'click', () => {
+    userPaused = !userPaused;
+    syncCycleControl();
+  });
+
+  if (!reducedMotion() && triggers.length > 1 && cycleControl) {
+    cycleControl.hidden = false;
+    timer = window.setInterval(() => {
+      if (!root.isConnected) {
+        window.clearInterval(timer);
+        timer = 0;
+      } else if (!pointerInside && !focusInside && !userPaused) {
+        apply(active + 1);
+      }
+    }, 3200);
+  }
+
+  apply(active);
+  syncCycleControl();
+  return () => {
+    if (timer) window.clearInterval(timer);
+    cleanups.forEach((cleanup) => cleanup());
+    delete root.dataset.sctdInit;
+  };
+}
+
 export function initEmails(root) {
-  root?.querySelectorAll('[data-email-user]').forEach((el)=>{ const address=`${el.getAttribute('data-email-user')}@${el.getAttribute('data-email-domain')}`; if(el.tagName==='A'){const subject=el.getAttribute('data-email-subject');el.setAttribute('href',`mailto:${address}${subject?`?subject=${encodeURIComponent(subject)}`:''}`);} if(!el.textContent.trim())el.textContent=address; });
+  root?.querySelectorAll('[data-email-user]').forEach((el)=>{
+    const user=el.getAttribute('data-email-user'),domain=el.getAttribute('data-email-domain');
+    if(!user||!domain)return;
+    const address=`${user}@${domain}`;
+    if(el.tagName==='A'&&(!el.getAttribute('href')||el.getAttribute('href')==='#')){
+      const subject=el.getAttribute('data-email-subject');
+      el.setAttribute('href',`mailto:${address}${subject?`?subject=${encodeURIComponent(subject)}`:''}`);
+    }
+    if(!el.textContent.trim()&&!el.getAttribute('aria-label'))el.textContent=address;
+  });
 }
 
 // Ambient console visual used in the homepage product band. The copy remains generic;

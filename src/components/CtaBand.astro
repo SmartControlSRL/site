@@ -5,7 +5,6 @@
 import SectionHeading from './SectionHeading.astro';
 import GridTexture from './GridTexture.astro';
 import MailtoLink from './MailtoLink.astro';
-import { EMAIL_USER, EMAIL_DOMAIN } from '../i18n/ui';
 
 interface Props {
   id?: string;
@@ -44,7 +43,7 @@ const { id, eyebrow, heading, cta, subject, showContact = true, class: extra = '
 
       {showContact && (
         <p class="mt-6 font-mono text-[13px] text-[rgba(226,233,245,0.55)]">
-          <span data-email-user={EMAIL_USER} data-email-domain={EMAIL_DOMAIN}></span> · www.smartcontrol.ro
+          <MailtoLink variant="plain" dark class="text-[rgba(226,233,245,0.72)] hover:text-white" /> · www.smartcontrol.ro
         </p>
       )}
     </div>

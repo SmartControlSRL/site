@@ -32,7 +32,7 @@ const p = (path: string) => localizedPath(lang, path);
 const years = yearsInBusiness(new Date().getUTCFullYear());
 
 const title = 'Smart Control — Trusted Service Delivery Partner';
-const description = 'Enterprise infrastructure, networking, security and software, with 100% in-house execution and four ISO certifications.';
+const description = 'Enterprise infrastructure, networking, security and software, delivered under Smart Control coordination with four ISO certifications.';
 
 // — JSON-LD: Organization (EN description) —
 const org = {
@@ -129,11 +129,11 @@ const stackLayers = [
 
 // Cloud & Modernization — 5-stage methodology, teaser pipeline.
 const cloudSteps = [
-  { title: 'Assessment', sub: '2-day assessment' },
+  { title: 'Assessment', sub: 'initial assessment' },
   { title: 'Re-architecture', sub: 'target design' },
   { title: 'Containerization', sub: 'K8s / OpenShift' },
-  { title: 'Migration', sub: 'zero-downtime' },
-  { title: 'ROI validation', sub: '90-day report' },
+  { title: 'Migration', sub: 'rollback plan' },
+  { title: 'Validation', sub: 'agreed indicators' },
 ];
 
 const cloudRows = [
@@ -143,11 +143,11 @@ const cloudRows = [
   },
   {
     tag: 'K8S-READY',
-    body: 'Containerization and migration to Kubernetes / OpenShift / AKS / GKE, with zero downtime.',
+    body: 'Containerization and migration to Kubernetes / OpenShift / AKS / GKE, with planned windows and rollback.',
   },
   {
-    tag: 'ROI 90 DAYS',
-    body: 'Validating the investment through a performance report measured after 90 days in production.',
+    tag: 'POST-LAUNCH VALIDATION',
+    body: 'Validating the investment against indicators and a measurement period agreed for the project.',
   },
 ];
 ---
@@ -173,22 +173,21 @@ const cloudRows = [
         class="hero-in-2 mt-7 max-w-[860px] text-[clamp(2.4rem,1.6rem+3.6vw,4rem)] font-extrabold leading-[1.08] tracking-[-2px] text-midnight"
       >
         Infrastructure. Security. Software.<br />
-        <span class="text-bright">Execution 100% in-house.</span>
+        <span class="text-bright">Delivery coordinated by our team.</span>
       </h1>
 
       <p
         class="hero-in-3 mt-7 max-w-[600px] text-[18px] leading-[1.7] text-slate"
       >
         Smart Control has been building and operating complex IT infrastructure for over {years}{' '}
-        years, for local and international clients. We work exclusively with our{' '}
-        <strong class="font-semibold text-navy">in-house team of experts</strong>, in a consultative
-        approach: every recommendation starts from measurements taken in the client's own
-        infrastructure.
+        years, for local and international clients. The Smart Control team remains directly
+        accountable for delivery and coordinates the specialists and technology partners each
+        project requires. Every recommendation starts from measurements in the client's own infrastructure.
       </p>
 
       <div class="hero-in-4 mt-[38px] flex flex-wrap items-center gap-[18px]">
         <MailtoLink variant="button" subject={t('subject.assessment')}>
-          Schedule a free assessment
+          {t('cta.assessment')}
         </MailtoLink>
         <TextLink href="#servicii">See services</TextLink>
       </div>
@@ -207,8 +206,8 @@ const cloudRows = [
           heading="An integrated portfolio of enterprise services"
           headingMaxWidth="700px"
         >
-          Four service pillars, backed by 50 in-house specialists with over 500 cumulative years of
-          experience — on-site and remote, the same level of quality.
+          Four service pillars, backed by a multidisciplinary internal team available on-site and
+          remotely, with clear responsibilities for every project.
         </SectionHeading>
       </div>
 
@@ -312,10 +311,10 @@ const cloudRows = [
     eyebrow="Stack Teardown"
     heading="One partner, single point of accountability"
     layers={stackLayers}
-    note="24/7 SLA, end-to-end — zero hand-offs of responsibility between vendors."
+    note="One point of contact and contractual responsibilities defined for each project."
   >
     We cover the entire technology stack — infrastructure, network, platforms and software — with a
-    particular focus on security, under a single end-to-end SLA.
+    particular focus on security, with service levels agreed for each project.
   </StackTeardown>
 
   {/* ── Products (DARK band) ── */}
@@ -457,12 +456,11 @@ const cloudRows = [
   <CtaBand
     id="contact"
     eyebrow="Next steps"
-    heading="Free initial assessment — 2 days"
+    heading="Discuss an initial assessment"
     cta={t('cta.assessment')}
     subject={t('subject.assessment')}
     showContact={false}
   >
-    No contractual obligations. Together we identify the priority area of interest and deliver a recommendations
-    report at the end.
+    We clarify the priority area, deliverables and commercial terms before the assessment begins.
   </CtaBand>
 </BaseLayout>

@@ -41,14 +41,14 @@ const { steps, active = 0, class: extra = '' } = Astro.props;
             class:list={[
               'relative z-[1] mx-auto mb-3.5 flex h-[34px] w-[34px] items-center justify-center rounded-full font-mono text-[13px]',
               i === active
-                ? 'bg-bright font-medium text-white [box-shadow:0_0_0_4px_rgba(68,135,220,0.14)]'
+                ? 'bg-royal font-medium text-white [box-shadow:0_0_0_4px_rgba(31,60,128,0.14)]'
                 : 'border-[1.5px] border-border-blue bg-surface text-cool',
             ]}
           >
             {String(i + 1).padStart(2, '0')}
           </span>
           <div class="font-sans text-[14.5px] font-semibold text-navy">{step.title}</div>
-          <div class="mt-1 font-mono text-[12px] text-faint">{step.sub}</div>
+          <div class="mt-1 font-mono text-[12px] text-cool">{step.sub}</div>
         </li>
       ))
     }

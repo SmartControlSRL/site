@@ -5,10 +5,10 @@
 // dots become sky (green is product-UI only), IBM Plex/Space Grotesk become the
 // site's Inter + JetBrains Mono, greys become warm-blue washes with navy-tinted
 // shadows, and body-size links render royal (AA). Four exploded isometric
-// plates (L4→L1) sync with accordion detail rows; hover previews a layer, click
-// pins it, and an ambient auto-cycle advances every 3.2s until the visitor
-// picks one (disabled under prefers-reduced-motion). Copy comes in via props so
-// RO / EN pages stay at full parity.
+// plates (L4→L1) mirror four native disclosure controls. The visual plates
+// stay decorative; an ambient auto-cycle can be paused and stops after the
+// visitor picks a layer (disabled under prefers-reduced-motion). Copy comes in
+// via props so RO / EN pages stay at full parity.
 import SectionHeading from './SectionHeading.astro';
 
 interface Layer {
@@ -19,7 +19,7 @@ interface Layer {
   chips: string[];
   href: string;
   linkLabel: string;
-  /** aria-label for the clickable plate */
+  /** Legacy accessible label retained in page data; visible button copy is canonical. */
   aria: string;
 }
 
@@ -30,6 +30,8 @@ interface Props {
   /** Exactly 4 layers, rendered top (L4) → bottom (L1). */
   layers: Layer[];
   note: string;
+  cyclePauseLabel?: string;
+  cycleResumeLabel?: string;
   id?: string;
   class?: string;
 }
@@ -39,6 +41,12 @@ const {
   heading,
   layers,
   note,
+  cyclePauseLabel = Astro.url.pathname.startsWith('/en')
+    ? 'Pause automatic cycling'
+    : 'Oprește parcurgerea automată',
+  cycleResumeLabel = Astro.url.pathname.startsWith('/en')
+    ? 'Resume automatic cycling'
+    : 'Reia parcurgerea automată',
   id = 'stack',
   class: extra = '',
 } = Astro.props;
@@ -68,7 +76,12 @@ const TOPS = [118, 202, 286, 370];
 
         {
           layers.map((layer, i) => (
-            <div class="sctd-callout" data-layer={i} style={`--top:${TOPS[i]}px`}>
+            <div
+              class:list={['sctd-callout', { 'is-active': i === 0 }]}
+              data-layer={i}
+              style={`--top:${TOPS[i]}px`}
+              aria-hidden="true"
+            >
               <span class="sctd-code">{layer.code}</span>
               <span class="sctd-dash" />
             </div>
@@ -77,13 +90,10 @@ const TOPS = [118, 202, 286, 370];
 
         {/* L4 · applications & automation — app windows + CI/CD pipeline */}
         <div
-          class="sctd-plate"
+          class="sctd-plate is-active"
           data-layer="0"
           style={`--top:${TOPS[0]}px;z-index:10`}
-          role="button"
-          tabindex="0"
-          aria-expanded="false"
-          aria-label={layers[0].aria}
+          aria-hidden="true"
         >
           <span class="sctd-inner"></span>
           <svg viewBox="0 0 280 280" fill="none" aria-hidden="true">
@@ -111,10 +121,7 @@ const TOPS = [118, 202, 286, 370];
           class="sctd-plate"
           data-layer="1"
           style={`--top:${TOPS[1]}px;z-index:9`}
-          role="button"
-          tabindex="0"
-          aria-expanded="false"
-          aria-label={layers[1].aria}
+          aria-hidden="true"
         >
           <span class="sctd-inner"></span>
           <svg viewBox="0 0 280 280" fill="none" aria-hidden="true">
@@ -154,10 +161,7 @@ const TOPS = [118, 202, 286, 370];
           class="sctd-plate"
           data-layer="2"
           style={`--top:${TOPS[2]}px;z-index:8`}
-          role="button"
-          tabindex="0"
-          aria-expanded="false"
-          aria-label={layers[2].aria}
+          aria-hidden="true"
         >
           <span class="sctd-inner"></span>
           <svg viewBox="0 0 280 280" fill="none" aria-hidden="true">
@@ -190,10 +194,7 @@ const TOPS = [118, 202, 286, 370];
           class="sctd-plate"
           data-layer="3"
           style={`--top:${TOPS[3]}px;z-index:7`}
-          role="button"
-          tabindex="0"
-          aria-expanded="false"
-          aria-label={layers[3].aria}
+          aria-hidden="true"
         >
           <span class="sctd-inner"></span>
           <svg viewBox="0 0 280 280" fill="none" aria-hidden="true">
@@ -231,18 +232,37 @@ const TOPS = [118, 202, 286, 370];
       {/* ══ Per-layer detail rows ══ */}
       <div class="sctd-rows">
         {
-          layers.map((layer, i) => (
-            <div class="sctd-row" data-layer={i} role="button" tabindex="0" aria-expanded="false">
-              <div class="sctd-rowhead">
-                <span class="sctd-code">{layer.code}</span>
-                <div>
-                  <div class="sctd-name">{layer.name}</div>
-                  <div class="sctd-desc">{layer.desc}</div>
-                </div>
-              </div>
-              {/* ships inert — collapsed content must not be tabbable (WCAG
-                  2.4.7); apply() lifts it on the active row */}
-              <div class="sctd-more" inert>
+          layers.map((layer, i) => {
+            const triggerId = `${id}-layer-${i + 1}-trigger`;
+            const panelId = `${id}-layer-${i + 1}-panel`;
+            const isActive = i === 0;
+            return (
+            <article class:list={['sctd-row', { 'is-active': isActive }]} data-layer={i}>
+              <h3>
+                <button
+                  id={triggerId}
+                  class="sctd-trigger"
+                  type="button"
+                  data-sctd-trigger
+                  data-layer={i}
+                  aria-expanded={isActive}
+                  aria-controls={panelId}
+                >
+                  <span class="sctd-code">{layer.code}</span>
+                  <span>
+                    <span class="sctd-name">{layer.name}</span>
+                    <span class="sctd-desc">{layer.desc}</span>
+                  </span>
+                </button>
+              </h3>
+              <div
+                id={panelId}
+                class="sctd-panel"
+                role="region"
+                aria-labelledby={triggerId}
+                hidden={!isActive}
+                inert={!isActive}
+              >
                 <div>
                   <div class="sctd-chips">
                     {layer.chips.map((chip) => (
@@ -254,10 +274,24 @@ const TOPS = [118, 202, 286, 370];
                   </a>
                 </div>
               </div>
-            </div>
-          ))
+            </article>
+            );
+          })
         }
-        <div class="sctd-note"><i class="sctd-dot sctd-dot--ops"></i>{note}</div>
+        <div class="sctd-controls">
+          <div class="sctd-note"><i class="sctd-dot sctd-dot--ops"></i>{note}</div>
+          <button
+            class="sctd-cycle"
+            type="button"
+            data-sctd-cycle
+            data-pause-label={cyclePauseLabel}
+            data-resume-label={cycleResumeLabel}
+            aria-pressed="false"
+            hidden
+          >
+            <span data-sctd-cycle-label>{cyclePauseLabel}</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -323,7 +357,7 @@ const TOPS = [118, 202, 286, 370];
     width: 280px;
     height: 280px;
     border-radius: var(--radius-lg);
-    cursor: pointer;
+    pointer-events: none;
     border: 1.5px solid var(--color-border-blue);
     background: rgba(255, 255, 255, 0.72);
     box-shadow: 0 18px 34px -24px rgba(14, 31, 91, 0.28);
@@ -388,9 +422,9 @@ const TOPS = [118, 202, 286, 370];
   }
   .sctd-callout.is-active .sctd-code,
   .sctd-row.is-active .sctd-code {
-    background: var(--color-bright);
+    background: var(--color-royal);
     color: #fff;
-    border-color: var(--color-bright);
+    border-color: var(--color-royal);
   }
   .sctd-callout.is-active .sctd-dash {
     border-color: color-mix(in srgb, var(--color-bright) 55%, transparent);
@@ -418,7 +452,6 @@ const TOPS = [118, 202, 286, 370];
     background: var(--color-surface);
     border-radius: var(--radius-md);
     padding: 16px 18px;
-    cursor: pointer;
     border: 1px solid var(--color-border);
     box-shadow: var(--shadow-xs);
     transition: all 0.3s;
@@ -427,39 +460,44 @@ const TOPS = [118, 202, 286, 370];
     border-color: var(--color-bright);
     box-shadow: 0 14px 34px -20px color-mix(in srgb, var(--color-bright) 40%, transparent);
   }
-  .sctd-rowhead {
+  .sctd-row h3 {
+    margin: 0;
+  }
+  .sctd-trigger {
+    width: 100%;
     display: flex;
     align-items: baseline;
     gap: 12px;
+    padding: 0;
+    border: 0;
+    color: inherit;
+    background: transparent;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
   }
-  .sctd-rowhead > div {
+  .sctd-trigger > span:last-child {
     flex: 1;
   }
+  .sctd-trigger:focus-visible,
+  .sctd-cycle:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--color-bright) 55%, transparent);
+    outline-offset: 4px;
+  }
   .sctd-name {
+    display: block;
     font-size: 16.5px;
     font-weight: 700;
     color: var(--color-navy);
   }
   .sctd-desc {
+    display: block;
     font-size: 13.5px;
     color: var(--color-cool);
     margin-top: 2px;
   }
-  .sctd-more {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.35s ease;
-  }
-  .sctd-more > div {
-    overflow: hidden;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .sctd-row.is-active .sctd-more {
-    grid-template-rows: 1fr;
-  }
-  .sctd-row.is-active .sctd-more > div {
-    opacity: 1;
+  .sctd-panel {
+    padding-left: 48px;
   }
   .sctd-chips {
     display: flex;
@@ -496,11 +534,34 @@ const TOPS = [118, 202, 286, 370];
     padding: 4px 4px 0;
     font-family: var(--font-mono);
     font-size: 12px;
-    color: var(--color-cool);
+    color: var(--color-slate);
   }
   .sctd-note .sctd-dot--ops {
     width: 7px;
     height: 7px;
+  }
+  .sctd-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .sctd-cycle {
+    border: 1px solid var(--color-border-blue);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    padding: 7px 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-royal);
+    cursor: pointer;
+  }
+  .sctd-cycle:hover {
+    border-color: var(--color-bright);
+    background: var(--color-blue-wash);
+    color: var(--color-navy);
   }
 
   /* ── responsive ── */
@@ -518,73 +579,17 @@ const TOPS = [118, 202, 286, 370];
       margin-bottom: -100px;
     }
   }
+  @media (max-width: 360px) {
+    .sctd-visual {
+      transform: scale(0.68);
+      margin-bottom: -145px;
+    }
+    .sctd-plate,
+    .sctd-spine {
+      left: 50%;
+    }
+    .sctd-panel {
+      padding-left: 0;
+    }
+  }
 </style>
-
-<script>
-  // Layer sync: hover previews, click/Enter pins (stops the ambient cycle),
-  // auto-advance every 3.2s until the visitor interacts. Reduced motion: no
-  // auto-cycle (transitions are already killed globally in global.css).
-  const initStackTeardown = () => {
-    document.querySelectorAll<HTMLElement>('[data-sctd]').forEach((root) => {
-      if (root.dataset.sctdInit) return;
-      root.dataset.sctdInit = '1';
-      const els = Array.from(root.querySelectorAll<HTMLElement>('[data-layer]'));
-      const count = new Set(els.map((el) => el.dataset.layer)).size;
-      let active = 0;
-      let hover = false;
-      let picked = false;
-      const apply = () => {
-        els.forEach((el) => {
-          const i = Number(el.dataset.layer);
-          const isActive = i === active;
-          el.classList.toggle('is-active', isActive);
-          el.classList.toggle('is-above', i < active);
-          // role="button" plates + rows expose expanded state to AT; collapsed
-          // row content leaves the tab order via inert (WCAG 2.4.7).
-          if (el.getAttribute('role') === 'button') el.setAttribute('aria-expanded', String(isActive));
-          const more = el.querySelector('.sctd-more');
-          if (more) more.toggleAttribute('inert', !isActive);
-        });
-      };
-      const set = (i: number, byUser: boolean) => {
-        if (byUser) picked = true;
-        if (i !== active) {
-          active = i;
-          apply();
-        }
-      };
-      els.forEach((el) => {
-        const i = Number(el.dataset.layer);
-        el.addEventListener('mouseenter', () => set(i, false));
-        el.addEventListener('click', () => set(i, true));
-        el.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            set(i, true);
-          }
-        });
-      });
-      root.addEventListener('mouseenter', () => {
-        hover = true;
-      });
-      root.addEventListener('mouseleave', () => {
-        hover = false;
-      });
-      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        const timer = window.setInterval(() => {
-          if (!root.isConnected) {
-            window.clearInterval(timer);
-            return;
-          }
-          if (!hover && !picked) {
-            active = (active + 1) % count;
-            apply();
-          }
-        }, 3200);
-      }
-      apply();
-    });
-  };
-  document.addEventListener('astro:page-load', initStackTeardown);
-  initStackTeardown();
-</script>
