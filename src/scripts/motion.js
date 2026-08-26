@@ -77,7 +77,6 @@ export function initStackTeardown(root) {
   };
   const syncCycleControl = () => {
     if (!cycleControl || !cycleLabel) return;
-    cycleControl.setAttribute('aria-pressed', String(userPaused));
     cycleLabel.textContent = userPaused
       ? cycleControl.dataset.resumeLabel
       : cycleControl.dataset.pauseLabel;

@@ -74,7 +74,7 @@ const altLang = lang === 'ro' ? 'en' : 'ro';
           <span class="text-[17px] font-bold tracking-[-0.3px] text-navy">Smart<span class="text-bright">Control</span></span>
           <span class="mt-[3px] flex items-center gap-1.5" aria-hidden="true">
             <span class="h-px w-4 shrink-0 bg-bright"></span>
-            <span class="font-mono text-[9px] font-semibold uppercase tracking-[2px] text-royal">DIN 2003</span>
+            <span class="font-mono text-[9px] font-semibold uppercase tracking-[2px] text-royal">IT ENTERPRISE</span>
           </span>
         </span>
       </a>
@@ -150,12 +150,11 @@ const altLang = lang === 'ro' ? 'en' : 'ro';
       <div class="flex shrink-0 items-center gap-3">
         <a
           href={altHref}
-          lang={altLang}
           hreflang={altLang}
           class="text-[13.5px] font-semibold text-cool transition-colors hover:text-navy"
           aria-label={t('lang.switch.aria')}
         >
-          {t('lang.switch')}
+          <span lang={altLang}>{t('lang.switch')}</span>
         </a>
         <MailtoLink
           variant="button"
@@ -314,7 +313,7 @@ const altLang = lang === 'ro' ? 'en' : 'ro';
         panel.style.visibility = 'hidden';
         panel.style.opacity = '0';
         panel.style.pointerEvents = 'none';
-        trigger?.focus({ preventScroll: true });
+        if (focused) trigger?.focus({ preventScroll: true });
         const reset = () => {
           panel.style.visibility = '';
           panel.style.opacity = '';

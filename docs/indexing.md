@@ -7,7 +7,7 @@ This document defines verifiable crawler behavior. It does not claim that the pr
 | Environment | Hosting contract | Indexing behavior | Source of truth |
 |---|---|---|---|
 | Vercel preview | Team validation only; never attach `smartcontrol.ro` | Every response includes `X-Robots-Tag: noindex` | `vercel.json` |
-| Production VPS | Company-operated EU VPS after an authorized rollout | Content pages are indexable; missing URLs return localized noindex HTML with status 404 | `deployment/nginx/` and `docs/deployment.md` |
+| Production VPS | Approved VPS after an authorized rollout | Approved content pages are indexable; privacy legal holds and missing URLs are noindex | `deployment/nginx/`, `BaseLayout.astro`, and `docs/deployment.md` |
 
 The Vercel rule is intentionally unconditional because Vercel is not a production target. Do not copy its `X-Robots-Tag` into Nginx and do not point the production domain at a Vercel preview.
 
@@ -26,8 +26,9 @@ The checker proves from repository state that:
 - Vercel applies an unconditional catch-all `X-Robots-Tag: noindex` header;
 - the production Nginx template contains no `X-Robots-Tag: noindex` directive;
 - Nginx preserves real 404 status and internal localized error documents;
-- all generated content routes have no meta noindex;
+- 18 approved content routes have no meta noindex;
 - canonical and RO/EN/x-default hreflang targets use `https://smartcontrol.ro` and resolve to generated pages;
+- the two bilingual privacy holding pages carry the legal-review marker and meta noindex, omit canonical/hreflang/og:url, and stay out of the sitemap;
 - both generated 404 documents contain meta noindex and omit canonical/hreflang;
 - `robots.txt` allows crawling and advertises the production sitemap index; and
 - sitemap contents exactly equal the generated indexable routes and exclude both 404 documents.
@@ -53,7 +54,7 @@ node scripts/verify-production.mjs https://smartcontrol.ro
 npm run verify:indexing -- --mode production --base https://smartcontrol.ro/
 ```
 
-The indexing verifier reads the live sitemap inventory, checks every listed page for status 200 and absence of header/meta noindex, validates canonical and hreflang origins and resolution, checks robots and child sitemaps, excludes error documents, and verifies RO/EN missing URLs return non-indexable 404 responses.
+The indexing verifier reads the live sitemap inventory, checks every listed page for status 200 and absence of header/meta noindex, validates canonical and hreflang origins and resolution, checks robots and child sitemaps, excludes error documents, and verifies RO/EN missing URLs return non-indexable 404 responses. The production verifier separately rejects a release while either privacy route still carries `pending-legal-review` or meta noindex. That failure is intentional until the evidence and bilingual notices are legally approved.
 
 Record the command output, timestamp, deployed release ID and operator in the approved change ticket. A failed production assertion is a launch/rollback blocker unless the infrastructure and website owners document a narrower understood exception.
 

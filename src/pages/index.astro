@@ -1,9 +1,9 @@
 ---
 // Home (RO) — /
 // Built 1:1 with docs/build-specs/home.md, applying RESOLUTIONS.md rulings:
-//  · ISO 27701 stripped (4 ISO badges only); legal frameworks excluded from marketing copy.
+//  · Claims without approved primary evidence are excluded from public copy.
 //  · "Asset Management" stripped — the Produse dual cards pair SEKNET ↔ S-VPN.
-//  · Years computed from 2003; © year dynamic (handled in Footer).
+//  · © year dynamic (handled in Footer).
 //  · No email inputs (no-forms); CTAs go straight to obfuscated mailto.
 //  · Body-size link text royal on light / sky on dark (AA) via TextLink/MailtoLink.
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -20,30 +20,22 @@ import MailtoLink from '../components/MailtoLink.astro';
 import SeknetConsole from '../components/SeknetConsole.astro';
 import CloudPipeline from '../components/CloudPipeline.astro';
 import StackTeardown from '../components/StackTeardown.astro';
-import {
-  getLangFromUrl,
-  useTranslations,
-  localizedPath,
-  yearsInBusiness,
-} from '../i18n/ui';
+import { getLangFromUrl, useTranslations, localizedPath } from '../i18n/ui';
 import { Server, ShieldCheck, Code, LifeBuoy, Shield, Lock } from '@lucide/astro';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const p = (path: string) => localizedPath(lang, path);
-const years = yearsInBusiness(new Date().getUTCFullYear());
-
 const title = 'Smart Control — Trusted Service Delivery Partner';
-const description = 'Infrastructură, networking, security și software enterprise, cu livrare coordonată de echipa Smart Control și patru certificări ISO.';
+const description = 'Infrastructură, networking, security și software enterprise, cu livrare coordonată de echipa Smart Control.';
 
 // — JSON-LD: Organization —
 const org = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'Smart Control SRL',
-  url: 'https://smartcontrol.ro',
+  url: 'https://smartcontrol.ro/',
   logo: 'https://smartcontrol.ro/smartcontrol-mark.png',
-  foundingDate: '2003',
   description:
     'Infrastructură, securitate și software enterprise, cu livrare coordonată de echipa Smart Control.',
   address: {
@@ -55,7 +47,7 @@ const org = {
   },
 };
 
-const isoBadges = ['ISO 9001', 'ISO 27001', 'ISO 14001', 'ISO 45001'];
+const deliveryAreas = ['Infrastructură', 'Securitate', 'Software', 'Servicii gestionate'];
 
 const partners = [
   'Hitachi Vantara',
@@ -181,8 +173,8 @@ const cloudRows = [
       <p
         class="hero-in-3 mt-7 max-w-[600px] text-[18px] leading-[1.7] text-slate"
       >
-        Smart Control construiește și operează infrastructuri IT complexe de peste {years} de ani,
-        pentru clienți locali și internaționali. Echipa Smart Control răspunde direct de livrare și
+        Smart Control construiește și operează infrastructuri IT complexe pentru clienți locali și
+        internaționali. Echipa Smart Control răspunde direct de livrare și
         coordonează specialiștii și partenerii tehnologici necesari. Fiecare recomandare pleacă de
         la măsurători făcute în infrastructura clientului.
       </p>
@@ -195,7 +187,7 @@ const cloudRows = [
       </div>
 
       <div class="hero-in-4 mt-10 flex flex-wrap gap-2.5">
-        {isoBadges.map((b) => <MonoPill class="!text-[13px] !px-3.5 !py-2 !tracking-[0.6px]">{b}</MonoPill>)}
+        {deliveryAreas.map((area) => <MonoPill class="!text-[13px] !px-3.5 !py-2 !tracking-[0.6px]">{area}</MonoPill>)}
       </div>
     </div>
   </header>
@@ -208,8 +200,8 @@ const cloudRows = [
           heading="Un portofoliu integrat de servicii enterprise"
           headingMaxWidth="700px"
         >
-          Patru piloni de servicii, susținuți de o echipă internă multidisciplinară, disponibilă
-          on-site și remote, cu responsabilități clare pentru fiecare proiect.
+          Patru piloni de servicii, coordonați de o echipă multidisciplinară, cu responsabilități
+          clare pentru fiecare proiect și colaborare on-site sau remote stabilită împreună.
         </SectionHeading>
       </div>
 

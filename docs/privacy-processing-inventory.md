@@ -5,6 +5,11 @@
 > Romanian or English privacy pages. A Romanian privacy lawyer must approve the
 > final notices after the responsible owners supply the external evidence below.
 
+The public routes now render minimal bilingual `pending-legal-review` holding
+pages. They are noindex, omit publication metadata, and are excluded from the
+sitemap. `scripts/verify-production.mjs` rejects production while that state
+remains; replacing it requires the completed approval record below.
+
 Prepared from the repository working tree on **2026-08-26** for issue #19. The
 review covers the website code, generated static output, Vercel preview guard,
 and the versioned-but-not-deployed EU VPS Nginx template. It does not inspect
@@ -35,7 +40,7 @@ procedures, contracts, or vendor portals.
 | `CODE-09` | No automated decision-making or profiling implementation was found in the website code. | The mailbox workflow and wider Smart Control business processes were not inspected; the responsible owner must confirm the organization-level statement. | Repository search; static architecture; no analytics/data-entry workflow |
 | `CODE-10` | No age gate, age field, parental-consent workflow, or other minors-verification control exists in the website code. | Legal wording about minors must describe the actual absence of a website mechanism and must not promise verification the site cannot perform. | No form/input workflow under `src/` |
 | `CODE-11` | The UI displays “Smart Control SRL”, a Bucharest contact address, and `office@smartcontrol.ro`. | UI content is not evidence that the name/address is the controller's exact registered identity or registered office. CUI, Trade Registry data, DPO and representative status are absent. | `src/i18n/ui.ts`; footer output |
-| `CODE-12` | The rights-exercise links now render complete static mailto URLs in both generated privacy pages and work without JavaScript. | Mailbox availability, authorization, routing, retention, and response procedure remain unverified. | `src/components/MailtoLink.astro`; `dist/confidentialitate/index.html`; `dist/en/privacy/index.html` |
+| `CODE-12` | The legal-review holding pages render complete static privacy-request mailto URLs in both languages and work without JavaScript. | Mailbox availability, authorization, routing, retention, rights procedure and approved notice wording remain unverified. | `src/components/MailtoLink.astro`; `dist/confidentialitate/index.html`; `dist/en/privacy/index.html` |
 
 Reproduce the absence checks from the repository root:
 

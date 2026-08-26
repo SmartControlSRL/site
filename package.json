@@ -17,6 +17,7 @@
     "check:email": "node scripts/check-email-links.mjs",
     "check:claims": "node scripts/check-claims.mjs",
     "check:deployment": "node scripts/check-nginx-config.mjs",
+    "check:nginx-runtime": "bash scripts/check-nginx-runtime.sh",
     "check:indexing": "node scripts/check-indexing-config.mjs",
     "check:stack-teardown": "node scripts/check-stack-teardown.mjs",
     "check:nav-responsive": "node scripts/check-nav-responsive.mjs",

@@ -32,13 +32,13 @@ export const ui = {
     'cta.demo.seknet': 'Solicită un demo',
     'cta.demo.svpn': 'Solicită un demo',
     // — Email subjects (routed inbound, RESOLUTIONS §13) —
-    'subject.assessment': 'Evaluare gratuită',
+    'subject.assessment': 'Solicitare assessment',
     'subject.demo.seknet': 'Demo SEKNET',
     'subject.demo.svpn': 'Demo S-VPN',
     // — Footer —
     'footer.tagline': 'Trusted Service Delivery Partner',
     'footer.blurb':
-      'Servicii IT enterprise și securitate cibernetică pentru companii din România și internațional, livrate integral de echipa noastră din 2003.',
+      'Servicii IT enterprise și securitate cibernetică pentru companii din România și internațional, coordonate de echipa Smart Control.',
     'footer.col.services': 'Servicii',
     'footer.col.solutions': 'Soluții',
     'footer.col.contact': 'Contact',
@@ -73,14 +73,13 @@ export const ui = {
     'cta.demo.seknet': 'Request a demo',
     'cta.demo.svpn': 'Request a demo',
     // Stays Romanian on EN pages too: the subject is a self-routing inbox
-    // token (RESOLUTIONS §13), same pattern as 'Demo SEKNET' / 'Demo S-VPN'
-    // being identical across locales.
-    'subject.assessment': 'Evaluare gratuită',
+    // token, like the product-demo subjects shared across locales.
+    'subject.assessment': 'Solicitare assessment',
     'subject.demo.seknet': 'Demo SEKNET',
     'subject.demo.svpn': 'Demo S-VPN',
     'footer.tagline': 'Trusted Service Delivery Partner',
     'footer.blurb':
-      'Enterprise IT services and cybersecurity for companies in Romania and abroad, delivered entirely by our own team since 2003.',
+      'Enterprise IT services and cybersecurity for companies in Romania and abroad, coordinated by the Smart Control team.',
     'footer.col.services': 'Services',
     'footer.col.solutions': 'Solutions',
     'footer.col.contact': 'Contact',
@@ -164,11 +163,3 @@ export function hreflangPair(pathname: string): { ro: string; en: string } {
 export const EMAIL_USER = 'office';
 export const EMAIL_DOMAIN = 'smartcontrol.ro';
 export const EMAIL = `${EMAIL_USER}@${EMAIL_DOMAIN}`;
-
-// Company founded in 2003 — compute years so the figure never goes stale.
-export const FOUNDED = 2003;
-export const yearsInBusiness = (now: number) => now - FOUNDED;
-// Stat-block decade floor (RESOLUTIONS §10): the "20+" figure stays the
-// computed floor — 2026 → 20, 2033 → 30.
-export const yearsDecadeFloor = (now: number) =>
-  Math.floor((now - FOUNDED) / 10) * 10;

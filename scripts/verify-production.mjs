@@ -35,6 +35,7 @@ const skipAlias = argv.includes('--skip-alias-host');
 const aliasHost = option('--alias-host') ?? `www.${base.hostname}`;
 const failures = [];
 let checks = 0;
+const EXPECTED_CSP = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; form-action 'none'";
 
 async function check(name, task) {
   try {
@@ -49,6 +50,36 @@ async function check(name, task) {
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
+}
+
+function normalizedDirectives(value) {
+  return value.trim().replace(/\s*;\s*/g, '; ').replace(/\s+/g, ' ');
+}
+
+function assertLegacyTlsRejected(version) {
+  return new Promise((resolve, reject) => {
+    let connected = false;
+    let timedOut = false;
+    const socket = connect({
+      host: base.hostname,
+      port: Number(base.port || 443),
+      servername: base.hostname,
+      minVersion: version,
+      maxVersion: version,
+      rejectUnauthorized: true,
+      timeout,
+    });
+    socket.once('secureConnect', () => {
+      connected = true;
+      socket.destroy();
+      reject(new Error(`${version} was accepted`));
+    });
+    socket.once('timeout', () => {
+      timedOut = true;
+      socket.destroy(new Error(`${version} probe timed out`));
+    });
+    socket.once('error', (error) => (connected || timedOut) ? reject(error) : resolve());
+  });
 }
 
 async function request(url, init = {}) {
@@ -108,6 +139,10 @@ await check('TLS certificate and protocol', () => new Promise((resolve, reject) 
   socket.once('error', reject);
 }));
 
+for (const version of ['TLSv1', 'TLSv1.1']) {
+  await check(`${version} is rejected`, () => assertLegacyTlsRejected(version));
+}
+
 await check('HTTP redirects once to the canonical HTTPS origin', async () => {
   const url = new URL(base);
   url.protocol = 'http:';
@@ -136,19 +171,18 @@ await check('homepage status, indexing and security headers', async () => {
   homepageHtml = await homepageResponse.text();
 
   const headers = homepageResponse.headers;
-  assert(headers.get('strict-transport-security')?.includes('max-age=31536000'), 'HSTS missing');
+  const hsts = headers.get('strict-transport-security')?.toLowerCase().replace(/\s/g, '');
+  assert(hsts === 'max-age=31536000;includesubdomains', `HSTS mismatch: ${hsts || '<missing>'}`);
   assert(headers.get('x-content-type-options')?.toLowerCase() === 'nosniff', 'nosniff missing');
   assert(headers.get('x-frame-options')?.toUpperCase() === 'DENY', 'X-Frame-Options missing');
   assert(headers.get('referrer-policy') === 'strict-origin-when-cross-origin', 'Referrer-Policy mismatch');
+  assert(headers.get('cross-origin-opener-policy')?.toLowerCase() === 'same-origin', 'Cross-Origin-Opener-Policy mismatch');
   assert(headers.get('permissions-policy')?.includes('camera=()'), 'Permissions-Policy missing');
   assert(!headers.get('x-robots-tag')?.toLowerCase().includes('noindex'), 'production header is noindex');
   assert(!/<meta(?=[^>]*name=["']robots["'])(?=[^>]*content=["'][^"']*noindex)/i.test(homepageHtml), 'production HTML is noindex');
 
   const csp = headers.get('content-security-policy-report-only') ?? '';
-  for (const directive of [
-    'default-src', 'script-src', 'style-src', 'img-src', 'font-src',
-    'connect-src', 'frame-ancestors', 'base-uri', 'object-src', 'form-action',
-  ]) assert(csp.includes(`${directive} `), `CSP report-only missing ${directive}`);
+  assert(normalizedDirectives(csp) === normalizedDirectives(EXPECTED_CSP), `CSP report-only mismatch: ${csp || '<missing>'}`);
 });
 
 await check('HTML revalidates', async () => {
@@ -204,6 +238,16 @@ for (const [locale, path, lang, marker] of [
     assert(new RegExp(`<html\\s+lang=["']${lang}["']`).test(html), `lang=${lang} missing`);
     assert(html.includes(marker), `localized marker “${marker}” missing`);
     assert(/<meta(?=[^>]*name=["']robots["'])(?=[^>]*content=["']noindex["'])/i.test(html), '404 noindex missing');
+  });
+}
+
+for (const path of ['/confidentialitate/', '/en/privacy/']) {
+  await check(`${path} is approved for publication`, async () => {
+    const response = await request(new URL(path, base), { redirect: 'error' });
+    const html = await response.text();
+    assert(response.status === 200, `returned ${response.status}`);
+    assert(!html.includes('data-privacy-status="pending-legal-review"'), 'legal-review holding marker is still deployed');
+    assert(!/<meta(?=[^>]*name=["']robots["'])(?=[^>]*content=["'][^"']*noindex)/i.test(html), 'privacy notice is still noindex');
   });
 }
 

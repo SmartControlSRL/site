@@ -119,7 +119,8 @@ async function checkNavigationSemantics(page, base, width) {
 
     const switchLink = page.locator('nav a[hreflang]').first();
     assert(await switchLink.getAttribute('href') === testCase.alt, `${testCase.path}: non-canonical language-switch target`);
-    assert(await switchLink.getAttribute('lang') === testCase.altLang, `${testCase.path}: incorrect switch lang`);
+    assert(await switchLink.getAttribute('lang') === null, `${testCase.path}: destination language leaks into the localized accessible name`);
+    assert(await switchLink.locator('[lang]').getAttribute('lang') === testCase.altLang, `${testCase.path}: visible switch token has incorrect lang`);
     assert(await switchLink.getAttribute('hreflang') === testCase.altLang, `${testCase.path}: incorrect switch hreflang`);
     assert(await switchLink.getAttribute('aria-label') === testCase.label, `${testCase.path}: incorrect localized accessible name`);
     assert((await switchLink.getAttribute('aria-label'))?.includes(testCase.token), `${testCase.path}: visible language token absent from accessible name`);
@@ -154,6 +155,15 @@ async function checkFocusAndResize(page, base) {
   await page.waitForTimeout(100);
   assert(await toggle.getAttribute('aria-expanded') === 'false' && await mobilePanel.isHidden(), 'desktop breakpoint crossing did not reset mobile panel');
   assert(await page.locator('body').evaluate((body) => body.style.overflow === ''), 'desktop breakpoint crossing left body scroll locked');
+
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto(base + '/servicii/cloud/', { waitUntil: 'networkidle' });
+  const languageSwitch = page.locator('nav a[hreflang]').first();
+  const hoverOnlyTrigger = page.locator('[data-nav-dropdown-trigger][href="/servicii/"]');
+  await languageSwitch.focus();
+  await hoverOnlyTrigger.hover();
+  await page.keyboard.press('Escape');
+  assert(await languageSwitch.evaluate((element) => document.activeElement === element), 'desktop Escape stole focus from an unrelated control');
 }
 
 async function checkBreakpointsAndFooter(page, base) {

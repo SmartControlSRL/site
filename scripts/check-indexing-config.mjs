@@ -71,8 +71,10 @@ assert(/location\s+=\s+\/en\/404\/index\.html\s*{\s*internal;/s.test(nginx), 'pr
 
 const htmlFiles = (await filesBelow(DIST)).filter((file) => file.endsWith('.html'));
 const errorRoutes = new Set(['/404', '/en/404/']);
-const contentFiles = htmlFiles.filter((file) => !errorRoutes.has(routeOf(file)));
+const legalHoldRoutes = new Set(['/confidentialitate/', '/en/privacy/']);
+const contentFiles = htmlFiles.filter((file) => !errorRoutes.has(routeOf(file)) && !legalHoldRoutes.has(routeOf(file)));
 const generatedUrls = new Set(contentFiles.map((file) => `${PRODUCTION_ORIGIN}${routeOf(file)}`));
+let topLevelStructuredUrls = 0;
 
 for (const file of contentFiles) {
   const route = routeOf(file);
@@ -82,6 +84,22 @@ for (const file of contentFiles) {
   const canonical = links.find((tag) => attribute(tag, 'rel')?.toLowerCase() === 'canonical');
   const canonicalHref = canonical && attribute(canonical, 'href');
   assert(canonicalHref === `${PRODUCTION_ORIGIN}${route}`, `${route}: canonical must equal the production route`);
+
+  for (const match of html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
+    let data;
+    try {
+      data = JSON.parse(match[1]);
+    } catch {
+      assert(false, `${route}: JSON-LD is not valid JSON`);
+      continue;
+    }
+    const documents = Array.isArray(data) ? data : [data];
+    for (const document of documents) {
+      if (!['Organization', 'Service', 'Product'].includes(document?.['@type'])) continue;
+      topLevelStructuredUrls += 1;
+      assert(document.url === canonicalHref, `${route}: top-level ${document['@type']} JSON-LD url must equal canonical (${document.url ?? '<missing>'})`);
+    }
+  }
 
   const alternates = links.filter((tag) => attribute(tag, 'rel')?.toLowerCase() === 'alternate' && attribute(tag, 'hreflang'));
   for (const language of ['ro', 'en', 'x-default']) {
@@ -104,6 +122,17 @@ for (const [route, path] of [
   assert(!linkTags(html).some((tag) => ['canonical', 'alternate'].includes(attribute(tag, 'rel')?.toLowerCase())), `${route}: error document must not emit canonical/hreflang links`);
 }
 
+for (const route of legalHoldRoutes) {
+  const path = route === '/confidentialitate/'
+    ? resolve(DIST, 'confidentialitate/index.html')
+    : resolve(DIST, 'en/privacy/index.html');
+  const html = await readFile(path, 'utf8');
+  assert(html.includes('data-privacy-status="pending-legal-review"'), `${route}: legal hold marker is missing`);
+  assert(hasNoindexMeta(html), `${route}: legal hold page must contain meta noindex`);
+  assert(!linkTags(html).some((tag) => ['canonical', 'alternate'].includes(attribute(tag, 'rel')?.toLowerCase())), `${route}: legal hold page must not emit canonical/hreflang links`);
+  assert(!/<meta\b[^>]*property=["']og:(?:locale:alternate|url)["'][^>]*>/i.test(html), `${route}: legal hold page must not emit route sharing metadata`);
+}
+
 const robots = await readFile(resolve(DIST, 'robots.txt'), 'utf8');
 assert(/^\s*Allow:\s*\/\s*$/im.test(robots), 'robots.txt must allow production crawling');
 assert(!/^\s*Disallow:\s*\/\s*$/im.test(robots), 'robots.txt must not block the production site');
@@ -120,6 +149,7 @@ for (const location of sitemapLocations) {
   for (const match of child.matchAll(/<loc>([^<]+)<\/loc>/g)) sitemapUrls.add(match[1]);
 }
 assert(![...sitemapUrls].some((url) => /\/(?:en\/)?404\/?$/.test(new URL(url).pathname)), '404 documents must be absent from sitemap contents');
+assert(![...sitemapUrls].some((url) => legalHoldRoutes.has(new URL(url).pathname)), 'legal hold pages must be absent from sitemap contents');
 assert(sitemapUrls.size === generatedUrls.size && [...generatedUrls].every((url) => sitemapUrls.has(url)), 'sitemap contents must exactly match generated indexable routes');
 
 if (failures.length) {
@@ -127,4 +157,4 @@ if (failures.length) {
   process.exit(1);
 }
 console.log(`OK: preview and production indexing contracts passed ${checks} local assertions`);
-console.log(`OK: ${contentFiles.length} indexable routes; ${errorRoutes.size} localized noindex error documents`);
+console.log(`OK: ${contentFiles.length} indexable routes; ${legalHoldRoutes.size} legal holds; ${errorRoutes.size} localized error documents; ${topLevelStructuredUrls} structured-data URLs`);

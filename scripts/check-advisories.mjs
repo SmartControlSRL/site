@@ -6,7 +6,7 @@ import { spawnSync } from 'node:child_process';
 
 const policyPath = process.argv[2] || 'config/dependency-risk-acceptance.json';
 const policy = JSON.parse(await readFile(policyPath, 'utf8'));
-const requiredFields = ['id', 'package', 'severity', 'affectedPath', 'reachability', 'exposure', 'rationale', 'owner', 'reviewBy'];
+const requiredFields = ['id', 'package', 'severity', 'affectedRange', 'affectedPath', 'reachability', 'exposure', 'rationale', 'owner', 'reviewBy'];
 const today = new Date().toISOString().slice(0, 10);
 
 function npmAudit(extraArgs = []) {
@@ -57,6 +57,20 @@ const production = npmAudit(['--omit=dev']);
 const current = advisoriesIn(full);
 const unknown = [...current.keys()].filter((id) => !policyById.has(id));
 const productionCount = production.metadata?.vulnerabilities?.total ?? 0;
+
+for (const [id, advisory] of current) {
+  const acceptance = policyById.get(id);
+  if (!acceptance) continue;
+  if (acceptance.package !== advisory.name) {
+    policyErrors.push(`${id}: package drifted from ${acceptance.package} to ${advisory.name}`);
+  }
+  if (acceptance.severity.toLowerCase() !== advisory.severity.toLowerCase()) {
+    policyErrors.push(`${id}: severity drifted from ${acceptance.severity} to ${advisory.severity}`);
+  }
+  if (acceptance.affectedRange !== advisory.range) {
+    policyErrors.push(`${id}: affected range drifted from ${acceptance.affectedRange} to ${advisory.range}`);
+  }
+}
 
 console.log(`Dependency audit: ${full.metadata?.vulnerabilities?.total ?? 0} vulnerable packages, ${current.size} advisory IDs`);
 console.log(`Production-omitted audit: ${productionCount} vulnerable packages`);

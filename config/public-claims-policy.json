@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "register": "docs/build-specs/CLAIMS.md",
+  "reviewOwner": "Commercial and legal owners",
+  "reviewBy": "Before production publication",
+  "scanTargets": [
+    "src",
+    "CLAUDE.md",
+    "docs/build-specs/RESOLUTIONS.md",
+    "docs/build-specs/foundation.md",
+    "dist"
+  ],
+  "socialAsset": {
+    "path": "public/og-public.png",
+    "sha256": "5dd1d96b8b1ee12ffa958c7958889dd00ef849911f1bb1828cdc8bcf6e4fb66b",
+    "bindingSource": "src/layouts/BaseLayout.astro"
+  },
+  "claims": [
+    {
+      "id": "C-001",
+      "status": "blocked",
+      "reason": "Founding date and tenure lack approved primary evidence.",
+      "patterns": ["\\b2003\\b", "(?:fondat[ăa]|founded|din)\\s+(?:în\\s+)?2003"]
+    },
+    {
+      "id": "C-002",
+      "status": "blocked",
+      "reason": "Certification claims lack current certificates, scopes, expiry dates and approval.",
+      "patterns": [
+        "(?:four|4|patru)\\s+(?:ISO\\s+)?(?:certifications?|certified\\s+management\\s+systems?|certificări|sisteme\\s+de\\s+management\\s+certificate)",
+        "ISO\\s*9001[\\s\\S]{0,160}ISO\\s*27001[\\s\\S]{0,160}ISO\\s*14001[\\s\\S]{0,160}ISO\\s*45001"
+      ],
+      "publicOnlyPatterns": ["ISO\\s*27701"]
+    },
+    {
+      "id": "C-003",
+      "status": "blocked",
+      "reason": "Project and client totals lack approved CRM evidence.",
+      "patterns": ["650\\+\\s+(?:proiecte|projects)", "250\\+\\s+(?:clienți|clients)", "25\\+\\s+(?:clienți\\s+internaționali|international\\s+clients)"]
+    },
+    {
+      "id": "C-004",
+      "status": "blocked",
+      "reason": "Headcount and cumulative experience lack HR approval.",
+      "patterns": ["50\\s+(?:de\\s+)?(?:specialiști|in-house\\s+specialists)", "500\\+?\\s+(?:de\\s+)?(?:ani|cumulative\\s+years)"]
+    },
+    {
+      "id": "C-005/C-006",
+      "status": "blocked",
+      "reason": "Product metrics require versioned evidence and approval before publication.",
+      "patterns": ["(?:alertăm\\s+în\\s+sub|alert\\s+in\\s+under)\\s+60\\s+(?:de\\s+)?sec", "guaranteed\\s+metrics", "metrici\\s+garantate"]
+    },
+    {
+      "id": "C-007/C-008",
+      "status": "blocked",
+      "reason": "Absolute delivery and source-code promises exceed the approved contract-scoped wording.",
+      "patterns": [
+        "(?:execuție|execution)\\s+100%\\s+in-house",
+        "delivered\\s+entirely\\s+by\\s+our\\s+own\\s+team",
+        "every\\s+pillar\\s+is\\s+delivered\\s+by\\s+our\\s+in-house\\s+team",
+        "livrat[ăe]?\\s+integral\\s+de\\s+echipa\\s+noastră",
+        "zero[- ]downtime",
+        "zero\\s+(?:hand-offs?|pasare)",
+        "(?:sla\\s+24/7|24/7\\s+sla)",
+        "cod\\s+sursă\\s+inclus\\s+pentru\\s+fiecare\\s+proiect",
+        "source\\s+code\\s+included\\s+with\\s+every\\s+project"
+      ]
+    },
+    {
+      "id": "C-009",
+      "status": "blocked",
+      "reason": "Assessment price, duration and availability lack current commercial/legal approval.",
+      "patterns": [
+        "evaluare\\s+gratuită",
+        "assessment(?:-ul|\\s+inițial)?\\s+gratuit[ă]?",
+        "free\\s+(?:initial\\s+)?(?:2-day\\s+)?assessment",
+        "2\\s+(?:zile|days)[\\s·—-]+(?:gratuit|free)"
+      ]
+    }
+  ],
+  "scopedCopy": [
+    {
+      "id": "C-007",
+      "status": "scoped-copy",
+      "wording": "Service levels and indicators are agreed contractually."
+    },
+    {
+      "id": "C-008",
+      "status": "scoped-copy",
+      "wording": "Source-code access is defined for applicable software deliverables."
+    }
+  ]
+}

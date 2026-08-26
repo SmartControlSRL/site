@@ -42,30 +42,17 @@ preview/production indexing separation, and both built error documents. It is a
 fast static gate; production still requires the native `nginx -t` command.
 
 When Docker is available, the exact shared serving rules can also be exercised
-without root or TLS. The stock image provides nginx and the expected MIME map:
+without root or TLS. The script uses the official Nginx 1.28.0 Alpine image
+pinned by registry digest, runs `nginx -t`, starts a rootless server, tests
+representative routes and localized errors, and cleans up the container:
 
 ```bash
-docker run --rm --name smartcontrol-nginx-smoke -p 8080:8080 \
-  -v "$PWD/dist:/srv/site:ro" \
-  -v "$PWD/deployment/nginx:/etc/nginx/smartcontrol:ro" \
-  -v "$PWD/deployment/nginx/local-smoke.conf:/etc/nginx/conf.d/default.conf:ro" \
-  nginx:1.30.4-alpine
-```
-
-From a second shell, check representative behavior:
-
-```bash
-curl -sS -I http://127.0.0.1:8080/
-curl -sS -I http://127.0.0.1:8080/servicii
-curl -sS -I http://127.0.0.1:8080/_astro/does-not-exist.js
-curl -sS -o /dev/null -w '%{http_code}\n' http://127.0.0.1:8080/missing-ro
-curl -sS -o /dev/null -w '%{http_code}\n' http://127.0.0.1:8080/en/missing-en
+npm run check:nginx-runtime
 ```
 
 Expected results are a `200` homepage, one redirect from `/servicii` to
-`/servicii/`, and genuine `404` responses for all three missing resources. The
-two missing-page response bodies must contain `lang="ro"` and `lang="en"`
-respectively. HSTS and TLS are intentionally absent from this HTTP-only harness.
+`/servicii/`, and genuine localized `404` responses in both languages. HSTS and
+TLS are intentionally absent from this HTTP-only harness.
 
 ## Production prerequisites
 
@@ -73,7 +60,7 @@ The infrastructure operator must confirm all of the following before changing
 the active site:
 
 1. The VPS is company-controlled and located in the approved EU datacenter.
-2. Nginx is 1.30.4+ or a supported distribution package with equivalent
+2. Nginx is 1.28.0+ or a supported distribution package with equivalent
    security backports, TLS 1.3 and variable `error_page` URI support.
 3. DNS for `smartcontrol.ro` and `www.smartcontrol.ro` resolves to the VPS.
 4. The existing certificate covers both names and has more than 14 days left.
@@ -97,6 +84,7 @@ example the full Git commit SHA). Never build as root.
 npm ci
 npm run qa:static
 node scripts/check-nginx-config.mjs
+npm run check:nginx-runtime
 rsync -a --delete dist/ deploy@VPS_HOST:/var/www/smartcontrol.ro/releases/RELEASE_ID/
 rsync -a \
   deployment/nginx/maps.conf \
@@ -159,11 +147,13 @@ Run the post-deployment verifier from a network outside the VPS:
 node scripts/verify-production.mjs https://smartcontrol.ro
 ```
 
-It checks TLS, deterministic HTTP and host redirects, security headers, gzip or
-Brotli, cache classes, trailing slashes, production indexability, and localized
-RO/EN 404 bodies with a real `404` status. It performs network requests only to
-the explicitly supplied origin. A successful run and timestamp belong in the
-change ticket; this repository does not contain production credentials.
+It checks the certificate, TLS 1.2/1.3 acceptance and TLS 1.0/1.1 rejection,
+deterministic redirects, exact HSTS/CSP/COOP and companion security headers,
+gzip or Brotli, cache classes, trailing slashes, production indexability, and
+localized RO/EN 404 bodies with a real `404` status. It also fails while either
+privacy route remains a legal-review holding page. That is an intentional launch
+blocker until the evidence pack and bilingual notices are approved. The command
+requests only the explicitly supplied origin.
 
 ## Rollback
 

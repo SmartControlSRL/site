@@ -10,9 +10,10 @@
 | `npm run build` | Production static generation |
 | `npm run check:links` | Internal links, fragments, hreflang, RO/EN parity, sitemap and the #26-approved 404 contract |
 | `npm run check:email` | Resilient contact addresses and `mailto:` targets in generated HTML |
-| `npm run check:claims` | Approved public claims and banned/stale wording |
+| `npm run check:claims` | Registry-driven blocked claims across binding sources and generated output, plus the approved social-card hash |
 | `npm run check:deployment` | Versioned Nginx structure, security/cache/error rules and preview/production separation |
-| `npm run check:indexing` | Preview/production header configuration, generated canonicals/hreflang, robots, sitemap and noindex error documents |
+| `npm run check:nginx-runtime` | Native pinned Nginx `-t`, route/redirect behavior, and localized 404 smoke tests in Docker (CI) |
+| `npm run check:indexing` | Preview/production headers, structured-data URL parity, canonicals/hreflang, sitemap, legal holds and noindex error documents |
 | `npm run check:stack-teardown` | Native disclosure semantics, focus-safe cycling, pause/reduced-motion behavior and 320/390/1280px geometry |
 | `npm run check:nav-responsive` | Navigation semantics/focus, localized language links, breakpoints, service CTAs, footer tracks and meaningful overflow |
 | `npm run audit:site` | Generated-route HTTP, contrast, performance and browser smoke coverage |
@@ -25,6 +26,10 @@ The only current contrast exemption is the bright-blue `Control` portion of the 
 The audit expects generated `/404` and `/en/404/` documents to return HTTP 404. Their parity, metadata, sitemap and linking rules are owned by `scripts/check-links.mjs`. Navigation errors, unexpected status codes, browser page errors, missing LCP and smoke-test failures are blocking.
 
 `npm run qa:browser` runs the two focused component regressions before the all-route browser audit. All three browser checks are part of `npm run qa` and therefore block CI.
+
+CI additionally runs `npm run check:nginx-runtime` after the build. The image is
+the official stable Alpine Nginx release pinned by registry digest, so tag drift
+cannot change the tested runtime.
 
 Reports are written below `artifacts/` and uploaded for 14 days even when CI fails. For a real post-deployment target, first build locally so route discovery remains authoritative, then run:
 

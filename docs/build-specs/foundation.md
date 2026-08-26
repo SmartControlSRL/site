@@ -20,18 +20,17 @@ each data-attr does), the i18n helpers, and the rules every page coder obeys.
    `data-email-user`/`data-email-domain` pattern (contact lines). `initEmails`
    (auto-wired) fills the href + text at runtime and appends `?subject=` from
    `data-email-subject`.
-3. **Bans (CLAUDE.md / RESOLUTIONS §9):** strip **ISO 27701** everywhere (only 4
-   ISO badges: 9001 / 27001 / 14001 / 45001). Strip **Asset Management** entirely
-   (no card, no footer link, no cross-sell). SEKNET cross-sells pair with
-   **S-VPN**.
+3. **Bans (CLAIMS.md / RESOLUTIONS §9):** strip all unapproved certification,
+   founding/tenure, headcount and commercial-offer claims. Strip **Asset
+   Management** entirely (no card, no footer link, no cross-sell). SEKNET
+   cross-sells pair with **S-VPN**.
 4. **AA link text (RESOLUTIONS §22):** body-size link TEXT is royal
    (`text-royal` `#1F3C80`) on light, sky (`text-sky`) on dark. Bright
    (`#4487DC`) is ONLY for rules, eyebrows, large display headings, accent
    glyphs — never readable link text on white. `<TextLink>` and `<MailtoLink>`
    already do this.
-5. **Recompute stale figures (RESOLUTIONS §10):** years from 2003
-   (`yearsInBusiness(new Date().getUTCFullYear())`), © year dynamic. Don't
-   hardcode "22 de ani" / "© 2026".
+5. **Date handling (RESOLUTIONS §10):** omit founding/tenure figures until C-001
+   is approved; keep © year dynamic.
 6. **CTA wording = export wording (RESOLUTIONS §11):** "Solicită assessment"
    (assessment ask), "Solicită un demo" (product demo ask). Pulled from
    `ui.ts` keys.
@@ -125,11 +124,10 @@ finds each container, locates its fill, and runs
 ## i18n helpers (`src/i18n/ui.ts`)
 
 ```ts
-import { getLangFromUrl, useTranslations, localizedPath, EMAIL_USER, EMAIL_DOMAIN, yearsInBusiness } from '../i18n/ui';
+import { getLangFromUrl, useTranslations, localizedPath, EMAIL_USER, EMAIL_DOMAIN } from '../i18n/ui';
 const lang = getLangFromUrl(Astro.url);      // 'ro' | 'en'
 const t = useTranslations(lang);             // t('cta.assessment')
 const p = (path) => localizedPath(lang, path); // p('/servicii/cloud') → /en/... under EN
-const years = yearsInBusiness(new Date().getUTCFullYear()); // 2003-based
 ```
 
 Chrome strings (nav/footer/CTA/subjects/company) live in `ui`. **Page marketing
@@ -162,7 +160,7 @@ Eyebrow + word-fill H2 + optional sub-paragraph (default slot).
   heading="Un portofoliu integrat, de la infrastructura fizică până la cod"
   variant="light"
   headingMaxWidth="700px">
-  Patru piloni de servicii, susținuți de 50 de specialiști interni…
+  Patru piloni de servicii coordonați într-un cadru comun de livrare…
 </SectionHeading>
 ```
 Props: `eyebrow`, `heading` (plain string — fed to initWordFill char-by-char),
@@ -185,10 +183,10 @@ mono contact line. NO input.
 <CtaBand
   id="contact"
   eyebrow="Pașii următori"
-  heading="Assessment Inițial gratuit — 2 zile"
+  heading="Un assessment care clarifică punctul de pornire"
   cta={t('cta.assessment')}
   subject={t('subject.assessment')}>
-  Fără angajamente. Identificăm împreună zona de interes prioritară…
+  Identificăm împreună zona de interes prioritară și pașii următori…
 </CtaBand>
 ```
 Props: `id?`, `eyebrow`, `heading`, `cta` (button label), `subject?` (mailto
@@ -217,10 +215,7 @@ extra content via default slot.
 4-up hairline grid (2-up mobile). StatStrip carries `data-reveal`.
 ```astro
 <StatStrip>
-  <StatBlock value="650" count={650} suffix="+" caption="Proiecte livrate" />
-  <StatBlock value="250" count={250} suffix="+" caption="Clienți satisfăcuți" />
-  <StatBlock value="25"  count={25}  suffix="+" caption="Clienți internaționali" />
-  <StatBlock value={String(years)} count={years} suffix="+" caption="Ani de experiență" />
+  <StatBlock value="4" count={4} caption="Piloni de servicii" />
 </StatStrip>
 ```
 StatBlock props: `value` (no-JS fallback text), `count?` (count-up int — plain
@@ -245,7 +240,7 @@ Props: `items: string[]`, `cols: 1|2`, `dark?`.
 
 ### MonoPill
 ```astro
-<MonoPill>ISO 9001</MonoPill>
+<MonoPill>Infrastructură</MonoPill>
 <MonoPill variant="compliance">GDPR</MonoPill>   {/* teal — framework badges */}
 <MonoPill variant="dark">Nou</MonoPill>
 ```
@@ -268,7 +263,7 @@ string[]`. (Partner names only — no client names, no logo images.)
 ### Stepper
 ```astro
 <Stepper steps={[
-  { title: 'Assessment', body: '2 zile, fără angajament…' },
+  { title: 'Assessment', body: 'Clarificăm contextul și prioritățile…' },
   { title: 'Re-arhitecturare', body: '…' },
   …5 stages…
 ]} />
@@ -297,8 +292,8 @@ for idempotent progressive enhancement.
 ---
 
 ## OG image
-`public/og-claims-safe.png` (1200×630): hero-gradient background, duotone mark, white
-"SmartControl" wordmark, sky italic "Trusted Service Delivery Partner" tagline +
-an ISO-only credentials line. Referenced by BaseLayout's `og:image`/`twitter:image` (absolute
-URL from `Astro.site`). Regenerate by rasterizing an SVG (gradient + embedded
-Inter woff2 + the duotone mark) with `sharp` — see the report; no Google CDN.
+`public/og-public.png` (1200×630): blue brand background, mark, SmartControl
+wordmark and "Trusted Service Delivery Partner" tagline. It intentionally has
+no factual credentials line. BaseLayout references it for `og:image` and
+`twitter:image`; `config/public-claims-policy.json` pins its SHA-256 so an
+unreviewed artwork change fails the claims gate.

@@ -5,12 +5,11 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SectionHeading from '../../../components/SectionHeading.astro';
 import ModuleCard from '../../../components/ModuleCard.astro';
-import MonoPill from '../../../components/MonoPill.astro';
 import CtaBand from '../../../components/CtaBand.astro';
 import TextLink from '../../../components/TextLink.astro';
 import Eyebrow from '../../../components/Eyebrow.astro';
 import { Server, ShieldCheck, Code, Settings2 } from '@lucide/astro';
-import { useTranslations, getLangFromUrl, localizedPath, FOUNDED } from '../../../i18n/ui';
+import { useTranslations, getLangFromUrl, localizedPath } from '../../../i18n/ui';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -62,7 +61,7 @@ const pillars = [
     title: 'Managed Services',
     href: p('/servicii/managed'),
     icon: Settings2,
-    body: 'We take over continuous operation of your infrastructure and applications. Our in-house team works with clear SLAs and transparent reporting.',
+    body: 'We take over continuous operation of infrastructure and applications, with clear SLAs and transparent reporting.',
     items: [
       'Managed Infrastructure Operations',
       'Service Desk Outsourcing',
@@ -158,7 +157,7 @@ const jsonLd = {
           data-reveal
           data-reveal-delay="200"
         >
-          Four service pillars, backed by <strong class="text-navy font-semibold">a multidisciplinary internal team</strong>. A consultative approach, with source-code access defined contractually for applicable software deliverables.
+          Four service pillars coordinated by <strong class="text-navy font-semibold">a multidisciplinary team</strong>. A consultative approach, with source-code access defined contractually for applicable software deliverables.
         </p>
 
       </div>
@@ -174,7 +173,7 @@ const jsonLd = {
           heading="Four enterprise service pillars"
           headingMaxWidth="680px"
         >
-          Smart Control covers the full enterprise IT spectrum: infrastructure, security, software and day-to-day operations. Every pillar is delivered by our in-house team.
+          Smart Control covers the full enterprise IT spectrum: infrastructure, security, software and day-to-day operations. Delivery across pillars is coordinated as one program.
         </SectionHeading>
       </div>
 
@@ -211,23 +210,12 @@ const jsonLd = {
     </div>
   </section>
 
-  {/* ── PROOF STRIP ───────────────────────────────────────────────── */}
+  {/* ── DELIVERY STRIP ────────────────────────────────────────────── */}
   <section class="bg-page py-[44px] sm:py-[64px]">
     <div class="container">
-      {/* ISO certification badges */}
-      <div data-reveal class="mb-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-        <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-3">
-          <MonoPill>ISO 9001</MonoPill>
-          <MonoPill>ISO 27001</MonoPill>
-          <MonoPill>ISO 14001</MonoPill>
-          <MonoPill>ISO 45001</MonoPill>
-        </div>
-      </div>
-
-      {/* Trust proof */}
-      <div data-reveal class="mt-2 text-center">
+      <div data-reveal class="text-center">
         <p class="text-[15px] text-cool">
-          Founded in {FOUNDED}, with a multidisciplinary internal team and enterprise project experience.
+          Architecture, implementation and operations coordinated through one point of contact.
         </p>
       </div>
     </div>
@@ -247,8 +235,8 @@ const jsonLd = {
         {
           [
             {
-              title: 'Specialists employed directly',
-              body: 'Internal specialists are available on-site and remotely, with responsibilities defined for each project.',
+              title: 'Clear responsibilities',
+              body: 'Roles, on-site or remote availability, and responsibilities are defined for each project.',
             },
             {
               title: 'Consultative approach',
@@ -259,8 +247,8 @@ const jsonLd = {
               body: 'Our proprietary software products are developed and supported by the Smart Control team, with delivery options defined for each project.',
             },
             {
-              title: 'Active certifications',
-              body: '4 management systems certified simultaneously: ISO 9001, ISO 27001, ISO 14001, ISO 45001.',
+              title: 'Cross-discipline coordination',
+              body: 'Infrastructure, security, software and operations are planned within a shared delivery framework.',
             },
             {
               title: 'One point of contact across all four pillars',

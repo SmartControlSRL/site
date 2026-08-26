@@ -32,16 +32,16 @@ The two specs are the source of truth and should be re-read before any build wor
 - Content in **Markdown/MDX content collections**.
 - **i18n: RO + EN, both first-class from launch.** RO default at `/`, EN under `/en/`, full parity across every page. Use Astro built-in i18n.
 - Motion stack: **GSAP + ScrollTrigger** (scroll reveals, count-ups, the pinned 5-stage stepper); the node-graph background is a **2D `<canvas>`, NOT Three.js/WebGL** (keeps Core Web Vitals green); CSS for micro-interactions; **Astro View Transitions** for page transitions. Render all motion as **deferred Astro islands** so it never blocks first paint, and gate everything behind `prefers-reduced-motion`. (Owner wants it to look polished — invest in the animation quality, just not in JS weight on the critical path.)
-- Analytics: **self-hosted Umami (EU), cookieless.** Combined with no forms, no Google Maps, and self-hosted fonts, the site sets **zero cookies → no consent banner** (and the claim is actually true — important for a GDPR/NIS2/DORA vendor).
+- Analytics and consent behavior are deployment facts, not repository assumptions. Do not publish provider, residency, cookie, or consent claims until the production inventory and legal review are complete.
 - **Self-host fonts (WOFF2).** Do NOT load the Google Fonts CDN — it transfers visitor IPs to Google in the US, the same data-transfer problem that got the Google Map dropped.
 - **No Google Maps** (dropped — sets cookies, US data transfer). Contact section is email + address only; a static map image is acceptable if a visual is wanted.
-- Hosting: **Vercel free tier for team validation / preview only → production on the company's own EU VPS (datacenter).** EU data residency is part of the compliance pitch. Note: Vercel's Hobby (free) plan is **non-commercial** — never point the production `smartcontrol.ro` domain at it; use it for preview URLs only.
+- Hosting: previews and production must follow the approved deployment plan. Do not publish provider or data-residency claims based only on this repository.
 
 When translating design tokens, put them in the **Tailwind theme** and reference by name — never hardcode hex. The tokens live in `docs/SMC Web/ds/colors_and_type.css` as `--sc-*` CSS variables.
 
 ## Sitemap (locked)
 
-The site is **multi-page**, but Home is a catch-all that absorbs About / Partners / Contact as in-page sections. There are **no** standalone About/Partners/Contact pages, **no cookie policy, and no terms page** (zero cookies, no forms, no e-commerce → none needed). **Exception: the privacy policy gets its own page** — `/confidentialitate` (RO) + `/en/privacy` (EN), linked from the footer, rendered as accessible HTML (convert `docs/Politica de confidentialitate.pdf`, do NOT link the raw PDF). Verify the policy text matches the no-forms / cookieless / self-hosted-Umami reality before publishing.
+The site is **multi-page**, but Home is a catch-all that absorbs About / Partners / Contact as in-page sections. There are **no** standalone About/Partners/Contact pages, cookie-policy page, terms page, or e-commerce flow. Privacy routes `/confidentialitate/` (RO) and `/en/privacy/` (EN) stay linked for navigation continuity but remain `noindex`, excluded from the sitemap, and marked `pending-legal-review` until the production processing inventory and bilingual legal notice are approved.
 
 - `/` — Home (hero, stats, About, services bento, products teaser, Cloud teaser, partners, CTA, contact, footer)
 - `/servicii` — Services hub →
@@ -51,7 +51,7 @@ The site is **multi-page**, but Home is a catch-all that absorbs About / Partner
   - `/solutii/seknet`, `/solutii/s-vpn` — one full product detail page each
 
 **Conversion / CTAs (two asks, scoped):**
-- **Primary, site-wide:** "Programează evaluarea gratuită de 2 zile" → `mailto:office@smartcontrol.ro?subject=Evaluare gratuită`. The single ask on Home, services, Cloud, footer.
+- **Primary, site-wide:** "Solicită assessment" → `mailto:office@smartcontrol.ro?subject=Solicitare%20assessment`. Duration and price must not be implied until C-009 is approved.
 - **Products only** (SEKNET, S-VPN pages + the Home products-teaser band): "Cere un demo" → `mailto:` with a product-specific subject (`Demo SEKNET` / `Demo S-VPN`) so inbound self-routes. Never put both asks competing on the same view.
 
 ## Two page templates
@@ -94,10 +94,10 @@ Read `docs/SMC Web/ds/README.md` in full before building UI. The key constraints
 
 ## ⚠️ Known-stale facts in source documents — do NOT copy these
 
-- **ISO 27701 is NOT a current certification** (owner-confirmed 2026-06-12). The 2026 services offer (`docs/build-specs/oferta-servicii.txt`, p.1) and **all four Claude Design exports** (`Home/SEKNET/SVPN/Cloud.dc.html`) wrongly list "ISO 27701 — Confidențialitate date" as a 5th certified system. The site shows exactly **4 ISO badges: 9001, 27001, 14001, 45001**. When porting copy from the exports or the offer, strip ISO 27701 everywhere. (Sales has been flagged to correct the offer PDF.)
+- Certification claims in source offers and design exports are not approved for publication. Do not publish ISO certification badges or counts until C-002 records current certificate identifiers, scope, expiry, named approval and review date. ISO 27701 is explicitly prohibited.
 - **"Asset Management" is a dropped product** (owner-confirmed 2026-06-12). It still appears in the design exports' footers/cross-sell cards — strip it everywhere; SEKNET cross-sells pair with S-VPN instead. Two products only: SEKNET, S-VPN.
 - **Build rulings for all open design questions live in `docs/build-specs/RESOLUTIONS.md`** — binding; it supersedes both the page specs and older lines in this file where they conflict (e.g. CTA wording is the exports' "Solicită un demo", not "Cere un demo"; export desktop sizing is canonical, not the larger web scale).
 
 ## Claims and trust evidence
 
-`docs/build-specs/CLAIMS.md` is the publication gate. The 2003 founding date may be used to compute years dynamically. Headcount, cumulative experience, project/client totals, commercial assessment terms, product performance figures and certification status require the evidence, scope, owner and review date recorded in that register before publication. GDPR / NIS 2 / DORA are regulatory frameworks, never certifications or ISO equivalents.
+`docs/build-specs/CLAIMS.md` is the publication gate. Founding date and tenure, headcount, cumulative experience, project/client totals, commercial assessment terms, product performance figures and certification status are blocked until the evidence, scope, named owner, approval date and review date are recorded. GDPR / NIS 2 / DORA are regulatory frameworks, never certifications or ISO equivalents.

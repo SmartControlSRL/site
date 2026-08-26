@@ -132,6 +132,7 @@ try {
   const cycle = root.locator('[data-sctd-cycle]');
   assert(await cycle.isVisible(), 'normal-motion cycle control is not visible');
   assert((await cycle.textContent())?.includes('Oprește'), 'RO pause label is missing');
+  assert(await cycle.getAttribute('aria-pressed') === null, 'cycle action exposes contradictory toggle state');
   await cycle.click();
   const pausedAt = await root.locator('[data-sctd-trigger][aria-expanded="true"]').getAttribute('data-layer');
   await page.mouse.move(0, 0);
@@ -150,7 +151,19 @@ try {
   assert(await reducedRoot.locator('[data-sctd-trigger][aria-expanded="true"]').getAttribute('data-layer') === reducedBefore, 'reduced-motion state is not stable');
   await reducedContext.close();
 
-  console.log('StackTeardown check passed: disclosures, focus, pause, reduced motion, and 320/390/1280px geometry.');
+  const noJsContext = await browser.newContext({
+    viewport: { width: 390, height: 900 },
+    javaScriptEnabled: false,
+  });
+  const noJsPage = await noJsContext.newPage();
+  await noJsPage.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'domcontentloaded' });
+  const noJsRoot = noJsPage.locator('[data-sctd]');
+  assert(await noJsRoot.locator('[data-sctd-trigger][aria-expanded="true"]').count() === 4, 'no-JS disclosures are not represented as expanded');
+  assert(await noJsRoot.locator('.sctd-panel:visible').count() === 4, 'no-JS fallback hides layer content');
+  assert(await noJsRoot.locator('.sctd-panel a:visible').count() === 4, 'no-JS fallback hides destination links');
+  await noJsContext.close();
+
+  console.log('StackTeardown check passed: disclosures, focus, pause, reduced motion, no-JS fallback, and 320/390/1280px geometry.');
 } finally {
   await browser.close();
   server.close();

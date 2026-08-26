@@ -245,7 +245,7 @@ const TOPS = [118, 202, 286, 370];
                   type="button"
                   data-sctd-trigger
                   data-layer={i}
-                  aria-expanded={isActive}
+                  aria-expanded="true"
                   aria-controls={panelId}
                 >
                   <span class="sctd-code">{layer.code}</span>
@@ -260,8 +260,6 @@ const TOPS = [118, 202, 286, 370];
                 class="sctd-panel"
                 role="region"
                 aria-labelledby={triggerId}
-                hidden={!isActive}
-                inert={!isActive}
               >
                 <div>
                   <div class="sctd-chips">
@@ -286,7 +284,6 @@ const TOPS = [118, 202, 286, 370];
             data-sctd-cycle
             data-pause-label={cyclePauseLabel}
             data-resume-label={cycleResumeLabel}
-            aria-pressed="false"
             hidden
           >
             <span data-sctd-cycle-label>{cyclePauseLabel}</span>
@@ -341,9 +338,11 @@ const TOPS = [118, 202, 286, 370];
     padding: 4px 8px;
     border-radius: var(--radius-sm);
     background: var(--color-surface);
-    color: var(--color-cool);
+    color: var(--color-slate);
     border: 1px solid var(--color-border-blue);
-    transition: all 0.3s;
+    /* Text/background changes are intentionally immediate. Interpolating both
+       colors produced a transient 3.63:1 state in CI. */
+    transition: border-color 0.3s;
   }
   .sctd-dash {
     flex: 1;

@@ -1,51 +1,71 @@
-import { readdir, readFile } from 'node:fs/promises';
-import { join, relative } from 'node:path';
+import { createHash } from 'node:crypto';
+import { readdir, readFile, stat } from 'node:fs/promises';
+import { extname, relative, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const sourceDir = new URL('../src/', import.meta.url);
+const root = resolve(fileURLToPath(new URL('..', import.meta.url)));
+const policyPath = resolve(root, 'config/public-claims-policy.json');
+const policy = JSON.parse(await readFile(policyPath, 'utf8'));
+const textExtensions = new Set(['.astro', '.ts', '.js', '.mjs', '.md', '.mdx', '.html', '.xml']);
 
-async function sourceFiles(dir) {
-  const entries = await readdir(dir, { withFileTypes: true });
-  const paths = await Promise.all(entries.map((entry) => {
-    const path = join(dir.pathname, entry.name);
-    if (entry.isDirectory()) return sourceFiles(new URL(`file://${path}/`));
-    return /\.(astro|ts|js|mdx?)$/.test(entry.name) ? [path] : [];
-  }));
-  return paths.flat();
+if (!policy.register || !policy.reviewOwner || !policy.reviewBy) {
+  throw new Error('Claims policy is missing register, reviewOwner, or reviewBy.');
+}
+if (!Array.isArray(policy.claims) || policy.claims.some((claim) =>
+  !claim.id || claim.status !== 'blocked' || !claim.reason || !claim.patterns?.length
+)) {
+  throw new Error('Every machine-enforced claim must declare id, blocked status, reason, and patterns.');
 }
 
-const forbidden = [
-  [/execuție\s+100%\s+in-house/iu, 'absolute in-house execution'],
-  [/execution\s+100%\s+in-house/iu, 'absolute in-house execution'],
-  [/zero[- ]downtime/iu, 'zero-downtime promise'],
-  [/zero\s+pasare/iu, 'zero hand-off promise'],
-  [/zero\s+hand-offs?/iu, 'zero hand-off promise'],
-  [/(?:sla\s+24\/7|24\/7\s+sla)/iu, 'universal 24/7 SLA'],
-  [/cod\s+sursă\s+inclus\s+pentru\s+fiecare\s+proiect/iu, 'universal source-code promise'],
-  [/source\s+code\s+included\s+with\s+every\s+project/iu, 'universal source-code promise'],
-  [/metrici\s+garantate/iu, 'guaranteed metrics'],
-  [/guaranteed\s+metrics/iu, 'guaranteed metrics'],
-  [/50\s+de\s+specialiști/iu, 'unapproved headcount'],
-  [/50\s+in-house\s+specialists/iu, 'unapproved headcount'],
-  [/500\s+de\s+ani/iu, 'unapproved cumulative experience'],
-  [/500\s+cumulative\s+years/iu, 'unapproved cumulative experience'],
-  [/250\+\s+clienți/iu, 'unapproved client count'],
-  [/250\+\s+clients/iu, 'unapproved client count'],
-  [/(?:alertăm\s+în\s+sub|alert\s+in\s+under)\s+60\s+(?:de\s+)?sec/iu, 'SEKNET metric extrapolated beyond the product'],
-  [/(?:2\s+zile\s*[·—-]\s*gratuit|2\s+days\s*[·—-]\s*free|free\s+(?:initial\s+)?2-day\s+assessment|assessment(?:-ul)?\s+gratuit(?:ă)?\s+(?:—\s*)?2\s+zile)/iu, 'unapproved assessment duration/price'],
-];
+async function existingTextFiles(target) {
+  const path = resolve(root, target);
+  let info;
+  try {
+    info = await stat(path);
+  } catch (error) {
+    if (error.code === 'ENOENT') return [];
+    throw error;
+  }
+  if (info.isFile()) return textExtensions.has(extname(path)) ? [path] : [];
+  const entries = await readdir(path, { withFileTypes: true });
+  return (await Promise.all(entries.map((entry) =>
+    existingTextFiles(resolve(path, entry.name))
+  ))).flat();
+}
 
+const files = (await Promise.all(policy.scanTargets.map(existingTextFiles))).flat();
 const failures = [];
-for (const file of await sourceFiles(sourceDir)) {
+for (const file of files) {
   const text = await readFile(file, 'utf8');
-  for (const [pattern, reason] of forbidden) {
-    if (reason.startsWith('SEKNET metric') && /\/solutii\/seknet\.astro$/.test(file)) continue;
-    if (pattern.test(text)) failures.push(`${relative(sourceDir.pathname, file)}: ${reason}`);
+  const rel = relative(root, file).split('\\').join('/');
+  const publicOutput = rel.startsWith('src/') || rel.startsWith('dist/');
+  for (const claim of policy.claims) {
+    const patterns = publicOutput
+      ? [...claim.patterns, ...(claim.publicOnlyPatterns ?? [])]
+      : claim.patterns;
+    for (const source of patterns) {
+      if (new RegExp(source, 'iu').test(text)) {
+        failures.push(`${rel}: ${claim.id} — ${claim.reason}`);
+        break;
+      }
+    }
   }
 }
 
+const assetPath = resolve(root, policy.socialAsset.path);
+const asset = await readFile(assetPath);
+const assetHash = createHash('sha256').update(asset).digest('hex');
+if (assetHash !== policy.socialAsset.sha256) {
+  failures.push(`${policy.socialAsset.path}: social asset hash does not match the approved policy hash`);
+}
+const binding = await readFile(resolve(root, policy.socialAsset.bindingSource), 'utf8');
+if (!binding.includes(policy.socialAsset.path.replace(/^public\//, ''))) {
+  failures.push(`${policy.socialAsset.bindingSource}: approved social asset is not the active binding`);
+}
+
 if (failures.length) {
-  console.error(`Unregistered or over-broad claims found:\n${failures.join('\n')}`);
+  console.error(`Blocked or unregistered public claims found:\n${[...new Set(failures)].join('\n')}`);
   process.exitCode = 1;
 } else {
-  console.log('Claims check passed.');
+  console.log(`Claims check passed across ${files.length} source, binding, and generated files.`);
 }

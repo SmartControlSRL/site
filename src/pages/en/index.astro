@@ -1,9 +1,8 @@
 ---
 // Home (EN) — /en/
 // Faithful EN translation of the RO Home (src/pages/index.astro), same structure
-// and motion wiring. RESOLUTIONS rulings applied identically: ISO 27701 stripped,
-// legal frameworks excluded from marketing copy, Asset Management stripped (SEKNET ↔ S-VPN),
-// years computed, no email inputs, AA link colors.
+// and motion wiring. Pending claims are excluded, Asset Management is stripped
+// (SEKNET ↔ S-VPN), and the page uses no email inputs and AA link colors.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Eyebrow from '../../components/Eyebrow.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
@@ -18,32 +17,24 @@ import MailtoLink from '../../components/MailtoLink.astro';
 import SeknetConsole from '../../components/SeknetConsole.astro';
 import CloudPipeline from '../../components/CloudPipeline.astro';
 import StackTeardown from '../../components/StackTeardown.astro';
-import {
-  getLangFromUrl,
-  useTranslations,
-  localizedPath,
-  yearsInBusiness,
-} from '../../i18n/ui';
+import { getLangFromUrl, useTranslations, localizedPath } from '../../i18n/ui';
 import { Server, ShieldCheck, Code, LifeBuoy, Shield, Lock } from '@lucide/astro';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const p = (path: string) => localizedPath(lang, path);
-const years = yearsInBusiness(new Date().getUTCFullYear());
-
 const title = 'Smart Control — Trusted Service Delivery Partner';
-const description = 'Enterprise infrastructure, networking, security and software, delivered under Smart Control coordination with four ISO certifications.';
+const description = 'Enterprise infrastructure, networking, security and software, delivered under Smart Control coordination.';
 
 // — JSON-LD: Organization (EN description) —
 const org = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'Smart Control SRL',
-  url: 'https://smartcontrol.ro',
+  url: 'https://smartcontrol.ro/en/',
   logo: 'https://smartcontrol.ro/smartcontrol-mark.png',
-  foundingDate: '2003',
   description:
-    'Romanian enterprise IT services and cybersecurity company — infrastructure, security and software delivered by an in-house team.',
+    'Romanian enterprise IT services and cybersecurity company — infrastructure, security and software delivered under Smart Control coordination.',
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Intrarea Aviator Teodor Iliescu 37',
@@ -53,7 +44,7 @@ const org = {
   },
 };
 
-const isoBadges = ['ISO 9001', 'ISO 27001', 'ISO 14001', 'ISO 45001'];
+const deliveryAreas = ['Infrastructure', 'Security', 'Software', 'Managed services'];
 
 const partners = [
   'Hitachi Vantara',
@@ -179,8 +170,8 @@ const cloudRows = [
       <p
         class="hero-in-3 mt-7 max-w-[600px] text-[18px] leading-[1.7] text-slate"
       >
-        Smart Control has been building and operating complex IT infrastructure for over {years}{' '}
-        years, for local and international clients. The Smart Control team remains directly
+        Smart Control builds and operates complex IT infrastructure for local and international
+        clients. The Smart Control team remains directly
         accountable for delivery and coordinates the specialists and technology partners each
         project requires. Every recommendation starts from measurements in the client's own infrastructure.
       </p>
@@ -193,7 +184,7 @@ const cloudRows = [
       </div>
 
       <div class="hero-in-4 mt-10 flex flex-wrap gap-2.5">
-        {isoBadges.map((b) => <MonoPill class="!text-[13px] !px-3.5 !py-2 !tracking-[0.6px]">{b}</MonoPill>)}
+        {deliveryAreas.map((area) => <MonoPill class="!text-[13px] !px-3.5 !py-2 !tracking-[0.6px]">{area}</MonoPill>)}
       </div>
     </div>
   </header>
@@ -206,8 +197,8 @@ const cloudRows = [
           heading="An integrated portfolio of enterprise services"
           headingMaxWidth="700px"
         >
-          Four service pillars, backed by a multidisciplinary internal team available on-site and
-          remotely, with clear responsibilities for every project.
+          Four service pillars coordinated by a multidisciplinary team, with clear responsibilities
+          for every project and on-site or remote collaboration agreed together.
         </SectionHeading>
       </div>
 
