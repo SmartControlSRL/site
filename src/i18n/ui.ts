@@ -55,6 +55,9 @@ export const ui = {
     'company.address.l2': '011672 București',
     'lang.switch': 'EN',
     'lang.switch.aria': 'EN — Comută în limba engleză',
+    // — StackTeardown ambient-cycle control —
+    'sctd.cycle.pause': 'Oprește parcurgerea automată',
+    'sctd.cycle.resume': 'Reia parcurgerea automată',
   },
   en: {
     // — Nav —
@@ -95,6 +98,8 @@ export const ui = {
     'company.address.l2': '011672 București',
     'lang.switch': 'RO',
     'lang.switch.aria': 'RO — Switch language to Romanian',
+    'sctd.cycle.pause': 'Pause automatic cycling',
+    'sctd.cycle.resume': 'Resume automatic cycling',
   },
 } as const;
 

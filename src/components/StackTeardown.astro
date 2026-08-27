@@ -10,6 +10,7 @@
 // visitor picks a layer (disabled under prefers-reduced-motion). Copy comes in
 // via props so RO / EN pages stay at full parity.
 import SectionHeading from './SectionHeading.astro';
+import { getLangFromUrl, useTranslations } from '../i18n/ui';
 
 interface Layer {
   /** mono level code, top of stack first (L4 … L1) */
@@ -36,17 +37,15 @@ interface Props {
   class?: string;
 }
 
+const t = useTranslations(getLangFromUrl(Astro.url));
+
 const {
   eyebrow,
   heading,
   layers,
   note,
-  cyclePauseLabel = Astro.url.pathname.startsWith('/en')
-    ? 'Pause automatic cycling'
-    : 'Oprește parcurgerea automată',
-  cycleResumeLabel = Astro.url.pathname.startsWith('/en')
-    ? 'Resume automatic cycling'
-    : 'Reia parcurgerea automată',
+  cyclePauseLabel = t('sctd.cycle.pause'),
+  cycleResumeLabel = t('sctd.cycle.resume'),
   id = 'stack',
   class: extra = '',
 } = Astro.props;
