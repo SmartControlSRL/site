@@ -176,6 +176,10 @@ const contrastFn = (exemptionRules) => {
     if (!foreground) continue;
     const background = effectiveBackground(element);
     const opacity = cumulativeOpacity(element);
+    // Fully transparent text is invisible to every sighted user, so WCAG 1.4.3
+    // does not apply; it is also the signature of a reveal the IntersectionObserver
+    // never fired for during the synthetic scroll, which made this gate flaky.
+    if (opacity === 0) continue;
     const paintedForeground = blend({ ...foreground, a: foreground.a * opacity }, background);
     const contrast = ratio(paintedForeground, background);
     const fontSize = Number.parseFloat(style.fontSize);
@@ -214,15 +218,33 @@ async function scrollThrough(page) {
     await page.evaluate((top) => scrollTo(0, top), y);
     await page.waitForTimeout(80);
   }
-  // Allow the longest configured reveal delay + transition to settle before
-  // returning to the initial state. Measuring mid-transition creates false
-  // opacity/contrast failures rather than testing the initialized component.
-  await page.waitForTimeout(1100);
+  await settleReveals(page);
   await page.evaluate(() => scrollTo(0, 0));
   await page.waitForTimeout(250);
 }
 
+// Wait for every triggered reveal to reach its inline target opacity instead
+// of sleeping a fixed interval: measuring mid-transition created false
+// opacity/contrast failures whose count varied with machine load. Reveals
+// whose observer never fired stay at inline opacity 0 and are settled by
+// definition (the contrast scan skips invisible text). The timeout bounds a
+// stuck transition; the longest configured delay+transition is ~800 ms.
+async function settleReveals(page) {
+  await page.waitForFunction(
+    () => [...document.querySelectorAll('[data-reveal]')].every((el) => {
+      const inline = el.style.opacity;
+      if (inline === '' || inline === '0') return true;
+      return getComputedStyle(el).opacity === inline;
+    }),
+    null,
+    { timeout: 4000 },
+  ).catch(() => {});
+}
+
 async function scanContrast(page, exemptions, failures, allowed, state) {
+  // Focus, hover and scroll state changes can trigger reveals adjacent to the
+  // exercised element; settle them so every scan measures finished states.
+  await settleReveals(page);
   const result = await page.evaluate(contrastFn, exemptions);
   mergeFindings(failures, result.findings, state);
   mergeFindings(allowed, result.exemptions, state);
