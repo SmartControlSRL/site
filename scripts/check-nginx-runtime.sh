@@ -46,7 +46,9 @@ assert_status() {
 assert_body() {
   local path="$1"
   local marker="$2"
-  curl --silent --show-error "$ORIGIN$path" | grep -Fq "$marker" || {
+  local body
+  body="$(curl --silent --show-error "$ORIGIN$path")"
+  [[ "$body" == *"$marker"* ]] || {
     echo "Expected $path to contain: $marker" >&2
     exit 1
   }
