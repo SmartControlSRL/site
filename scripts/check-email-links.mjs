@@ -25,6 +25,12 @@ function visibleText(markup) {
     .trim();
 }
 
+const CONTACT = 'mailto:office@smartcontrol.ro';
+// Error documents are deployment internals; every real page must carry the
+// static contact path. Everything else is derived from dist/ so new pages are
+// covered automatically instead of relying on a hand-maintained route list.
+const errorDocuments = new Set(['404.html', 'en/404/index.html']);
+
 const failures = [];
 const files = await htmlFiles(distDir);
 let checkedLinks = 0;
@@ -35,29 +41,19 @@ for (const file of files) {
 
   if (/href=(?:"#"|'#')/i.test(html)) failures.push(`${route}: contains a dead href="#" link`);
 
-  const emailElements = html.match(/<a\b(?=[^>]*\bdata-email-user=)[^>]*>[\s\S]*?<\/a>/gi) ?? [];
+  const emailElements = html.match(/<a\b(?=[^>]*\bhref=["']mailto:)[^>]*>[\s\S]*?<\/a>/gi) ?? [];
   for (const anchor of emailElements) {
     checkedLinks += 1;
     const href = attribute(anchor, 'href') ?? '';
     const label = attribute(anchor, 'aria-label') ?? visibleText(anchor);
-    if (!href.startsWith('mailto:')) failures.push(`${route}: email link does not have a mailto destination`);
+    if (!href.startsWith(CONTACT)) failures.push(`${route}: email link does not target the contact address`);
     if (!label) failures.push(`${route}: email link has no accessible name`);
     if (href.includes('?subject=') && /\s/.test(href)) failures.push(`${route}: mail subject is not URL-encoded`);
   }
-}
 
-const representative = [
-  'index.html',
-  'en/index.html',
-  'confidentialitate/index.html',
-  'en/privacy/index.html',
-  'servicii/cloud/index.html',
-  'solutii/seknet/index.html',
-];
-
-for (const route of representative) {
-  const html = await readFile(join(distDir.pathname, route), 'utf8');
-  if (!html.includes('mailto:office@smartcontrol.ro')) failures.push(`${route}: missing the static contact destination`);
+  if (!errorDocuments.has(route) && !html.includes(CONTACT)) {
+    failures.push(`${route}: missing the static contact destination`);
+  }
 }
 
 if (!checkedLinks) failures.push('No email links were found in the generated site');
