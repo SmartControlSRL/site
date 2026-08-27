@@ -4,6 +4,7 @@
 // server configuration and the generated static site. No network is used.
 import { readFile, readdir } from 'node:fs/promises';
 import { join, relative, resolve, sep } from 'node:path';
+import { hasRobotsDirective, hasRobotsMeta, nginxHeaderHasDirective } from './robots-directives.mjs';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const DIST = resolve(ROOT, 'dist');
@@ -41,10 +42,6 @@ function linkTags(html) {
   return html.match(/<link\b[^>]*>/gi) || [];
 }
 
-function hasNoindexMeta(html) {
-  return /<meta(?=[^>]*name=["']robots["'])(?=[^>]*content=["'][^"']*\bnoindex\b)[^>]*>/i.test(html);
-}
-
 function pathForProductionUrl(url) {
   const parsed = new URL(url);
   if (parsed.origin !== PRODUCTION_ORIGIN || parsed.search || parsed.hash) return null;
@@ -57,14 +54,14 @@ const previewConfig = JSON.parse(await readFile(resolve(ROOT, 'vercel.json'), 'u
 const catchAll = previewConfig.headers?.find((rule) => rule.source === '/(.*)');
 const robotsHeader = catchAll?.headers?.find((header) => header.key?.toLowerCase() === 'x-robots-tag');
 assert(Boolean(catchAll), 'preview: vercel.json must retain the unconditional /(.*) header rule');
-assert(robotsHeader?.value?.toLowerCase().split(/[\s,]+/).includes('noindex'), 'preview: catch-all X-Robots-Tag must include noindex');
+assert(hasRobotsDirective(robotsHeader?.value, 'noindex'), 'preview: catch-all X-Robots-Tag must include noindex');
 assert(!catchAll?.has && !catchAll?.missing, 'preview: noindex guard must not depend on request conditions');
 
 const nginxFiles = ['smartcontrol.ro.conf', 'maps.conf', 'site-rules.conf', 'tls.conf'];
 const nginx = (await Promise.all(nginxFiles.map((name) => readFile(resolve(ROOT, 'deployment/nginx', name), 'utf8'))))
   .join('\n')
   .replace(/^\s*#.*$/gm, '');
-assert(!/X-Robots-Tag\s+[^;]*\bnoindex\b/i.test(nginx), 'production: nginx must not emit X-Robots-Tag noindex');
+assert(!nginxHeaderHasDirective(nginx, 'X-Robots-Tag', 'noindex'), 'production: nginx must not emit X-Robots-Tag noindex');
 assert(/error_page\s+404\s+=404\s+\$smartcontrol_error_document;/i.test(nginx), 'production: nginx must preserve a real 404 status');
 assert(/location\s+=\s+\/404\.html\s*{\s*internal;/s.test(nginx), 'production: RO error document must remain internal');
 assert(/location\s+=\s+\/en\/404\/index\.html\s*{\s*internal;/s.test(nginx), 'production: EN error document must remain internal');
@@ -79,7 +76,7 @@ let topLevelStructuredUrls = 0;
 for (const file of contentFiles) {
   const route = routeOf(file);
   const html = await readFile(file, 'utf8');
-  assert(!hasNoindexMeta(html), `${route}: indexable content must not contain meta noindex`);
+  assert(!hasRobotsMeta(html, 'noindex'), `${route}: indexable content must not contain meta noindex`);
   const links = linkTags(html);
   const canonical = links.find((tag) => attribute(tag, 'rel')?.toLowerCase() === 'canonical');
   const canonicalHref = canonical && attribute(canonical, 'href');
@@ -118,7 +115,7 @@ for (const [route, path] of [
   ['/en/404/', resolve(DIST, 'en/404/index.html')],
 ]) {
   const html = await readFile(path, 'utf8');
-  assert(hasNoindexMeta(html), `${route}: error document must contain meta noindex`);
+  assert(hasRobotsMeta(html, 'noindex'), `${route}: error document must contain meta noindex`);
   assert(!linkTags(html).some((tag) => ['canonical', 'alternate'].includes(attribute(tag, 'rel')?.toLowerCase())), `${route}: error document must not emit canonical/hreflang links`);
 }
 
@@ -128,7 +125,7 @@ for (const route of legalHoldRoutes) {
     : resolve(DIST, 'en/privacy/index.html');
   const html = await readFile(path, 'utf8');
   assert(html.includes('data-privacy-status="pending-legal-review"'), `${route}: legal hold marker is missing`);
-  assert(hasNoindexMeta(html), `${route}: legal hold page must contain meta noindex`);
+  assert(hasRobotsMeta(html, 'noindex'), `${route}: legal hold page must contain meta noindex`);
   assert(!linkTags(html).some((tag) => ['canonical', 'alternate'].includes(attribute(tag, 'rel')?.toLowerCase())), `${route}: legal hold page must not emit canonical/hreflang links`);
   assert(!/<meta\b[^>]*property=["']og:(?:locale:alternate|url)["'][^>]*>/i.test(html), `${route}: legal hold page must not emit route sharing metadata`);
 }

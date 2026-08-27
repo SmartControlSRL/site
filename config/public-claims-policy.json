@@ -89,5 +89,14 @@
       "status": "scoped-copy",
       "wording": "Source-code access is defined for applicable software deliverables."
     }
+  ],
+  "approvedCopy": [
+    {
+      "id": "C-011",
+      "status": "approved-copy",
+      "wording": "Smart Control remains directly accountable for delivery, coordinates the required specialists and technology partners, and bases recommendations on measurements from the client's infrastructure.",
+      "approval": "Site owner confirmation in the Codex task on 2026-08-27.",
+      "reviewBy": "Reconfirm after any material change to the delivery model or this public wording."
+    }
   ]
 }

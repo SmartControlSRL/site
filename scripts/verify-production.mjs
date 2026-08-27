@@ -4,6 +4,7 @@
 // intentionally not called by local QA: it performs network requests against
 // the explicit base URL supplied by an operator.
 import { connect } from 'node:tls';
+import { hasRobotsDirective, hasRobotsMeta } from './robots-directives.mjs';
 
 const argv = process.argv.slice(2);
 if (argv.includes('--help') || argv.length === 0) {
@@ -178,8 +179,8 @@ await check('homepage status, indexing and security headers', async () => {
   assert(headers.get('referrer-policy') === 'strict-origin-when-cross-origin', 'Referrer-Policy mismatch');
   assert(headers.get('cross-origin-opener-policy')?.toLowerCase() === 'same-origin', 'Cross-Origin-Opener-Policy mismatch');
   assert(headers.get('permissions-policy')?.includes('camera=()'), 'Permissions-Policy missing');
-  assert(!headers.get('x-robots-tag')?.toLowerCase().includes('noindex'), 'production header is noindex');
-  assert(!/<meta(?=[^>]*name=["']robots["'])(?=[^>]*content=["'][^"']*noindex)/i.test(homepageHtml), 'production HTML is noindex');
+  assert(!hasRobotsDirective(headers.get('x-robots-tag'), 'noindex'), 'production header is noindex');
+  assert(!hasRobotsMeta(homepageHtml, 'noindex'), 'production HTML is noindex');
 
   const csp = headers.get('content-security-policy-report-only') ?? '';
   assert(normalizedDirectives(csp) === normalizedDirectives(EXPECTED_CSP), `CSP report-only mismatch: ${csp || '<missing>'}`);
@@ -237,7 +238,7 @@ for (const [locale, path, lang, marker] of [
     assert(response.url === url.href, `request was externally redirected to ${response.url}`);
     assert(new RegExp(`<html\\s+lang=["']${lang}["']`).test(html), `lang=${lang} missing`);
     assert(html.includes(marker), `localized marker “${marker}” missing`);
-    assert(/<meta(?=[^>]*name=["']robots["'])(?=[^>]*content=["'][^"']*\bnoindex\b)/i.test(html), '404 noindex missing');
+    assert(hasRobotsMeta(html, 'noindex'), '404 noindex missing');
   });
 }
 
@@ -247,7 +248,7 @@ for (const path of ['/confidentialitate/', '/en/privacy/']) {
     const html = await response.text();
     assert(response.status === 200, `returned ${response.status}`);
     assert(!html.includes('data-privacy-status="pending-legal-review"'), 'legal-review holding marker is still deployed');
-    assert(!/<meta(?=[^>]*name=["']robots["'])(?=[^>]*content=["'][^"']*noindex)/i.test(html), 'privacy notice is still noindex');
+    assert(!hasRobotsMeta(html, 'noindex'), 'privacy notice is still noindex');
   });
 }
 

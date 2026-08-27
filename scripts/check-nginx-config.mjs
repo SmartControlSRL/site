@@ -5,6 +5,7 @@
 // complementary to (not a replacement for) `nginx -t` during deployment.
 import { existsSync, readFileSync } from 'node:fs';
 import { basename, resolve } from 'node:path';
+import { hasRobotsDirective, hasRobotsMeta, nginxHeaderHasDirective } from './robots-directives.mjs';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const paths = {
@@ -94,6 +95,35 @@ function balancedBraces(name, value) {
   if (depth !== 0 || quote) errors.push(`${name}: unbalanced braces or quotes`);
 }
 
+function serverBlocks(value) {
+  const blocks = [];
+  const starts = value.matchAll(/\bserver\s*{/g);
+  for (const match of starts) {
+    const start = match.index;
+    let depth = 0;
+    let end = start;
+    for (; end < value.length; end += 1) {
+      if (value[end] === '{') depth += 1;
+      else if (value[end] === '}') {
+        depth -= 1;
+        if (depth === 0) {
+          blocks.push(value.slice(start, end + 1));
+          break;
+        }
+      }
+    }
+  }
+  return blocks;
+}
+
+function httpsServerBlock(value, hostname) {
+  return serverBlocks(value).find((block) => {
+    const listensOn443 = /\blisten\s+(?:\[::\]:)?443\b[^;]*;/.test(block);
+    const names = block.match(/\bserver_name\s+([^;]+);/)?.[1].trim().split(/\s+/) ?? [];
+    return listensOn443 && names.includes(hostname);
+  });
+}
+
 for (const [name, value] of Object.entries(config)) balancedBraces(name, value);
 
 expect('locale error map', config.maps, /~\^\/en\(\?:\/\|\$\)\s+\/en\/404\/index\.html;/);
@@ -144,12 +174,17 @@ expect('HTTP to HTTPS', config.site, /return\s+308\s+https:\/\/smartcontrol\.ro\
 expect('canonical host', config.site, /server_name\s+www\.smartcontrol\.ro;[\s\S]*?return\s+308\s+https:\/\/smartcontrol\.ro\$request_uri;/);
 expect('production web root', config.site, /root\s+\/var\/www\/smartcontrol\.ro\/current;/);
 expect('HTTP/2 enabled', config.site, /\bhttp2\s+on;/);
-expect('HSTS', config.site, /add_header\s+Strict-Transport-Security\s+"max-age=31536000; includeSubDomains"\s+always;/);
+const hstsPattern = /add_header\s+Strict-Transport-Security\s+"max-age=31536000; includeSubDomains"\s+always;/;
+for (const hostname of ['www.smartcontrol.ro', 'smartcontrol.ro']) {
+  const block = httpsServerBlock(config.site, hostname);
+  if (!block) errors.push(`HTTPS server ${hostname}: missing server block`);
+  else expect(`HSTS ${hostname}`, block, hstsPattern);
+}
 expect('TLS 1.2 and 1.3', config.tls, /ssl_protocols\s+TLSv1\.2\s+TLSv1\.3;/);
 expect('local unprivileged port', config.smoke, /listen\s+8080;/);
 expect('local built-site root', config.smoke, /root\s+\/srv\/site;/);
 
-if (/X-Robots-Tag\s+"?noindex/i.test(combined)) {
+if (nginxHeaderHasDirective(combined, 'X-Robots-Tag', 'noindex')) {
   errors.push('production nginx config must not emit X-Robots-Tag: noindex');
 }
 if (/BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY/.test(combined)) {
@@ -157,7 +192,15 @@ if (/BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY/.test(combined)) {
 }
 
 const preview = requireFile('preview', paths.preview);
-expect('preview noindex guard', preview, /"key"\s*:\s*"X-Robots-Tag"[\s\S]*?"value"\s*:\s*"noindex"/);
+try {
+  const previewConfig = JSON.parse(preview);
+  const catchAll = previewConfig.headers?.find((rule) => rule.source === '/(.*)');
+  const robotsHeader = catchAll?.headers?.find((header) => header.key?.toLowerCase() === 'x-robots-tag');
+  if (!hasRobotsDirective(robotsHeader?.value, 'noindex')) errors.push('preview noindex guard: missing exact noindex token');
+  else ok.push('preview noindex guard');
+} catch (error) {
+  errors.push(`preview: invalid JSON (${error instanceof Error ? error.message : error})`);
+}
 
 for (const [locale, path, lang, marker] of [
   ['RO 404', paths.ro404, 'ro', 'Pagina nu a fost găsită'],
@@ -165,7 +208,8 @@ for (const [locale, path, lang, marker] of [
 ]) {
   const html = requireFile(locale, path);
   expect(`${locale} language`, html, new RegExp(`<html\\s+lang="${lang}"`));
-  expect(`${locale} noindex`, html, /<meta(?=[^>]*name="robots")(?=[^>]*content="[^"]*\bnoindex\b)[^>]*>/);
+  if (!hasRobotsMeta(html, 'noindex')) errors.push(`${locale}: missing exact noindex robots token`);
+  else ok.push(`${locale} noindex`);
   expect(`${locale} content`, html, new RegExp(marker));
   if (/<link\s+rel="(?:canonical|alternate)"/.test(html)) {
     errors.push(`${locale}: error document must not emit canonical or alternate links`);

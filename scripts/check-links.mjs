@@ -6,6 +6,7 @@
 // excluded from parity and sitemap expectations and must not emit route SEO.
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { hasRobotsMeta } from './robots-directives.mjs';
 
 const DIST = 'dist';
 const pages = [];
@@ -63,7 +64,7 @@ for (const fp of pages) {
   }
 
   if (ERROR_DOCUMENT_ROUTES.has(route)) {
-    if (!/<meta(?=[^>]*\bname="robots")(?=[^>]*\bcontent="[^"]*\bnoindex\b)[^>]*>/.test(html)) {
+    if (!hasRobotsMeta(html, 'noindex')) {
       errors.push(`${route}: error document must remain noindex`);
     }
     if (/<link rel="(?:canonical|alternate)"/.test(html)) {
@@ -77,7 +78,7 @@ for (const fp of pages) {
     if (!html.includes('data-privacy-status="pending-legal-review"')) {
       errors.push(`${route}: legal hold marker is missing`);
     }
-    if (!/<meta(?=[^>]*\bname="robots")(?=[^>]*\bcontent="[^"]*\bnoindex\b)[^>]*>/.test(html)) {
+    if (!hasRobotsMeta(html, 'noindex')) {
       errors.push(`${route}: legal hold page must remain noindex`);
     }
     if (/<link rel="(?:canonical|alternate)"/.test(html) || /<meta property="og:(?:locale:alternate|url)"/.test(html)) {

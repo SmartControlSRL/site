@@ -2,6 +2,8 @@
 
 // Read-only remote verification for preview or production indexing behavior.
 // Requires an explicit origin and never infers or deploys an environment.
+import { hasRobotsDirective, hasRobotsMeta } from './robots-directives.mjs';
+
 const argv = process.argv.slice(2);
 function option(name) {
   const index = argv.indexOf(name);
@@ -39,11 +41,7 @@ function assert(condition, message) {
 }
 
 function hasNoindexHeader(response) {
-  return response.headers.get('x-robots-tag')?.toLowerCase().split(/[\s,]+/).includes('noindex') || false;
-}
-
-function hasNoindexMeta(html) {
-  return /<meta(?=[^>]*name=["']robots["'])(?=[^>]*content=["'][^"']*\bnoindex\b)[^>]*>/i.test(html);
+  return hasRobotsDirective(response.headers.get('x-robots-tag'), 'noindex');
 }
 
 function attribute(tag, name) {
@@ -136,7 +134,7 @@ if (mode === 'preview') {
       const { response, body } = await fetchText(parsed);
       assert(response.status === 200, `returned ${response.status}`);
       assert(!hasNoindexHeader(response), 'response is header-noindex');
-      assert(!hasNoindexMeta(body), 'HTML contains meta noindex');
+      assert(!hasRobotsMeta(body, 'noindex'), 'HTML contains meta noindex');
       const links = body.match(/<link\b[^>]*>/gi) || [];
       const canonical = links.find((tag) => attribute(tag, 'rel')?.toLowerCase() === 'canonical');
       assert(attribute(canonical || '', 'href') === parsed.href, `canonical mismatch: ${attribute(canonical || '', 'href') || '<missing>'}`);
@@ -160,7 +158,7 @@ if (mode === 'preview') {
     await check(`production error policy ${path}`, async () => {
       const { response, body } = await fetchText(path);
       assert(response.status === 404, `returned ${response.status}`);
-      assert(hasNoindexHeader(response) || hasNoindexMeta(body), '404 response is indexable');
+      assert(hasNoindexHeader(response) || hasRobotsMeta(body, 'noindex'), '404 response is indexable');
     });
   }
 }

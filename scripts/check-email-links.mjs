@@ -1,5 +1,6 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
+import { CONTACT_MAILTO, isCanonicalContactHref } from './contact-policy.mjs';
 
 const distDir = new URL('../dist/', import.meta.url);
 
@@ -25,7 +26,6 @@ function visibleText(markup) {
     .trim();
 }
 
-const CONTACT = 'mailto:office@smartcontrol.ro';
 // Error documents are deployment internals; every real page must carry the
 // static contact path. Everything else is derived from dist/ so new pages are
 // covered automatically instead of relying on a hand-maintained route list.
@@ -42,17 +42,20 @@ for (const file of files) {
   if (/href=(?:"#"|'#')/i.test(html)) failures.push(`${route}: contains a dead href="#" link`);
 
   const emailElements = html.match(/<a\b(?=[^>]*\bhref=["']mailto:)[^>]*>[\s\S]*?<\/a>/gi) ?? [];
+  let hasContactLink = false;
   for (const anchor of emailElements) {
     checkedLinks += 1;
     const href = attribute(anchor, 'href') ?? '';
     const label = attribute(anchor, 'aria-label') ?? visibleText(anchor);
-    if (!href.startsWith(CONTACT)) failures.push(`${route}: email link does not target the contact address`);
+    const targetsContact = isCanonicalContactHref(href);
+    if (targetsContact) hasContactLink = true;
+    else failures.push(`${route}: email link does not target the exact contact address`);
     if (!label) failures.push(`${route}: email link has no accessible name`);
     if (href.includes('?subject=') && /\s/.test(href)) failures.push(`${route}: mail subject is not URL-encoded`);
   }
 
-  if (!errorDocuments.has(route) && !html.includes(CONTACT)) {
-    failures.push(`${route}: missing the static contact destination`);
+  if (!errorDocuments.has(route) && !hasContactLink) {
+    failures.push(`${route}: missing the exact static contact destination ${CONTACT_MAILTO}`);
   }
 }
 
