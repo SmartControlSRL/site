@@ -1,0 +1,17 @@
+.git
+.github
+.astro
+.codex
+.env
+.env.*
+.npmrc
+.vercel
+.DS_Store
+**/.DS_Store
+artifacts
+dist
+docs
+node_modules
+npm-debug.log*
+*.key
+*.pem

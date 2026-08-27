@@ -14,6 +14,7 @@ const paths = {
   tls: resolve(ROOT, 'deployment/nginx/tls.conf'),
   site: resolve(ROOT, 'deployment/nginx/smartcontrol.ro.conf'),
   smoke: resolve(ROOT, 'deployment/nginx/local-smoke.conf'),
+  container: resolve(ROOT, 'deployment/nginx/container-nginx.conf'),
   preview: resolve(ROOT, 'vercel.json'),
   ro404: resolve(ROOT, 'dist/404.html'),
   en404: resolve(ROOT, 'dist/en/404/index.html'),
@@ -41,7 +42,7 @@ function requireFile(name, path) {
 }
 
 const config = Object.fromEntries(
-  ['maps', 'rules', 'tls', 'site', 'smoke'].map((name) => [name, requireFile(name, paths[name])]),
+  ['maps', 'rules', 'tls', 'site', 'smoke', 'container'].map((name) => [name, requireFile(name, paths[name])]),
 );
 const combined = Object.values(config).join('\n');
 
@@ -183,6 +184,9 @@ for (const hostname of ['www.smartcontrol.ro', 'smartcontrol.ro']) {
 expect('TLS 1.2 and 1.3', config.tls, /ssl_protocols\s+TLSv1\.2\s+TLSv1\.3;/);
 expect('local unprivileged port', config.smoke, /listen\s+8080;/);
 expect('local built-site root', config.smoke, /root\s+\/srv\/site;/);
+expect('container rootless pid', config.container, /pid\s+\/tmp\/nginx\.pid;/);
+expect('container writable temp paths', config.container, /client_body_temp_path\s+\/tmp\/client_temp;/);
+expect('container server includes', config.container, /include\s+\/etc\/nginx\/conf\.d\/\*\.conf;/);
 
 if (nginxHeaderHasDirective(combined, 'X-Robots-Tag', 'noindex')) {
   errors.push('production nginx config must not emit X-Robots-Tag: noindex');
