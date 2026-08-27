@@ -214,9 +214,11 @@ async function checkBreakpointsAndFooter(page, base) {
 
 async function checkServiceActions(page, base) {
   for (const path of servicePaths) {
+    // The pages are fully static: navigate once and resize, matching
+    // checkBreakpointsAndFooter, instead of reloading per width.
+    await page.goto(base + path, { waitUntil: 'domcontentloaded' });
     for (const width of [320, 390, 767, 768, 769, 1023, 1024, 1280]) {
       await page.setViewportSize({ width, height: 900 });
-      await page.goto(base + path, { waitUntil: 'domcontentloaded' });
       const actions = page.locator('[data-service-hero-actions]');
       assert(await actions.count() === 1, `${path}: missing unique hero-action group`);
       const result = await actions.evaluate((group) => {
