@@ -14,11 +14,18 @@ import { getLangFromUrl, hreflangPair, useTranslations } from '../i18n/ui';
 interface Props {
   title: string;
   description: string;
-  /** Emit <meta name="robots" content="noindex"> (error pages only). */
+  /** Emit <meta name="robots" content="noindex">. */
   noindex?: boolean;
+  /**
+   * Error documents describe the unknown request, not their internal fallback
+   * file. Do not publish canonical/alternate/og:url metadata for them.
+   */
+  errorDocument?: boolean;
+  /** Routable holding page that is not approved for publication. */
+  unpublished?: boolean;
 }
 
-const { title, description, noindex = false } = Astro.props;
+const { title, description, noindex = false, errorDocument = false, unpublished = false } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
@@ -33,11 +40,12 @@ const { ro: roPath, en: enPath } = hreflangPair(path);
 const canonical = new URL(path, Astro.site).href;
 const roHref = new URL(withSlash(roPath), Astro.site).href;
 const enHref = new URL(withSlash(enPath), Astro.site).href;
-const ogImage = new URL('og.png', Astro.site).href;
+const hideRouteSeo = errorDocument || unpublished;
+const ogImage = new URL('og-public.png', Astro.site).href;
 
 // Browser-chrome tint: --sc-deep-navy (theme tokens can't be var()'d in meta).
 const themeColor = '#0e1f5b';
-// og.png in /public is 1200×630 (verified) — the standard OG card size.
+// The policy-pinned public image is 1200×630 — the standard OG card size.
 const ogLocale = lang === 'en' ? 'en_US' : 'ro_RO';
 const ogLocaleAlt = lang === 'en' ? 'ro_RO' : 'en_US';
 ---
@@ -54,17 +62,17 @@ const ogLocaleAlt = lang === 'en' ? 'ro_RO' : 'en_US';
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
     <meta name="theme-color" content={themeColor} />
-    <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="ro" href={roHref} />
-    <link rel="alternate" hreflang="en" href={enHref} />
-    <link rel="alternate" hreflang="x-default" href={roHref} />
+    {!hideRouteSeo && <link rel="canonical" href={canonical} />}
+    {!hideRouteSeo && <link rel="alternate" hreflang="ro" href={roHref} />}
+    {!hideRouteSeo && <link rel="alternate" hreflang="en" href={enHref} />}
+    {!hideRouteSeo && <link rel="alternate" hreflang="x-default" href={roHref} />}
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Smart Control" />
     <meta property="og:locale" content={ogLocale} />
-    <meta property="og:locale:alternate" content={ogLocaleAlt} />
+    {!hideRouteSeo && <meta property="og:locale:alternate" content={ogLocaleAlt} />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    {!hideRouteSeo && <meta property="og:url" content={canonical} />}
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -95,6 +103,7 @@ const ogLocaleAlt = lang === 'en' ? 'ro_RO' : 'en_US';
         initReveals,
         initCounters,
         initStepper,
+        initStackTeardown,
         initConsole,
       } from '../scripts/motion.js';
 
@@ -117,6 +126,10 @@ const ogLocaleAlt = lang === 'en' ? 'ro_RO' : 'en_US';
         doc.querySelectorAll<HTMLElement>('[data-stepper]').forEach((container) => {
           const fill = container.querySelector<HTMLElement>('[data-stepper-fill]');
           if (fill) cleanups.push(initStepper(container, fill, { dark: container.hasAttribute('data-stepper-dark') }));
+        });
+
+        doc.querySelectorAll<HTMLElement>('[data-sctd]').forEach((container) => {
+          cleanups.push(initStackTeardown(container));
         });
 
         doc.querySelectorAll<HTMLElement>('[data-console]').forEach((container) => {

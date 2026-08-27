@@ -1,8 +1,10 @@
 ---
-// Export 4-col footer (RESOLUTIONS §17), ALWAYS light. Cols: brand / Servicii /
-// Soluții / Contact. NO "Termeni", NO "Cookies", NO "Asset Management". Privacy
-// → /confidentialitate (/en/privacy). © year computed. Email obfuscated.
-import { getLangFromUrl, useTranslations, localizedPath, EMAIL_USER, EMAIL_DOMAIN } from '../i18n/ui';
+// Responsive 1/2/4-column footer (4 columns from the shared 1024px desktop-nav
+// threshold), ALWAYS light. Cols: brand / Servicii / Soluții / Contact. NO
+// "Termeni", NO "Cookies", NO "Asset Management". Privacy →
+// /confidentialitate (/en/privacy). © year computed.
+import MailtoLink from './MailtoLink.astro';
+import { getLangFromUrl, useTranslations, localizedPath } from '../i18n/ui';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -25,12 +27,27 @@ const solutions = [
 
 <footer class="border-t border-border bg-surface px-6 pb-10 pt-16 md:px-10">
   <div class="mx-auto max-w-[1180px]">
-    <div class="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
+    <!-- Segmented datum track mirrors the active 1 / 2 / 4-column grid. -->
+    <div
+      data-footer-track
+      class="mb-8 grid grid-cols-1 gap-x-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:gap-x-12"
+      aria-hidden="true"
+    >
+      <span class="relative block h-px bg-divider"><i class="absolute -top-1 left-0 h-2 w-px bg-border-blue"></i></span>
+      <span class="relative hidden h-px bg-divider sm:block"><i class="absolute -top-1 left-0 h-2 w-px bg-border-blue"></i></span>
+      <span class="relative hidden h-px bg-divider lg:block"><i class="absolute -top-1 left-0 h-2 w-px bg-border-blue"></i></span>
+      <span class="relative hidden h-px bg-divider lg:block"><i class="absolute -top-1 left-0 h-2 w-px bg-border-blue"></i></span>
+    </div>
+
+    <div
+      data-footer-grid
+      class="grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:gap-x-12"
+    >
       <!-- Col 1 — brand -->
       <div>
         <a href={p('/')} class="flex items-center gap-[11px]" aria-label="Smart Control — home">
           <img src="/smartcontrol-mark-96.png" alt="" width="34" height="34" class="h-[34px] w-[34px]" loading="lazy" decoding="async" />
-          <span class="text-[17px] font-bold tracking-[-0.3px] text-navy">Smart<span class="text-bright">Control</span></span>
+          <span data-brand-wordmark class="text-[17px] font-bold tracking-[-0.3px] text-navy">Smart<span class="text-bright">Control</span></span>
         </a>
         <p class="mt-3.5 text-[13.5px] italic text-cool">{t('footer.tagline')}</p>
         <p class="mt-4 max-w-xs text-[13px] leading-[1.7] text-cool">{t('footer.blurb')}</p>
@@ -60,7 +77,7 @@ const solutions = [
       <div>
         <h2 class="font-mono text-[11px] font-semibold uppercase tracking-[2px] text-cool">{t('footer.col.contact')}</h2>
         <div class="mt-4 grid gap-2.5">
-          <a data-email-user={EMAIL_USER} data-email-domain={EMAIL_DOMAIN} href="#" class="text-[13.5px] text-slate transition-colors hover:text-royal"></a>
+          <MailtoLink variant="plain" class="text-[13.5px] text-slate hover:text-royal" />
           <span class="text-[13.5px] text-slate">{t('footer.website')}</span>
           <span class="text-[13.5px] leading-[1.6] text-cool">
             {t('company.address.l1')}<br />{t('company.address.l2')}

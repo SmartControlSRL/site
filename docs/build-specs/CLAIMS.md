@@ -1,0 +1,47 @@
+# Marketing claims register
+
+This register is the publication gate for quantitative, security, SLA,
+certification, compliance and absolute delivery claims. A source document is
+not, by itself, approval to publish. Restricted commercial or certification
+evidence should be referenced by identifier and owner; do not commit it here.
+
+## Status vocabulary and required approval fields
+
+`blocked` claims must not appear in source-driven public copy, generated HTML,
+metadata, JSON-LD, or social artwork. `scoped-copy` entries may use only the
+bounded wording shown here; they do not authorize broader factual claims.
+
+Before a blocked claim can be published, replace the role placeholders
+with the approver name, approval date, evidence reference and review date.
+Romanian and English wording must be approved together.
+
+| ID | Candidate or allowed RO / EN wording | Permitted surfaces | Evidence and scope | Owners | Status / review |
+| --- | --- | --- | --- | --- | --- |
+| C-001 | `Fondată în 2003` / `Founded in 2003` | None until approved | `docs/build-specs/oferta-servicii.txt:26` is a source mention, not approval. Corporate primary evidence is required. | Commercial: pending; Legal: pending | **Blocked**; approval and review dates missing |
+| C-002 | `4 sisteme de management certificate: ISO 9001, ISO 27001, ISO 14001, ISO 45001` / `4 certified management systems: ISO 9001, ISO 27001, ISO 14001, ISO 45001` | None until approved | Current certificate identifiers, scopes and expiry dates must be supplied by the legal/compliance owner. ISO 27701 is explicitly prohibited. | Legal/compliance: pending | **Blocked**; primary evidence and review date missing |
+| C-003 | `650+ proiecte`, `250+ clienți`, `25+ internaționali` and EN equivalents | Not currently approved for publication | Source mentions: `docs/SMC Web/ds/README.md:5`, `docs/build-specs/oferta-servicii.txt:13`. CRM/commercial evidence is required; counts must not be extrapolated. | Commercial: pending; Legal: pending | Pending; do not publish |
+| C-004 | `50 de specialiști interni`, `500+ ani experiență cumulată` and EN equivalents | Not currently approved for publication | Source mentions: `docs/smartcontrol-ro-brief.md:16`, `docs/build-specs/oferta-servicii.txt:131`. HR-approved headcount and calculation method are required. | HR/commercial: pending; Legal: pending | Pending; do not publish |
+| C-005 | `<60s alerting` / `<60s alerting` | SEKNET product specifications only | `docs/build-specs/seknet.md:203` plus current approved product test evidence. Never extrapolate to all security services or incident response. | Technical: pending; Commercial: pending | Pending current product evidence; do not publish outside SEKNET |
+| C-006 | SEKNET throughput/uptime and S-VPN performance figures | Product specification tables only | `docs/build-specs/seknet.md` and `docs/build-specs/svpn.md:182`; require versioned product test evidence. | Technical: pending; Commercial: pending | Pending; do not publish until evidence/version/date are recorded |
+| C-007 | `Nivelurile de serviciu și indicatorii sunt agreate contractual` / `Service levels and indicators are agreed contractually` | Service and delivery copy | Contract-specific wording only. No universal `24/7`, guaranteed metric, zero-handoff or zero-downtime promise. | Commercial/legal owner of the applicable contract | **Scoped-copy**; review with contract template changes |
+| C-008 | `Accesul la codul sursă este definit pentru livrabilele software aplicabile` / `Source-code access is defined for applicable software deliverables` | Software-service copy | Contract-specific. Never claim source code is included with every project or imply proprietary product licensing terms. | Technical/commercial/legal owner of the applicable contract | **Scoped-copy**; review with licensing terms |
+| C-009 | Initial assessment offer, duration and price | None until approved; neutral “request an assessment” CTA is allowed | `docs/build-specs/oferta-servicii.txt:563-572` is a source mention, not current commercial approval. Record eligibility, deliverables, exclusions, duration, availability and expiry. | Commercial: pending; Legal: pending | **Blocked**; duration/free claims must not be published |
+| C-010 | ROI or post-launch performance reporting | Only project-specific proposals using agreed indicators and interval | No unconditional 90-day ROI/report promise. Measurement scope and baseline belong in the contract or statement of work. | Technical: pending; Commercial: pending | Safe scoped wording only; review per proposal template |
+| C-011 | `Echipa Smart Control răspunde direct de livrare și coordonează specialiștii și partenerii tehnologici necesari. Fiecare recomandare pleacă de la măsurători făcute în infrastructura clientului.` / `The Smart Control team remains directly accountable for delivery and coordinates the specialists and technology partners each project requires. Every recommendation starts from measurements in the client's own infrastructure.` | Homepage hero, description and organization metadata using equivalent bounded wording | Site-owner confirmation in the Codex task on 2026-08-27. Applies to the current delivery model; do not extrapolate into an all-in-house or universal service-level promise. | Site owner: approved | **Approved 2026-08-27**; reconfirm after a material delivery-model or wording change |
+
+## Prohibited extrapolations
+
+- Do not present GDPR, NIS 2 or DORA as certifications or ISO equivalents.
+- Do not use ISO 27701 as a current certification.
+- Do not convert a SEKNET product metric into a service-wide response promise.
+- Do not use `100%`, `every project`, `zero downtime`, `zero hand-offs`, a
+  universal `24/7 SLA` or `guaranteed metrics` without a registered,
+  contractually bounded claim.
+- Do not publish client names, logos or case studies.
+
+## Approval record
+
+The commercial, technical and legal owners must append a dated approval entry
+here for each claim promoted from `blocked`. Until then, the safe scoped wording
+above is the maximum allowed wording, and blocked claims remain
+out of generated pages, metadata, JSON-LD and social artwork.

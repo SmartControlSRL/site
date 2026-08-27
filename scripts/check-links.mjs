@@ -1,8 +1,12 @@
 // Deterministic link / hreflang / parity checker over the built dist/.
 // Verifies: every internal href + src resolves to a built file; hreflang pairs
-// point at existing pages; RO/EN route parity; sitemap covers all pages.
+// point at existing pages; RO/EN route parity; sitemap covers all real pages.
+// The two locale-specific 404 files are deployment error documents rather
+// than navigable routes. They remain fully link-checked, but are explicitly
+// excluded from parity and sitemap expectations and must not emit route SEO.
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { hasRobotsMeta } from './robots-directives.mjs';
 
 const DIST = 'dist';
 const pages = [];
@@ -16,6 +20,9 @@ const pages = [];
 
 const errors = [];
 const routeOf = (fp) => '/' + fp.replace(/^dist\//, '').replace(/index\.html$/, '').replace(/\.html$/, '');
+const ERROR_DOCUMENT_ROUTES = new Set(['/404', '/en/404/']);
+const ERROR_DOCUMENT_TARGETS = new Set(['/404', '/404/', '/en/404', '/en/404/']);
+const LEGAL_HOLD_ROUTES = new Set(['/confidentialitate/', '/en/privacy/']);
 
 const resolves = (path) => {
   const clean = path.split('#')[0].split('?')[0];
@@ -43,6 +50,11 @@ for (const fp of pages) {
       continue;
     }
     if (!url.startsWith('/')) continue; // relative — astro emits absolute; skip
+    const targetPath = url.split('#')[0].split('?')[0];
+    if (ERROR_DOCUMENT_TARGETS.has(targetPath)) {
+      errors.push(`${route}: error document exposed as an internal link ${url}`);
+      continue;
+    }
     if (!resolves(url)) errors.push(`${route}: broken internal link ${url}`);
   }
 
@@ -50,17 +62,45 @@ for (const fp of pages) {
   for (const m of html.matchAll(/hreflang="(?:ro|en|x-default)" href="https:\/\/smartcontrol\.ro([^"]*)"/g)) {
     if (!resolves(m[1] || '/')) errors.push(`${route}: hreflang target missing ${m[1]}`);
   }
+
+  if (ERROR_DOCUMENT_ROUTES.has(route)) {
+    if (!hasRobotsMeta(html, 'noindex')) {
+      errors.push(`${route}: error document must remain noindex`);
+    }
+    if (/<link rel="(?:canonical|alternate)"/.test(html)) {
+      errors.push(`${route}: error document emits canonical/alternate metadata`);
+    }
+    if (/<meta property="og:(?:locale:alternate|url)"/.test(html)) {
+      errors.push(`${route}: error document emits misleading alternate/og:url metadata`);
+    }
+  }
+  if (LEGAL_HOLD_ROUTES.has(route)) {
+    if (!html.includes('data-privacy-status="pending-legal-review"')) {
+      errors.push(`${route}: legal hold marker is missing`);
+    }
+    if (!hasRobotsMeta(html, 'noindex')) {
+      errors.push(`${route}: legal hold page must remain noindex`);
+    }
+    if (/<link rel="(?:canonical|alternate)"/.test(html) || /<meta property="og:(?:locale:alternate|url)"/.test(html)) {
+      errors.push(`${route}: legal hold page emits publication metadata`);
+    }
+  }
 }
 
 // RO/EN parity (privacy maps to a different EN slug)
 const routes = new Set(pages.map(routeOf));
+for (const errorRoute of ERROR_DOCUMENT_ROUTES) {
+  if (!routes.has(errorRoute)) errors.push(`404: missing locale error document ${errorRoute}`);
+}
 const map = { '/confidentialitate/': '/en/privacy/' };
 for (const r of routes) {
+  if (ERROR_DOCUMENT_ROUTES.has(r)) continue;
   if (r.startsWith('/en/')) continue;
   const en = map[r] || ('/en' + r);
   if (!routes.has(en)) errors.push(`parity: ${r} has no EN twin ${en}`);
 }
 for (const r of routes) {
+  if (ERROR_DOCUMENT_ROUTES.has(r)) continue;
   if (!r.startsWith('/en/')) continue;
   const roFromMap = Object.entries(map).find(([, v]) => v === r)?.[0];
   const ro = roFromMap || r.replace(/^\/en/, '') || '/';
@@ -70,7 +110,12 @@ for (const r of routes) {
 // sitemap coverage
 const sm = readFileSync(join(DIST, 'sitemap-0.xml'), 'utf8');
 for (const r of routes) {
-  if (!sm.includes(`https://smartcontrol.ro${r}`)) errors.push(`sitemap: missing ${r}`);
+  const inSitemap = sm.includes(`https://smartcontrol.ro${r}`);
+  if (ERROR_DOCUMENT_ROUTES.has(r) || LEGAL_HOLD_ROUTES.has(r)) {
+    if (inSitemap) errors.push(`sitemap: non-indexable route must be excluded ${r}`);
+    continue;
+  }
+  if (!inSitemap) errors.push(`sitemap: missing ${r}`);
 }
 
 if (errors.length) {
@@ -78,4 +123,4 @@ if (errors.length) {
   console.log(`\nFAIL: ${errors.length} problems`);
   process.exit(1);
 }
-console.log(`OK: ${pages.length} pages, all internal links/fragments/hreflang/parity/sitemap verified`);
+console.log(`OK: ${pages.length} pages, including ${LEGAL_HOLD_ROUTES.size} legal holds; links/fragments/hreflang/parity/sitemap verified`);

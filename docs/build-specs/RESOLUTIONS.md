@@ -29,13 +29,10 @@ Orchestrator rulings on every open question raised by the design extraction
    move into `global.css`.
 
 ## Copy & content
-9. **RO copy verbatim from the specs** (diacritics exact), EXCEPT the
-   known-stale facts in CLAUDE.md: **ISO 27701 stripped everywhere** (4 ISO
-   badges: 9001/27001/14001/45001) and **Asset Management stripped everywhere**
-   (footers, cross-sells, nav). SEKNET's cross-sell pairs with **S-VPN** instead.
-10. **Hardcoded years are recomputed**: "22 de ani" → computed
-    `new Date().getUTCFullYear() - 2003` ("23 de ani" in 2026); stats "20+"
-    stays the computed decade floor; © year dynamic.
+9. **RO copy follows the specs** (diacritics exact), except claims blocked by
+   `CLAIMS.md`. Certification counts/badges and ISO 27701 are stripped; Asset
+   Management is stripped. SEKNET's cross-sell pairs with **S-VPN** instead.
+10. **Founding/tenure figures are omitted** until C-001 is approved; © year is dynamic.
 11. **CTA wording = export wording** ("Solicită un demo", "Solicită assessment").
     CLAUDE.md's "Cere un demo" is superseded — export copy was approved.
 12. **EN pages**: translate the RO copy per the brand voice rules (technical
@@ -43,13 +40,17 @@ Orchestrator rulings on every open question raised by the design extraction
 
 ## CTAs & email
 13. **Primary CTAs go straight to mailto** (no #contact anchor hops): nav CTA +
-    hero assessment CTAs → `office@smartcontrol.ro` subject `Evaluare gratuită`;
+    hero assessment CTAs → `office@smartcontrol.ro` subject `Solicitare assessment`;
     product hero demo CTAs → subject `Demo SEKNET` / `Demo S-VPN`. In-page
     secondary anchors (e.g. "vezi modulele") stay anchors. A product page keeps
     the export pattern: hero = demo ask, closing band = assessment ask.
-14. **Obfuscation**: use the `data-email-user/-domain` pattern + `initEmails`
-    everywhere (no raw address in static HTML). **Extend `initEmails`** to honor
-    a `data-email-subject` attribute (the one permitted motion.js change).
+14. **Resilient email links**: render a complete static `mailto:` destination
+    and a non-empty accessible name at every call site. Address-style links
+    also expose `office@smartcontrol.ro` as selectable text without JavaScript.
+    The `data-email-user/-domain/-subject` attributes and `initEmails` may stay
+    only as idempotent progressive enhancement; they must never replace or
+    regress the static fallback. The small scraper benefit of splitting the
+    address does not justify a broken no-JS contact path.
 15. **The decorative email `<input>` in CTA bands is REMOVED** (no-forms rule,
     a11y) — keep the pill shell + mailto button only.
 

@@ -13,12 +13,13 @@ const { href, dark = false, chevron = true, class: extra = '' } = Astro.props;
 ---
 
 <a
+  data-text-link
   href={href}
   class:list={[
-    'inline-flex items-center gap-2 text-[14.5px] font-semibold transition-colors',
+    'inline-flex w-fit max-w-full shrink-0 items-center gap-2 whitespace-nowrap text-[14.5px] font-semibold transition-colors',
     dark ? 'text-sky hover:text-white' : 'text-royal hover:text-navy',
     extra,
   ]}
 >
-  <slot />{chevron && <span aria-hidden="true">›</span>}
+  <span><slot /></span>{chevron && <span aria-hidden="true">›</span>}
 </a>

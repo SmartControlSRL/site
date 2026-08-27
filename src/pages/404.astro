@@ -1,8 +1,8 @@
 ---
-// 404 — served by the static host for ANY unknown path (RO or EN), so the
-// page is bilingual: RO-led message + one EN line, with links to both
-// homepages. Chrome (Nav/Footer) resolves RO via getLangFromUrl('/404').
-// noindex: error pages have no business in the index.
+// Romanian error document. The production server maps unknown non-/en paths
+// to this file while preserving the original URL and 404 status. /en/* errors
+// use src/pages/en/404.astro. Error-document URLs are deployment internals:
+// no canonical, hreflang, alternate or og:url metadata is emitted.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Eyebrow from '../components/Eyebrow.astro';
 import TextLink from '../components/TextLink.astro';
@@ -10,12 +10,13 @@ import TextLink from '../components/TextLink.astro';
 
 <BaseLayout
   title="404 — Pagina nu a fost găsită | Smart Control"
-  description="Pagina căutată nu există sau a fost mutată. / The page you are looking for does not exist or has moved."
+  description="Pagina căutată nu există sau a fost mutată."
   noindex
+  errorDocument
 >
   <section class="px-6 md:px-10" style="background:var(--sc-gradient-hero-light)">
     <div class="mx-auto max-w-[1180px] py-[110px] text-center md:py-[150px]">
-      <Eyebrow>Eroare 404 — Not Found</Eyebrow>
+      <Eyebrow>Eroare 404</Eyebrow>
 
       <p
         class="mt-8 font-mono text-[clamp(4.5rem,3rem+6vw,7rem)] font-bold leading-none tracking-[-2px] text-navy"
@@ -32,13 +33,14 @@ import TextLink from '../components/TextLink.astro';
         Pagina căutată nu există sau a fost mutată. Verificați adresa sau
         continuați din pagina principală.
       </p>
-      <p class="mx-auto mt-2 max-w-[560px] leading-[1.7] text-cool" lang="en">
-        The page you are looking for does not exist or has moved.
-      </p>
-
-      <div class="mt-10 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
-        <TextLink href="/">Pagina principală</TextLink>
-        <TextLink href="/en/">English homepage</TextLink>
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
+        <a
+          href="/"
+          class="inline-flex items-center justify-center rounded-md bg-navy px-6 py-3 text-[14.5px] font-semibold text-white transition-all hover:bg-midnight hover:[box-shadow:0_6px_20px_rgba(14,31,91,0.25)]"
+        >
+          Înapoi la pagina principală
+        </a>
+        <TextLink href="/servicii/">Explorează serviciile</TextLink>
       </div>
     </div>
   </section>

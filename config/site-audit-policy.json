@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "owner": "Smart Control site maintainers",
+  "reviewBy": "2026-11-26",
+  "maxContrastFailures": 0,
+  "maxLcpMs": 2500,
+  "requireLcpProfiles": ["desktop-normal"],
+  "expectedStatuses": {
+    "/404": 404,
+    "/en/404/": 404
+  },
+  "contrastExemptions": [
+    {
+      "selector": "[data-brand-wordmark] .text-bright",
+      "reason": "Brand wordmark accent; decorative logo lettering rather than body copy. Requires brand-owner review before changing the locked mark.",
+      "owner": "Smart Control brand owner",
+      "reviewBy": "2026-11-26"
+    }
+  ]
+}
