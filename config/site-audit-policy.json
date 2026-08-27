@@ -11,7 +11,7 @@
   },
   "contrastExemptions": [
     {
-      "selector": "a[aria-label*='Smart Control'] .text-bright",
+      "selector": "[data-brand-wordmark] .text-bright",
       "reason": "Brand wordmark accent; decorative logo lettering rather than body copy. Requires brand-owner review before changing the locked mark.",
       "owner": "Smart Control brand owner",
       "reviewBy": "2026-11-26"
