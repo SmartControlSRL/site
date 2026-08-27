@@ -63,7 +63,7 @@ for (const fp of pages) {
   }
 
   if (ERROR_DOCUMENT_ROUTES.has(route)) {
-    if (!/<meta(?=[^>]*\bname="robots")(?=[^>]*\bcontent="noindex")[^>]*>/.test(html)) {
+    if (!/<meta(?=[^>]*\bname="robots")(?=[^>]*\bcontent="[^"]*\bnoindex\b)[^>]*>/.test(html)) {
       errors.push(`${route}: error document must remain noindex`);
     }
     if (/<link rel="(?:canonical|alternate)"/.test(html)) {
@@ -77,7 +77,7 @@ for (const fp of pages) {
     if (!html.includes('data-privacy-status="pending-legal-review"')) {
       errors.push(`${route}: legal hold marker is missing`);
     }
-    if (!/<meta(?=[^>]*\bname="robots")(?=[^>]*\bcontent="noindex")[^>]*>/.test(html)) {
+    if (!/<meta(?=[^>]*\bname="robots")(?=[^>]*\bcontent="[^"]*\bnoindex\b)[^>]*>/.test(html)) {
       errors.push(`${route}: legal hold page must remain noindex`);
     }
     if (/<link rel="(?:canonical|alternate)"/.test(html) || /<meta property="og:(?:locale:alternate|url)"/.test(html)) {

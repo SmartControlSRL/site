@@ -165,7 +165,7 @@ for (const [locale, path, lang, marker] of [
 ]) {
   const html = requireFile(locale, path);
   expect(`${locale} language`, html, new RegExp(`<html\\s+lang="${lang}"`));
-  expect(`${locale} noindex`, html, /<meta(?=[^>]*name="robots")(?=[^>]*content="noindex")[^>]*>/);
+  expect(`${locale} noindex`, html, /<meta(?=[^>]*name="robots")(?=[^>]*content="[^"]*\bnoindex\b)[^>]*>/);
   expect(`${locale} content`, html, new RegExp(marker));
   if (/<link\s+rel="(?:canonical|alternate)"/.test(html)) {
     errors.push(`${locale}: error document must not emit canonical or alternate links`);

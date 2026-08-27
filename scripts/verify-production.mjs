@@ -237,7 +237,7 @@ for (const [locale, path, lang, marker] of [
     assert(response.url === url.href, `request was externally redirected to ${response.url}`);
     assert(new RegExp(`<html\\s+lang=["']${lang}["']`).test(html), `lang=${lang} missing`);
     assert(html.includes(marker), `localized marker “${marker}” missing`);
-    assert(/<meta(?=[^>]*name=["']robots["'])(?=[^>]*content=["']noindex["'])/i.test(html), '404 noindex missing');
+    assert(/<meta(?=[^>]*name=["']robots["'])(?=[^>]*content=["'][^"']*\bnoindex\b)/i.test(html), '404 noindex missing');
   });
 }
 
