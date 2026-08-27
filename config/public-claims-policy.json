@@ -12,7 +12,7 @@
   ],
   "socialAsset": {
     "path": "public/og-public.png",
-    "sha256": "5dd1d96b8b1ee12ffa958c7958889dd00ef849911f1bb1828cdc8bcf6e4fb66b",
+    "sha256": "c8a5d5816066b6b05cb2218070880ec69efa103dc19cf414377204c7ad3ae1cc",
     "bindingSource": "src/layouts/BaseLayout.astro"
   },
   "claims": [
