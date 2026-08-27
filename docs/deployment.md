@@ -20,6 +20,7 @@ safeguard.
 | `deployment/nginx/site-rules.conf` | Static serving, headers, gzip and error routing | `/etc/nginx/smartcontrol/site-rules.conf` |
 | `deployment/nginx/tls.conf` | Non-secret TLS policy and certificate paths | `/etc/nginx/smartcontrol/tls.conf` |
 | `deployment/nginx/local-smoke.conf` | Local HTTP-only smoke harness; never install | not installed |
+| `deployment/nginx/container-nginx.conf` | Rootless process configuration for the published container | packaged as `/etc/nginx/nginx.conf` |
 
 The production document root is `/var/www/smartcontrol.ro/current`, an atomic
 symlink to one release under `/var/www/smartcontrol.ro/releases/`. Certificate
@@ -53,6 +54,38 @@ npm run check:nginx-runtime
 Expected results are a `200` homepage, one redirect from `/servicii` to
 `/servicii/`, and genuine localized `404` responses in both languages. HSTS and
 TLS are intentionally absent from this HTTP-only harness.
+
+## Published container image
+
+`.github/workflows/container.yml` builds the static site for `linux/amd64` and
+`linux/arm64` and publishes it to `ghcr.io/smartcontrolsrl/site`. Every `main`
+build receives `latest`, `main`, and an immutable `sha-<full-commit>` tag.
+Version tags such as `v0.2.0` additionally publish semantic-version tags. Pull
+requests build the image without publishing it.
+
+The runtime is a rootless, HTTP-only Nginx process on port 8080. Terminate TLS
+in a trusted reverse proxy when the site is exposed beyond the local host. For
+a private GitHub package, authenticate with a personal access token that has
+`read:packages`, then start the container with a read-only filesystem:
+
+```bash
+echo "$GHCR_READ_TOKEN" | docker login ghcr.io -u GITHUB_USERNAME --password-stdin
+docker pull ghcr.io/smartcontrolsrl/site:latest
+docker run -d \
+  --name smartcontrol-site \
+  --restart unless-stopped \
+  --read-only \
+  --tmpfs /tmp:rw,noexec,nosuid,size=64m \
+  --cap-drop ALL \
+  --security-opt no-new-privileges:true \
+  -p 127.0.0.1:8080:8080 \
+  ghcr.io/smartcontrolsrl/site:latest
+```
+
+Omit the registry login when the package is public. Replace the loopback-only
+port mapping with `-p 8080:8080` only when LAN access is intentional and the
+host firewall is configured. Use an immutable `sha-...` tag for repeatable
+deployments and rollbacks.
 
 ## Production prerequisites
 
