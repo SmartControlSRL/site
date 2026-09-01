@@ -67,13 +67,13 @@ const partners = [
 const consoleMetrics = [
   { label: 'Visibility', value: 'Active' },
   { label: 'Protection', value: 'Continuous', accent: true },
-  { label: 'Control', value: 'Centralized' },
+  { label: 'Control', value: 'Centralised' },
 ];
 const consoleLog = [
   { time: '08:14:02', msg: 'Infrastructure status updated', blocked: false },
   { time: '08:14:05', msg: 'Operational event analyzed' },
   { time: '08:14:09', msg: 'Response coordinated from the central view', blocked: false },
-  { time: '08:14:12', msg: 'Organization context synchronized' },
+  { time: '08:14:12', msg: 'Organisation context synchronised' },
 ];
 
 
@@ -84,7 +84,7 @@ const stackLayers = [
     code: 'L4',
     name: 'Applications & Automation',
     desc: 'Custom software, APIs and AI / LLM automation.',
-    chips: ['Custom dev & API', 'App modernization', 'AI / LLM automation', 'CI/CD & DevSecOps'],
+    chips: ['Custom dev & API', 'App modernisation', 'AI / LLM automation', 'CI/CD & DevSecOps'],
     href: p('/servicii/software'),
     linkLabel: 'Software & Automation',
     aria: 'Layer L4 — Applications and Automation',
@@ -118,11 +118,11 @@ const stackLayers = [
   },
 ];
 
-// Cloud & Modernization — 5-stage methodology, teaser pipeline.
+// Cloud & Modernisation — 5-stage methodology, teaser pipeline.
 const cloudSteps = [
   { title: 'Assessment', sub: 'initial assessment' },
   { title: 'Re-architecture', sub: 'target design' },
-  { title: 'Containerization', sub: 'K8s / OpenShift' },
+  { title: 'Containerisation', sub: 'K8s / OpenShift' },
   { title: 'Migration', sub: 'rollback plan' },
   { title: 'Validation', sub: 'agreed indicators' },
 ];
@@ -134,7 +134,7 @@ const cloudRows = [
   },
   {
     tag: 'K8S-READY',
-    body: 'Containerization and migration to Kubernetes / OpenShift / AKS / GKE, with planned windows and rollback.',
+    body: 'Containerisation and migration to Kubernetes / OpenShift / AKS / GKE, with planned windows and rollback.',
   },
   {
     tag: 'POST-LAUNCH VALIDATION',
@@ -257,11 +257,11 @@ const cloudRows = [
           <ModuleCard
             title="Software & Automation"
             index="03"
-            body="Custom development, application modernization and AI automation — DevSecOps delivery."
+            body="Custom development, application modernisation and AI automation — DevSecOps delivery."
             items={[
               'Custom software development & APIs',
               'DevOps / DevSecOps & CI/CD',
-              'Application migration and modernization',
+              'Application migration and modernisation',
               'AI / LLM automation',
             ]}
             cols={1}
@@ -323,7 +323,7 @@ const cloudRows = [
             heading="Proprietary products for security and protected access"
             variant="dark"
           >
-            SEKNET and S-VPN support organizations that need control, visibility, and secure access. Technical details are available through a commercial discussion.
+            SEKNET and S-VPN support organisations that need control, visibility, and secure access. Technical details are available through a commercial discussion.
           </SectionHeading>
           <div class="mt-7 flex flex-wrap items-center gap-5">
             <a
@@ -388,7 +388,7 @@ const cloudRows = [
       {/* Header split — heading left, context + CTA right */}
       <div data-reveal class="grid grid-cols-1 items-end gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">
         <SectionHeading
-          eyebrow="Cloud & Modernization"
+          eyebrow="Cloud & Modernisation"
           heading="Optimizing budgets by shifting from hardware dependency to intelligent architecture"
         />
         <div>
@@ -401,7 +401,7 @@ const cloudRows = [
             href={p('/servicii/cloud')}
             class="mt-5 inline-flex items-center gap-2 rounded-md bg-navy px-6 py-3 text-[14.5px] font-semibold text-white transition-all hover:bg-midnight hover:[box-shadow:0_6px_20px_rgba(14,31,91,0.25)]"
           >
-            Explore Cloud & Modernization <span aria-hidden="true">›</span>
+            Explore Cloud & Modernisation <span aria-hidden="true">›</span>
           </a>
         </div>
       </div>
@@ -415,7 +415,7 @@ const cloudRows = [
       <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
         {
           cloudRows.map(({ tag, body }) => (
-            <div class="rounded-lg border border-border bg-surface p-[26px] shadow-sm transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[2px] hover:border-border-blue hover:shadow-lg">
+            <div class="rounded-lg border border-border bg-surface p-[26px] shadow-sm">
               <span class="mb-3.5 inline-block rounded-sm bg-blue-wash px-2.5 py-1 font-mono text-[11.5px] tracking-[0.5px] text-royal">
                 {tag}
               </span>
@@ -450,7 +450,7 @@ const cloudRows = [
     heading="Discuss an initial assessment"
     cta={t('cta.assessment')}
     subject={t('subject.assessment')}
-    showContact={false}
+    showContact={true}
   >
     We clarify the priority area, deliverables and commercial terms before the assessment begins.
   </CtaBand>

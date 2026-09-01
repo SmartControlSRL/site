@@ -150,11 +150,13 @@ const altLang = lang === 'ro' ? 'en' : 'ro';
       <div class="flex shrink-0 items-center gap-3">
         <a
           href={altHref}
+          lang={altLang}
           hreflang={altLang}
+          aria-labelledby="language-switch-token language-switch-action"
           class="text-[13.5px] font-semibold text-cool transition-colors hover:text-navy"
-          aria-label={t('lang.switch.aria')}
         >
-          <span lang={altLang}>{t('lang.switch')}</span>
+          <span id="language-switch-token" lang={altLang}>{t('lang.switch')}</span>
+          <span id="language-switch-action" lang={lang} class="sr-only">{t('lang.switch.action')}</span>
         </a>
         <MailtoLink
           variant="button"

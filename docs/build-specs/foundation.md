@@ -273,7 +273,7 @@ Props: `steps: {title, body}[]`, `dark?`. Auto-wired to `initStepper`.
 
 ### TextLink
 ```astro
-<TextLink href={p('/servicii/cloud')}>Explorează Cloud &amp; Modernization</TextLink>
+<TextLink href={p('/servicii/cloud')}>Explorează Cloud &amp; Modernizare</TextLink>
 <TextLink href="#module" dark>Vezi modulele</TextLink>   {/* sky on dark */}
 ```
 Props: `href`, `dark?`, `chevron?` (default true — appends `›`). Royal on light
@@ -291,9 +291,13 @@ for idempotent progressive enhancement.
 
 ---
 
-## OG image
-`public/og-public.png` (1200×630): blue brand background, mark, SmartControl
-wordmark and "Trusted Service Delivery Partner" tagline. It intentionally has
-no factual credentials line. BaseLayout references it for `og:image` and
-`twitter:image`; `config/public-claims-policy.json` pins its SHA-256 so an
-unreviewed artwork change fails the claims gate.
+## Social images
+
+`public/og-ro.png` and `public/og-en.png` are separate 1200×630 brand cards
+with locale-specific positioning copy. They contain no factual credential,
+client, certification, or quantitative claim. BaseLayout selects the matching
+asset and localized alternative text for Open Graph and Twitter metadata;
+`config/public-claims-policy.json` pins both SHA-256 hashes so an unreviewed
+artwork change fails the claims gate. Regenerate intentionally with
+`npm run generate:social`, then review the rendered cards and update both
+policy hashes in the same change.

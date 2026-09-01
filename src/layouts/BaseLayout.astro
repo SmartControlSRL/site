@@ -41,7 +41,10 @@ const canonical = new URL(path, Astro.site).href;
 const roHref = new URL(withSlash(roPath), Astro.site).href;
 const enHref = new URL(withSlash(enPath), Astro.site).href;
 const hideRouteSeo = errorDocument || unpublished;
-const ogImage = new URL('og-public.png', Astro.site).href;
+const socialCard = lang === 'en'
+  ? { path: 'og-en.png', alt: 'Smart Control — technical clarity and coordinated enterprise IT delivery' }
+  : { path: 'og-ro.png', alt: 'Smart Control — claritate tehnică și livrare coordonată de servicii IT enterprise' };
+const ogImage = new URL(socialCard.path, Astro.site).href;
 
 // Browser-chrome tint: --sc-deep-navy (theme tokens can't be var()'d in meta).
 const themeColor = '#0e1f5b';
@@ -76,11 +79,12 @@ const ogLocaleAlt = lang === 'en' ? 'ro_RO' : 'en_US';
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Smart Control — Trusted Service Delivery Partner" />
+    <meta property="og:image:alt" content={socialCard.alt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={socialCard.alt} />
     <meta name="generator" content={Astro.generator} />
     <ClientRouter />
   </head>

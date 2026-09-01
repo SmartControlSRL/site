@@ -1,5 +1,9 @@
 # Build Spec — `/servicii/cloud` (Cloud & Modernization)
 
+> Localisation and workflow note: `RESOLUTIONS.md` decisions 29–31 supersede
+> literal English spelling and the exported stage order below. Public English
+> uses “Modernisation”, and Fast Track is optional rather than stage one.
+
 **Source export:** `docs/SMC Web/Cloud.dc.html` (visual ground truth, client-approved — match closely)
 **Target route:** `/servicii/cloud` (RO) + `/en/servicii/cloud` (EN). Template B (service/solution, flagship).
 **Motion lib:** `docs/SMC Web/motion.js` (port to a deferred Astro island wired with GSAP/ScrollTrigger per CLAUDE.md, or port the vanilla functions verbatim — see "Deviations").

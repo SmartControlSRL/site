@@ -52,15 +52,25 @@ for (const file of files) {
   }
 }
 
-const assetPath = resolve(root, policy.socialAsset.path);
-const asset = await readFile(assetPath);
-const assetHash = createHash('sha256').update(asset).digest('hex');
-if (assetHash !== policy.socialAsset.sha256) {
-  failures.push(`${policy.socialAsset.path}: social asset hash does not match the approved policy hash`);
-}
-const binding = await readFile(resolve(root, policy.socialAsset.bindingSource), 'utf8');
-if (!binding.includes(policy.socialAsset.path.replace(/^public\//, ''))) {
-  failures.push(`${policy.socialAsset.bindingSource}: approved social asset is not the active binding`);
+if (!Array.isArray(policy.socialAssets) || policy.socialAssets.length !== 2) {
+  failures.push('Claims policy must register exactly one Romanian and one English social asset.');
+} else {
+  const locales = new Set(policy.socialAssets.map((entry) => entry.locale));
+  if (locales.size !== 2 || !locales.has('ro') || !locales.has('en')) {
+    failures.push('Claims policy social assets must cover the ro and en locales.');
+  }
+  for (const entry of policy.socialAssets) {
+    const assetPath = resolve(root, entry.path);
+    const asset = await readFile(assetPath);
+    const assetHash = createHash('sha256').update(asset).digest('hex');
+    if (assetHash !== entry.sha256) {
+      failures.push(`${entry.path}: social asset hash does not match the approved policy hash`);
+    }
+    const binding = await readFile(resolve(root, entry.bindingSource), 'utf8');
+    if (!binding.includes(entry.path.replace(/^public\//, ''))) {
+      failures.push(`${entry.bindingSource}: ${entry.locale} social asset is not an active binding`);
+    }
+  }
 }
 
 if (failures.length) {

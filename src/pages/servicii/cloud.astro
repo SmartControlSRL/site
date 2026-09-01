@@ -1,5 +1,5 @@
 ---
-// /servicii/cloud — Cloud & Modernization (RO). Template B flagship: light hero
+// /servicii/cloud — Cloud & Modernizare (RO). Template B flagship: light hero
 // → "De ce acum" 3-card reasons grid → #flux 5-stage scroll stepper (wash band)
 // → "Ce livrăm" capabilities bento → dark CtaBand (#contact). Copy verbatim from
 // docs/build-specs/cloud.md; motion via data-attributes auto-wired by BaseLayout.
@@ -22,36 +22,36 @@ import {
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const pageTitle = 'Cloud & Modernizare — Re-arhitecturare și optimizare aplicații | Smart Control';
+const pageTitle = 'Cloud & Modernizare — Re-arhitecturare | Smart Control';
 const pageDescription =
   'Hardware-ul se scumpește. Propunem o abordare de re-arhitecturare, containerizare și migrare selectivă în cloud pentru performanță și costuri predictibile.';
 
 // SECTION 4 — #flux 5-stage methodology (number / title / pill / body, verbatim).
 const steps = [
   {
-    title: 'Propunere de re-arhitecturare',
-    pill: 'Fast Track',
-    body: 'Pentru clienții cu care avem deja o relație stabilă: valorificăm cunoștințele despre infrastructura existentă pentru a identifica punctele critice și propunem modernizări bazate pe date reale.',
-  },
-  {
     title: 'Assessment inițial & quick wins',
     pill: 'Assessment inițial',
     body: 'Inventarierea infrastructurii, analiza de performanță și evaluarea gap-urilor.',
   },
   {
-    title: 'Planul de refactoring',
-    pill: 'Plan tehnic',
-    body: 'Roadmap tehnic cu prioritizarea aplicațiilor, testare în staging și plan de rollback.',
+    title: 'Design țintă de re-arhitecturare',
+    pill: 'Arhitectură',
+    body: 'Definirea arhitecturii țintă și prioritizarea schimbărilor pe baza datelor colectate în assessment.',
   },
   {
-    title: 'Implementare agilă & transfer de cunoștințe',
+    title: 'Containerizare & pregătirea livrării',
     pill: 'DevSecOps',
-    body: 'Containerizare și migrare, pipeline-uri de livrare, integrare hibridă, workshop-uri tehnice și documentație.',
+    body: 'Refactoring, containerizare, pipeline-uri de livrare, testare în staging și plan de rollback.',
   },
   {
-    title: 'Monitorizare continuă și optimizare',
+    title: 'Migrare controlată & transfer de cunoștințe',
+    pill: 'Implementare',
+    body: 'Migrare selectivă, integrare hibridă, validarea ferestrelor de schimbare, workshop-uri și documentație.',
+  },
+  {
+    title: 'Validare & optimizare continuă',
     pill: 'Indicatori propuși',
-    body: 'Monitorizare și optimizare proactive pentru a atinge indicatorii propuși.',
+    body: 'Măsurarea rezultatelor și optimizarea continuă în raport cu indicatorii agreați pentru proiect.',
   },
 ];
 
@@ -99,13 +99,13 @@ const capabilities = [
   },
 ];
 
-// JSON-LD: Service (Cloud & Modernization, provider Smart Control).
+// JSON-LD: Service (Cloud & Modernizare, provider Smart Control).
 const SITE = 'https://smartcontrol.ro';
 const serviceLd = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   name: 'Cloud & Modernizare',
-  serviceType: 'Cloud modernization & application re-architecture',
+  serviceType: 'Cloud modernisation & application re-architecture',
   url: `${SITE}/servicii/cloud/`,
   description:
     'Re-arhitecturare și optimizare a aplicațiilor, containerizare, DevSecOps și migrare selectivă în cloud printr-o abordare în 5 etape.',
@@ -130,7 +130,7 @@ const serviceLd = {
     <GridTexture fade />
 
     <div class="container relative pb-[72px] pt-[120px] md:pt-[120px]">
-      <Eyebrow variant="light" class="hero-in">Cloud &amp; Modernization</Eyebrow>
+      <Eyebrow variant="light" class="hero-in">Cloud &amp; Modernizare</Eyebrow>
 
       <h1
         class="hero-in-2 mt-6 max-w-[860px] text-[clamp(2.25rem,1.6rem+2.8vw,3.625rem)] font-extrabold leading-[1.1] tracking-[-1.8px] text-midnight"
@@ -160,14 +160,16 @@ const serviceLd = {
   </header>
 
   {/* ============ SECTION 4 — FLUX 5 ETAPE (#flux, scroll stepper, wash band) ============ */}
-  <section id="flux" class="bg-page">
+  <section id="flux" data-route-visual class="bg-page">
     <div class="container py-[64px] sm:py-[88px]">
       <div data-reveal>
         <SectionHeading
           eyebrow="Abordare"
           heading="Propunem 5 etape"
           headingMaxWidth="700px"
-        />
+        >
+          Pentru clienții cu un context tehnic deja cunoscut, o propunere de re-arhitecturare poate fi pregătită ca traseu Fast Track. Aceasta este o opțiune, nu o etapă universală și nu înlocuiește validarea datelor de intrare.
+        </SectionHeading>
       </div>
 
       {/* Page-local stepper composite — matches the initStepper data-contract
@@ -214,6 +216,9 @@ const serviceLd = {
           }
         </ol>
       </div>
+      <p class="mt-6 max-w-[820px] text-[13.5px] leading-[1.7] text-slate">
+        Metodologia este un cadru de livrare, nu o promisiune de calendar, economii sau rezultat. Aria și indicatorii sunt agreați pentru fiecare proiect.
+      </p>
     </div>
   </section>
 
@@ -232,7 +237,7 @@ const serviceLd = {
         {
           capabilities.map(({ Icon, title, items, reveal }) => (
             <div {...reveal}>
-              <article class="box-border h-full rounded-xl border border-border bg-surface px-[34px] py-[30px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[4px] hover:border-border-blue hover:shadow-lg">
+              <article class="box-border h-full rounded-xl border border-border bg-surface px-[34px] py-[30px] shadow-sm">
                 <div class="flex items-center gap-3">
                   <Icon class="h-5 w-5 text-bright" stroke-width={1.5} />
                   <h3 class="text-[17px] font-bold text-navy">{title}</h3>

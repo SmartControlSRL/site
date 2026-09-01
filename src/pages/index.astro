@@ -121,7 +121,7 @@ const stackLayers = [
   },
 ];
 
-// Cloud & Modernization — 5-stage methodology, teaser pipeline.
+// Cloud & Modernizare — 5-stage methodology, teaser pipeline.
 const cloudSteps = [
   { title: 'Evaluare', sub: 'assessment inițial' },
   { title: 'Re-arhitecturare', sub: 'design țintă' },
@@ -393,7 +393,7 @@ const cloudRows = [
       {/* Header split — heading left, context + CTA right */}
       <div data-reveal class="grid grid-cols-1 items-end gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">
         <SectionHeading
-          eyebrow="Cloud & Modernization"
+          eyebrow="Cloud & Modernizare"
           heading="Optimizarea bugetelor prin tranziția de la necesitatea de hardware la o arhitectură inteligentă"
         />
         <div>
@@ -406,7 +406,7 @@ const cloudRows = [
             href={p('/servicii/cloud')}
             class="mt-5 inline-flex items-center gap-2 rounded-md bg-navy px-6 py-3 text-[14.5px] font-semibold text-white transition-all hover:bg-midnight hover:[box-shadow:0_6px_20px_rgba(14,31,91,0.25)]"
           >
-            Explorează Cloud & Modernization <span aria-hidden="true">›</span>
+            Explorează Cloud & Modernizare <span aria-hidden="true">›</span>
           </a>
         </div>
       </div>
@@ -420,7 +420,7 @@ const cloudRows = [
       <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
         {
           cloudRows.map(({ tag, body }) => (
-            <div class="rounded-lg border border-border bg-surface p-[26px] shadow-sm transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[2px] hover:border-border-blue hover:shadow-lg">
+            <div class="rounded-lg border border-border bg-surface p-[26px] shadow-sm">
               <span class="mb-3.5 inline-block rounded-sm bg-blue-wash px-2.5 py-1 font-mono text-[11.5px] tracking-[0.5px] text-royal">
                 {tag}
               </span>
@@ -455,7 +455,7 @@ const cloudRows = [
     heading="Discutăm un assessment inițial"
     cta={t('cta.assessment')}
     subject={t('subject.assessment')}
-    showContact={false}
+    showContact={true}
   >
     Clarificăm zona de interes prioritară, livrabilele și condițiile comerciale înainte de începerea
     assessment-ului.

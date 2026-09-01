@@ -45,7 +45,7 @@ The site is **multi-page**, but Home is a catch-all that absorbs About / Partner
 
 - `/` — Home (hero, stats, About, services bento, products teaser, Cloud teaser, partners, CTA, contact, footer)
 - `/servicii` — Services hub →
-  - `/servicii/cloud` — **Cloud & Modernization** (the flagship/deepest page; home of the 5-stage methodology)
+  - `/servicii/cloud` — **Cloud & Modernizare** / **Cloud & Modernisation** (the flagship/deepest page; home of the 5-stage methodology)
   - `/servicii/securitate`, `/servicii/software`, `/servicii/managed` — lighter service pages
 - `/solutii` — products index →
   - `/solutii/seknet`, `/solutii/s-vpn` — one full product detail page each
@@ -78,7 +78,7 @@ Read `docs/SMC Web/ds/README.md` in full before building UI. The key constraints
 
 - **Romanian by default with mandatory diacritics** (ă â î ș ț — never ASCII fallback). EN versions carry an `_EN` suffix in the design system, but on the site they live under `/en/`.
 - Keep technical terms in English even inside RO copy (cloud, DevOps, Kubernetes, refactoring, smart contracts).
-- Reference the four service pillars by their exact Romanian names: **Infrastructură & Cloud · Securitate & Conformitate · Software & Automatizare · Servicii Gestionate**.
+- Reference the four service pillars by their approved public names: **Infrastructură & Cloud · Networking & Security · Software & Automatizare · Servicii Gestionate**.
 - Canonical positioning: "Trusted Service Delivery Partner" (always English, italic with the logo) and "abordare consultativă". Delivery, source-code, SLA and ROI statements must use the scoped wording and approval status in `docs/build-specs/CLAIMS.md`; never turn them into universal guarantees.
 - Name compliance frameworks exactly ("NIS 2", "DORA", "GDPR", "ISO 27001") — never paraphrase.
 - Marketing bullets use the chevron `›` glyph, not `•` or `*`. **No emoji anywhere.**

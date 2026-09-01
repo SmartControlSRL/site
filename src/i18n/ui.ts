@@ -54,7 +54,7 @@ export const ui = {
     'company.address.l1': 'Intrarea Aviator Teodor Iliescu 37,',
     'company.address.l2': '011672 București',
     'lang.switch': 'EN',
-    'lang.switch.aria': 'EN — Comută în limba engleză',
+    'lang.switch.action': ' — Comută în limba engleză',
     // — StackTeardown ambient-cycle control —
     'sctd.cycle.pause': 'Oprește parcurgerea automată',
     'sctd.cycle.resume': 'Reia parcurgerea automată',
@@ -63,7 +63,7 @@ export const ui = {
     // — Nav —
     'nav.services': 'Services',
     'nav.products': 'Solutions',
-    'nav.cloud': 'Cloud & Modernization',
+    'nav.cloud': 'Cloud & Modernisation',
     'nav.seknet': 'SEKNET',
     'nav.svpn': 'S-VPN',
     'nav.contact': 'Contact',
@@ -97,7 +97,7 @@ export const ui = {
     'company.address.l1': 'Intrarea Aviator Teodor Iliescu 37,',
     'company.address.l2': '011672 București',
     'lang.switch': 'RO',
-    'lang.switch.aria': 'RO — Switch language to Romanian',
+    'lang.switch.action': ' — Switch language to Romanian',
     'sctd.cycle.pause': 'Pause automatic cycling',
     'sctd.cycle.resume': 'Resume automatic cycling',
   },

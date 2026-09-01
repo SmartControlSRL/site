@@ -90,6 +90,50 @@ Orchestrator rulings on every open question raised by the design extraction
 24. `vercel.json` (noindex) + `robots.txt` + sitemap integration already done.
 25. Do NOT touch: package.json, astro.config.mjs, tsconfig, vercel.json.
 
+## Localisation and content architecture (approved 2026-09-01)
+
+26. **CTA matrix:** service pages and service hubs use “Solicită assessment” /
+    “Request an assessment”; SEKNET and S-VPN detail pages use “Solicită un
+    demo” / “Request a demo”. A view presents one primary ask. Product-hub
+    guidance may route to the assessment mailbox when the visitor has not yet
+    selected a product.
+27. **Inbox-routing subject:** the assessment subject remains Romanian
+    (`Solicitare assessment`) on both locales. It is an intentional routing
+    token and is not visible page copy. Product subjects remain `Demo SEKNET`
+    and `Demo S-VPN`.
+28. **Romanian glossary:** keep `assessment`, `cloud`, `deployment`, `DevOps`,
+    `DevSecOps`, `Kubernetes`, `refactoring`, and `handover` where they identify
+    established technical or commercial concepts. Use Romanian
+    `modernizare`, `securitate`, `operare`, `livrare`, and `indicatori` in
+    descriptive prose. Do not alternate `assessment` with `evaluare` for the
+    primary service CTA.
+29. **English convention:** public English copy uses British spelling:
+    `organisation`, `modernisation`, `optimisation`, `prioritise`,
+    `centralised`, and `containerisation`. Schema.org type names remain their
+    canonical vocabulary and are not prose.
+30. **Service pillar 02:** the approved public name is **Networking &
+    Security** in both locales. The older “Securitate & Conformitate” direction
+    is superseded; regulatory frameworks must not be implied as service
+    certifications.
+31. **Cloud workflow:** the canonical five stages are assessment, target
+    re-architecture design, containerisation/delivery preparation, controlled
+    migration/knowledge transfer, and validation/continuous optimisation.
+    Fast Track is an optional path for clients whose technical context is
+    already known; it is never presented as a universal first stage.
+32. **Social cards:** use separate 1200×630 Romanian and English images with
+    locale-specific alt text. Cards contain brand positioning only and no
+    blocked quantitative, certification, client, or product-performance claim.
+33. **Shared source of truth:** repeated service-detail and hub structures are
+    rendered from typed localized content in `src/content/` through templates
+    in `src/components/pages/`. Unique Cloud and product-detail compositions
+    may stay page-local, while shared diagrams use `RouteFlowVisual.astro`.
+34. **Card and contact affordance:** `ModuleCard` is a static content container
+    and carries no lift, pointer, focus, or card-wide link styling. A destination
+    is an explicit `TextLink` or a deliberately authored whole-card anchor; do
+    not nest links. Homepage service cards are intentionally static summaries.
+    The navigation label “Contact” targets the homepage `#contact` band, which
+    exposes the static email address as well as the mail action.
+
 ## File ownership (conflict avoidance)
 - Foundation agent owns: `global.css`, `BaseLayout.astro`, `Nav.astro`,
   `Footer.astro`, `src/components/*`, `src/scripts/*`, `src/i18n/ui.ts`, OG image.

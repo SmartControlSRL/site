@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CtaBand from '../CtaBand.astro';
+import Eyebrow from '../Eyebrow.astro';
+import MailtoLink from '../MailtoLink.astro';
+import ModuleCard from '../ModuleCard.astro';
+import RouteFlowVisual from '../RouteFlowVisual.astro';
+import SectionHeading from '../SectionHeading.astro';
+import TextLink from '../TextLink.astro';
+import { getLangFromUrl, localizedPath, useTranslations } from '../../i18n/ui';
+import type { ServicesHubContent } from '../../content/hub-pages';
+
+interface Props { content: ServicesHubContent }
+
+const { content } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const p = (path: string) => localizedPath(lang, path);
+const canonical = new URL(lang === 'en' ? '/en/servicii/' : '/servicii/', 'https://smartcontrol.ro').href;
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: content.schemaName,
+  description: content.description,
+  url: canonical,
+  numberOfItems: content.pillars.length,
+  itemListElement: content.pillars.map((pillar, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    item: {
+      '@type': 'Service',
+      name: pillar.title,
+      description: pillar.body,
+      url: new URL(p(pillar.href), 'https://smartcontrol.ro').href,
+      provider: { '@type': 'Organization', name: 'Smart Control SRL' },
+    },
+  })),
+};
+---
+
+<BaseLayout title={content.title} description={content.description}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+  <header class="relative overflow-hidden bg-page">
+    <div class="container pb-[64px] pt-[120px] sm:pb-[72px]">
+      <Eyebrow variant="hero">{content.hero.eyebrow}</Eyebrow>
+      <h1 class="mt-6 max-w-[860px] text-[clamp(2.5rem,2rem+2.5vw,4rem)] font-extrabold leading-[1.1] tracking-[-1.8px] text-midnight">
+        {content.hero.lead}<br /><span class="text-bright">{content.hero.accent}</span>
+      </h1>
+      <p class="mt-6 max-w-[680px] text-[18px] leading-[1.7] text-slate">{content.hero.body}</p>
+      <div data-service-hero-actions class="mt-9 flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:items-center">
+        <MailtoLink variant="button" subject={t('subject.assessment')}>{content.hero.primary}</MailtoLink>
+        <TextLink href="#pillars">{content.hero.secondary}</TextLink>
+      </div>
+    </div>
+  </header>
+
+  <section id="pillars" class="scroll-mt-24 bg-surface py-[56px] sm:py-[80px]">
+    <div class="container">
+      <SectionHeading eyebrow={content.portfolio.eyebrow} heading={content.portfolio.heading}>{content.portfolio.body}</SectionHeading>
+      <div class="mt-10 grid gap-5 sm:grid-cols-2">
+        {
+          content.pillars.map((pillar) => {
+            const Icon = pillar.Icon;
+            return (
+              <ModuleCard title={pillar.title} index={pillar.index} body={pillar.body} items={pillar.items}>
+                <Icon slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
+                <div class="mt-5"><TextLink href={p(pillar.href)}>{pillar.linkLabel}</TextLink></div>
+              </ModuleCard>
+            );
+          })
+        }
+      </div>
+    </div>
+  </section>
+
+  <RouteFlowVisual
+    id="delivery-framework"
+    eyebrow={content.process.eyebrow}
+    heading={content.process.heading}
+    description={content.process.description}
+    caption={content.process.caption}
+    steps={content.process.steps}
+    surface="page"
+  />
+
+  <CtaBand id="contact" heading={content.cta.heading} cta={t('cta.assessment')} subject={t('subject.assessment')}>
+    {content.cta.body}
+  </CtaBand>
+</BaseLayout>
