@@ -1,5 +1,10 @@
 # Build Spec — Home (`/`)
 
+> Localisation note: `RESOLUTIONS.md` decisions 29–31 supersede older literal
+> “Modernization”, “Securitate & Conformitate”, and Fast Track wording below.
+> The implementation uses British English, “Networking & Security”, and the
+> approved five-stage Cloud workflow.
+
 Source of truth: `docs/SMC Web/Home.dc.html` (Claude Design export). Motion hooks wired to `docs/SMC Web/motion.js`. This spec is 1:1 with the export — a coder should never need to open the HTML for copy or values.
 
 ## Global page shell

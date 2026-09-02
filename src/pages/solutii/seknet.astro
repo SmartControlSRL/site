@@ -8,6 +8,7 @@ import MailtoLink from '../../components/MailtoLink.astro';
 import TextLink from '../../components/TextLink.astro';
 import IconChip from '../../components/IconChip.astro';
 import GridTexture from '../../components/GridTexture.astro';
+import RouteFlowVisual from '../../components/RouteFlowVisual.astro';
 import { getLangFromUrl, useTranslations, localizedPath } from '../../i18n/ui';
 import { Activity, ShieldCheck, SlidersHorizontal, BellRing, Network, Cloud } from '@lucide/astro';
 
@@ -32,6 +33,11 @@ const uses = [
   { title: 'Prioritizarea alertelor', body: 'Pentru echipe care trebuie să reducă timpul dintre apariția unui eveniment, analiză și acțiunea potrivită.' },
   { title: 'Suport pentru operare și audit', body: 'Pentru contexte în care istoricul, trasabilitatea și raportarea trebuie păstrate într-un mod coerent.' },
 ];
+const journey = [
+  { label: 'Observare', title: 'Reunim semnalele relevante', body: 'Vizibilitatea este configurată pentru mediul și responsabilitățile stabilite împreună cu organizația.' },
+  { label: 'Context', title: 'Organizăm informația operațională', body: 'Evenimentele sunt grupate și prioritizate pentru rolurile care trebuie să analizeze și să decidă.' },
+  { label: 'Coordonare', title: 'Susținem acțiunea potrivită', body: 'Echipele folosesc contextul comun pentru investigație, răspuns și raportare în limitele procesului agreat.' },
+];
 ---
 <BaseLayout title="SEKNET — Monitorizare, securitate și control | Smart Control" description={description}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(productLd)} />
@@ -44,6 +50,16 @@ const uses = [
       <div class="mt-9 flex flex-wrap items-center gap-5"><MailtoLink variant="button" dark subject={t('subject.demo.seknet')}>{t('cta.demo.seknet')}</MailtoLink><TextLink href="#capabilitati" dark>Vezi capabilitățile</TextLink></div>
     </div>
   </header>
+
+  <RouteFlowVisual
+    id="context-operational"
+    eyebrow="Context conceptual"
+    heading="De la semnal la context operațional"
+    description="O reprezentare de nivel înalt a modului în care SEKNET poate susține munca echipelor, fără a expune arhitectura, topologia sau configurația produsului."
+    caption="Diagrama este conceptuală și nu descrie surse de date, protocoale, capacități, furnizori sau un mediu de client. Publicarea a fost revizuită pentru a evita informațiile sensibile."
+    steps={journey}
+    surface="page"
+  />
 
   <section id="capabilitati" class="bg-surface py-[64px] sm:py-[88px]">
     <div class="container">

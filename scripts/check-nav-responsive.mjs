@@ -46,6 +46,7 @@ const semanticCases = [
     alt: '/en/servicii/',
     label: 'EN — Comută în limba engleză',
     token: 'EN',
+    lang: 'ro',
     altLang: 'en',
   },
   {
@@ -55,6 +56,7 @@ const semanticCases = [
     alt: '/en/servicii/cloud/',
     label: 'EN — Comută în limba engleză',
     token: 'EN',
+    lang: 'ro',
     altLang: 'en',
   },
   {
@@ -63,6 +65,7 @@ const semanticCases = [
     alt: '/solutii/',
     label: 'RO — Switch language to Romanian',
     token: 'RO',
+    lang: 'en',
     altLang: 'ro',
   },
   {
@@ -72,6 +75,7 @@ const semanticCases = [
     alt: '/solutii/seknet/',
     label: 'RO — Switch language to Romanian',
     token: 'RO',
+    lang: 'en',
     altLang: 'ro',
   },
 ];
@@ -119,11 +123,14 @@ async function checkNavigationSemantics(page, base, width) {
 
     const switchLink = page.locator('nav a[hreflang]').first();
     assert(await switchLink.getAttribute('href') === testCase.alt, `${testCase.path}: non-canonical language-switch target`);
-    assert(await switchLink.getAttribute('lang') === null, `${testCase.path}: destination language leaks into the localized accessible name`);
-    assert(await switchLink.locator('[lang]').getAttribute('lang') === testCase.altLang, `${testCase.path}: visible switch token has incorrect lang`);
+    assert(await switchLink.locator('#language-switch-token').getAttribute('lang') === testCase.altLang, `${testCase.path}: visible switch token has incorrect lang`);
+    assert(await switchLink.locator('#language-switch-action').getAttribute('lang') === testCase.lang, `${testCase.path}: localized action has incorrect language boundary`);
     assert(await switchLink.getAttribute('hreflang') === testCase.altLang, `${testCase.path}: incorrect switch hreflang`);
-    assert(await switchLink.getAttribute('aria-label') === testCase.label, `${testCase.path}: incorrect localized accessible name`);
-    assert((await switchLink.getAttribute('aria-label'))?.includes(testCase.token), `${testCase.path}: visible language token absent from accessible name`);
+    assert(await switchLink.getAttribute('lang') === testCase.altLang, `${testCase.path}: incorrect switch language boundary`);
+    assert(await switchLink.getAttribute('aria-labelledby') === 'language-switch-token language-switch-action', `${testCase.path}: switch name is not composed from explicit language spans`);
+    const switchName = await switchLink.evaluate((element) => element.textContent?.replace(/\s+/g, ' ').trim());
+    assert(switchName === testCase.label, `${testCase.path}: incorrect localized accessible name`);
+    assert(switchName?.includes(testCase.token), `${testCase.path}: visible language token absent from accessible name`);
   }
 }
 

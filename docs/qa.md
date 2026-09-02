@@ -14,6 +14,7 @@
 | `npm run check:deployment` | Versioned Nginx structure, security/cache/error rules and preview/production separation |
 | `npm run check:nginx-runtime` | Native pinned Nginx `-t`, route/redirect behavior, and localized 404 smoke tests in Docker (CI) |
 | `npm run check:indexing` | Preview/production headers, structured-data URL parity, canonicals/hreflang, sitemap, legal holds and noindex error documents |
+| `npm run check:localization` | RO/EN semantic heading parity, shared typed templates, route visuals, British-English rules, localized social metadata and card dimensions |
 | `npm run check:stack-teardown` | Native disclosure semantics, focus-safe cycling, pause/reduced-motion behavior and 320/390/1280px geometry |
 | `npm run check:nav-responsive` | Navigation semantics/focus, localized language links, breakpoints, service CTAs, footer tracks and meaningful overflow |
 | `npm run audit:site` | Generated-route HTTP, contrast, performance and browser smoke coverage |
@@ -26,6 +27,12 @@ The only current contrast exemption is the bright-blue `Control` portion of the 
 The audit expects generated `/404` and `/en/404/` documents to return HTTP 404. Their parity, metadata, sitemap and linking rules are owned by `scripts/check-links.mjs`. Navigation errors, unexpected status codes, browser page errors, missing LCP and smoke-test failures are blocking.
 
 `npm run qa:browser` runs the two focused component regressions before the all-route browser audit. All three browser checks are part of `npm run qa` and therefore block CI.
+
+Repeated service-detail and hub structures use typed localized records in
+`src/content/` and render through `src/components/pages/`. The localisation
+gate rejects copied page markup on those routes and checks the unique Cloud and
+product-detail route pairs at generated-output level. Contribution rules and
+the semantic-parity definition live in `docs/localization-and-content.md`.
 
 CI additionally runs `npm run check:nginx-runtime` after the build. The image is
 the official stable Alpine Nginx release pinned by registry digest, so tag drift

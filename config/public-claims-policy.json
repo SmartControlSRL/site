@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "register": "docs/build-specs/CLAIMS.md",
   "reviewOwner": "Commercial and legal owners",
   "reviewBy": "Before production publication",
@@ -10,11 +10,20 @@
     "docs/build-specs/foundation.md",
     "dist"
   ],
-  "socialAsset": {
-    "path": "public/og-public.png",
-    "sha256": "c8a5d5816066b6b05cb2218070880ec69efa103dc19cf414377204c7ad3ae1cc",
-    "bindingSource": "src/layouts/BaseLayout.astro"
-  },
+  "socialAssets": [
+    {
+      "locale": "ro",
+      "path": "public/og-ro.png",
+      "sha256": "b46f8556040ba019c273fe3fe59359e945c93144a4686bea3459c4d045da7e32",
+      "bindingSource": "src/layouts/BaseLayout.astro"
+    },
+    {
+      "locale": "en",
+      "path": "public/og-en.png",
+      "sha256": "2db6b7dd50e6fd78a7f7a58030753905719fd80e7607fe1e6f811c4c457e4c9e",
+      "bindingSource": "src/layouts/BaseLayout.astro"
+    }
+  ],
   "claims": [
     {
       "id": "C-001",

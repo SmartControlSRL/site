@@ -2,7 +2,9 @@
 // Service / module card.
 //   light (default) — white, 16px radius, 1px border, navy-tinted shadow;
 //     icon chip + optional mono kicker + optional index + h3 + body + chevron
-//     bullet list; lifts on hover. (Home services bento, SEKNET modules 1–4.)
+//     bullet list. Cards are deliberately static; destinations are exposed as
+//     explicit TextLink children so a visual hover cue never promises a
+//     card-wide interaction that does not exist.
 //   dark — navy bg, royal border, sky icon chip, optional "Nou" badge; white
 //     h3, sky chevrons. (SEKNET Trap featured card.)
 // Icon goes in the `icon` slot (a lucide component); bullets via `items`.
@@ -40,8 +42,8 @@ const {
 const isDark = variant === 'dark';
 
 const shell = isDark
-  ? 'h-full box-border bg-navy border border-royal rounded-xl p-[30px] [box-shadow:0_2px_12px_rgba(14,31,91,0.2)] transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-mid-blue hover:[box-shadow:0_12px_36px_rgba(14,31,91,0.35)]'
-  : 'h-full box-border bg-surface border border-border rounded-xl p-[34px] shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[5px] hover:border-border-blue hover:shadow-lg';
+  ? 'h-full box-border rounded-xl border border-royal bg-navy p-[30px] [box-shadow:0_2px_12px_rgba(14,31,91,0.2)]'
+  : 'h-full box-border rounded-xl border border-border bg-surface p-[34px] shadow-sm';
 ---
 
 <div class:list={[shell, extra]}>
