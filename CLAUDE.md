@@ -41,7 +41,7 @@ When translating design tokens, put them in the **Tailwind theme** and reference
 
 ## Sitemap (locked)
 
-The site is **multi-page**, but Home is a catch-all that absorbs About / Partners / Contact as in-page sections. There are **no** standalone About/Partners/Contact pages, cookie-policy page, terms page, or e-commerce flow. Privacy routes `/confidentialitate/` (RO) and `/en/privacy/` (EN) stay linked for navigation continuity but remain `noindex`, excluded from the sitemap, and marked `pending-legal-review` until the production processing inventory and bilingual legal notice are approved.
+The site is **multi-page**, but Home is a catch-all that absorbs About / Partners / Contact as in-page sections. There are **no** standalone About/Partners/Contact pages, cookie-policy page, terms page, or e-commerce flow. Privacy routes `/confidentialitate/` (RO) and `/en/privacy/` (EN) publish the owner-approved, attorney-authored uploaded policy as indexable HTML. Preserve its substance unless the owner supplies a replacement legal revision.
 
 - `/` — Home (hero, stats, About, services bento, products teaser, Cloud teaser, partners, CTA, contact, footer)
 - `/servicii` — Services hub →

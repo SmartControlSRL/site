@@ -22,7 +22,6 @@ const errors = [];
 const routeOf = (fp) => '/' + fp.replace(/^dist\//, '').replace(/index\.html$/, '').replace(/\.html$/, '');
 const ERROR_DOCUMENT_ROUTES = new Set(['/404', '/en/404/']);
 const ERROR_DOCUMENT_TARGETS = new Set(['/404', '/404/', '/en/404', '/en/404/']);
-const LEGAL_HOLD_ROUTES = new Set(['/confidentialitate/', '/en/privacy/']);
 
 const resolves = (path) => {
   const clean = path.split('#')[0].split('?')[0];
@@ -74,17 +73,6 @@ for (const fp of pages) {
       errors.push(`${route}: error document emits misleading alternate/og:url metadata`);
     }
   }
-  if (LEGAL_HOLD_ROUTES.has(route)) {
-    if (!html.includes('data-privacy-status="pending-legal-review"')) {
-      errors.push(`${route}: legal hold marker is missing`);
-    }
-    if (!hasRobotsMeta(html, 'noindex')) {
-      errors.push(`${route}: legal hold page must remain noindex`);
-    }
-    if (/<link rel="(?:canonical|alternate)"/.test(html) || /<meta property="og:(?:locale:alternate|url)"/.test(html)) {
-      errors.push(`${route}: legal hold page emits publication metadata`);
-    }
-  }
 }
 
 // RO/EN parity (privacy maps to a different EN slug)
@@ -111,7 +99,7 @@ for (const r of routes) {
 const sm = readFileSync(join(DIST, 'sitemap-0.xml'), 'utf8');
 for (const r of routes) {
   const inSitemap = sm.includes(`https://smartcontrol.ro${r}`);
-  if (ERROR_DOCUMENT_ROUTES.has(r) || LEGAL_HOLD_ROUTES.has(r)) {
+  if (ERROR_DOCUMENT_ROUTES.has(r)) {
     if (inSitemap) errors.push(`sitemap: non-indexable route must be excluded ${r}`);
     continue;
   }
@@ -123,4 +111,4 @@ if (errors.length) {
   console.log(`\nFAIL: ${errors.length} problems`);
   process.exit(1);
 }
-console.log(`OK: ${pages.length} pages, including ${LEGAL_HOLD_ROUTES.size} legal holds; links/fragments/hreflang/parity/sitemap verified`);
+console.log(`OK: ${pages.length} pages; links/fragments/hreflang/parity/sitemap verified`);

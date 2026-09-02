@@ -13,7 +13,7 @@
 | `npm run check:claims` | Registry-driven blocked claims across binding sources and generated output, plus the approved social-card hash |
 | `npm run check:deployment` | Versioned Nginx structure, security/cache/error rules and preview/production separation |
 | `npm run check:nginx-runtime` | Native pinned Nginx `-t`, route/redirect behavior, and localized 404 smoke tests in Docker (CI) |
-| `npm run check:indexing` | Preview/production headers, structured-data URL parity, canonicals/hreflang, sitemap, legal holds and noindex error documents |
+| `npm run check:indexing` | Preview/production headers, structured-data URL parity, canonicals/hreflang, sitemap, approved privacy-source markers and noindex error documents |
 | `npm run check:localization` | RO/EN semantic heading parity, shared typed templates, route visuals, British-English rules, localized social metadata and card dimensions |
 | `npm run check:stack-teardown` | Native disclosure semantics, focus-safe cycling, pause/reduced-motion behavior and 320/390/1280px geometry |
 | `npm run check:nav-responsive` | Navigation semantics/focus, localized language links, breakpoints, service CTAs, footer tracks and meaningful overflow |

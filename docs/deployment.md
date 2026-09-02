@@ -5,11 +5,10 @@ does **not** describe or authorize a deployment by itself. Vercel remains a
 preview-only target and its `X-Robots-Tag: noindex` guard must not be copied into
 production.
 
-Production logging and provider facts are legal-review inputs as well as
-operational settings. The responsible owners must complete the evidence and
-questionnaire in `docs/privacy-processing-inventory.md`; this runbook does not
-assign a logging legal basis, retention period, processor role or transfer
-safeguard.
+Production logging and provider facts remain recorded as optional operational
+and privacy-review inputs in `docs/privacy-processing-inventory.md`. Per the
+owner decision recorded for issue #19, that advisory inventory does not replace
+or block publication of the uploaded attorney-authored privacy policy.
 
 ## Versioned source of truth
 
@@ -183,9 +182,9 @@ node scripts/verify-production.mjs https://smartcontrol.ro
 It checks the certificate, TLS 1.2/1.3 acceptance and TLS 1.0/1.1 rejection,
 deterministic redirects, exact HSTS/CSP/COOP and companion security headers,
 gzip or Brotli, cache classes, trailing slashes, production indexability, and
-localized RO/EN 404 bodies with a real `404` status. It also fails while either
-privacy route remains a legal-review holding page. That is an intentional launch
-blocker until the evidence pack and bilingual notices are approved. The command
+localized RO/EN 404 bodies with a real `404` status. It also verifies that both
+privacy routes publish the approved attorney-upload source marker, remain
+indexable, and no longer carry the obsolete legal-review hold. The command
 requests only the explicitly supplied origin.
 
 ## Rollback
