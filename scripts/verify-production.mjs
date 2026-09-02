@@ -247,6 +247,7 @@ for (const path of ['/confidentialitate/', '/en/privacy/']) {
     const response = await request(new URL(path, base), { redirect: 'error' });
     const html = await response.text();
     assert(response.status === 200, `returned ${response.status}`);
+    assert(html.includes('data-policy-source="attorney-authored-upload"'), 'approved attorney-authored policy marker is missing');
     assert(!html.includes('data-privacy-status="pending-legal-review"'), 'legal-review holding marker is still deployed');
     assert(!hasRobotsMeta(html, 'noindex'), 'privacy notice is still noindex');
   });

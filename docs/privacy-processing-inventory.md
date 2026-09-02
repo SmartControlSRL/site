@@ -1,14 +1,16 @@
-# Privacy processing inventory and legal-review handoff
+# Privacy processing inventory and advisory review notes
 
-> **Status: evidence pack only — not a privacy notice and not legal approval.**
-> Do not copy unknowns, questions, or provisional infrastructure plans into the
-> Romanian or English privacy pages. A Romanian privacy lawyer must approve the
-> final notices after the responsible owners supply the external evidence below.
+> **Status: optional advisory inventory — not the approved privacy notice.**
+> On 2026-09-02 the owner directed the project to retain the uploaded policy,
+> which the owner states was prepared by an attorney. The Romanian policy under
+> `docs/Politica de confidentialitate.pdf` and its existing English courtesy
+> translation therefore remain the publication source. This inventory does not
+> block their publication and must not be used to rewrite them without a new
+> owner-approved legal revision.
 
-The public routes now render minimal bilingual `pending-legal-review` holding
-pages. They are noindex, omit publication metadata, and are excluded from the
-sitemap. `scripts/verify-production.mjs` rejects production while that state
-remains; replacing it requires the completed approval record below.
+The public routes render that policy as indexable, accessible HTML and carry a
+machine-checkable `attorney-authored-upload` source marker. The production
+verifier rejects an obsolete legal-review hold or a missing source marker.
 
 Prepared from the repository working tree on **2026-08-26** for issue #19. The
 review covers the website code, generated static output, Vercel preview guard,
@@ -22,8 +24,9 @@ procedures, contracts, or vendor portals.
   checked-in configuration. This says nothing about an uninspected live service.
 - **Planned, not deployed:** represented by the production template/runbook but
   not verified on a live host.
-- **Unknown — owner evidence required:** cannot be answered from this repository
-  and must remain out of published copy until the identified evidence is filed.
+- **Unknown — owner evidence required:** cannot be answered from this repository.
+  Record it here for a future policy revision; do not silently alter the current
+  owner-approved policy to resolve it.
 
 ## Verified current implementation facts
 
@@ -40,7 +43,7 @@ procedures, contracts, or vendor portals.
 | `CODE-09` | No automated decision-making or profiling implementation was found in the website code. | The mailbox workflow and wider Smart Control business processes were not inspected; the responsible owner must confirm the organization-level statement. | Repository search; static architecture; no analytics/data-entry workflow |
 | `CODE-10` | No age gate, age field, parental-consent workflow, or other minors-verification control exists in the website code. | Legal wording about minors must describe the actual absence of a website mechanism and must not promise verification the site cannot perform. | No form/input workflow under `src/` |
 | `CODE-11` | The UI displays “Smart Control SRL”, a Bucharest contact address, and `office@smartcontrol.ro`. | UI content is not evidence that the name/address is the controller's exact registered identity or registered office. CUI, Trade Registry data, DPO and representative status are absent. | `src/i18n/ui.ts`; footer output |
-| `CODE-12` | The legal-review holding pages render complete static privacy-request mailto URLs in both languages and work without JavaScript. | Mailbox availability, authorization, routing, retention, rights procedure and approved notice wording remain unverified. | `src/components/MailtoLink.astro`; `dist/confidentialitate/index.html`; `dist/en/privacy/index.html` |
+| `CODE-12` | The owner-approved attorney-authored policy is rendered as accessible RO/EN HTML, with complete static privacy-request mailto URLs that work without JavaScript. | The repository records the owner's source decision; it does not independently certify the legal advice or uninspected mailbox operations. | `docs/Politica de confidentialitate.pdf`; `src/pages/confidentialitate.astro`; `src/pages/en/privacy.astro`; `src/components/MailtoLink.astro` |
 
 Reproduce the absence checks from the repository root:
 
@@ -73,9 +76,11 @@ must not be inferred from common practice.
 
 ## Required external evidence register
 
-The artifact owner should attach or link each item in the issue/change record.
-“Confirmed by email” is insufficient where a contract, registry document,
-configuration export, or retention policy exists.
+This register is retained for a future compliance review or policy revision; it
+is not a publication gate for the attorney-authored upload. If that review is
+started, the artifact owner should attach or link each item in the issue/change
+record. “Confirmed by email” is insufficient where a contract, registry
+document, configuration export, or retention policy exists.
 
 | ID | Required evidence | Accountable owner | Status |
 | --- | --- | --- | --- |
@@ -96,6 +101,7 @@ configuration export, or retention policy exists.
 
 ## Owner questionnaire
 
+Use this questionnaire only when the owner requests a future policy revision.
 Every answer must cite one or more `EXT-*` evidence IDs. If the answer is not
 known, record “unknown” and an owner/date for resolution; do not draft around it.
 
@@ -188,8 +194,9 @@ means the same substance and scope, not necessarily a literal translation.
 
 ## Review and approval record
 
-These fields must remain visibly incomplete until real reviewers approve the
-evidence and text.
+This table applies to a future replacement revision. The current publication
+decision is the owner instruction dated 2026-09-02 to retain the uploaded
+attorney-authored policy.
 
 | Role | Name | Review scope | Date | Evidence/revision | Approval |
 | --- | --- | --- | --- | --- | --- |

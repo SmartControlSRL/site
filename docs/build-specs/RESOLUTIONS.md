@@ -133,6 +133,12 @@ Orchestrator rulings on every open question raised by the design extraction
     not nest links. Homepage service cards are intentionally static summaries.
     The navigation label “Contact” targets the homepage `#contact` band, which
     exposes the static email address as well as the mail action.
+35. **Privacy-policy source (owner decision 2026-09-02):** retain the uploaded
+    attorney-authored Romanian policy in `docs/Politica de confidentialitate.pdf`
+    and the existing English courtesy translation as the public RO/EN notices.
+    Render them as indexable, accessible HTML and preserve the resilient static
+    rights-request email link. The advisory processing inventory remains useful
+    for future revisions but does not gate publication of this approved source.
 
 ## File ownership (conflict avoidance)
 - Foundation agent owns: `global.css`, `BaseLayout.astro`, `Nav.astro`,

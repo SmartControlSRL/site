@@ -68,8 +68,8 @@ assert(/location\s+=\s+\/en\/404\/index\.html\s*{\s*internal;/s.test(nginx), 'pr
 
 const htmlFiles = (await filesBelow(DIST)).filter((file) => file.endsWith('.html'));
 const errorRoutes = new Set(['/404', '/en/404/']);
-const legalHoldRoutes = new Set(['/confidentialitate/', '/en/privacy/']);
-const contentFiles = htmlFiles.filter((file) => !errorRoutes.has(routeOf(file)) && !legalHoldRoutes.has(routeOf(file)));
+const approvedPrivacyRoutes = new Set(['/confidentialitate/', '/en/privacy/']);
+const contentFiles = htmlFiles.filter((file) => !errorRoutes.has(routeOf(file)));
 const generatedUrls = new Set(contentFiles.map((file) => `${PRODUCTION_ORIGIN}${routeOf(file)}`));
 let topLevelStructuredUrls = 0;
 
@@ -119,15 +119,13 @@ for (const [route, path] of [
   assert(!linkTags(html).some((tag) => ['canonical', 'alternate'].includes(attribute(tag, 'rel')?.toLowerCase())), `${route}: error document must not emit canonical/hreflang links`);
 }
 
-for (const route of legalHoldRoutes) {
+for (const route of approvedPrivacyRoutes) {
   const path = route === '/confidentialitate/'
     ? resolve(DIST, 'confidentialitate/index.html')
     : resolve(DIST, 'en/privacy/index.html');
   const html = await readFile(path, 'utf8');
-  assert(html.includes('data-privacy-status="pending-legal-review"'), `${route}: legal hold marker is missing`);
-  assert(hasRobotsMeta(html, 'noindex'), `${route}: legal hold page must contain meta noindex`);
-  assert(!linkTags(html).some((tag) => ['canonical', 'alternate'].includes(attribute(tag, 'rel')?.toLowerCase())), `${route}: legal hold page must not emit canonical/hreflang links`);
-  assert(!/<meta\b[^>]*property=["']og:(?:locale:alternate|url)["'][^>]*>/i.test(html), `${route}: legal hold page must not emit route sharing metadata`);
+  assert(html.includes('data-policy-source="attorney-authored-upload"'), `${route}: approved policy source marker is missing`);
+  assert(!html.includes('data-privacy-status="pending-legal-review"'), `${route}: obsolete legal-review hold marker is present`);
 }
 
 const robots = await readFile(resolve(DIST, 'robots.txt'), 'utf8');
@@ -146,7 +144,6 @@ for (const location of sitemapLocations) {
   for (const match of child.matchAll(/<loc>([^<]+)<\/loc>/g)) sitemapUrls.add(match[1]);
 }
 assert(![...sitemapUrls].some((url) => /\/(?:en\/)?404\/?$/.test(new URL(url).pathname)), '404 documents must be absent from sitemap contents');
-assert(![...sitemapUrls].some((url) => legalHoldRoutes.has(new URL(url).pathname)), 'legal hold pages must be absent from sitemap contents');
 assert(sitemapUrls.size === generatedUrls.size && [...generatedUrls].every((url) => sitemapUrls.has(url)), 'sitemap contents must exactly match generated indexable routes');
 
 if (failures.length) {
@@ -154,4 +151,4 @@ if (failures.length) {
   process.exit(1);
 }
 console.log(`OK: preview and production indexing contracts passed ${checks} local assertions`);
-console.log(`OK: ${contentFiles.length} indexable routes; ${legalHoldRoutes.size} legal holds; ${errorRoutes.size} localized error documents; ${topLevelStructuredUrls} structured-data URLs`);
+console.log(`OK: ${contentFiles.length} indexable routes, including ${approvedPrivacyRoutes.size} approved privacy notices; ${errorRoutes.size} localized error documents; ${topLevelStructuredUrls} structured-data URLs`);
