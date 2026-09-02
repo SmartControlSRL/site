@@ -3,7 +3,9 @@
 ARG NODE_IMAGE=node:22.22.3-alpine@sha256:e58326d0d441090181ac150dc2078d3e2cf6a0d42e809aebba3ef5880935ffdd
 ARG NGINX_IMAGE=nginx:1.28.0-alpine@sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284
 
-FROM ${NODE_IMAGE} AS build
+# The Astro output is architecture-neutral. Keep Node/npm on the native builder
+# platform so multi-arch publication does not execute npm under QEMU.
+FROM --platform=$BUILDPLATFORM ${NODE_IMAGE} AS build
 
 WORKDIR /app
 ENV ASTRO_TELEMETRY_DISABLED=1
