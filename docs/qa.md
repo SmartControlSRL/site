@@ -6,6 +6,7 @@
 
 | Command | Gate |
 |---|---|
+| `npm run check:homepage` | Homepage geometry, early CTA, motion controls, reduced motion, route re-entry and no-JS contact in RO/EN |
 | `npm run check` | Astro/type diagnostics |
 | `npm run build` | Production static generation |
 | `npm run check:links` | Internal links, fragments, hreflang, RO/EN parity, sitemap and the #26-approved 404 contract |
