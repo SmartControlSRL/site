@@ -78,6 +78,10 @@ rotating mechanism, retained ten-second sequence and complete framing.
 
 ## Review evidence
 
+The [September copy review](../copy-review/README.md) records the current plain
+language revision, reference sites and updated RO/EN headline frames. It supersedes
+the wording visible in earlier layout and video screenshots.
+
 The PNGs in this directory record the **initial homepage-only proposal** and are
 historical. Current desktop/mobile screenshots are in `../refinement/`; use the
 PR's latest Vercel preview for interaction review. Current homepage video frames

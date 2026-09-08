@@ -25,43 +25,43 @@ const engagement = en
   ? [
       {
         title: "Understand",
-        body: "Map the environment, dependencies and business priorities.",
+        body: "Review your systems, how they connect and what needs to change.",
       },
       {
         title: "Agree",
-        body: "Set the scope, responsibilities and a practical sequence of work.",
+        body: "Agree the work, responsibilities and schedule.",
       },
       {
         title: "Deliver",
-        body: "Coordinate implementation, integration and knowledge transfer.",
+        body: "Implement and test the changes, then hand over to your team.",
       },
       {
         title: "Operate & improve",
-        body: "Support the environment and review agreed indicators together.",
+        body: "Provide the agreed support and review service indicators with your team.",
       },
     ]
   : [
       {
         title: "Înțelegem",
-        body: "Analizăm mediul, dependențele și prioritățile organizației.",
+        body: "Analizăm sistemele, legăturile dintre ele și ce trebuie schimbat.",
       },
       {
         title: "Stabilim",
-        body: "Agreăm scopul, responsabilitățile și ordinea activităților.",
+        body: "Stabilim activitățile, responsabilitățile și calendarul.",
       },
       {
         title: "Livrăm",
-        body: "Coordonăm implementarea, integrarea și transferul de cunoștințe.",
+        body: "Implementăm și testăm schimbările, apoi le predăm echipei tale.",
       },
       {
         title: "Operăm & îmbunătățim",
-        body: "Susținem mediul IT și revizuim împreună indicatorii agreați.",
+        body: "Asigurăm suportul convenit și analizăm împreună indicatorii de serviciu.",
       },
     ];
 const icons = [Server, ShieldCheck, Code, Workflow];
 const description = en
-  ? "Enterprise infrastructure, security and software, with delivery coordinated by the Smart Control team. Explore our services and proprietary products."
-  : "Infrastructură, securitate și software enterprise, cu livrare coordonată de echipa Smart Control. Descoperă serviciile și produsele noastre proprii.";
+  ? "IT infrastructure, network security, software development and managed services for businesses. Projects and support coordinated by Smart Control."
+  : "Infrastructură IT, securitatea rețelelor, dezvoltare software și servicii gestionate pentru companii. Proiecte și suport coordonate de Smart Control.";
 const org = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -90,15 +90,15 @@ const org = {
         <div class="hero-copy">
           <p class="home-kicker hero-in">Trusted Service Delivery Partner</p>
           <h1 class="hero-in-2">
-            {en ? "Complex IT." : "IT complex."}<br /><span
-              >{en ? "Clear direction." : "Direcție clară."}</span
+            {en ? "IT services" : "Servicii IT"}<br /><span
+              >{en ? "for businesses." : "pentru companii."}</span
             >
           </h1>
           <p class="hero-lead hero-in-3">
             {
               en
-                ? "Infrastructure, security and software, brought together around your organisation’s priorities. One team coordinating delivery and operations."
-                : "Infrastructură, securitate și software, reunite în jurul priorităților organizației tale. O echipă care coordonează livrarea și operarea."
+                ? "We design and manage IT infrastructure, secure networks and develop software. The Smart Control team coordinates projects and support."
+                : "Proiectăm și administrăm infrastructuri IT, securizăm rețele și dezvoltăm software. Echipa Smart Control coordonează proiectele și suportul."
             }
           </p>
           <div class="hero-actions hero-in-4">
@@ -108,7 +108,7 @@ const org = {
               class="home-primary"
               >{t("cta.assessment")}<ArrowUpRight size={19} /></MailtoLink
             ><a class="home-text-link" href="#servicii"
-              >{en ? "Explore services" : "Explorează serviciile"}<ArrowRight
+              >{en ? "View services" : "Vezi serviciile"}<ArrowRight
                 size={18}
               /></a
             >
@@ -184,20 +184,20 @@ const org = {
           >
             {
               en
-                ? "One environment.\nA shared plan."
-                : "Un singur mediu IT.\nUn plan comun."
+                ? "How a project\ntakes shape"
+                : "Cum organizăm\nun proiect"
             }
           </h2>
         </div><div>
           <p class="section-lead">
             {
               en
-                ? "We look at the whole environment, agree priorities with your team and coordinate the work across disciplines. Smart Control remains directly accountable for delivery."
-                : "Privim întregul mediu IT, stabilim prioritățile cu echipa ta și coordonăm activitățile între specializări. Smart Control își asumă direct livrarea."
+                ? "Our recommendations start with measurements in your infrastructure. Smart Control is responsible for delivery and coordinates the specialists and technology partners the project needs."
+                : "Ne bazăm recomandările pe măsurători în infrastructura ta. Smart Control răspunde de livrare și coordonează specialiștii și partenerii tehnologici necesari proiectului."
             }
           </p><a href={p("/servicii/managed")} class="home-text-link cloud-link"
             >{
-              en ? "Explore ongoing support" : "Descoperă colaborarea continuă"
+              en ? "View managed services" : "Vezi serviciile de administrare și suport"
             }<ArrowUpRight size={20} /></a
           >
         </div>

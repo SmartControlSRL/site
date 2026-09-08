@@ -7,11 +7,34 @@ drift.
 ## Sources of truth
 
 - Shared chrome and CTA labels: `src/i18n/ui.ts`.
-- Services hub and solutions hub: `src/content/hub-pages.ts`.
+- Homepage sections: `src/content/home-page.ts` and
+  `src/components/pages/HomePage.astro`.
 - Security, Software, and Managed Services detail pages:
   `src/content/service-pages.ts`.
 - Shared renderers: `src/components/pages/`.
-- Unique Cloud and product-detail copy: the corresponding `.astro` page pair.
+- Cloud copy: `src/content/cloud-page.ts`.
+- Product copy: `src/content/product-pages.ts`.
+
+## Editorial tone
+
+The site owner requested plain, restrained language on 2026-09-08. Describe the
+work in familiar terms: what we configure, develop, monitor or support. Give each
+heading a clear subject. Prefer a concrete description such as “Proiectăm și
+modernizăm infrastructura IT” to paired slogans about foundations or the future.
+
+Keep paragraphs short and remove repeated references to clarity, coordination,
+connected expertise and the wider IT environment when they add no information.
+Keep the actual delivery model clear: Smart Control coordinates the specialists
+and technology partners required by the project and is responsible for delivery.
+Several services can form part of the same engagement.
+
+Use established technical terms, but write the surrounding Romanian naturally.
+Write the English version for the same reader rather than translating Romanian
+word for word. Retain qualifications where they define a service commitment,
+source-code access or another scoped claim. Avoid repeating contractual language
+in adjacent paragraphs when the scope is already clear.
+
+[Copy review and reference sites](design-proposals/copy-review/README.md).
 
 Update both locales in the same typed record. Do not copy a shared template
 back into locale-specific page files. Route-specific layout may be added

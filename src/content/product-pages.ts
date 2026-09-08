@@ -26,90 +26,90 @@ export const productPages: Record<ProductKey, Record<Lang, ProductContent>> = {
       name: "SEKNET",
       title: "SEKNET — Monitorizare și securitate | Smart Control",
       description:
-        "SEKNET reunește monitorizarea și protecția infrastructurii IT, cu vizibilitate operațională și control centralizat, adaptate mediului organizației.",
-      headline: "Monitorizare clară. Răspuns coordonat.",
+        "SEKNET monitorizează infrastructura IT și centralizează evenimentele de securitate pentru analiză și intervenție.",
+      headline: "Monitorizare și securitate IT.",
       intro:
-        "Monitorizează infrastructura și reunește evenimentele relevante pentru echipele de operațiuni și securitate.",
+        "Urmărește infrastructura IT și centralizează evenimentele de securitate pentru analiză și intervenție.",
       signal: ["Infrastructură", "Evenimente & context", "Analiză & răspuns"],
       capabilities: [
         {
           title: "Monitorizare operațională",
-          body: "Reunește informațiile despre infrastructură pentru a identifica situațiile care necesită atenție.",
+          body: "Urmărește starea infrastructurii și identifică situațiile care cer atenție.",
         },
         {
-          title: "Protecție integrată",
-          body: "Aduce evenimentele relevante într-un context comun pentru analiză și coordonarea răspunsului.",
+          title: "Evenimente de securitate",
+          body: "Reunește evenimentele de securitate pentru investigații și intervenții.",
         },
         {
           title: "Control centralizat",
-          body: "Organizează informațiile tehnice pentru rolurile de operare și securitate.",
+          body: "Organizează informațiile într-un singur loc pentru echipele de operațiuni și securitate.",
         },
       ],
-      contextTitle: "Informația de care echipele au nevoie.",
+      contextTitle: "Pentru echipe de operațiuni și securitate",
       context:
-        "Pentru medii distribuite, alerte care trebuie prioritizate și operațiuni care au nevoie de trasabilitate. Configurația se stabilește în funcție de infrastructură și de responsabilitățile echipelor.",
+        "SEKNET ajută echipele să urmărească infrastructura distribuită și să prioritizeze alertele. Configurația ține cont de sistemele monitorizate și de responsabilitățile echipelor.",
       journey: [
         {
           title: "Înțelegem mediul",
-          body: "Clarificăm cerințele de vizibilitate și procesele operaționale.",
+          body: "Stabilim ce sisteme trebuie monitorizate și ce informații sunt necesare.",
         },
         {
-          title: "Configurăm împreună",
-          body: "Adaptăm integrarea și informațiile la mediul organizației.",
+          title: "Configurăm produsul",
+          body: "Configurăm integrarea cu sistemele existente și verificăm datele colectate.",
         },
         {
-          title: "Susținem operarea",
-          body: "Stabilim asistența, mentenanța și responsabilitățile necesare.",
+          title: "Stabilim suportul",
+          body: "Agreăm asistența tehnică, mentenanța și responsabilitățile fiecărei echipe.",
         },
       ],
       relatedTitle: "Servicii Gestionate",
       relatedBody:
-        "Conectează vizibilitatea oferită de produs cu monitorizarea, suportul și îmbunătățirea continuă a mediului IT.",
+        "Echipa Smart Control poate prelua monitorizarea și suportul pentru sistemele incluse în contract.",
       relatedHref: "/servicii/managed",
     },
     en: {
       name: "SEKNET",
       title: "SEKNET — Monitoring and security | Smart Control",
       description:
-        "SEKNET brings IT infrastructure monitoring and protection together, with operational visibility and centralised control adapted to your organisation.",
-      headline: "Clear visibility. Coordinated response.",
+        "SEKNET monitors IT infrastructure and brings security events together for analysis and response.",
+      headline: "IT monitoring and security.",
       intro:
-        "Monitor infrastructure and bring relevant events together for operations and security teams.",
+        "Monitor IT infrastructure and bring security events together for analysis and response.",
       signal: ["Infrastructure", "Events & context", "Analysis & response"],
       capabilities: [
         {
           title: "Operational monitoring",
-          body: "Brings infrastructure information together to identify situations that need attention.",
+          body: "Tracks infrastructure status and identifies situations that need attention.",
         },
         {
-          title: "Integrated protection",
-          body: "Places relevant events in a shared context for analysis and coordinated response.",
+          title: "Security events",
+          body: "Brings security events together for investigation and response.",
         },
         {
           title: "Centralised control",
-          body: "Organises technical information for operational and security roles.",
+          body: "Organises information in one place for operations and security teams.",
         },
       ],
-      contextTitle: "The information your teams need.",
+      contextTitle: "For operations and security teams",
       context:
-        "For distributed environments, alerts that need prioritising and operations that require traceability. Configuration follows the infrastructure and the responsibilities of your teams.",
+        "SEKNET helps teams monitor distributed infrastructure and prioritise alerts. Configuration reflects the monitored systems and each team’s responsibilities.",
       journey: [
         {
           title: "Understand the environment",
-          body: "Clarify visibility requirements and operational processes.",
+          body: "Agree which systems to monitor and what information is needed.",
         },
         {
-          title: "Configure together",
-          body: "Adapt integration and information to your organisation’s environment.",
+          title: "Configure the product",
+          body: "Configure integration with existing systems and check the collected data.",
         },
         {
-          title: "Support operations",
-          body: "Agree the assistance, maintenance and responsibilities required.",
+          title: "Agree support",
+          body: "Agree technical support, maintenance and each team’s responsibilities.",
         },
       ],
       relatedTitle: "Managed Services",
       relatedBody:
-        "Connect the visibility provided by the product with monitoring, support and ongoing improvement across your IT environment.",
+        "The Smart Control team can take on monitoring and support for the systems included in your contract.",
       relatedHref: "/servicii/managed",
     },
   },
@@ -118,10 +118,10 @@ export const productPages: Record<ProductKey, Record<Lang, ProductContent>> = {
       name: "S-VPN",
       title: "S-VPN — Acces remote securizat | Smart Control",
       description:
-        "S-VPN conectează utilizatorii la resursele organizației prin acces remote securizat, cu administrare centralizată și integrare adaptată mediului IT.",
-      headline: "Echipe distribuite. Acces controlat.",
+        "S-VPN asigură acces remote securizat la resursele companiei, cu administrare centralizată și integrare în infrastructura existentă.",
+      headline: "Acces remote securizat.",
       intro:
-        "Conectează utilizatorii la resursele de lucru, cu acces securizat adaptat infrastructurii și politicilor organizației.",
+        "Conectează utilizatorii la resursele companiei, conform politicilor de acces administrate de echipa IT.",
       signal: ["Utilizator", "Acces securizat", "Resurse IT"],
       capabilities: [
         {
@@ -129,44 +129,44 @@ export const productPages: Record<ProductKey, Record<Lang, ProductContent>> = {
           body: "Conectarea utilizatorilor la resursele necesare, conform politicilor organizației.",
         },
         {
-          title: "Administrare simplificată",
-          body: "Control centralizat și vizibilitate operațională pentru echipa IT.",
+          title: "Administrare centralizată",
+          body: "Echipa IT administrează accesul utilizatorilor dintr-un singur loc.",
         },
         {
           title: "Integrare în mediul existent",
-          body: "Configurare adaptată infrastructurii, proceselor și cerințelor de securitate existente.",
+          body: "Configurarea ține cont de infrastructură și de regulile de securitate existente.",
         },
       ],
-      contextTitle: "Accesul urmează nevoile organizației.",
+      contextTitle: "Acces pentru echipe distribuite",
       context:
-        "Pentru organizații cu utilizatori și locații distribuite, care au nevoie de administrare coerentă a accesului și vizibilitate pentru echipa IT.",
+        "S-VPN le permite utilizatorilor din afara sediului să acceseze resursele companiei. Echipa IT stabilește și administrează accesul necesar.",
       journey: [
         {
           title: "Definim cerințele",
-          body: "Clarificăm utilizatorii, resursele și politicile relevante pentru acces.",
+          body: "Stabilim cine are nevoie de acces, la ce resurse și în ce condiții.",
         },
         {
           title: "Configurăm și integrăm",
-          body: "Adaptăm soluția la mediul existent și validăm configurația agreată.",
+          body: "Configurăm produsul în infrastructura existentă și verificăm accesul.",
         },
         {
-          title: "Susținem utilizarea",
+          title: "Stabilim suportul",
           body: "Stabilim asistența tehnică, mentenanța și actualizările necesare.",
         },
       ],
       relatedTitle: "Networking & Security",
       relatedBody:
-        "Integrează accesul remote în planul mai amplu pentru rețea, identitate și protecția informațiilor.",
+        "Putem include accesul remote într-un proiect de rețea, administrare a identităților și securitate.",
       relatedHref: "/servicii/securitate",
     },
     en: {
       name: "S-VPN",
       title: "S-VPN — Secure remote access | Smart Control",
       description:
-        "S-VPN connects users to organisational resources through secure remote access, with centralised administration and integration adapted to the IT environment.",
-      headline: "Distributed teams. Controlled access.",
+        "S-VPN provides secure remote access to company resources, with centralised administration and integration with existing infrastructure.",
+      headline: "Secure remote access.",
       intro:
-        "Connect users to the resources they need, with secure access adapted to your organisation’s infrastructure and policies.",
+        "Connect users to company resources under the access policies managed by your IT team.",
       signal: ["User", "Secure access", "IT resources"],
       capabilities: [
         {
@@ -174,34 +174,34 @@ export const productPages: Record<ProductKey, Record<Lang, ProductContent>> = {
           body: "Connects users to the resources they need, according to organisational policies.",
         },
         {
-          title: "Simplified administration",
-          body: "Centralised control and operational visibility for the IT team.",
+          title: "Centralised administration",
+          body: "The IT team manages user access from one place.",
         },
         {
           title: "Integration with your environment",
-          body: "Configuration adapted to existing infrastructure, processes and security requirements.",
+          body: "Configuration takes account of existing infrastructure and security rules.",
         },
       ],
-      contextTitle: "Access follows your organisation’s needs.",
+      contextTitle: "Access for distributed teams",
       context:
-        "For organisations with distributed users and locations that need consistent access administration and visibility for the IT team.",
+        "S-VPN lets users outside the office access company resources. The IT team defines and manages the access they need.",
       journey: [
         {
           title: "Define requirements",
-          body: "Clarify the users, resources and policies relevant to access.",
+          body: "Agree who needs access, to which resources and under what conditions.",
         },
         {
           title: "Configure and integrate",
-          body: "Adapt the solution to the existing environment and validate the agreed configuration.",
+          body: "Configure the product in your existing infrastructure and test access.",
         },
         {
-          title: "Support ongoing use",
+          title: "Agree support",
           body: "Agree the technical assistance, maintenance and updates required.",
         },
       ],
       relatedTitle: "Networking & Security",
       relatedBody:
-        "Integrate remote access into the wider plan for networking, identity and information protection.",
+        "We can include remote access in a project covering networks, identity management and security.",
       relatedHref: "/servicii/securitate",
     },
   },

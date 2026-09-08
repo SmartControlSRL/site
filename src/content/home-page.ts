@@ -1,47 +1,47 @@
 /** Homepage copy is paired so both locales share the same composition and links. */
 export const homeCopy = {
   ro: {
-    servicesLabel: "Expertiză conectată",
-    servicesTitle: "Expertiză pentru\nîntregul mediu IT.",
+    servicesLabel: "Servicii IT",
+    servicesTitle: "Ce putem face\npentru echipa ta",
     servicesIntro:
-      "Pentru organizații cu nevoi IT interconectate. Reunim infrastructura, securitatea, software-ul și operarea într-o colaborare coordonată.",
+      "Un proiect poate include mai multe dintre aceste servicii. Le planificăm împreună, ținând cont de sistemele existente.",
     services: [
       {
         title: "Infrastructură & Cloud",
-        body: "O arhitectură pregătită pentru ceea ce urmează. De la data center la medii private și hibride.",
+        body: "Proiectăm și modernizăm data center-e, infrastructuri on-premises și medii cloud private sau hibride.",
         detail: "Arhitectură · Cloud · Continuitate",
         href: "/servicii/cloud",
       },
       {
         title: "Networking & Security",
-        body: "Conectăm infrastructura și protejăm accesul, identitatea și informațiile organizației.",
+        body: "Configurăm rețele, administrăm accesul și implementăm măsuri de securitate pentru date și sisteme.",
         detail: "Rețea · Identitate · Protecție",
         href: "/servicii/securitate",
       },
       {
         title: "Software & Automatizare",
-        body: "Aplicații care lucrează împreună. Dezvoltare custom, integrare și automatizarea proceselor.",
+        body: "Dezvoltăm aplicații, integrăm sisteme și automatizăm procesele de lucru.",
         detail: "Software custom · API · DevSecOps",
         href: "/servicii/software",
       },
       {
         title: "Servicii Gestionate",
-        body: "O relație continuă pentru întregul mediu IT. Monitorizare, suport și îmbunătățiri, cu responsabilități agreate.",
+        body: "Monitorizăm și administrăm sistemele IT și preluăm solicitările de suport, conform serviciilor agreate.",
         detail: "Monitorizare · Operare · Suport",
         href: "/servicii/managed",
       },
     ],
     stackLabel: "De la infrastructură la aplicații",
-    stackTitle: "Piesele se schimbă.\nResponsabilitatea rămâne clară.",
+    stackTitle: "Cum se leagă\nsistemele tale",
     stackBody:
-      "Echipa Smart Control răspunde direct de livrare și coordonează specialiștii și partenerii tehnologici necesari. Explorează nivelurile infrastructurii.",
+      "Aplicațiile depind de platforme, rețea și infrastructura fizică. Selectează un nivel pentru a vedea serviciile aferente.",
     stackNote:
-      "Nivelurile de servicii și indicatorii sunt definiți contractual.",
+      "Nivelurile de serviciu și indicatorii sunt agreați contractual.",
     layers: [
       {
         code: "L4",
         name: "Aplicații & Automatizare",
-        desc: "Software custom, API-uri și automatizare cu AI / LLM.",
+        desc: "Software custom, API-uri și automatizarea proceselor.",
         chips: [
           "Custom dev & API",
           "Modernizare aplicații",
@@ -96,14 +96,14 @@ export const homeCopy = {
       },
     ],
     productsLabel: "Produse Smart Control",
-    productsTitle: "Mai multă vizibilitate.\nAcces mai bine controlat.",
+    productsTitle: "Monitorizare IT și\nacces remote",
     productsIntro:
-      "Două produse proprii, pentru monitorizarea mediilor IT și acces remote securizat.",
+      "SEKNET și S-VPN sunt produsele dezvoltate de Smart Control.",
     products: [
       {
         name: "SEKNET",
         label: "Monitorizare & securitate",
-        body: "O perspectivă comună asupra infrastructurii, evenimentelor și riscurilor. Pentru echipele care coordonează operațiunile și răspunsul.",
+        body: "Monitorizează infrastructura și centralizează evenimentele pentru echipele de operațiuni și securitate.",
         href: "/solutii/seknet",
         steps: ["Infrastructură", "Evenimente", "Analiză"],
         caption: "Schemă conceptuală de monitorizare",
@@ -111,63 +111,63 @@ export const homeCopy = {
       {
         name: "S-VPN",
         label: "Acces remote securizat",
-        body: "Conectarea utilizatorilor la resursele organizației, cu acces securizat adaptat cerințelor mediului IT.",
+        body: "Conectează utilizatorii la resursele companiei prin acces remote securizat, administrat de echipa IT.",
         href: "/solutii/s-vpn",
         steps: ["Utilizator", "Acces securizat", "Resurse IT"],
         caption: "Schemă conceptuală de acces",
       },
     ],
     explore: "Explorează",
-    partnersLabel: "Ecosistem tehnologic",
-    partnersTitle: "Expertiza noastră.\nTehnologiile potrivite.",
+    partnersLabel: "Tehnologii",
+    partnersTitle: "Parteneri tehnologici",
     partnersBody:
-      "Lucrăm cu parteneri tehnologici și selectăm componentele în funcție de cerințele proiectului.",
-    contactLabel: "Să discutăm despre infrastructura ta",
-    contactTitle: "Următorul pas începe\ncu întrebările potrivite.",
+      "Alegem tehnologiile în funcție de cerințele proiectului și de sistemele pe care le folosești deja.",
+    contactLabel: "Contact",
+    contactTitle: "Să discutăm despre\nnevoile tale IT",
     contactBody:
-      "Spune-ne ce vrei să îmbunătățești. Stabilim împreună scopul assessment-ului și pașii următori.",
+      "Spune-ne ce vrei să îmbunătățești. Stabilim împreună ce trebuie evaluat și cum putem ajuta.",
   },
   en: {
-    servicesLabel: "Connected expertise",
-    servicesTitle: "Expertise across\nyour IT environment.",
+    servicesLabel: "IT services",
+    servicesTitle: "How we can help\nyour team",
     servicesIntro:
-      "For organisations with connected IT needs. We bring infrastructure, security, software and operations into one coordinated engagement.",
+      "A project can span several of these services. We plan the work together, taking your existing systems into account.",
     services: [
       {
         title: "Infrastructure & Cloud",
-        body: "An architecture ready for what comes next. From data centres to private and hybrid environments.",
+        body: "We design and modernise data centres, on-premises infrastructure and private or hybrid cloud environments.",
         detail: "Architecture · Cloud · Continuity",
         href: "/servicii/cloud",
       },
       {
         title: "Networking & Security",
-        body: "Connecting infrastructure and protecting access, identity and your organisation’s information.",
+        body: "We configure networks, manage access and implement security measures for data and systems.",
         detail: "Network · Identity · Protection",
         href: "/servicii/securitate",
       },
       {
         title: "Software & Automation",
-        body: "Applications that work together. Custom development, integration and process automation.",
+        body: "We develop applications, integrate systems and automate business processes.",
         detail: "Custom software · API · DevSecOps",
         href: "/servicii/software",
       },
       {
         title: "Managed Services",
-        body: "The ongoing relationship across your IT environment. Monitoring, support and improvements with agreed responsibilities.",
+        body: "We monitor and manage IT systems and handle support requests under the agreed service scope.",
         detail: "Monitoring · Operations · Support",
         href: "/servicii/managed",
       },
     ],
     stackLabel: "From infrastructure to applications",
-    stackTitle: "The layers change.\nAccountability stays clear.",
+    stackTitle: "How your systems\nfit together",
     stackBody:
-      "The Smart Control team remains directly accountable for delivery and coordinates the specialists and technology partners each project requires. Explore the infrastructure layers.",
+      "Applications depend on platforms, networks and physical infrastructure. Select a layer to see the related services.",
     stackNote: "Service levels and indicators are agreed contractually.",
     layers: [
       {
         code: "L4",
         name: "Applications & Automation",
-        desc: "Custom software, APIs and AI / LLM automation.",
+        desc: "Custom software, APIs and process automation.",
         chips: [
           "Custom dev & API",
           "App modernisation",
@@ -222,14 +222,14 @@ export const homeCopy = {
       },
     ],
     productsLabel: "Smart Control products",
-    productsTitle: "More visibility.\nBetter controlled access.",
+    productsTitle: "IT monitoring and\nremote access",
     productsIntro:
-      "Two proprietary products for monitoring IT environments and securing remote access.",
+      "SEKNET and S-VPN are products developed by Smart Control.",
     products: [
       {
         name: "SEKNET",
         label: "Monitoring & security",
-        body: "A shared perspective on infrastructure, events and risks. For teams coordinating operations and response.",
+        body: "Monitor infrastructure and bring events together for operations and security teams.",
         href: "/solutii/seknet",
         steps: ["Infrastructure", "Events", "Analysis"],
         caption: "Conceptual monitoring diagram",
@@ -237,21 +237,21 @@ export const homeCopy = {
       {
         name: "S-VPN",
         label: "Secure remote access",
-        body: "Connecting users to organisational resources, with secure access adapted to the requirements of the IT environment.",
+        body: "Connect users to company resources through secure remote access managed by the IT team.",
         href: "/solutii/s-vpn",
         steps: ["User", "Secure access", "IT resources"],
         caption: "Conceptual access diagram",
       },
     ],
     explore: "Explore",
-    partnersLabel: "Technology ecosystem",
-    partnersTitle: "Our expertise.\nThe right technologies.",
+    partnersLabel: "Technology",
+    partnersTitle: "Technology partners",
     partnersBody:
-      "We work with technology partners and select components around each project’s requirements.",
-    contactLabel: "Let’s talk about your infrastructure",
-    contactTitle: "The next step starts\nwith the right questions.",
+      "We choose technologies to suit the project requirements and the systems you already use.",
+    contactLabel: "Contact",
+    contactTitle: "Tell us about\nyour IT plans",
     contactBody:
-      "Tell us what you want to improve. Together, we define the assessment scope and the next steps.",
+      "Tell us what you want to improve. We will agree what needs assessing and how we can help.",
   },
 };
 export const technologyPartners = [

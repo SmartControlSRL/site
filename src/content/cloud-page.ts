@@ -5,17 +5,17 @@ export const cloudPages: Record<Lang, ServicePageContent> = {
   ro: {
     title: "Infrastructură & Cloud — Smart Control",
     description:
-      "Arhitectură enterprise, infrastructură fizică, cloud privat și hibrid. Planificăm modernizarea și coordonăm implementarea, migrarea și operarea.",
+      "Proiectare și modernizare de infrastructură IT: data center, cloud privat și hibrid, backup și migrarea aplicațiilor.",
     canonicalPath: "/servicii/cloud/",
     schemaName: "Infrastructură & Cloud",
     schemaServiceType: "Enterprise infrastructure and cloud services",
     hero: {
       artwork: "architecture-light",
       eyebrow: "Infrastructură & Cloud",
-      lead: "O bază solidă.",
-      accent: "Loc pentru evoluție.",
-      body: "Conectăm infrastructura fizică, platformele și aplicațiile într-o arhitectură adaptată organizației. Pornim de la ce există și planificăm ce urmează.",
-      secondary: "Explorează expertiza",
+      lead: "Proiectăm și modernizăm",
+      accent: "infrastructura IT.",
+      body: "Evaluăm infrastructura existentă și stabilim ce trebuie extins, înlocuit sau migrat. Implementăm medii on-premises, cloud privat și hibrid.",
+      secondary: "Vezi serviciile",
     },
     capabilities: {
       eyebrow: "Ce acoperim",
@@ -23,29 +23,29 @@ export const cloudPages: Record<Lang, ServicePageContent> = {
       items: [
         {
           title: "Infrastructură fizică",
-          body: "Design de data center, compute, storage și cablare structurată, dimensionate pentru mediul organizației.",
+          body: "Proiectăm data center-e și dimensionăm resursele de compute, storage și cablare.",
           Icon: Server,
         },
         {
           title: "Cloud privat & hibrid",
-          body: "Virtualizare și integrarea mediilor on-premise și cloud, cu migrare selectivă a aplicațiilor.",
+          body: "Implementăm virtualizarea, integrăm mediile on-premises și cloud și migrăm aplicațiile selectate.",
           Icon: Cloud,
         },
         {
-          title: "Date & continuitate",
-          body: "Storage, backup și disaster recovery, planificate în funcție de dependențe și cerințele de recuperare.",
+          title: "Storage, backup & recovery",
+          body: "Planificăm stocarea, backup-ul și disaster recovery în funcție de aplicații și cerințele de recuperare.",
           Icon: DatabaseZap,
         },
         {
           title: "Modernizarea aplicațiilor",
-          body: "Re-arhitecturare, containerizare și pipeline-uri de livrare, împreună cu expertiza software și DevSecOps.",
+          body: "Adaptăm arhitectura aplicațiilor și configurăm containere și pipeline-uri de livrare.",
           Icon: Container,
         },
       ],
     },
     flow: {
       eyebrow: "Modernizare în cinci etape",
-      heading: "Schimbări planificate. Tranziție controlată.",
+      heading: "Cum pregătim și realizăm migrarea",
       description:
         "Recomandările pornesc de la măsurători în infrastructura clientului. Etapele sunt adaptate scopului și dependențelor proiectului.",
       caption:
@@ -58,22 +58,22 @@ export const cloudPages: Record<Lang, ServicePageContent> = {
         },
         {
           label: "Arhitectură",
-          title: "Definim direcția",
+          title: "Proiectăm arhitectura",
           body: "Arhitectură țintă și ordinea schimbărilor, pe baza datelor colectate.",
         },
         {
           label: "Pregătire",
-          title: "Pregătim livrarea",
+          title: "Pregătim migrarea",
           body: "Containerizare, pipeline-uri, testare în staging și plan de rollback.",
         },
         {
           label: "Migrare",
-          title: "Implementăm controlat",
+          title: "Migrăm aplicațiile",
           body: "Migrare selectivă, integrare hibridă și transfer de cunoștințe.",
         },
         {
           label: "Optimizare",
-          title: "Validăm și îmbunătățim",
+          title: "Verificăm rezultatele",
           body: "Urmărim rezultatele în raport cu indicatorii agreați.",
         },
       ],
@@ -86,17 +86,17 @@ export const cloudPages: Record<Lang, ServicePageContent> = {
   en: {
     title: "Infrastructure & Cloud — Smart Control",
     description:
-      "Enterprise architecture, physical infrastructure, private and hybrid cloud. We plan modernisation and coordinate implementation, migration and operations.",
+      "IT infrastructure design and modernisation: data centres, private and hybrid cloud, backup and application migration.",
     canonicalPath: "/en/servicii/cloud/",
     schemaName: "Infrastructure & Cloud",
     schemaServiceType: "Enterprise infrastructure and cloud services",
     hero: {
       artwork: "architecture-light",
       eyebrow: "Infrastructure & Cloud",
-      lead: "A solid foundation.",
-      accent: "Room to evolve.",
-      body: "We connect physical infrastructure, platforms and applications in an architecture that fits your organisation. We start with what exists and plan what comes next.",
-      secondary: "Explore expertise",
+      lead: "Designing and modernising",
+      accent: "IT infrastructure.",
+      body: "We assess your infrastructure and identify what needs expanding, replacing or migrating. We implement on-premises, private and hybrid cloud environments.",
+      secondary: "View services",
     },
     capabilities: {
       eyebrow: "Scope",
@@ -104,29 +104,29 @@ export const cloudPages: Record<Lang, ServicePageContent> = {
       items: [
         {
           title: "Physical infrastructure",
-          body: "Data centre design, compute, storage and structured cabling, sized around the organisation’s environment.",
+          body: "We design data centres and size compute, storage and cabling resources.",
           Icon: Server,
         },
         {
           title: "Private & hybrid cloud",
-          body: "Virtualisation and integration of on-premise and cloud environments, with selective application migration.",
+          body: "We implement virtualisation, integrate on-premises and cloud environments and migrate selected applications.",
           Icon: Cloud,
         },
         {
-          title: "Data & continuity",
-          body: "Storage, backup and disaster recovery, planned around dependencies and recovery requirements.",
+          title: "Storage, backup & recovery",
+          body: "We plan storage, backup and disaster recovery around your applications and recovery requirements.",
           Icon: DatabaseZap,
         },
         {
           title: "Application modernisation",
-          body: "Re-architecture, containerisation and delivery pipelines, connected with software and DevSecOps expertise.",
+          body: "We adapt application architecture and configure containers and delivery pipelines.",
           Icon: Container,
         },
       ],
     },
     flow: {
       eyebrow: "Five stages of modernisation",
-      heading: "Planned change. Controlled transition.",
+      heading: "How we prepare and carry out a migration",
       description:
         "Recommendations start with measurements in the client’s infrastructure. We adapt the stages to the scope and dependencies of each project.",
       caption:
@@ -139,22 +139,22 @@ export const cloudPages: Record<Lang, ServicePageContent> = {
         },
         {
           label: "Architecture",
-          title: "Define the direction",
+          title: "Design the architecture",
           body: "Target architecture and a sequence of changes based on the collected data.",
         },
         {
           label: "Preparation",
-          title: "Prepare delivery",
+          title: "Prepare the migration",
           body: "Containerisation, pipelines, staging tests and a rollback plan.",
         },
         {
           label: "Migration",
-          title: "Implement with control",
+          title: "Migrate applications",
           body: "Selective migration, hybrid integration and knowledge transfer.",
         },
         {
           label: "Optimisation",
-          title: "Validate and improve",
+          title: "Check the results",
           body: "Track results against the agreed indicators.",
         },
       ],
