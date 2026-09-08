@@ -1,14 +1,14 @@
-/** Copy restored from origin/main (c551648); navigation and composition follow the redesign. */
+/** Main-approved baseline (c551648), with the owner-approved editorial audit revision. */
 export const homeCopy = {
   ro: {
     servicesLabel: "Servicii IT",
     servicesTitle: "Un portofoliu integrat de servicii enterprise",
     servicesIntro:
-      "Patru piloni de servicii, coordonați de o echipă multidisciplinară, cu responsabilități clare pentru fiecare proiect și colaborare on-site sau remote stabilită împreună.",
+      "Infrastructura, securitatea, software-ul și operarea pot fi abordate separat sau coordonate într-un program comun.",
     services: [
       {
         title: "Infrastructură & Cloud",
-        body: "Proiectăm și consolidăm centre de date, virtualizăm și operăm medii private, hibride și cloud.",
+        body: "Proiectăm și consolidăm centre de date, virtualizăm și operăm medii de cloud privat și hibrid.",
         detail: "Arhitectură · Cloud · Continuitate",
         href: "/servicii/cloud",
       },
@@ -31,7 +31,7 @@ export const homeCopy = {
         href: "/servicii/managed",
       },
     ],
-    stackLabel: "Stack Teardown",
+    stackLabel: "Arhitectură IT",
     stackTitle: "Un singur partener, unic responsabil",
     stackBody:
       "Acoperim întregul stack tehnologic — infrastructură, rețea, platforme și software — cu accent deosebit pe securitate, cu niveluri de serviciu agreate pentru fiecare proiect.",
@@ -103,7 +103,7 @@ export const homeCopy = {
       {
         name: "SEKNET",
         label: "Monitorizare & securitate",
-        body: "Produs proprietar pentru monitorizarea și protejarea mediilor IT. Detaliile de capabilitate și integrare sunt disponibile la cerere.",
+        body: "Produs proprietar pentru monitorizarea și protejarea mediilor IT.",
         href: "/solutii/seknet",
         steps: ["Infrastructură", "Evenimente", "Analiză"],
         caption: "Schemă conceptuală de monitorizare",
@@ -111,7 +111,7 @@ export const homeCopy = {
       {
         name: "S-VPN",
         label: "Acces remote securizat",
-        body: "Produs proprietar pentru acces remote securizat. Detaliile de capabilitate și integrare sunt disponibile la cerere.",
+        body: "Produs proprietar pentru acces remote securizat.",
         href: "/solutii/s-vpn",
         steps: ["Utilizator", "Acces securizat", "Resurse IT"],
         caption: "Schemă conceptuală de acces",
@@ -137,9 +137,9 @@ export const homeCopy = {
     },
     process: {
       eyebrow: "Cadru de livrare",
-      heading: "Un parcurs compact, cu decizii verificabile",
+      heading: "Cum lucrăm împreună",
       description:
-        "Infrastructura, securitatea, software-ul și operarea pot fi abordate separat sau coordonate într-un program comun.",
+        "Clarificăm contextul, stabilim planul și implementăm soluția, cu livrabile și responsabilități agreate pentru fiecare etapă.",
       caption:
         "Fiecare etapă produce o decizie sau un livrabil convenit; domeniul, calendarul și criteriile de acceptanță rămân specifice proiectului.",
       steps: [
@@ -165,11 +165,11 @@ export const homeCopy = {
     servicesLabel: "IT services",
     servicesTitle: "An integrated portfolio of enterprise services",
     servicesIntro:
-      "Four service pillars coordinated by a multidisciplinary team, with clear responsibilities for every project and on-site or remote collaboration agreed together.",
+      "Infrastructure, security, software, and operations can be addressed independently or coordinated within one programme.",
     services: [
       {
         title: "Infrastructure & Cloud",
-        body: "We design and consolidate data centres, virtualise and operate private, hybrid and cloud environments.",
+        body: "We design and consolidate data centres, virtualise and operate private and hybrid cloud environments.",
         detail: "Architecture · Cloud · Continuity",
         href: "/servicii/cloud",
       },
@@ -192,7 +192,7 @@ export const homeCopy = {
         href: "/servicii/managed",
       },
     ],
-    stackLabel: "Stack Teardown",
+    stackLabel: "IT architecture",
     stackTitle: "One partner, single point of accountability",
     stackBody:
       "We cover the entire technology stack — infrastructure, network, platforms and software — with a particular focus on security, with service levels agreed for each project.",
@@ -264,7 +264,7 @@ export const homeCopy = {
       {
         name: "SEKNET",
         label: "Monitoring & security",
-        body: "A proprietary product for monitoring and protecting IT environments. Capability and integration details are available on request.",
+        body: "A proprietary product for monitoring and protecting IT environments.",
         href: "/solutii/seknet",
         steps: ["Infrastructure", "Events", "Analysis"],
         caption: "Conceptual monitoring diagram",
@@ -272,7 +272,7 @@ export const homeCopy = {
       {
         name: "S-VPN",
         label: "Secure remote access",
-        body: "A proprietary product for secure remote access. Capability and integration details are available on request.",
+        body: "A proprietary product for secure remote access.",
         href: "/solutii/s-vpn",
         steps: ["User", "Secure access", "IT resources"],
         caption: "Conceptual access diagram",
@@ -298,9 +298,9 @@ export const homeCopy = {
     },
     process: {
       eyebrow: "Delivery framework",
-      heading: "A compact path with verifiable decisions",
+      heading: "How we work together",
       description:
-        "Infrastructure, security, software, and operations can be addressed independently or coordinated within one programme.",
+        "We clarify the context, define the plan and implement the solution, with deliverables and responsibilities agreed for each stage.",
       caption:
         "Each stage produces an agreed decision or deliverable; scope, schedule, and acceptance criteria remain project-specific.",
       steps: [

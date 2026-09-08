@@ -32,6 +32,14 @@ owner's explicit restoration request recorded under C-001 in CLAIMS.
 
 [Comparison with main and retained layout adaptations](design-proposals/copy-review/README.md).
 
+The owner subsequently approved implementation of the independently reviewed
+editorial audit (A01–A09) on 2026-09-08. The specific exceptions to the baseline
+are recorded in [the editorial revision](design-proposals/editorial-revision/README.md).
+Infrastructure & Cloud presents the full pillar documented in the approved
+Services hub, with modernisation kept as a dedicated section. Networking uses
+only the technologies already named on Home and the approved network-operations
+description. This approval does not authorise unrelated copy or service claims.
+
 Update both locales in the same typed record. Do not copy a shared template
 back into locale-specific page files. Route-specific layout may be added
 through an explicit typed field or a named slot when it has genuine semantic

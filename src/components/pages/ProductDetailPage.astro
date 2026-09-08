@@ -146,6 +146,22 @@ const schema = {
         </ol>
       </div>
     </section>
+    {
+      copy.associatedServices && (
+        <section class="detail-wrap detail-section" aria-labelledby="associated-services-heading">
+          <div class="detail-intro" data-detail-enter>
+            <div>
+              <p class="detail-kicker">{copy.associatedServices.eyebrow}</p>
+              <h2 id="associated-services-heading">{copy.associatedServices.heading}</h2>
+            </div>
+            <p>{copy.associatedServices.body}</p>
+          </div>
+          <ul class="detail-scope-list" data-detail-enter>
+            {copy.associatedServices.items.map((item) => <li>{item}</li>)}
+          </ul>
+        </section>
+      )
+    }
     <section class="detail-wrap detail-section">
       <div class="detail-intro">
         <div>

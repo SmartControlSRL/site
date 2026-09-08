@@ -80,12 +80,26 @@ const schema = {
       </div>
     </header>
     <section class="detail-wrap detail-section" id="capabilities">
+      {
+        content.scope && (
+          <div class="detail-scope" data-detail-enter>
+            <div class="detail-intro">
+              <h2>{content.scope.heading}</h2>
+              {content.scope.body && <p>{content.scope.body}</p>}
+            </div>
+            <ul class="detail-scope-list">
+              {content.scope.items.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+        )
+      }
       <div class="detail-intro" data-detail-enter>
         <div>
           <p class="detail-kicker">{content.capabilities.eyebrow}</p><h2>
             {content.capabilities.heading}
           </h2>
         </div>
+        {content.capabilities.description && <p>{content.capabilities.description}</p>}
       </div>
       <div class="detail-capabilities">
         {
@@ -141,7 +155,7 @@ const schema = {
           <div class="detail-intro" data-detail-enter>
             <>
               <h2>{content.proof.heading}</h2>
-              <p>{content.proof.body}</p>
+              {content.proof.body && <p>{content.proof.body}</p>}
             </>
           </div>
           <div class="detail-capabilities">
@@ -165,7 +179,7 @@ const schema = {
             {en ? "Related services" : "Servicii conexe"}
           </h2>
         </div><p>
-          {homeCopy[lang].process.description}
+          {homeCopy[lang].servicesIntro}
         </p>
       </div>
       <div class="detail-related">

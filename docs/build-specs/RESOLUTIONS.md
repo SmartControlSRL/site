@@ -219,3 +219,22 @@ other headers as static images. Provide a localised pause control, defer media
 loading until playback is allowed, honour reduced motion/save-data, and release
 the video on route changes. The missing video-generator connection is resolved
 by the supplied media; no plugin installation is needed.
+
+### Reviewed editorial audit implementation (owner approval, 2026-09-08)
+
+After the main-copy restoration and an independent review, the owner requested
+implementation of the revised A01–A09 proposals in the existing PR. The approved
+scope and wording decisions are recorded in
+`docs/design-proposals/editorial-revision/README.md`.
+
+Use the main Services hub's full Infrastructure & Cloud scope and retain the
+five-stage modernisation workflow, including its optional Fast Track qualifier.
+Replace the time-dependent hardware-price/budget argument with equivalent RO/EN
+copy about reviewing existing infrastructure and applications. Networking scope
+comes from the approved homepage technologies and network-operations description.
+In Romanian descriptive prose, “punerea în producție” and “predarea” supersede
+“deployment” and “handover” in the specific Software passages identified by the
+audit; the established technical terms and primary CTA matrix otherwise remain.
+Retain the original Software responsibility heading, specific contractual
+conditions and product conceptual labels. Recover S-VPN's associated services
+without implying they are automatically included with the product.

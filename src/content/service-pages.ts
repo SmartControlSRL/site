@@ -60,6 +60,11 @@ export interface ServicePageContent {
     secondary: string;
   };
   context?: Array<{ title: string; body: string }>;
+  scope?: {
+    heading: string;
+    body?: string;
+    items: string[];
+  };
   flow: {
     eyebrow: string;
     heading: string;
@@ -70,11 +75,12 @@ export interface ServicePageContent {
   capabilities: {
     eyebrow: string;
     heading: string;
+    description?: string;
     items: Capability[];
   };
   proof?: {
     heading: string;
-    body: string;
+    body?: string;
     items: Capability[];
   };
   supporting?: {
@@ -107,7 +113,7 @@ const security: Record<Lang, ServicePageContent> = {
     flow: {
       eyebrow: 'Flux operațional conceptual',
       heading: 'De la semnal la răspuns coordonat',
-      description: 'Un model de lucru orientativ pentru structurarea deciziilor. Configurația reală este stabilită numai după analiza mediului clientului.',
+      description: 'Colectăm semnalele, stabilim prioritatea și coordonăm răspunsul. Configurația reală este stabilită numai după analiza mediului clientului.',
       caption: 'Diagrama descrie etapele de colaborare, nu o topologie, o configurație de produs sau un timp de răspuns garantat.',
       steps: [
         { label: 'Detectare', title: 'Colectăm semnalele relevante', body: 'Sursele și nivelul de vizibilitate sunt selectate în funcție de mediul și responsabilitățile convenite.' },
@@ -115,9 +121,14 @@ const security: Record<Lang, ServicePageContent> = {
         { label: 'Răspuns', title: 'Coordonăm acțiunile agreate', body: 'Echipele urmează responsabilitățile, canalele de escaladare și indicatorii stabiliți contractual.' },
       ],
     },
+    scope: {
+      heading: 'Rețea & conectivitate',
+      body: 'Operarea rețelei cu vizibilitate asupra traficului și incidentelor.',
+      items: ['LAN / WAN core', 'SD-WAN', 'Load balancing'],
+    },
     capabilities: {
       eyebrow: 'Capabilități',
-      heading: 'Șase domenii de Networking & Security',
+      heading: 'Securitate & acces',
       items: [
         { title: 'Data Leakage Prevention', body: 'Protecția datelor sensibile și vizibilitate asupra transferurilor.', items: ['Politici pentru date sensibile', 'Monitorizare și investigații', 'Rapoarte pentru audit și investigații'], Icon: DatabaseZap },
         { title: 'Acces remote securizat', body: 'Acces configurat în funcție de politicile și cerințele organizației.', items: ['Control centralizat al accesului', 'Autentificare consolidată', 'Politici adaptate rolurilor'], Icon: KeyRound },
@@ -155,7 +166,7 @@ const security: Record<Lang, ServicePageContent> = {
     flow: {
       eyebrow: 'Conceptual operating flow',
       heading: 'From signal to coordinated response',
-      description: 'An indicative working model for structuring decisions. The actual configuration is defined only after reviewing the client environment.',
+      description: 'We collect signals, establish priorities and coordinate the response. The actual configuration is defined only after reviewing the client environment.',
       caption: 'This diagram describes collaboration stages, not a topology, product configuration, or guaranteed response time.',
       steps: [
         { label: 'Detect', title: 'Collect relevant signals', body: 'Sources and visibility are selected for the environment and the agreed responsibilities.' },
@@ -163,9 +174,14 @@ const security: Record<Lang, ServicePageContent> = {
         { label: 'Respond', title: 'Coordinate agreed actions', body: 'Teams follow the responsibilities, escalation paths, and indicators defined contractually.' },
       ],
     },
+    scope: {
+      heading: 'Network & connectivity',
+      body: 'Network operation with visibility over traffic and incidents.',
+      items: ['LAN / WAN core', 'SD-WAN', 'Load balancing'],
+    },
     capabilities: {
       eyebrow: 'Capabilities',
-      heading: 'Six Networking & Security domains',
+      heading: 'Security & access',
       items: [
         { title: 'Data Leakage Prevention', body: 'Sensitive-data protection and visibility over transfers.', items: ['Sensitive-data policies', 'Monitoring and investigation', 'Audit and investigation reporting'], Icon: DatabaseZap },
         { title: 'Secure remote access', body: 'Access configured for organisational policies and requirements.', items: ['Centralised access control', 'Stronger authentication', 'Role-based policies'], Icon: KeyRound },
@@ -188,11 +204,11 @@ const security: Record<Lang, ServicePageContent> = {
 const software: Record<Lang, ServicePageContent> = {
   ro: {
     title: 'Software & Automatizare — Smart Control',
-    description: 'Dezvoltare software end-to-end: aplicații custom, DevSecOps, modernizare și automatizare cu AI, de la arhitectură la deployment și suport.',
+    description: 'Dezvoltare software end-to-end: aplicații custom, DevSecOps, modernizare și automatizare cu AI, de la arhitectură la punerea în producție și suport.',
     canonicalPath: '/servicii/software/',
     schemaName: 'Software & Automatizare',
     schemaServiceType: ['Custom Software Development', 'DevOps', 'DevSecOps', 'Application Modernisation', 'AI Automation'],
-    hero: { artwork: 'software-automation', eyebrow: 'Software & Automatizare', lead: 'Dezvoltare software', accent: 'end-to-end', body: 'De la arhitectura inițială până la deployment în producție: dezvoltare custom, DevSecOps, modernizare și automatizare cu AI, cu responsabilități clare pe întregul ciclu de livrare.', secondary: 'Vezi capabilitățile' },
+    hero: { artwork: 'software-automation', eyebrow: 'Software & Automatizare', lead: 'Dezvoltare software', accent: 'end-to-end', body: 'De la arhitectura inițială până la punerea în producție: dezvoltare custom, DevSecOps, modernizare și automatizare cu AI, cu responsabilități clare pe întregul ciclu de livrare.', secondary: 'Vezi capabilitățile' },
     flow: {
       eyebrow: 'Ciclu de livrare',
       heading: 'Un traseu clar de la problemă la operare',
@@ -207,7 +223,6 @@ const software: Record<Lang, ServicePageContent> = {
     },
     proof: {
       heading: 'Livrare software cu limite și responsabilități explicite',
-      body: 'Angajamentele comerciale și tehnice se stabilesc contractual pentru proiectul concret.',
       items: [
         { title: 'Acces la codul sursă', body: 'Pentru livrabilele software aplicabile, accesul la cod și documentație este definit contractual.', Icon: FileCode },
         { title: 'Indicatori agreați', body: 'Timpii, disponibilitatea și indicatorii relevanți sunt definiți explicit în contract.', Icon: Gauge },
@@ -225,7 +240,7 @@ const software: Record<Lang, ServicePageContent> = {
         { title: 'Consultanță & Staff Augmentation', body: 'Arhitectură, prioritizare și specialiști integrați în echipa clientului, cu niveluri de serviciu agreate contractual.', Icon: Users },
       ],
     },
-    cta: { heading: 'Discutăm arhitectura și constrângerile proiectului', body: 'Clarificăm arhitectura, integrările și constrângerile, cu livrabilele software aplicabile și handover-ul definite contractual.' },
+    cta: { heading: 'Discutăm arhitectura și constrângerile proiectului', body: 'Clarificăm arhitectura, integrările și constrângerile. Livrabilele software aplicabile și predarea acestora sunt definite contractual.' },
   },
   en: {
     title: 'Software & Automation — Smart Control',
@@ -243,12 +258,11 @@ const software: Record<Lang, ServicePageContent> = {
         { label: 'Discover', title: 'Define the problem and constraints', body: 'Objectives, users, integrations, and operational limits become working criteria.' },
         { label: 'Build', title: 'Deliver incrementally', body: 'Architecture, code, and automation evolve through verifiable steps and regular feedback.' },
         { label: 'Validate', title: 'Test quality and security', body: 'Controls are selected for agreed risks and requirements rather than applied generically.' },
-        { label: 'Operate', title: 'Handover and support the solution', body: 'Documentation, source-code access, and support are defined contractually for applicable deliverables.' },
+        { label: 'Operate', title: 'Hand over and support the solution', body: 'Documentation, source-code access, and support are defined contractually for applicable deliverables.' },
       ],
     },
     proof: {
       heading: 'Software delivery with explicit boundaries and responsibilities',
-      body: 'Commercial and technical commitments are defined contractually for the specific project.',
       items: [
         { title: 'Source-code access', body: 'For applicable software deliverables, access to source code and documentation is defined contractually.', Icon: FileCode },
         { title: 'Agreed indicators', body: 'Timelines, availability, and relevant indicators are explicitly defined in the contract.', Icon: Gauge },
@@ -266,7 +280,7 @@ const software: Record<Lang, ServicePageContent> = {
         { title: 'Consulting & Staff Augmentation', body: 'Architecture, prioritisation, and specialists integrated with the client team under contractually agreed service levels.', Icon: Users },
       ],
     },
-    cta: { heading: 'Discuss your project architecture and constraints', body: 'We clarify architecture, integrations, and constraints, with applicable software deliverables and handover defined contractually.' },
+    cta: { heading: 'Discuss your project architecture and constraints', body: 'We clarify architecture, integrations and constraints. Applicable software deliverables and their handover are defined contractually.' },
   },
 };
 
@@ -281,7 +295,7 @@ const managed: Record<Lang, ServicePageContent> = {
     flow: {
       eyebrow: 'Model operațional',
       heading: 'Un ciclu comun pentru operare și îmbunătățire',
-      description: 'Capabilitățile sunt grupate într-un model operațional clar, configurat în jurul responsabilităților agreate.',
+      description: 'Monitorizăm serviciile agreate, prioritizăm cererile, coordonăm intervențiile și raportăm rezultatele.',
       caption: 'Diagrama este un model de colaborare; instrumentele, acoperirea, timpii și escaladările sunt definite în acordul de servicii.',
       steps: [
         { label: 'Observare', title: 'Monitorizăm serviciile agreate', body: 'Sursele, intervalele și responsabilitățile sunt stabilite pentru mediul inclus în contract.' },
@@ -294,8 +308,8 @@ const managed: Record<Lang, ServicePageContent> = {
       eyebrow: 'Capabilități',
       heading: 'Ce acoperă serviciile Smart Control',
       items: [
-        { title: 'Service Desk Outsourcing', body: 'Suport pentru utilizatori cu ținte contractuale de răspuns și rezolvare.', items: ['Suport L1 / L2 / L3', 'Niveluri de serviciu contractuale', 'Raportare'], Icon: Headset },
-        { title: 'Managed Infrastructure Operations', body: 'Operarea și mentenanța proactive ale infrastructurii critice.', items: ['Monitorizare', 'Patch management', 'Backup și recovery'], Icon: Server },
+        { title: 'Service Desk Outsourcing', body: 'Suport L1 / L2 / L3 pentru utilizatori și raportare, cu ținte contractuale de răspuns și rezolvare.', items: ['Suport L1 / L2 / L3', 'Niveluri de serviciu contractuale', 'Raportare'], Icon: Headset },
+        { title: 'Managed Infrastructure Operations', body: 'Operarea și mentenanța proactive ale infrastructurii critice: monitorizare, actualizări, backup și recuperarea datelor.', items: ['Monitorizare', 'Patch management', 'Backup și recovery'], Icon: Server },
         { title: 'Network Managed Services', body: 'Operarea rețelei cu vizibilitate asupra traficului și incidentelor.', items: ['Disponibilitate', 'Gestionarea echipamentelor', 'Politici de acces'], Icon: Network },
         { title: 'Cyber Security Managed Services', body: 'Monitorizare, analiză și răspuns coordonat la incidente.', items: ['Evenimente de securitate', 'Răspuns la incidente', 'Rapoarte'], Icon: ShieldCheck },
         { title: 'Outsourced Systems Support', body: 'Asistență on-site și remote în limitele nivelurilor de serviciu agreate.', items: ['Intervenție on-site', 'Acces remote securizat', 'Documentație'], Icon: Wrench },
@@ -311,7 +325,7 @@ const managed: Record<Lang, ServicePageContent> = {
         { name: 'S-VPN', body: 'Produs proprietar pentru acces remote securizat.', href: '/solutii/s-vpn', linkLabel: 'Explorează S-VPN', Icon: Network },
       ],
     },
-    cta: { heading: 'Clarificăm modelul operațional potrivit', body: 'Discutăm serviciile incluse, limitele de responsabilitate, escaladările și indicatorii care trebuie definiți contractual. Contactul rămâne disponibil direct prin email.' },
+    cta: { heading: 'Clarificăm modelul operațional potrivit', body: 'Discutăm serviciile incluse, limitele de responsabilitate, escaladările și indicatorii care trebuie definiți contractual.' },
   },
   en: {
     title: 'Managed Services — Smart Control',
@@ -323,7 +337,7 @@ const managed: Record<Lang, ServicePageContent> = {
     flow: {
       eyebrow: 'Operating model',
       heading: 'One cycle for operations and improvement',
-      description: 'Capabilities are grouped into a clear operating model configured around agreed responsibilities.',
+      description: 'We monitor agreed services, prioritise requests, coordinate interventions and report the results.',
       caption: 'This diagram is a collaboration model; tools, coverage, response targets, and escalations are defined in the service agreement.',
       steps: [
         { label: 'Observe', title: 'Monitor agreed services', body: 'Sources, intervals, and responsibilities are established for the environment included in the contract.' },
@@ -336,8 +350,8 @@ const managed: Record<Lang, ServicePageContent> = {
       eyebrow: 'Capabilities',
       heading: 'What Smart Control services cover',
       items: [
-        { title: 'Service Desk Outsourcing', body: 'User support with contractual response and resolution targets.', items: ['L1 / L2 / L3 support', 'Contractual service levels', 'Reporting'], Icon: Headset },
-        { title: 'Managed Infrastructure Operations', body: 'Proactive operation and maintenance of critical infrastructure.', items: ['Monitoring', 'Patch management', 'Backup and recovery'], Icon: Server },
+        { title: 'Service Desk Outsourcing', body: 'L1 / L2 / L3 user support and reporting, with contractual response and resolution targets.', items: ['L1 / L2 / L3 support', 'Contractual service levels', 'Reporting'], Icon: Headset },
+        { title: 'Managed Infrastructure Operations', body: 'Proactive operation and maintenance of critical infrastructure: monitoring, updates, backup and data recovery.', items: ['Monitoring', 'Patch management', 'Backup and recovery'], Icon: Server },
         { title: 'Network Managed Services', body: 'Network operation with visibility over traffic and incidents.', items: ['Availability', 'Equipment management', 'Access policies'], Icon: Network },
         { title: 'Cyber Security Managed Services', body: 'Coordinated security monitoring, analysis, and incident response.', items: ['Security events', 'Incident response', 'Reporting'], Icon: ShieldCheck },
         { title: 'Outsourced Systems Support', body: 'On-site and remote assistance within agreed service levels.', items: ['On-site intervention', 'Secure remote access', 'Documentation'], Icon: Wrench },
@@ -353,7 +367,7 @@ const managed: Record<Lang, ServicePageContent> = {
         { name: 'S-VPN', body: 'A proprietary product for secure remote access.', href: '/solutii/s-vpn', linkLabel: 'Explore S-VPN', Icon: Network },
       ],
     },
-    cta: { heading: 'Clarify the right operating model', body: 'We discuss included services, responsibility boundaries, escalations, and the indicators to define contractually. Direct email contact remains visible and available.' },
+    cta: { heading: 'Clarify the right operating model', body: 'We discuss included services, responsibility boundaries, escalations, and the indicators to define contractually.' },
   },
 };
 

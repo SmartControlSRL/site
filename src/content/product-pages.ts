@@ -19,12 +19,18 @@ interface ProductContent {
   journeyEyebrow: string;
   journeyTitle: string;
   journeyIntro: string;
+  associatedServices?: {
+    eyebrow: string;
+    heading: string;
+    body: string;
+    items: string[];
+  };
   cta: { heading: string; body: string };
   relatedTitle: string;
   relatedBody: string;
   relatedHref: string;
 }
-/** Product copy restored from origin/main (c551648). */
+/** Main-approved product copy (c551648), with the owner-approved editorial audit revision. */
 export const productPages: Record<ProductKey, Record<Lang, ProductContent>> = {
   seknet: {
     ro: {
@@ -47,10 +53,10 @@ export const productPages: Record<ProductKey, Record<Lang, ProductContent>> = {
         },
         {
           title: "Control centralizat",
-          body: "Informațiile tehnice sunt organizate într-o experiență unitară, adaptată rolurilor operaționale și de securitate.",
+          body: "Evenimentele sunt grupate și prioritizate pentru rolurile care trebuie să analizeze și să decidă.",
         },
       ],
-      contextTitle: "Vizibilitate și protecție într-o experiență unificată",
+      contextTitle: "Monitorizarea și protejarea infrastructurii IT",
       context:
         "SEKNET centralizează informațiile relevante pentru operarea și protejarea infrastructurii IT, într-o experiență configurată în funcție de mediul și cerințele organizației.",
       journey: [
@@ -62,7 +68,7 @@ export const productPages: Record<ProductKey, Record<Lang, ProductContent>> = {
         {
           label: "Context",
           title: "Organizăm informația operațională",
-          body: "Evenimentele sunt grupate și prioritizate pentru rolurile care trebuie să analizeze și să decidă.",
+          body: "Informațiile tehnice sunt organizate pentru rolurile operaționale și de securitate.",
         },
         {
           label: "Coordonare",
@@ -77,7 +83,7 @@ export const productPages: Record<ProductKey, Record<Lang, ProductContent>> = {
       journeyEyebrow: "Context conceptual",
       journeyTitle: "De la semnal la context operațional",
       journeyIntro:
-        "O reprezentare de nivel înalt a modului în care SEKNET poate susține munca echipelor, fără a expune arhitectura, topologia sau configurația produsului.",
+        "Flux orientativ: de la monitorizarea infrastructurii la analiză și coordonarea răspunsului.",
       cta: {
         heading: "Vezi SEKNET în contextul infrastructurii tale",
         body: "Îți prezentăm platforma și discutăm cerințele, integrarea și configurația potrivită pentru mediul tău.",
@@ -103,10 +109,10 @@ export const productPages: Record<ProductKey, Record<Lang, ProductContent>> = {
         },
         {
           title: "Centralised control",
-          body: "Technical information is organised in a unified experience for operational and security roles.",
+          body: "Events are grouped and prioritised for the roles that need to analyse and decide.",
         },
       ],
-      contextTitle: "Visibility and protection in one unified experience",
+      contextTitle: "Monitoring and protecting IT infrastructure",
       context:
         "SEKNET centralises information relevant to operating and protecting IT infrastructure, configured around the organisation’s environment and requirements.",
       journey: [
@@ -118,7 +124,7 @@ export const productPages: Record<ProductKey, Record<Lang, ProductContent>> = {
         {
           label: "Context",
           title: "Organise operational information",
-          body: "Events are grouped and prioritised for the roles that need to analyse and decide.",
+          body: "Technical information is organised for operational and security roles.",
         },
         {
           label: "Coordinate",
@@ -133,7 +139,7 @@ export const productPages: Record<ProductKey, Record<Lang, ProductContent>> = {
       journeyEyebrow: "Conceptual context",
       journeyTitle: "From signal to operational context",
       journeyIntro:
-        "A high-level representation of how SEKNET can support team workflows without exposing product architecture, topology, or configuration.",
+        "An indicative workflow: from infrastructure monitoring to analysis and coordinated response.",
       cta: {
         heading: "See SEKNET in the context of your infrastructure",
         body: "We present the platform and discuss the requirements, integration and configuration appropriate for your environment.",
@@ -186,7 +192,7 @@ export const productPages: Record<ProductKey, Record<Lang, ProductContent>> = {
         {
           label: "Revizuire",
           title: "Echipa păstrează vizibilitatea",
-          body: "Administrarea și auditul susțin revizuirea accesului fără a publica detalii de topologie.",
+          body: "Administrarea și auditul susțin revizuirea accesului.",
         },
       ],
       relatedTitle: "Networking & Security",
@@ -196,7 +202,18 @@ export const productPages: Record<ProductKey, Record<Lang, ProductContent>> = {
       journeyEyebrow: "Parcurs conceptual",
       journeyTitle: "Acces de la solicitare la revizuire",
       journeyIntro:
-        "Un traseu de nivel înalt care explică relația dintre utilizator, politici și resurse fără a publica topologia sau configurația soluției.",
+        "Parcurs orientativ al accesului: solicitare, verificare, conectare și revizuire.",
+      associatedServices: {
+        eyebrow: "Servicii asociate",
+        heading: "Asistență pe parcursul implementării și operării",
+        body: "Echipa Smart Control asigură servicii pentru configurarea, integrarea și utilizarea soluției în mediul organizației. Serviciile necesare se stabilesc în funcție de proiect.",
+        items: [
+          "Analiză inițială și configurare",
+          "Integrare în mediul existent",
+          "Asistență tehnică",
+          "Mentenanță și actualizări",
+        ],
+      },
       cta: {
         heading: "Discută cu noi despre S-VPN",
         body: "Evaluăm contextul organizației tale și îți prezentăm modul în care S-VPN poate susține accesul remote securizat.",
@@ -247,7 +264,7 @@ export const productPages: Record<ProductKey, Record<Lang, ProductContent>> = {
         {
           label: "Review",
           title: "The team retains visibility",
-          body: "Administration and audit support access review without publishing topology details.",
+          body: "Administration and audit support access review.",
         },
       ],
       relatedTitle: "Networking & Security",
@@ -257,7 +274,18 @@ export const productPages: Record<ProductKey, Record<Lang, ProductContent>> = {
       journeyEyebrow: "Conceptual journey",
       journeyTitle: "Access from request to review",
       journeyIntro:
-        "A high-level journey explaining the relationship between user, policies, and resources without publishing solution topology or configuration.",
+        "An indicative access journey: request, verification, connection and review.",
+      associatedServices: {
+        eyebrow: "Associated services",
+        heading: "Support throughout implementation and operation",
+        body: "The Smart Control team provides services to configure, integrate and use the solution within the organisation’s environment. The services needed are defined for each project.",
+        items: [
+          "Initial assessment and configuration",
+          "Integration with the existing environment",
+          "Technical assistance",
+          "Maintenance and updates",
+        ],
+      },
       cta: {
         heading: "Talk to us about S-VPN",
         body: "We assess your organisation’s context and show how S-VPN can support secure remote access.",

@@ -1,5 +1,10 @@
 # Copy aligned with main — 8 September 2026
 
+This records the restoration at `bc64ae8`. The subsequent owner-approved
+[editorial revision](../editorial-revision/README.md) documents the specific
+changes made after the independent audit review. The screenshots below show
+the restoration, before that revision.
+
 The site owner clarified that much of the copy on `main` had been approved
 internally. The broad tone rewrite in `fc3c492` exceeded that request and is
 superseded by this comparison and restoration.

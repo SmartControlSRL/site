@@ -1,26 +1,36 @@
 import { Container, GitBranch, Cloud, Gauge } from "@lucide/astro";
 import type { Lang } from "../i18n/ui";
 import type { ServicePageContent } from "./service-pages";
-/** Cloud copy restored from origin/main (c551648), retaining the Infrastructure & Cloud navigation. */
+/** Full pillar scope from main (c551648), with modernisation as a dedicated offering. */
 export const cloudPages: Record<Lang, ServicePageContent> = {
   ro: {
-    title: "Cloud & Modernizare — Re-arhitecturare | Smart Control",
+    title: "Infrastructură & Cloud — Smart Control",
     description:
-      "Hardware-ul se scumpește. Propunem o abordare de re-arhitecturare, containerizare și migrare selectivă în cloud pentru performanță și costuri predictibile.",
+      "Proiectare și operare de centre de date, virtualizare, cloud privat și hibrid, continuitate și modernizarea infrastructurii IT.",
     canonicalPath: "/servicii/cloud/",
     schemaName: "Infrastructură & Cloud",
     schemaServiceType: "Enterprise infrastructure and cloud services",
     hero: {
       artwork: "architecture-light",
       eyebrow: "Infrastructură & Cloud",
-      lead: "Hardware-ul se scumpește.",
-      accent: "Propunem următoarea abordare.",
-      body: "Prețurile componentelor critice cresc sub presiunea cererii pentru infrastructură AI, iar bugetele de refresh nu mai ajung. Re-arhitecturarea și optimizarea aplicațiilor devin strategia principală — obții mai multă performanță din infrastructura existentă, înainte să cumperi una nouă.",
+      lead: "Proiectăm și operăm",
+      accent: "infrastructuri IT.",
+      body: "Proiectăm și consolidăm centre de date, virtualizăm și operăm medii de cloud privat și hibrid.",
       secondary: "Vezi fluxul în 5 etape",
     },
+    scope: {
+      heading: "Ce acoperim",
+      items: [
+        "Proiectare și implementare de centre de date",
+        "Consolidare și virtualizare",
+        "Cloud privat și hibrid",
+        "Continuitatea activității și recuperare în caz de dezastru",
+      ],
+    },
     capabilities: {
-      eyebrow: "Ce acoperim",
-      heading: "Ce livrăm concret",
+      eyebrow: "Modernizare",
+      heading: "Re-arhitecturare și migrare selectivă",
+      description: "Analizăm infrastructura și aplicațiile existente pentru a stabili ce poate fi optimizat, re-arhitecturat sau migrat în cloud.",
       items: [
         {
           title: "Containerizare & orchestrare",
@@ -66,7 +76,7 @@ export const cloudPages: Record<Lang, ServicePageContent> = {
     },
     flow: {
       eyebrow: "Abordare",
-      heading: "Propunem 5 etape",
+      heading: "Modernizare în 5 etape",
       description:
         "Pentru clienții cu un context tehnic deja cunoscut, o propunere de re-arhitecturare poate fi pregătită ca traseu Fast Track. Aceasta este o opțiune, nu o etapă universală și nu înlocuiește validarea datelor de intrare.",
       caption:
@@ -105,23 +115,33 @@ export const cloudPages: Record<Lang, ServicePageContent> = {
     },
   },
   en: {
-    title: "Cloud & Modernisation — Re-architecture | Smart Control",
+    title: "Infrastructure & Cloud — Smart Control",
     description:
-      "Hardware is getting more expensive. We propose an application re-architecture, containerisation and selective cloud migration approach for performance and predictable costs.",
+      "Data centre design and operation, virtualisation, private and hybrid cloud, business continuity and IT infrastructure modernisation.",
     canonicalPath: "/en/servicii/cloud/",
     schemaName: "Infrastructure & Cloud",
     schemaServiceType: "Enterprise infrastructure and cloud services",
     hero: {
       artwork: "architecture-light",
       eyebrow: "Infrastructure & Cloud",
-      lead: "Hardware is getting more expensive.",
-      accent: "We propose the following approach.",
-      body: "Critical component prices are rising under pressure from AI infrastructure demand. Application re-architecture and optimisation help obtain more performance from existing infrastructure before buying new hardware.",
+      lead: "We design and operate",
+      accent: "IT infrastructure.",
+      body: "We design and consolidate data centres, virtualise and operate private and hybrid cloud environments.",
       secondary: "See the 5 stages",
     },
+    scope: {
+      heading: "What we cover",
+      items: [
+        "Data centre design and implementation",
+        "Consolidation and virtualisation",
+        "Private and hybrid cloud",
+        "Business continuity and disaster recovery",
+      ],
+    },
     capabilities: {
-      eyebrow: "Scope",
-      heading: "What we deliver",
+      eyebrow: "Modernisation",
+      heading: "Re-architecture and selective migration",
+      description: "We review existing infrastructure and applications to identify what can be optimised, re-architected or migrated to the cloud.",
       items: [
         {
           title: "Containerisation & orchestration",
@@ -167,7 +187,7 @@ export const cloudPages: Record<Lang, ServicePageContent> = {
     },
     flow: {
       eyebrow: "Approach",
-      heading: "We propose 5 stages",
+      heading: "Modernisation in 5 stages",
       description:
         "For clients whose technical context is already understood, a re-architecture proposal can follow a Fast Track path. This is optional, not a universal stage, and does not replace validation of the input data.",
       caption:
