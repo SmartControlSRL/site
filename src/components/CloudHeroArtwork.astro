@@ -1,0 +1,104 @@
+---
+import AmbientArtwork from "./AmbientArtwork.astro";
+import { Pause, Play } from "@lucide/astro";
+import { getLangFromUrl } from "../i18n/ui";
+
+const en = getLangFromUrl(Astro.url) === "en";
+const pause = en ? "Pause video" : "Pauză video";
+const play = en ? "Play video" : "Redă video-ul";
+---
+
+<AmbientArtwork artwork="architecture-light">
+  <video
+    id="cloud-hero-video"
+    class="cloud-hero-video"
+    data-cloud-video
+    data-src="/videos/cloud-hero-1280.mp4"
+    data-src-mobile="/videos/cloud-hero-800.mp4"
+    preload="none"
+    muted
+    playsinline
+    loop
+    width="1280"
+    height="720"
+    aria-hidden="true"
+    tabindex="-1"></video>
+</AmbientArtwork>
+<button
+  type="button"
+  class="cloud-video-toggle"
+  data-cloud-video-toggle
+  data-label-pause={pause}
+  data-label-play={play}
+  data-paused="false"
+  aria-controls="cloud-hero-video"
+  hidden
+>
+  <Pause size={15} stroke-width={1.5} aria-hidden="true" data-video-pause />
+  <Play size={15} stroke-width={1.5} aria-hidden="true" data-video-play />
+  <span data-video-label>{pause}</span>
+</button>
+
+<style>
+  .cloud-hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center right;
+    opacity: 0;
+    transition: opacity 450ms ease;
+  }
+  .cloud-hero-video[data-ready="true"] {
+    opacity: 1;
+  }
+  .cloud-video-toggle {
+    position: absolute;
+    right: max(20px, calc((100% - 1180px) / 2));
+    bottom: 14px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding-inline: 12px;
+    border-radius: 6px;
+    color: var(--color-navy);
+    background: var(--color-surface);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .cloud-video-toggle:hover {
+    background: var(--color-page);
+  }
+  .cloud-video-toggle:focus-visible {
+    outline: 3px solid var(--color-bright);
+    outline-offset: 3px;
+  }
+  .cloud-video-toggle[hidden],
+  .cloud-video-toggle :global([data-video-play]),
+  .cloud-video-toggle[data-paused="true"] :global([data-video-pause]) {
+    display: none;
+  }
+  .cloud-video-toggle[data-paused="true"] :global([data-video-play]) {
+    display: block;
+  }
+  @media (max-width: 900px) {
+    .cloud-video-toggle {
+      top: 12px;
+      bottom: auto;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cloud-hero-video,
+    .cloud-video-toggle {
+      display: none;
+      transition: none;
+    }
+  }
+</style>
+<script>
+  import "../scripts/cloud-hero-video";
+</script>

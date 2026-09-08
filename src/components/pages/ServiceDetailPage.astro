@@ -1,5 +1,6 @@
 ---
 import AmbientArtwork from "../AmbientArtwork.astro";
+import CloudHeroArtwork from "../CloudHeroArtwork.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TextLink from "../TextLink.astro";
 import MailtoLink from "../MailtoLink.astro";
@@ -45,7 +46,13 @@ const schema = {
   />
   <div class="detail-page">
     <header class="detail-hero service-hero">
-      <AmbientArtwork artwork={content.hero.artwork} />
+      {
+        cloud ? (
+          <CloudHeroArtwork />
+        ) : (
+          <AmbientArtwork artwork={content.hero.artwork} />
+        )
+      }
       <div class="detail-wrap detail-hero-grid">
         <div>
           <p class="detail-kicker">{content.hero.eyebrow}</p>

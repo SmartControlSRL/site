@@ -35,6 +35,7 @@ const MIME = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css',
   '.png': 'image/png', '.svg': 'image/svg+xml', '.ico': 'image/x-icon',
   '.woff2': 'font/woff2', '.webp': 'image/webp', '.xml': 'application/xml', '.txt': 'text/plain',
+  '.mp4': 'video/mp4',
 };
 
 async function filesBelow(dir) {

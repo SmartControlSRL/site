@@ -62,8 +62,8 @@ preview noindex and the production hosting plan remain intact.
 
 Detail headers retain their approved still images with soft gradient edges. The
 service-header background also blends into the white section below. The rejected
-SVG/CSS header animation treatment has been removed; a real image-to-video pilot
-for Cloud is pending a connected generator. See the
+SVG/CSS header animation treatment has been removed. The owner-supplied Veo clip
+is now integrated as a Cloud-only video pilot, with the original still as fallback. See the
 [current header review](../header-fade/README.md).
 
 ## Review evidence

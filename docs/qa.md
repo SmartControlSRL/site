@@ -7,6 +7,7 @@
 | Command | Gate |
 |---|---|
 | `npm run check:homepage` | Homepage geometry, early CTA, motion controls, reduced motion, route re-entry and no-JS contact in RO/EN |
+| `npm run check:cloud-video` | Cloud-only media, responsive playback/loop, keyboard pause, no-download fallbacks, media errors and Astro teardown |
 | `npm run check` | Astro/type diagnostics |
 | `npm run build` | Production static generation |
 | `npm run check:links` | Internal links, fragments, hreflang, RO/EN parity, sitemap and the #26-approved 404 contract |
@@ -27,7 +28,14 @@ The only current contrast exemption is the bright-blue `Control` portion of the 
 
 The audit expects generated `/404` and `/en/404/` documents to return HTTP 404. Their parity, metadata, sitemap and linking rules are owned by `scripts/check-links.mjs`. Navigation errors, unexpected status codes, browser page errors, missing LCP and smoke-test failures are blocking.
 
-`npm run qa:browser` runs the three focused component regressions before the all-route browser audit. All four browser checks are part of `npm run qa` and therefore block CI.
+`npm run qa:browser` runs four focused component regressions before the all-route browser audit. All five browser checks are part of `npm run qa` and therefore block CI.
+
+The Cloud video regression checks advancing media time and a real loop, pause by
+click/Space, offscreen suspension, session persistence, live reduced motion and
+Astro teardown. Initial reduced motion, no-JS and save-data runs must make zero
+MP4 requests. Media failure and blocked autoplay are also exercised. Hidden-tab
+handling is implemented; real background-tab transitions still require manual
+verification because automated Chromium does not reliably expose that state.
 
 Service and product detail structures use typed localized records in
 `src/content/` and render through `src/components/pages/`. The localisation

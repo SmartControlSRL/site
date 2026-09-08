@@ -209,3 +209,13 @@ Cloud only. The pilot is pending a connected video generator; the current sessio
 has no callable video-generation tool. A production brief is prepared, but no video
 has been generated or embedded. Do not substitute CSS movement or an encoded zoom
 of a still for this requested pilot.
+
+### Owner-supplied Cloud video pilot (2026-09-08)
+
+The owner generated the Cloud clip in Veo and supplied it for the agreed one-page
+pilot. Integrate on Cloud in RO/EN, using a short reviewed loop blend, silent web
+encodes, the existing gradient edges and the approved still as fallback. Preserve
+other headers as static images. Provide a localised pause control, defer media
+loading until playback is allowed, honour reduced motion/save-data, and release
+the video on route changes. The missing video-generator connection is resolved
+by the supplied media; no plugin installation is needed.

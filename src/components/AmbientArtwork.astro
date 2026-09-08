@@ -12,7 +12,7 @@ const productArtwork =
 const variant = name === "optical-dark" || productArtwork ? "dark" : "light";
 ---
 
-<picture
+<div
   class:list={[
     "ambient-artwork",
     `ambient-artwork--${variant}`,
@@ -27,17 +27,20 @@ const variant = name === "optical-dark" || productArtwork ? "dark" : "light";
   data-artwork-name={name}
   aria-hidden="true"
 >
-  <source media="(max-width: 600px)" srcset={`/images/${name}-800.webp`} />
-  <img
-    src={`/images/${name}-1600.webp`}
-    width="1600"
-    height="900"
-    alt=""
-    loading={lazy ? "lazy" : "eager"}
-    decoding="async"
-    fetchpriority="low"
-  />
-</picture>
+  <picture>
+    <source media="(max-width: 600px)" srcset={`/images/${name}-800.webp`} />
+    <img
+      src={`/images/${name}-1600.webp`}
+      width="1600"
+      height="900"
+      alt=""
+      loading={lazy ? "lazy" : "eager"}
+      decoding="async"
+      fetchpriority="low"
+    />
+  </picture>
+  <slot />
+</div>
 <style>
   .ambient-artwork {
     position: absolute;
@@ -45,6 +48,11 @@ const variant = name === "optical-dark" || productArtwork ? "dark" : "light";
     overflow: hidden;
     pointer-events: none;
     z-index: 0;
+  }
+  .ambient-artwork picture {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
   .ambient-artwork img {
     width: 100%;
