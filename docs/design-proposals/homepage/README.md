@@ -38,8 +38,10 @@ The diagrams describe concepts and contain no invented telemetry or customer dat
 Each service has its own light hero artwork: architectural planes for
 Infrastructure & Cloud, routed connections for Networking & Security, modular
 assembly for Software & Automation, and a circular mechanism for Managed Services.
-The same service uses the same image in both languages. Product heroes and Home's
-product band use a dark optical-glass image. An independent asset agent generated
+The same service uses the same image in both languages. SEKNET has a vertical
+signal collector; S-VPN has a protected channel connecting two endpoints. Their
+conceptual summaries sit below the main hero content to leave the artwork visible.
+Only Home's product band uses the original dark optical-glass image. An independent asset agent generated
 the artwork with the built-in image tool. All images have optimised desktop and
 mobile WebP variants. [Prompts and files](generated-artwork.md).
 

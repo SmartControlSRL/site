@@ -181,3 +181,7 @@ The owner subsequently rejected sharing one header image across the four service
 pages. Give each service a distinct subject and composition within the same light
 blue palette; retain the architectural image only on Infrastructure & Cloud.
 Assign artwork explicitly per service and preserve the mapping across RO and EN.
+
+The same correction applies to products: SEKNET and S-VPN each have their own dark
+hero image, distinct from the homepage product-band background. Give the artwork
+visible space and preserve the labelled conceptual summaries and demo actions.

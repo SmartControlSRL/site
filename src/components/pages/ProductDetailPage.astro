@@ -11,7 +11,11 @@ import {
   User,
 } from "@lucide/astro";
 import { getLangFromUrl, localizedPath, useTranslations } from "../../i18n/ui";
-import { productPages, type ProductKey } from "../../content/product-pages";
+import {
+  productPages,
+  productArtwork,
+  type ProductKey,
+} from "../../content/product-pages";
 import "../../styles/detail.css";
 interface Props {
   product: ProductKey;
@@ -49,7 +53,7 @@ const schema = {
   />
   <div class="detail-page product-page">
     <header class="detail-hero product-hero">
-      <AmbientArtwork artwork="optical-dark" />
+      <AmbientArtwork artwork={productArtwork[product]} />
       <div class="detail-wrap detail-hero-grid">
         <div>
           <p class="detail-kicker">
@@ -84,7 +88,9 @@ const schema = {
               })
             }
           </ol><figcaption>
-            {en ? "Conceptual overview" : "Schemă conceptuală"} / {copy.name}
+            {en ? "Conceptual overview" : "Schemă conceptuală"} / <span
+              >{copy.name}</span
+            >
           </figcaption>
         </figure>
       </div>

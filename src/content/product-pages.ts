@@ -1,5 +1,10 @@
 import type { Lang } from "../i18n/ui";
 export type ProductKey = "seknet" | "s-vpn";
+export type ProductArtwork = "seknet-observability" | "svpn-connection";
+export const productArtwork: Record<ProductKey, ProductArtwork> = {
+  seknet: "seknet-observability",
+  "s-vpn": "svpn-connection",
+};
 interface ProductContent {
   name: string;
   title: string;

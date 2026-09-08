@@ -1,12 +1,15 @@
 ---
 import type { ServiceArtwork } from "../content/service-pages";
+import type { ProductArtwork } from "../content/product-pages";
 
 interface Props {
-  artwork: ServiceArtwork | "optical-dark";
+  artwork: ServiceArtwork | ProductArtwork | "optical-dark";
   lazy?: boolean;
 }
 const { artwork: name, lazy = false } = Astro.props;
-const variant = name === "optical-dark" ? "dark" : "light";
+const productArtwork =
+  name === "seknet-observability" || name === "svpn-connection";
+const variant = name === "optical-dark" || productArtwork ? "dark" : "light";
 ---
 
 <picture
@@ -14,8 +17,11 @@ const variant = name === "optical-dark" ? "dark" : "light";
     "ambient-artwork",
     `ambient-artwork--${variant}`,
     {
+      "ambient-artwork--product": productArtwork,
       "ambient-artwork--contained":
-        name === "software-automation" || name === "managed-services",
+        name === "software-automation" ||
+        name === "managed-services" ||
+        productArtwork,
     },
   ]}
   aria-hidden="true"
@@ -69,6 +75,32 @@ const variant = name === "optical-dark" ? "dark" : "light";
       color-mix(in srgb, var(--color-midnight) 96%, transparent) 35%,
       color-mix(in srgb, var(--color-midnight) 35%, transparent) 100%
     );
+  }
+  @media (min-width: 901px) {
+    .ambient-artwork--product img {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      width: 85%;
+      height: auto;
+      max-height: 100%;
+      transform: translateY(-50%);
+      mask-image: linear-gradient(
+        transparent,
+        black 8%,
+        black 92%,
+        transparent
+      );
+    }
+    .ambient-artwork--product::after {
+      background: linear-gradient(
+        90deg,
+        var(--color-midnight) 0%,
+        var(--color-midnight) 35%,
+        color-mix(in srgb, var(--color-midnight) 96%, transparent) 52%,
+        transparent 76%
+      );
+    }
   }
   @media (max-width: 900px) {
     .ambient-artwork--light {
