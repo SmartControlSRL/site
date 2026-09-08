@@ -195,3 +195,17 @@ and product motion work plus independent lifecycle/accessibility QA. Provide a
 pause control, honour reduced motion, suspend work offscreen and in hidden tabs,
 and clean up on Astro navigation. No video downloads or new animation dependency
 are needed for the chosen SVG/CSS and Web Animations implementation.
+
+### Header motion rejected; soft edges and one video pilot (owner request, 2026-09-08)
+
+This supersedes the preceding header-motion treatment. Remove the SVG/CSS light
+effects, image drift, controller and pause controls from all six detail headers.
+Preserve the approved original images and fade their edges gradually. Service
+headers also blend their page wash into the white section below; product images
+fade into the existing dark hero on desktop and mobile.
+
+Use a separate video agent for a real image-to-video pilot on Infrastructure &
+Cloud only. The pilot is pending a connected video generator; the current session
+has no callable video-generation tool. A production brief is prepared, but no video
+has been generated or embedded. Do not substitute CSS movement or an encoded zoom
+of a still for this requested pilot.

@@ -25,6 +25,5 @@ hero content instead of covering the image.
 [Artwork provenance, delivery files and final prompts](../homepage/generated-artwork.md).
 The interactive diagrams and all text remain separate from the decorative images.
 
-The later [header motion review](../artwork-motion/README.md) includes the current
-pause controls and animated light treatment. The full-page images above document
-the layout and artwork before that motion enhancement.
+The later [soft-edge header review](../header-fade/README.md) shows the current
+gradient treatment. The full-page images above predate that refinement.

@@ -57,17 +57,14 @@ small, finite entrance movements, without hiding content. View Transition
 cleanup cancels observers and running animations. Reduced-motion changes cancel
 motion immediately; reading and contact work without JavaScript.
 
-All six detail-header images now move gently with image-aligned light effects:
-glass edges, cable flow, sequential software connectors, managed-service arcs,
-SEKNET signals and the S-VPN channel. Separate service and product motion agents
-created the SVG treatments, with an independent QA agent checking their lifecycle.
-Each header has a keyboard-accessible pause control, remembered for the session.
-Motion pauses offscreen or in a hidden tab, and reduced motion restores the original
-static artwork. The homepage product-band image remains static. Existing bitmap
-files are preserved; the enhancement adds SVG/CSS and a small shared controller.
-
 No dependency or lockfile changes. Privacy text, claims gates, email routing,
 preview noindex and the production hosting plan remain intact.
+
+Detail headers retain their approved still images with soft gradient edges. The
+service-header background also blends into the white section below. The rejected
+SVG/CSS header animation treatment has been removed; a real image-to-video pilot
+for Cloud is pending a connected generator. See the
+[current header review](../header-fade/README.md).
 
 ## Review evidence
 

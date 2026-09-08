@@ -11,6 +11,14 @@
   position: relative;
   isolation: isolate;
 }
+.service-hero {
+  background: linear-gradient(
+    180deg,
+    var(--color-page) 0%,
+    var(--color-page) 52%,
+    var(--color-surface) 100%
+  );
+}
 .detail-hero-grid {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
