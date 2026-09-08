@@ -166,3 +166,13 @@ details, two products), plus the existing approved privacy notices.
 - Detail pages use concise capability summaries, open layouts, related expertise
   and motion that respects reduced-motion settings. No new dependency is needed.
 - Existing claims, product-disclosure, privacy and deployment policies still apply.
+
+### Artwork and UI refinement (owner request, 2026-09-08)
+
+The owner requested a further UI and copy check with generated imagery from a
+separate agent. Decorative generated material studies are approved within this
+redesign, superseding the older no-imagery restriction. Preserve the palette,
+light navigation/footer, accurate diagrams and claims policy. Asset prompts and
+delivery files are recorded in `docs/design-proposals/homepage/generated-artwork.md`.
+Product-page navigation now uses the relevant product demo action, keeping one
+conversion purpose throughout the page.

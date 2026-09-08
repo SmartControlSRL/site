@@ -1,0 +1,69 @@
+---
+interface Props {
+  variant: "light" | "dark";
+  lazy?: boolean;
+}
+const { variant, lazy = false } = Astro.props;
+const name = variant === "light" ? "architecture-light" : "optical-dark";
+---
+
+<picture
+  class:list={["ambient-artwork", `ambient-artwork--${variant}`]}
+  aria-hidden="true"
+>
+  <source media="(max-width: 600px)" srcset={`/images/${name}-800.webp`} />
+  <img
+    src={`/images/${name}-1600.webp`}
+    width="1672"
+    height="941"
+    alt=""
+    loading={lazy ? "lazy" : "eager"}
+    decoding="async"
+    fetchpriority="low"
+  />
+</picture>
+<style>
+  .ambient-artwork {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .ambient-artwork img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center right;
+  }
+  .ambient-artwork::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+  .ambient-artwork--light::after {
+    background: linear-gradient(
+      90deg,
+      var(--color-page) 0%,
+      var(--color-page) 35%,
+      color-mix(in srgb, var(--color-page) 90%, transparent) 48%,
+      transparent 76%
+    );
+  }
+  .ambient-artwork--dark::after {
+    background: linear-gradient(
+      90deg,
+      var(--color-midnight) 0%,
+      color-mix(in srgb, var(--color-midnight) 96%, transparent) 35%,
+      color-mix(in srgb, var(--color-midnight) 35%, transparent) 100%
+    );
+  }
+  @media (max-width: 900px) {
+    .ambient-artwork--light {
+      opacity: 0.2;
+    }
+    .ambient-artwork--dark::after {
+      background: color-mix(in srgb, var(--color-midnight) 78%, transparent);
+    }
+  }
+</style>

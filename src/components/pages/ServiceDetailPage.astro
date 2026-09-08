@@ -1,4 +1,5 @@
 ---
+import AmbientArtwork from "../AmbientArtwork.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TextLink from "../TextLink.astro";
 import MailtoLink from "../MailtoLink.astro";
@@ -43,7 +44,8 @@ const schema = {
     set:html={JSON.stringify(schema)}
   />
   <div class="detail-page">
-    <header class="detail-hero">
+    <header class="detail-hero service-hero">
+      <AmbientArtwork variant="light" />
       <div class="detail-wrap detail-hero-grid">
         <div>
           <p class="detail-kicker">{content.hero.eyebrow}</p>
@@ -56,22 +58,11 @@ const schema = {
             <MailtoLink variant="button" subject={t("subject.assessment")}
               >{t("cta.assessment")}</MailtoLink
             >
-            <TextLink href="#capabilities" class="!text-base">{en ? "Explore expertise" : "Explorează expertiza"}</TextLink>
+            <TextLink href="#capabilities" class="!text-base"
+              >{en ? "Explore expertise" : "Explorează expertiza"}</TextLink
+            >
           </div>
         </div>
-        <aside
-          class="detail-index"
-          aria-label={en ? "Areas of expertise" : "Domenii de expertiză"}
-        >
-          {
-            content.capabilities.items.slice(0, 4).map((item, index) => (
-              <p>
-                <span>0{index + 1}</span>
-                {item.title}
-              </p>
-            ))
-          }
-        </aside>
       </div>
     </header>
     <section class="detail-wrap detail-section" id="capabilities">
@@ -84,8 +75,8 @@ const schema = {
         <p>
           {
             en
-              ? "We agree the scope around your existing environment and priorities. These capabilities can form part of a wider engagement across infrastructure, security, software and operations."
-              : "Stabilim scopul în funcție de mediul existent și de prioritățile organizației. Aceste capabilități pot face parte dintr-o colaborare mai amplă, care reunește infrastructura, securitatea, software-ul și operarea."
+              ? "We select the capabilities your organisation needs and connect them with the wider delivery plan."
+              : "Selectăm capabilitățile de care organizația are nevoie și le integrăm în planul comun de livrare."
           }
         </p>
       </div>
@@ -195,7 +186,8 @@ const schema = {
           </p>
         </div><div class="detail-actions">
           <MailtoLink variant="button" dark subject={t("subject.assessment")}
-            >{t("cta.assessment")}<ArrowUpRight size={20} /></MailtoLink>
+            >{t("cta.assessment")}<ArrowUpRight size={20} /></MailtoLink
+          >
         </div>
       </div>
     </section>

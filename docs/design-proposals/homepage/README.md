@@ -33,6 +33,17 @@ Product pages share a dark hero with a conceptual diagram, concise capabilities,
 implementation/support steps, relevant service links and product-specific demos.
 The diagrams describe concepts and contain no invented telemetry or customer data.
 
+## Artwork and final UI review
+
+The service heroes use a light architectural material study; product heroes and
+Home's product band use a dark optical-glass image. An independent asset agent
+generated both with the built-in image tool. Optimised desktop images total
+72,876 bytes, with smaller mobile variants. [Prompts and files](generated-artwork.md).
+
+The review shortened service heroes, removed repeated capability lists and the
+redundant homepage process strip, balanced product capability/related grids,
+and tightened RO/EN copy. Product navigation uses the relevant demo action.
+
 ## Motion and resilience
 
 The homepage retains its animated infrastructure map with pause/resume control,
@@ -47,7 +58,8 @@ preview noindex and the production hosting plan remain intact.
 ## Review evidence
 
 The PNGs in this directory record the **initial homepage-only proposal** and are
-historical; use the PR's latest Vercel preview to review the expanded design.
+historical. Current desktop/mobile screenshots are in `../refinement/`; use the
+PR's latest Vercel preview for interaction review.
 The current validation covers the generated site, RO/EN parity, metadata,
 redirect destinations, contact links, claims, responsive navigation, homepage
 interactions and the repository-wide browser audit. Results are reported in the PR.

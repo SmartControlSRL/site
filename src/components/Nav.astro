@@ -57,6 +57,15 @@ const isActive = (href: string) => {
 // Language switch → the alternate-locale version of this page.
 const path = Astro.url.pathname;
 const altHref = altLocalePath(path);
+const productKey = path.includes("/solutii/seknet")
+  ? "seknet"
+  : path.includes("/solutii/s-vpn")
+    ? "svpn"
+    : null;
+const navSubject = productKey
+  ? t(`subject.demo.${productKey}`)
+  : t("subject.assessment");
+const navCta = productKey ? t(`cta.demo.${productKey}`) : t("cta.assessment");
 const altLang = lang === "ro" ? "en" : "ro";
 ---
 
@@ -184,10 +193,10 @@ const altLang = lang === "ro" ? "en" : "ro";
         </a>
         <MailtoLink
           variant="button"
-          subject={t("subject.assessment")}
+          subject={navSubject}
           class="!hidden !px-[18px] !py-[9px] !text-[13.5px] lg:!inline-flex"
         >
-          {t("cta.assessment")}
+          {navCta}
         </MailtoLink>
 
         <!-- Mobile hamburger -->
@@ -280,12 +289,8 @@ const altLang = lang === "ro" ? "en" : "ro";
         )
       }
       <li class="mt-2 px-3">
-        <MailtoLink
-          variant="button"
-          subject={t("subject.assessment")}
-          class="w-full"
-        >
-          {t("cta.assessment")}
+        <MailtoLink variant="button" subject={navSubject} class="w-full">
+          {navCta}
         </MailtoLink>
       </li>
     </ul>

@@ -2,7 +2,7 @@
 export const homeCopy = {
   ro: {
     servicesLabel: "Expertiză conectată",
-    servicesTitle: "Fiecare provocare IT.\nO direcție de lucru.",
+    servicesTitle: "Expertiză pentru\nîntregul mediu IT.",
     servicesIntro:
       "Pentru organizații cu nevoi IT interconectate. Reunim infrastructura, securitatea, software-ul și operarea într-o colaborare coordonată.",
     services: [
@@ -36,7 +36,7 @@ export const homeCopy = {
     stackBody:
       "Echipa Smart Control răspunde direct de livrare și coordonează specialiștii și partenerii tehnologici necesari. Explorează nivelurile infrastructurii.",
     stackNote:
-      "Nivelurile de serviciu și indicatorii sunt agreate contractual.",
+      "Nivelurile de servicii și indicatorii sunt definiți contractual.",
     layers: [
       {
         code: "L4",
@@ -129,7 +129,7 @@ export const homeCopy = {
   },
   en: {
     servicesLabel: "Connected expertise",
-    servicesTitle: "Every IT challenge.\nA clear way forward.",
+    servicesTitle: "Expertise across\nyour IT environment.",
     servicesIntro:
       "For organisations with connected IT needs. We bring infrastructure, security, software and operations into one coordinated engagement.",
     services: [

@@ -1,4 +1,5 @@
 ---
+import AmbientArtwork from "../AmbientArtwork.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import MailtoLink from "../MailtoLink.astro";
 import InfrastructureMap from "../home/InfrastructureMap.astro";
@@ -95,8 +96,8 @@ const org = {
         <p class="hero-lead hero-in-3">
           {
             en
-              ? "Infrastructure, security and software for organisations with complex IT needs. One team coordinating delivery and ongoing operations."
-              : "Infrastructură, securitate și software pentru organizații cu nevoi IT complexe. O echipă care coordonează livrarea și operarea."
+              ? "Infrastructure, security and software, brought together around your organisation’s priorities. One team coordinating delivery and operations."
+              : "Infrastructură, securitate și software, reunite în jurul priorităților organizației tale. O echipă care coordonează livrarea și operarea."
           }
         </p>
         <div class="hero-actions hero-in-4">
@@ -121,17 +122,6 @@ const org = {
       </div>
       <div class="hero-map hero-in-3"><InfrastructureMap en={en} /></div>
     </header>
-    <div class="home-wrap delivery-strip">
-      <p>
-        <span>01 /</span>{en ? "Understand the context" : "Înțelegem contextul"}
-      </p>
-      <p>
-        <span>02 /</span>{en ? "Connect the expertise" : "Conectăm expertiza"}
-      </p>
-      <p>
-        <span>03 /</span>{en ? "Coordinate delivery" : "Coordonăm livrarea"}
-      </p>
-    </div>
     <section
       id="servicii"
       class="home-wrap home-section"
@@ -229,6 +219,7 @@ const org = {
       class="home-products home-section"
       aria-labelledby="home-products-heading"
     >
+      <AmbientArtwork variant="dark" lazy />
       <div class="home-wrap">
         <div class="section-intro" data-home-enter>
           <div>
@@ -417,24 +408,6 @@ const org = {
     margin-top: 23px;
     color: var(--color-slate);
   }
-  .delivery-strip {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    border-top: 1px solid var(--color-border-blue);
-    border-bottom: 1px solid var(--color-border-blue);
-    padding-block: 24px;
-    gap: 24px;
-  }
-  .delivery-strip p {
-    font-size: 15px;
-    font-weight: 600;
-    display: flex;
-    gap: 20px;
-  }
-  .delivery-strip span {
-    font: 12px/2 var(--font-mono);
-    color: var(--color-royal);
-  }
   @media (max-width: 1000px) {
     .home-hero {
       gap: 32px;
@@ -483,17 +456,6 @@ const org = {
       max-width: 520px;
       width: 100%;
       margin-inline: auto;
-    }
-    .delivery-strip {
-      gap: 15px;
-    }
-    .delivery-strip p {
-      font-size: 13px;
-      display: block;
-    }
-    .delivery-strip span {
-      display: block;
-      margin-bottom: 6px;
     }
     .home-kicker {
       font-size: 11px;
@@ -622,6 +584,17 @@ const org = {
     color: var(--color-surface);
     position: relative;
     overflow: hidden;
+  }
+  .home-products > .home-wrap {
+    position: relative;
+    z-index: 1;
+  }
+  .home-products :global(.ambient-artwork) {
+    opacity: 0.38;
+  }
+  .home-products .section-lead,
+  .home-products .product-body {
+    color: var(--color-border-blue);
   }
   .home-products h2 {
     color: var(--color-surface);

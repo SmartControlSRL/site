@@ -1,4 +1,5 @@
 ---
+import AmbientArtwork from "../AmbientArtwork.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import MailtoLink from "../MailtoLink.astro";
 import DetailMotion from "../DetailMotion.astro";
@@ -46,8 +47,9 @@ const schema = {
     type="application/ld+json"
     set:html={JSON.stringify(schema)}
   />
-  <div class="detail-page">
+  <div class="detail-page product-page">
     <header class="detail-hero product-hero">
+      <AmbientArtwork variant="dark" />
       <div class="detail-wrap detail-hero-grid">
         <div>
           <p class="detail-kicker">
@@ -60,7 +62,8 @@ const schema = {
             {copy.intro}
           </p><div class="detail-actions">
             <MailtoLink variant="button" dark subject={subject}
-              >{t("cta.demo.seknet")}<ArrowUpRight size={20} /></MailtoLink>
+              >{t("cta.demo.seknet")}<ArrowUpRight size={20} /></MailtoLink
+            >
           </div>
         </div>
         <figure class="product-signal" data-route-visual data-detail-enter>
@@ -127,8 +130,8 @@ const schema = {
           </div><p>
             {
               en
-                ? "We discuss the fit, integration and ongoing support with your team. The scope and responsibilities are defined for your engagement."
-                : "Discutăm cu echipa ta potrivirea, integrarea și suportul continuu. Scopul și responsabilitățile sunt definite pentru colaborarea voastră."
+                ? "We plan integration, configuration and ongoing support with your IT team."
+                : "Planificăm integrarea, configurarea și suportul continuu împreună cu echipa ta IT."
             }
           </p>
         </div>
@@ -153,7 +156,11 @@ const schema = {
           <p class="detail-kicker">
             {en ? "Connected expertise" : "Expertiză conectată"}
           </p><h2>
-            {en ? "Build the wider picture." : "Completează perspectiva."}
+            {
+              en
+                ? "Explore related expertise."
+                : "Expertiză și produse complementare."
+            }
           </h2>
         </div>
       </div><div class="detail-related">
@@ -187,7 +194,8 @@ const schema = {
           </p>
         </div><div class="detail-actions">
           <MailtoLink variant="button" dark subject={subject}
-            >{t("cta.demo.seknet")}<ArrowUpRight size={20} /></MailtoLink>
+            >{t("cta.demo.seknet")}<ArrowUpRight size={20} /></MailtoLink
+          >
         </div>
       </div>
     </section>

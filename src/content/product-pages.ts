@@ -22,9 +22,9 @@ export const productPages: Record<ProductKey, Record<Lang, ProductContent>> = {
       title: "SEKNET — Monitorizare și securitate | Smart Control",
       description:
         "SEKNET reunește monitorizarea și protecția infrastructurii IT, cu vizibilitate operațională și control centralizat, adaptate mediului organizației.",
-      headline: "Vezi contextul. Coordonează răspunsul.",
+      headline: "Monitorizare clară. Răspuns coordonat.",
       intro:
-        "O perspectivă comună asupra infrastructurii, evenimentelor și riscurilor. Pentru echipele care coordonează operațiunile și securitatea.",
+        "Monitorizează infrastructura și reunește evenimentele relevante pentru echipele de operațiuni și securitate.",
       signal: ["Infrastructură", "Evenimente & context", "Analiză & răspuns"],
       capabilities: [
         {
@@ -37,10 +37,10 @@ export const productPages: Record<ProductKey, Record<Lang, ProductContent>> = {
         },
         {
           title: "Control centralizat",
-          body: "Organizează informațiile tehnice într-o experiență adaptată rolurilor operaționale și de securitate.",
+          body: "Organizează informațiile tehnice pentru rolurile de operare și securitate.",
         },
       ],
-      contextTitle: "O perspectivă comună pentru echipele tale.",
+      contextTitle: "Informația de care echipele au nevoie.",
       context:
         "Pentru medii distribuite, alerte care trebuie prioritizate și operațiuni care au nevoie de trasabilitate. Configurația se stabilește în funcție de infrastructură și de responsabilitățile echipelor.",
       journey: [
@@ -67,9 +67,9 @@ export const productPages: Record<ProductKey, Record<Lang, ProductContent>> = {
       title: "SEKNET — Monitoring and security | Smart Control",
       description:
         "SEKNET brings IT infrastructure monitoring and protection together, with operational visibility and centralised control adapted to your organisation.",
-      headline: "See the context. Coordinate the response.",
+      headline: "Clear visibility. Coordinated response.",
       intro:
-        "A shared perspective on infrastructure, events and risks. For the teams coordinating operations and security.",
+        "Monitor infrastructure and bring relevant events together for operations and security teams.",
       signal: ["Infrastructure", "Events & context", "Analysis & response"],
       capabilities: [
         {
@@ -82,10 +82,10 @@ export const productPages: Record<ProductKey, Record<Lang, ProductContent>> = {
         },
         {
           title: "Centralised control",
-          body: "Organises technical information in an experience adapted to operational and security roles.",
+          body: "Organises technical information for operational and security roles.",
         },
       ],
-      contextTitle: "A shared perspective for your teams.",
+      contextTitle: "The information your teams need.",
       context:
         "For distributed environments, alerts that need prioritising and operations that require traceability. Configuration follows the infrastructure and the responsibilities of your teams.",
       journey: [

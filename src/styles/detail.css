@@ -7,13 +7,17 @@
 }
 .detail-hero {
   background: var(--color-page);
-  padding: clamp(120px, 12vw, 160px) 0 72px;
+  padding: clamp(64px, 7vw, 92px) 0 72px;
+  position: relative;
+  isolation: isolate;
 }
 .detail-hero-grid {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
   gap: 64px;
   align-items: center;
+  position: relative;
+  z-index: 1;
 }
 .detail-hero-grid > * {
   min-width: 0;
@@ -26,12 +30,13 @@
 }
 .detail-page h1 {
   font-size: clamp(2.5rem, 4.6vw, 4.5rem);
-  line-height: 1.06;
+  line-height: 1.1;
   letter-spacing: -0.055em;
   font-weight: 800;
   margin-top: 24px;
 }
 .detail-page h1 span {
+  display: block;
   color: var(--color-royal);
 }
 .detail-lead {
@@ -58,21 +63,6 @@
 }
 .detail-link:hover {
   text-decoration: underline;
-}
-.detail-index {
-  border-top: 1px solid var(--color-border-blue);
-}
-.detail-index p {
-  padding: 20px 0;
-  border-bottom: 1px solid var(--color-border-blue);
-  font-size: 1rem;
-  display: flex;
-  gap: 20px;
-  align-items: center;
-}
-.detail-index span {
-  font: 500 0.75rem var(--font-mono);
-  color: var(--color-royal);
 }
 .detail-section {
   padding-block: clamp(56px, 7vw, 96px);
@@ -264,9 +254,6 @@
     grid-template-columns: 1fr;
     gap: 32px;
   }
-  .detail-index {
-    display: none;
-  }
   .detail-related {
     grid-template-columns: 1fr;
     gap: 0;
@@ -286,7 +273,7 @@
     grid-template-columns: 1fr;
   }
   .detail-hero {
-    padding-top: 116px;
+    padding-top: 60px;
     padding-bottom: 48px;
   }
   .product-signal {
@@ -303,5 +290,34 @@
 }
 
 @media (max-width: 639px) {
-  [data-service-hero-actions] { flex-direction:column; align-items:flex-start; }
+  [data-service-hero-actions] {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.product-signal {
+  background: color-mix(in srgb, var(--color-midnight) 90%, transparent);
+}
+.product-page .detail-capabilities {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+}
+.product-page .detail-related {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (max-width: 900px) {
+  .product-page .detail-capabilities {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .product-page .detail-related {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 540px) {
+  .product-page h1 {
+    font-size: 2.25rem;
+  }
 }
