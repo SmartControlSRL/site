@@ -3,7 +3,11 @@ import type { ServiceArtwork } from "../content/service-pages";
 import type { ProductArtwork } from "../content/product-pages";
 
 interface Props {
-  artwork: ServiceArtwork | ProductArtwork | "optical-dark";
+  artwork:
+    | ServiceArtwork
+    | ProductArtwork
+    | "optical-dark"
+    | "homepage-connected";
   lazy?: boolean;
 }
 const { artwork: name, lazy = false } = Astro.props;
@@ -18,6 +22,7 @@ const variant = name === "optical-dark" || productArtwork ? "dark" : "light";
     `ambient-artwork--${variant}`,
     {
       "ambient-artwork--product": productArtwork,
+      "ambient-artwork--homepage": name === "homepage-connected",
       "ambient-artwork--contained":
         name === "software-automation" ||
         name === "managed-services" ||
@@ -30,9 +35,9 @@ const variant = name === "optical-dark" || productArtwork ? "dark" : "light";
   <picture>
     <source media="(max-width: 600px)" srcset={`/images/${name}-800.webp`} />
     <img
-      src={`/images/${name}-1600.webp`}
-      width="1600"
-      height="900"
+      src={`/images/${name}-${name === "homepage-connected" ? 1280 : 1600}.webp`}
+      width={name === "homepage-connected" ? 1280 : 1600}
+      height={name === "homepage-connected" ? 720 : 900}
       alt=""
       loading={lazy ? "lazy" : "eager"}
       decoding="async"
@@ -62,6 +67,11 @@ const variant = name === "optical-dark" || productArtwork ? "dark" : "light";
   }
   .ambient-artwork--contained img {
     object-fit: contain;
+  }
+  .ambient-artwork--homepage picture {
+    position: absolute;
+    left: var(--artwork-left, 0);
+    width: var(--artwork-width, 100%);
   }
   .ambient-artwork--light {
     mask-image: linear-gradient(
@@ -132,6 +142,25 @@ const variant = name === "optical-dark" || productArtwork ? "dark" : "light";
     }
     .ambient-artwork--dark::after {
       background: color-mix(in srgb, var(--color-midnight) 78%, transparent);
+    }
+    .ambient-artwork--homepage {
+      --artwork-width: 182%;
+      --artwork-left: -82%;
+      position: relative;
+      inset: auto;
+      height: clamp(250px, 78vw, 420px);
+      opacity: 1;
+      mask-image: linear-gradient(
+        180deg,
+        transparent 0%,
+        black 14%,
+        black 66%,
+        rgb(0 0 0 / 0.6) 84%,
+        transparent 100%
+      );
+    }
+    .ambient-artwork--homepage::after {
+      background: none;
     }
   }
 </style>

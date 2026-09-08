@@ -240,7 +240,7 @@ try {
   const others = await browser.newPage();
   const requests = [];
   others.on("request", (req) => {
-    if (req.url().includes(".mp4")) requests.push(req.url());
+    if (req.url().includes("/videos/cloud-hero-")) requests.push(req.url());
   });
   for (const prefix of ["", "/en"])
     for (const route of [

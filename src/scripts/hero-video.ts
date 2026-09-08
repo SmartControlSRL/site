@@ -1,15 +1,14 @@
 export {};
 
-const preferenceKey = "smartcontrol-cloud-video-paused";
-let pausedPreference = false;
+const pausedPreferences = new Map<string, boolean>();
 let stop = () => {};
 
-function wireCloudVideo() {
+function wireHeroVideo() {
   stop();
   stop = () => {};
-  const video = document.querySelector<HTMLVideoElement>("[data-cloud-video]");
+  const video = document.querySelector<HTMLVideoElement>("[data-hero-video]");
   const button = document.querySelector<HTMLButtonElement>(
-    "[data-cloud-video-toggle]",
+    "[data-hero-video-toggle]",
   );
   if (!video || !button) return;
   const label = button.querySelector<HTMLElement>("[data-video-label]");
@@ -17,7 +16,8 @@ function wireCloudVideo() {
   const connection = (
     navigator as Navigator & { connection?: { saveData?: boolean } }
   ).connection;
-  let userPaused = pausedPreference;
+  const preferenceKey = `smartcontrol-${video.dataset.heroVideo}-video-paused`;
+  let userPaused = pausedPreferences.get(preferenceKey) ?? false;
   try {
     userPaused = sessionStorage.getItem(preferenceKey) === "true";
   } catch {
@@ -101,7 +101,7 @@ function wireCloudVideo() {
   };
   const toggle = () => {
     userPaused = !userPaused;
-    pausedPreference = userPaused;
+    pausedPreferences.set(preferenceKey, userPaused);
     try {
       sessionStorage.setItem(preferenceKey, String(userPaused));
     } catch {
@@ -137,9 +137,9 @@ function wireCloudVideo() {
   };
 }
 
-document.addEventListener("astro:page-load", wireCloudVideo);
+document.addEventListener("astro:page-load", wireHeroVideo);
 document.addEventListener("astro:before-swap", () => stop());
 window.addEventListener("pagehide", () => stop());
 window.addEventListener("pageshow", (event) => {
-  if (event.persisted) wireCloudVideo();
+  if (event.persisted) wireHeroVideo();
 });

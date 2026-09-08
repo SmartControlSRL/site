@@ -11,7 +11,7 @@ Networking & Security, Software & Automation, Managed Services, SEKNET and S-VPN
 Privacy remains in the footer in both languages. There are no separate company,
 contact, services-overview or products-overview pages.
 
-Home contains the positioning and animated expertise map, concise service links,
+Home contains the positioning and a rotating connected sculpture, concise service links,
 interactive infrastructure layers, the four-part engagement (understand, agree,
 deliver, operate/improve), product teasers, technology partners and contact.
 
@@ -51,8 +51,10 @@ and tightened RO/EN copy. Product navigation uses the relevant demo action.
 
 ## Motion and resilience
 
-The homepage retains its animated infrastructure map with pause/resume control,
-keyboard-operable stack and finite product flow animation. Detail sections have
+The homepage uses the owner-supplied Veo clip in place of the old infrastructure
+map. Its four connected modules rotate as one assembly, next to the copy on
+desktop and below it on mobile, with soft gradient edges. The keyboard-operable
+stack and finite product flow animation remain. Detail sections have
 small, finite entrance movements, without hiding content. View Transition
 cleanup cancels observers and running animations. Reduced-motion changes cancel
 motion immediately; reading and contact work without JavaScript.
@@ -63,14 +65,18 @@ preview noindex and the production hosting plan remain intact.
 Detail headers retain their approved still images with soft gradient edges. The
 service-header background also blends into the white section below. The rejected
 SVG/CSS header animation treatment has been removed. The owner-supplied Veo clip
-is now integrated as a Cloud-only video pilot, with the original still as fallback. See the
-[current header review](../header-fade/README.md).
+is integrated on Cloud and the separate homepage clip is now integrated in both
+languages. They share playback controls and lifecycle handling, with separate
+session pause preferences. No MP4 is loaded without JavaScript, with reduced
+motion or with save-data. See the [Cloud header review](../header-fade/README.md)
+and [homepage video review](../homepage-video/README.md).
 
 ## Review evidence
 
 The PNGs in this directory record the **initial homepage-only proposal** and are
 historical. Current desktop/mobile screenshots are in `../refinement/`; use the
-PR's latest Vercel preview for interaction review.
+PR's latest Vercel preview for interaction review. Current homepage video frames
+are in `../homepage-video/`.
 The current validation covers the generated site, RO/EN parity, metadata,
 redirect destinations, contact links, claims, responsive navigation, homepage
 interactions and the repository-wide browser audit. Results are reported in the PR.

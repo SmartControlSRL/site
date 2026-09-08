@@ -2,7 +2,7 @@
 import AmbientArtwork from "../AmbientArtwork.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import MailtoLink from "../MailtoLink.astro";
-import InfrastructureMap from "../home/InfrastructureMap.astro";
+import HeroVideoArtwork from "../HeroVideoArtwork.astro";
 import StackTeardown from "../StackTeardown.astro";
 import { homeCopy, technologyPartners } from "../../content/home-page";
 import {
@@ -85,42 +85,44 @@ const org = {
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(org)} />
   <div class="home-redesign">
-    <header class="home-hero home-wrap">
-      <div class="hero-copy">
-        <p class="home-kicker hero-in">Trusted Service Delivery Partner</p>
-        <h1 class="hero-in-2">
-          {en ? "Complex IT." : "IT complex."}<br /><span
-            >{en ? "Clear direction." : "Direcție clară."}</span
-          >
-        </h1>
-        <p class="hero-lead hero-in-3">
-          {
-            en
-              ? "Infrastructure, security and software, brought together around your organisation’s priorities. One team coordinating delivery and operations."
-              : "Infrastructură, securitate și software, reunite în jurul priorităților organizației tale. O echipă care coordonează livrarea și operarea."
-          }
-        </p>
-        <div class="hero-actions hero-in-4">
-          <MailtoLink
-            variant="button"
-            subject={t("subject.assessment")}
-            class="home-primary"
-            >{t("cta.assessment")}<ArrowUpRight size={19} /></MailtoLink
-          ><a class="home-text-link" href="#servicii"
-            >{en ? "Explore services" : "Explorează serviciile"}<ArrowRight
-              size={18}
-            /></a
-          >
+    <header class="home-hero">
+      <div class="home-wrap hero-layout">
+        <div class="hero-copy">
+          <p class="home-kicker hero-in">Trusted Service Delivery Partner</p>
+          <h1 class="hero-in-2">
+            {en ? "Complex IT." : "IT complex."}<br /><span
+              >{en ? "Clear direction." : "Direcție clară."}</span
+            >
+          </h1>
+          <p class="hero-lead hero-in-3">
+            {
+              en
+                ? "Infrastructure, security and software, brought together around your organisation’s priorities. One team coordinating delivery and operations."
+                : "Infrastructură, securitate și software, reunite în jurul priorităților organizației tale. O echipă care coordonează livrarea și operarea."
+            }
+          </p>
+          <div class="hero-actions hero-in-4">
+            <MailtoLink
+              variant="button"
+              subject={t("subject.assessment")}
+              class="home-primary"
+              >{t("cta.assessment")}<ArrowUpRight size={19} /></MailtoLink
+            ><a class="home-text-link" href="#servicii"
+              >{en ? "Explore services" : "Explorează serviciile"}<ArrowRight
+                size={18}
+              /></a
+            >
+          </div>
+          <p class="hero-note">
+            {
+              en
+                ? "From the first assessment to day-to-day operations."
+                : "De la primul assessment la operarea de zi cu zi."
+            }
+          </p>
         </div>
-        <p class="hero-note">
-          {
-            en
-              ? "From the first assessment to day-to-day operations."
-              : "De la primul assessment la operarea de zi cu zi."
-          }
-        </p>
       </div>
-      <div class="hero-map hero-in-3"><InfrastructureMap en={en} /></div>
+      <HeroVideoArtwork variant="homepage" />
     </header>
     <section
       id="servicii"
@@ -335,16 +337,28 @@ const org = {
     width: min(100% - 80px, 1180px);
     margin-inline: auto;
   }
-  .hero-copy,
-  .hero-map {
+  .hero-copy {
     min-width: 0;
+    width: 52%;
+    max-width: 600px;
   }
   .home-hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-    gap: 64px;
+    position: relative;
+    isolation: isolate;
+    background: linear-gradient(
+      180deg,
+      var(--color-page) 0%,
+      var(--color-page) 52%,
+      var(--color-surface) 100%
+    );
+  }
+  .hero-layout {
+    position: relative;
+    z-index: 1;
+    display: flex;
     align-items: center;
-    padding-block: 76px 68px;
+    min-height: 620px;
+    padding-block: 76px 88px;
   }
   .home-kicker {
     font: 500 12px/1.6 var(--font-mono);
@@ -409,9 +423,6 @@ const org = {
     color: var(--color-slate);
   }
   @media (max-width: 1000px) {
-    .home-hero {
-      gap: 32px;
-    }
     h1 {
       font-size: clamp(3rem, 6vw, 4rem);
     }
@@ -422,18 +433,13 @@ const org = {
       font-size: 17px;
     }
   }
-  @media (max-width: 1100px) {
-    .home-hero {
-      grid-template-columns: minmax(0, 1fr);
-      padding-block: 48px 40px;
-      gap: 40px;
-    }
-    .hero-map {
-      width: 100%;
-      max-width: 520px;
-      margin-inline: auto;
+  @media (max-width: 900px) {
+    .hero-layout {
+      min-height: auto;
+      padding-block: 48px 16px;
     }
     .hero-copy {
+      width: 100%;
       max-width: 620px;
     }
   }
@@ -441,21 +447,11 @@ const org = {
     .home-wrap {
       width: calc(100% - 40px);
     }
-    .home-hero {
-      grid-template-columns: 1fr;
-      padding-block: 48px 36px;
-      gap: 48px;
-    }
     h1 {
       font-size: clamp(3rem, 10vw, 4.5rem);
     }
     .hero-lead {
       max-width: 520px;
-    }
-    .hero-map {
-      max-width: 520px;
-      width: 100%;
-      margin-inline: auto;
     }
     .home-kicker {
       font-size: 11px;
