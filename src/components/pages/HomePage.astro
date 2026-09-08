@@ -21,54 +21,16 @@ const en = lang === "en";
 const t = useTranslations(lang);
 const copy = homeCopy[lang];
 const p = (path: string) => localizedPath(lang, path);
-const engagement = en
-  ? [
-      {
-        title: "Understand",
-        body: "Review your systems, how they connect and what needs to change.",
-      },
-      {
-        title: "Agree",
-        body: "Agree the work, responsibilities and schedule.",
-      },
-      {
-        title: "Deliver",
-        body: "Implement and test the changes, then hand over to your team.",
-      },
-      {
-        title: "Operate & improve",
-        body: "Provide the agreed support and review service indicators with your team.",
-      },
-    ]
-  : [
-      {
-        title: "Înțelegem",
-        body: "Analizăm sistemele, legăturile dintre ele și ce trebuie schimbat.",
-      },
-      {
-        title: "Stabilim",
-        body: "Stabilim activitățile, responsabilitățile și calendarul.",
-      },
-      {
-        title: "Livrăm",
-        body: "Implementăm și testăm schimbările, apoi le predăm echipei tale.",
-      },
-      {
-        title: "Operăm & îmbunătățim",
-        body: "Asigurăm suportul convenit și analizăm împreună indicatorii de serviciu.",
-      },
-    ];
+const engagement = copy.process.steps;
 const icons = [Server, ShieldCheck, Code, Workflow];
-const description = en
-  ? "IT infrastructure, network security, software development and managed services for businesses. Projects and support coordinated by Smart Control."
-  : "Infrastructură IT, securitatea rețelelor, dezvoltare software și servicii gestionate pentru companii. Proiecte și suport coordonate de Smart Control.";
+const description = copy.description;
 const org = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "Smart Control SRL",
   url: en ? "https://smartcontrol.ro/en/" : "https://smartcontrol.ro/",
   logo: "https://smartcontrol.ro/smartcontrol-mark.png",
-  description,
+  description: copy.organizationDescription,
   address: {
     "@type": "PostalAddress",
     streetAddress: "Intrarea Aviator Teodor Iliescu 37",
@@ -90,17 +52,9 @@ const org = {
         <div class="hero-copy">
           <p class="home-kicker hero-in">Trusted Service Delivery Partner</p>
           <h1 class="hero-in-2">
-            {en ? "IT services" : "Servicii IT"}<br /><span
-              >{en ? "for businesses." : "pentru companii."}</span
-            >
+            {copy.hero.lead}<br /><span>{copy.hero.accent}</span>
           </h1>
-          <p class="hero-lead hero-in-3">
-            {
-              en
-                ? "We design and manage IT infrastructure, secure networks and develop software. The Smart Control team coordinates projects and support."
-                : "Proiectăm și administrăm infrastructuri IT, securizăm rețele și dezvoltăm software. Echipa Smart Control coordonează proiectele și suportul."
-            }
-          </p>
+          <p class="hero-lead hero-in-3">{copy.hero.body}</p>
           <div class="hero-actions hero-in-4">
             <MailtoLink
               variant="button"
@@ -113,13 +67,6 @@ const org = {
               /></a
             >
           </div>
-          <p class="hero-note">
-            {
-              en
-                ? "From the first assessment to day-to-day operations."
-                : "De la primul assessment la operarea de zi cu zi."
-            }
-          </p>
         </div>
       </div>
       <HeroVideoArtwork variant="homepage" />
@@ -179,26 +126,18 @@ const org = {
     >
       <div class="section-intro" data-home-enter>
         <div>
-          <p class="home-kicker">{en ? "How we work" : "Cum lucrăm"}</p><h2
+          <p class="home-kicker">{copy.process.eyebrow}</p><h2
             id="home-cloud-heading"
           >
-            {
-              en
-                ? "How a project\ntakes shape"
-                : "Cum organizăm\nun proiect"
-            }
+            {copy.process.heading}
           </h2>
         </div><div>
-          <p class="section-lead">
-            {
-              en
-                ? "Our recommendations start with measurements in your infrastructure. Smart Control is responsible for delivery and coordinates the specialists and technology partners the project needs."
-                : "Ne bazăm recomandările pe măsurători în infrastructura ta. Smart Control răspunde de livrare și coordonează specialiștii și partenerii tehnologici necesari proiectului."
-            }
-          </p><a href={p("/servicii/managed")} class="home-text-link cloud-link"
-            >{
-              en ? "View managed services" : "Vezi serviciile de administrare și suport"
-            }<ArrowUpRight size={20} /></a
+          <p class="section-lead">{copy.process.description}</p><a
+            href={p("/servicii/managed")}
+            class="home-text-link cloud-link"
+            >{en ? "Managed Services" : "Servicii Gestionate"}<ArrowUpRight
+              size={20}
+            /></a
           >
         </div>
       </div>
@@ -367,7 +306,7 @@ const org = {
     color: var(--color-royal);
   }
   h1 {
-    font-size: clamp(3rem, 5.3vw, 4.75rem);
+    font-size: clamp(2.6rem, 4.3vw, 3.75rem);
     line-height: 1.02;
     letter-spacing: -0.065em;
     font-weight: 600;
@@ -378,9 +317,9 @@ const org = {
     color: var(--color-mid-blue);
   }
   .hero-lead {
-    font-size: 19px;
+    font-size: 18px;
     line-height: 1.65;
-    max-width: 490px;
+    max-width: 580px;
     margin-top: 28px;
     color: var(--color-slate);
   }
@@ -417,14 +356,9 @@ const org = {
     text-decoration: underline;
     text-underline-offset: 5px;
   }
-  .hero-note {
-    font-size: 13px;
-    margin-top: 23px;
-    color: var(--color-slate);
-  }
   @media (max-width: 1000px) {
     h1 {
-      font-size: clamp(3rem, 6vw, 4rem);
+      font-size: clamp(2.6rem, 5.4vw, 3.5rem);
     }
     .hero-actions {
       gap: 12px;
@@ -448,10 +382,18 @@ const org = {
       width: calc(100% - 40px);
     }
     h1 {
-      font-size: clamp(3rem, 10vw, 4.5rem);
+      font-size: clamp(2.35rem, 8.5vw, 3.5rem);
     }
     .hero-lead {
       max-width: 520px;
+      font-size: 16px;
+      margin-top: 22px;
+    }
+    .hero-layout {
+      padding-top: 32px;
+    }
+    .hero-actions {
+      margin-top: 20px;
     }
     .home-kicker {
       font-size: 11px;
@@ -543,7 +485,7 @@ const org = {
     line-height: 1.7;
     color: var(--color-slate);
     margin-top: 13px;
-    max-width: 490px;
+    max-width: 580px;
   }
   .service-detail {
     display: block;
@@ -629,7 +571,7 @@ const org = {
     color: var(--color-on-dark);
     margin-top: 12px;
     min-height: 82px;
-    max-width: 490px;
+    max-width: 580px;
   }
   .product-flow {
     position: relative;
@@ -717,7 +659,7 @@ const org = {
   }
   .methodology {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
     counter-reset: stage;
   }

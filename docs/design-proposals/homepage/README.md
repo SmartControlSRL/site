@@ -89,3 +89,10 @@ are in `../homepage-video/`.
 The current validation covers the generated site, RO/EN parity, metadata,
 redirect destinations, contact links, claims, responsive navigation, homepage
 interactions and the repository-wide browser audit. Results are reported in the PR.
+
+## Approved-copy alignment — 2026-09-08
+
+The owner requested alignment with internally approved copy on main and the
+original navigation brand subline. The [current copy comparison](../copy-review/README.md)
+supersedes earlier headline and tone examples. Images, video and navigation
+structure remain; the homepage uses the original three-stage Services hub process.

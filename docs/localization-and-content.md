@@ -15,26 +15,22 @@ drift.
 - Cloud copy: `src/content/cloud-page.ts`.
 - Product copy: `src/content/product-pages.ts`.
 
-## Editorial tone
+## Editorial baseline
 
-The site owner requested plain, restrained language on 2026-09-08. Describe the
-work in familiar terms: what we configure, develop, monitor or support. Give each
-heading a clear subject. Prefer a concrete description such as “Proiectăm și
-modernizăm infrastructura IT” to paired slogans about foundations or the future.
+The site owner clarified on 2026-09-08 that much of the wording on `main` had
+already been approved internally. The baseline for this redesign is
+`origin/main` at `c551648`. Preserve its headings, service and product
+descriptions, delivery responsibilities, contact copy and metadata when moving
+content into shared records. A design change is not permission to rewrite copy.
 
-Keep paragraphs short and remove repeated references to clarity, coordination,
-connected expertise and the wider IT environment when they add no information.
-Keep the actual delivery model clear: Smart Control coordinates the specialists
-and technology partners required by the project and is responsible for delivery.
-Several services can form part of the same engagement.
+The request for a restrained tone still applies. Treat external company sites
+as references for future, specific suggestions; they do not supersede approved
+Smart Control wording. Present substantive editorial changes individually for
+agreement before implementation. Mechanical spelling corrections and layout
+adjustments must preserve meaning. The navigation brand subline follows the
+owner's explicit restoration request recorded under C-001 in CLAIMS.
 
-Use established technical terms, but write the surrounding Romanian naturally.
-Write the English version for the same reader rather than translating Romanian
-word for word. Retain qualifications where they define a service commitment,
-source-code access or another scoped claim. Avoid repeating contractual language
-in adjacent paragraphs when the scope is already clear.
-
-[Copy review and reference sites](design-proposals/copy-review/README.md).
+[Comparison with main and retained layout adaptations](design-proposals/copy-review/README.md).
 
 Update both locales in the same typed record. Do not copy a shared template
 back into locale-specific page files. Route-specific layout may be added

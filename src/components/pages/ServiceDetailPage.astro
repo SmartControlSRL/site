@@ -29,7 +29,6 @@ const videoVariants = {
   "managed-services": "managed-services",
 } as const;
 const videoVariant = videoVariants[content.hero.artwork];
-const managed = content.canonicalPath.includes("/managed");
 const schema = {
   "@context": "https://schema.org",
   "@type": "Service",
@@ -72,8 +71,9 @@ const schema = {
             <MailtoLink variant="button" subject={t("subject.assessment")}
               >{t("cta.assessment")}</MailtoLink
             >
-            <TextLink href="#capabilities" class="!text-base"
-              >{en ? "View services" : "Vezi serviciile"}</TextLink
+            <TextLink
+              href={cloud ? "#flux" : "#capabilities"}
+              class="!text-base">{content.hero.secondary}</TextLink
             >
           </div>
         </div>
@@ -82,28 +82,21 @@ const schema = {
     <section class="detail-wrap detail-section" id="capabilities">
       <div class="detail-intro" data-detail-enter>
         <div>
-          <p class="detail-kicker">{en ? "Scope" : "Ce acoperim"}</p><h2>
+          <p class="detail-kicker">{content.capabilities.eyebrow}</p><h2>
             {content.capabilities.heading}
           </h2>
         </div>
-        <p>
-          {
-            en
-              ? "We agree which services you need and what each team will be responsible for."
-              : "Stabilim împreună serviciile necesare și responsabilitățile fiecărei echipe."
-          }
-        </p>
       </div>
       <div class="detail-capabilities">
         {
-          content.capabilities.items.map(({ title, body, Icon }) => (
+          content.capabilities.items.map(({ title, body, items, Icon }) => (
             <article class="detail-capability" data-detail-enter>
               <>
                 <h3>
                   <Icon size={24} stroke-width={1.5} />
                   {title}
                 </h3>
-                <p>{body}</p>
+                <p>{body || items?.join(" · ")}</p>
               </>
             </article>
           ))
@@ -142,28 +135,37 @@ const schema = {
         </figure>
       </div>
     </section>
+    {
+      content.proof && (
+        <section class="detail-wrap detail-section">
+          <div class="detail-intro" data-detail-enter>
+            <>
+              <h2>{content.proof.heading}</h2>
+              <p>{content.proof.body}</p>
+            </>
+          </div>
+          <div class="detail-capabilities">
+            {content.proof.items.map(({ title, body, Icon }) => (
+              <article class="detail-capability" data-detail-enter>
+                <h3>
+                  <Icon size={24} stroke-width={1.5} />
+                  {title}
+                </h3>
+                <p>{body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      )
+    }
     <section class="detail-wrap detail-section">
       <div class="detail-intro" data-detail-enter>
         <div>
-          <p class="detail-kicker">
+          <p class="detail-kicker">Smart Control</p><h2>
             {en ? "Related services" : "Servicii conexe"}
-          </p><h2>
-            {
-              managed
-                ? en
-                  ? "Services we can manage"
-                  : "Ce putem administra împreună"
-                : en
-                  ? "Other services for your project"
-                  : "Alte servicii pentru proiectul tău"
-            }
           </h2>
         </div><p>
-          {
-            en
-              ? "We can include these services in the same project and coordinate the teams involved. Responsibilities, service levels and indicators are agreed contractually."
-              : "Putem include și aceste servicii în proiect și coordona echipele implicate. Responsabilitățile, nivelurile de serviciu și indicatorii sunt agreați contractual."
-          }
+          {homeCopy[lang].process.description}
         </p>
       </div>
       <div class="detail-related">
@@ -185,19 +187,7 @@ const schema = {
     <section class="detail-section detail-close">
       <div class="detail-wrap detail-close-grid">
         <div>
-          <h2>
-            {
-              en
-                ? "Talk to our team."
-                : "Discută cu echipa noastră."
-            }
-          </h2><p>
-            {
-              en
-                ? "Describe your systems and what you want to improve. We will agree what needs to be assessed."
-                : "Descrie-ne infrastructura și ce vrei să îmbunătățești. Stabilim împreună ce trebuie evaluat."
-            }
-          </p>
+          <h2>{content.cta.heading}</h2><p>{content.cta.body}</p>
         </div><div class="detail-actions">
           <MailtoLink variant="button" dark subject={t("subject.assessment")}
             >{t("cta.assessment")}<ArrowUpRight size={20} /></MailtoLink

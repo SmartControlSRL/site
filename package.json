@@ -15,7 +15,7 @@
     "check": "astro check",
     "check:links": "node scripts/check-links.mjs",
     "check:email": "node scripts/check-email-links.mjs",
-    "check:claims": "node scripts/check-claims.mjs",
+    "check:claims": "node scripts/check-claims-brand-scope.mjs && node scripts/check-claims.mjs",
     "check:deployment": "node scripts/check-nginx-config.mjs",
     "check:nginx-runtime": "bash scripts/check-nginx-runtime.sh",
     "check:indexing": "node scripts/check-indexing-config.mjs",

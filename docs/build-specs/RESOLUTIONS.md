@@ -32,7 +32,7 @@ Orchestrator rulings on every open question raised by the design extraction
 9. **RO copy follows the specs** (diacritics exact), except claims blocked by
    `CLAIMS.md`. Certification counts/badges and ISO 27701 are stripped; Asset
    Management is stripped. SEKNET's cross-sell pairs with **S-VPN** instead.
-10. **Founding/tenure figures are omitted** until C-001 is approved; © year is dynamic.
+10. **Founding/tenure prose is omitted**. The original navigation brand subline is restored under the site owner’s scoped C-001 instruction recorded in CLAIMS; © year is dynamic.
 11. **CTA wording = export wording** ("Solicită un demo", "Solicită assessment").
     CLAUDE.md's "Cere un demo" is superseded — export copy was approved.
 12. **EN pages**: translate the RO copy per the brand voice rules (technical

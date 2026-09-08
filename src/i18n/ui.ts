@@ -38,8 +38,7 @@ export const ui = {
     'subject.demo.svpn': 'Demo S-VPN',
     // — Footer —
     'footer.tagline': 'Trusted Service Delivery Partner',
-    'footer.blurb':
-      'Infrastructură IT, securitate, software și suport pentru companii din România și din străinătate.',
+    "footer.blurb": "Servicii IT enterprise și securitate cibernetică pentru companii din România și internațional, coordonate de echipa Smart Control.",
     'footer.col.services': 'Servicii',
     'footer.col.solutions': 'Produse',
     'footer.col.contact': 'Contact',
@@ -83,8 +82,7 @@ export const ui = {
     'subject.demo.seknet': 'Demo SEKNET',
     'subject.demo.svpn': 'Demo S-VPN',
     'footer.tagline': 'Trusted Service Delivery Partner',
-    'footer.blurb':
-      'IT infrastructure, security, software and support for businesses in Romania and abroad.',
+    "footer.blurb": "Enterprise IT services and cybersecurity for companies in Romania and abroad, coordinated by the Smart Control team.",
     'footer.col.services': 'Services',
     'footer.col.solutions': 'Products',
     'footer.col.contact': 'Contact',

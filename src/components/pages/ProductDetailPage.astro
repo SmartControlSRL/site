@@ -125,28 +125,18 @@ const schema = {
         <div class="detail-intro" data-detail-enter>
           <div>
             <p class="detail-kicker">
-              {en ? "Implementation & support" : "Implementare & suport"}
-            </p><h2>
-              {
-                en
-                  ? "Installation and ongoing support"
-                  : "Instalare și suport tehnic"
-              }
-            </h2>
-          </div><p>
-            {
-              en
-                ? "We plan integration, configuration and ongoing support with your IT team."
-                : "Planificăm integrarea, configurarea și suportul continuu împreună cu echipa ta IT."
-            }
-          </p>
+              {copy.journeyEyebrow}
+            </p><h2>{copy.journeyTitle}</h2>
+          </div><p>{copy.journeyIntro}</p>
         </div>
         <ol class="detail-steps">
           {
             copy.journey.map((step, i) => (
               <li class="detail-step" data-detail-enter>
                 <>
-                  <span class="detail-step-number">0{i + 1}</span>
+                  <span class="detail-step-number">
+                    0{i + 1} / {step.label}
+                  </span>
                   <h3>{step.title}</h3>
                   <p>{step.body}</p>
                 </>
@@ -159,9 +149,7 @@ const schema = {
     <section class="detail-wrap detail-section">
       <div class="detail-intro">
         <div>
-          <p class="detail-kicker">
-            Smart Control
-          </p><h2>
+          <p class="detail-kicker">Smart Control</p><h2>
             {
               en
                 ? "Related services and products"
@@ -185,19 +173,7 @@ const schema = {
     <section class="detail-section detail-close">
       <div class="detail-wrap detail-close-grid">
         <div>
-          <h2>
-            {
-              en
-                ? `See how ${copy.name} works.`
-                : `Vezi cum funcționează ${copy.name}.`
-            }
-          </h2><p>
-            {
-              en
-                ? "Tell us about your environment. We will discuss your requirements and show you the product in a demo."
-                : "Spune-ne despre mediul tău IT. Discutăm cerințele și îți prezentăm produsul într-un demo."
-            }
-          </p>
+          <h2>{copy.cta.heading}</h2><p>{copy.cta.body}</p>
         </div><div class="detail-actions">
           <MailtoLink variant="button" dark subject={subject}
             >{t("cta.demo.seknet")}<ArrowUpRight size={20} /></MailtoLink
