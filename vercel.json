@@ -18,7 +18,17 @@
       "permanent": true
     },
     {
+      "source": "/servicii/",
+      "destination": "/#servicii",
+      "permanent": true
+    },
+    {
       "source": "/solutii",
+      "destination": "/#produse",
+      "permanent": true
+    },
+    {
+      "source": "/solutii/",
       "destination": "/#produse",
       "permanent": true
     },
@@ -28,7 +38,17 @@
       "permanent": true
     },
     {
+      "source": "/en/servicii/",
+      "destination": "/en/#servicii",
+      "permanent": true
+    },
+    {
       "source": "/en/solutii",
+      "destination": "/en/#produse",
+      "permanent": true
+    },
+    {
+      "source": "/en/solutii/",
       "destination": "/en/#produse",
       "permanent": true
     }

@@ -81,9 +81,9 @@ for (const [route, destination] of Object.entries(retiredRoutes)) {
   const target = new URL(destination, PRODUCTION_ORIGIN);
   const targetHtml = await readFile(resolve(DIST, target.pathname.slice(1), 'index.html'), 'utf8');
   assert(targetHtml.includes(`id="${target.hash.slice(1)}"`), `${route}: destination section must exist`);
-  const preview = previewConfig.redirects?.find((rule) => rule.source === route.slice(0,-1));
-  assert(preview?.destination === destination && preview?.permanent === true, `${route}: preview permanent redirect differs`);
   for (const source of [route, route.slice(0,-1)]) {
+    const preview = previewConfig.redirects?.find((rule) => rule.source === source);
+    assert(preview?.destination === destination && preview?.permanent === true, `${source}: preview permanent redirect differs`);
     assert(nginx.includes(`location = ${source} {\n    return 301 ${destination};`), `${source}: production permanent redirect differs`);
   }
 }
