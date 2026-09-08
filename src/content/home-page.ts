@@ -4,7 +4,7 @@ export const homeCopy = {
     servicesLabel: "Expertiză conectată",
     servicesTitle: "Fiecare provocare IT.\nO direcție de lucru.",
     servicesIntro:
-      "Pornim de la contextul infrastructurii tale și conectăm competențele de care proiectul are nevoie.",
+      "Pentru organizații cu nevoi IT interconectate. Reunim infrastructura, securitatea, software-ul și operarea într-o colaborare coordonată.",
     services: [
       {
         title: "Infrastructură & Cloud",
@@ -26,7 +26,7 @@ export const homeCopy = {
       },
       {
         title: "Servicii Gestionate",
-        body: "Continuitate între implementare și operare. Monitorizare, service desk și suport tehnic.",
+        body: "O relație continuă pentru întregul mediu IT. Monitorizare, suport și îmbunătățiri, cu responsabilități agreate.",
         detail: "Monitorizare · Operare · Suport",
         href: "/servicii/managed",
       },
@@ -76,8 +76,8 @@ export const homeCopy = {
           "Acces remote securizat",
           "Load balancing",
         ],
-        href: "/servicii/managed",
-        linkLabel: "Servicii Gestionate",
+        href: "/servicii/securitate",
+        linkLabel: "Networking & Security",
         aria: "Nivel L2 — Rețea și Conectivitate",
       },
       {
@@ -118,18 +118,6 @@ export const homeCopy = {
       },
     ],
     explore: "Explorează",
-    cloudLabel: "Cloud & Modernizare",
-    cloudTitle: "Înainte de hardware nou,\no perspectivă nouă.",
-    cloudBody:
-      "Fiecare recomandare pleacă de la măsurători făcute în infrastructura clientului. Identificăm ce merită păstrat, optimizat sau re-arhitecturat.",
-    cloudLink: "Descoperă abordarea",
-    stages: [
-      { title: "Assessment", body: "Înțelegem mediul și prioritățile." },
-      { title: "Re-arhitecturare", body: "Definim arhitectura țintă." },
-      { title: "Containerizare", body: "Pregătim aplicațiile și livrarea." },
-      { title: "Migrare", body: "Implementăm și transferăm cunoștințele." },
-      { title: "Optimizare", body: "Validăm și urmărim indicatorii agreați." },
-    ],
     partnersLabel: "Ecosistem tehnologic",
     partnersTitle: "Expertiza noastră.\nTehnologiile potrivite.",
     partnersBody:
@@ -143,7 +131,7 @@ export const homeCopy = {
     servicesLabel: "Connected expertise",
     servicesTitle: "Every IT challenge.\nA clear way forward.",
     servicesIntro:
-      "We start with your infrastructure and connect the expertise your project needs.",
+      "For organisations with connected IT needs. We bring infrastructure, security, software and operations into one coordinated engagement.",
     services: [
       {
         title: "Infrastructure & Cloud",
@@ -165,7 +153,7 @@ export const homeCopy = {
       },
       {
         title: "Managed Services",
-        body: "Continuity between implementation and operations. Monitoring, service desk and technical support.",
+        body: "The ongoing relationship across your IT environment. Monitoring, support and improvements with agreed responsibilities.",
         detail: "Monitoring · Operations · Support",
         href: "/servicii/managed",
       },
@@ -214,8 +202,8 @@ export const homeCopy = {
           "Secure remote access",
           "Load balancing",
         ],
-        href: "/servicii/managed",
-        linkLabel: "Managed Services",
+        href: "/servicii/securitate",
+        linkLabel: "Networking & Security",
         aria: "Layer L2 — Network and Connectivity",
       },
       {
@@ -256,21 +244,6 @@ export const homeCopy = {
       },
     ],
     explore: "Explore",
-    cloudLabel: "Cloud & Modernisation",
-    cloudTitle: "Before new hardware,\na fresh perspective.",
-    cloudBody:
-      "Every recommendation starts from measurements in the client’s own infrastructure. We identify what to retain, optimise or re-architect.",
-    cloudLink: "Explore our approach",
-    stages: [
-      {
-        title: "Assessment",
-        body: "Understand the environment and priorities.",
-      },
-      { title: "Re-architecture", body: "Define the target architecture." },
-      { title: "Containerisation", body: "Prepare applications and delivery." },
-      { title: "Migration", body: "Implement and transfer knowledge." },
-      { title: "Optimisation", body: "Validate and track agreed indicators." },
-    ],
     partnersLabel: "Technology ecosystem",
     partnersTitle: "Our expertise.\nThe right technologies.",
     partnersBody:

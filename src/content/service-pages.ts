@@ -274,7 +274,7 @@ const managed: Record<Lang, ServicePageContent> = {
     canonicalPath: '/servicii/managed/',
     schemaName: 'Servicii Gestionate — Smart Control',
     schemaServiceType: 'Managed IT Services',
-    hero: { eyebrow: 'Servicii Gestionate', lead: 'Infrastructura ta,', accent: 'operată de echipa noastră.', body: 'Preluăm operarea, monitorizarea și securizarea infrastructurii IT, cu responsabilități și niveluri de serviciu definite contractual.', secondary: 'Vezi capabilitățile' },
+    hero: { eyebrow: 'Servicii Gestionate', lead: 'Dincolo de implementare.', accent: 'Alături de echipa ta.', body: 'Conectăm operarea, monitorizarea și suportul într-o relație continuă pentru mediul IT. Responsabilitățile și nivelurile de servicii sunt definite contractual.', secondary: 'Vezi capabilitățile' },
     flow: {
       eyebrow: 'Model operațional',
       heading: 'Un ciclu comun pentru operare și îmbunătățire',
@@ -316,7 +316,7 @@ const managed: Record<Lang, ServicePageContent> = {
     canonicalPath: '/en/servicii/managed/',
     schemaName: 'Managed Services — Smart Control',
     schemaServiceType: 'Managed IT Services',
-    hero: { eyebrow: 'Managed Services', lead: 'Your infrastructure,', accent: 'operated by our team.', body: 'We take over operation, monitoring, and security for IT infrastructure, with responsibilities and service levels defined contractually.', secondary: 'View capabilities' },
+    hero: { eyebrow: 'Managed Services', lead: 'Beyond implementation.', accent: 'Alongside your team.', body: 'We connect operations, monitoring and support in an ongoing relationship across your IT environment. Responsibilities and service levels are defined contractually.', secondary: 'View capabilities' },
     flow: {
       eyebrow: 'Operating model',
       heading: 'One cycle for operations and improvement',

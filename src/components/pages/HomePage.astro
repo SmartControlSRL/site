@@ -20,6 +20,43 @@ const en = lang === "en";
 const t = useTranslations(lang);
 const copy = homeCopy[lang];
 const p = (path: string) => localizedPath(lang, path);
+const engagement = en
+  ? [
+      {
+        title: "Understand",
+        body: "Map the environment, dependencies and business priorities.",
+      },
+      {
+        title: "Agree",
+        body: "Set the scope, responsibilities and a practical sequence of work.",
+      },
+      {
+        title: "Deliver",
+        body: "Coordinate implementation, integration and knowledge transfer.",
+      },
+      {
+        title: "Operate & improve",
+        body: "Support the environment and review agreed indicators together.",
+      },
+    ]
+  : [
+      {
+        title: "Înțelegem",
+        body: "Analizăm mediul, dependențele și prioritățile organizației.",
+      },
+      {
+        title: "Stabilim",
+        body: "Agreăm scopul, responsabilitățile și ordinea activităților.",
+      },
+      {
+        title: "Livrăm",
+        body: "Coordonăm implementarea, integrarea și transferul de cunoștințe.",
+      },
+      {
+        title: "Operăm & îmbunătățim",
+        body: "Susținem mediul IT și revizuim împreună indicatorii agreați.",
+      },
+    ];
 const icons = [Server, ShieldCheck, Code, Workflow];
 const description = en
   ? "Enterprise infrastructure, security and software, with delivery coordinated by the Smart Control team. Explore our services and proprietary products."
@@ -58,8 +95,8 @@ const org = {
         <p class="hero-lead hero-in-3">
           {
             en
-              ? "Infrastructure, security and software. Connected by a team that takes responsibility for delivery."
-              : "Infrastructură, securitate și software. Conectate de o echipă care își asumă livrarea."
+              ? "Infrastructure, security and software for organisations with complex IT needs. One team coordinating delivery and ongoing operations."
+              : "Infrastructură, securitate și software pentru organizații cu nevoi IT complexe. O echipă care coordonează livrarea și operarea."
           }
         </p>
         <div class="hero-actions hero-in-4">
@@ -144,6 +181,50 @@ const org = {
       >
     </div>
     <section
+      id="cum-lucram"
+      class="home-wrap home-section home-cloud"
+      aria-labelledby="home-cloud-heading"
+    >
+      <div class="section-intro" data-home-enter>
+        <div>
+          <p class="home-kicker">{en ? "How we work" : "Cum lucrăm"}</p><h2
+            id="home-cloud-heading"
+          >
+            {
+              en
+                ? "One environment.\nA shared plan."
+                : "Un singur mediu IT.\nUn plan comun."
+            }
+          </h2>
+        </div><div>
+          <p class="section-lead">
+            {
+              en
+                ? "We look at the whole environment, agree priorities with your team and coordinate the work across disciplines. Smart Control remains directly accountable for delivery."
+                : "Privim întregul mediu IT, stabilim prioritățile cu echipa ta și coordonăm activitățile între specializări. Smart Control își asumă direct livrarea."
+            }
+          </p><a href={p("/servicii/managed")} class="home-text-link cloud-link"
+            >{
+              en ? "Explore ongoing support" : "Descoperă colaborarea continuă"
+            }<ArrowUpRight size={20} /></a
+          >
+        </div>
+      </div>
+      <ol class="methodology">
+        {
+          engagement.map((stage, i) => (
+            <li data-home-enter>
+              <>
+                <span class="stage-number">0{i + 1}</span>
+                <h3>{stage.title}</h3>
+                <p>{stage.body}</p>
+              </>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+    <section
       id="produse"
       class="home-products home-section"
       aria-labelledby="home-products-heading"
@@ -208,39 +289,6 @@ const org = {
           }
         </div>
       </div>
-    </section>
-    <section
-      class="home-wrap home-section home-cloud"
-      aria-labelledby="home-cloud-heading"
-    >
-      <div class="section-intro" data-home-enter>
-        <div>
-          <p class="home-kicker">{copy.cloudLabel}</p><h2
-            id="home-cloud-heading"
-          >
-            {copy.cloudTitle}
-          </h2>
-        </div><div>
-          <p class="section-lead">{copy.cloudBody}</p><a
-            href={p("/servicii/cloud")}
-            class="home-text-link cloud-link"
-            >{copy.cloudLink}<ArrowUpRight size={20} /></a
-          >
-        </div>
-      </div>
-      <ol class="methodology">
-        {
-          copy.stages.map((stage, i) => (
-            <li data-home-enter>
-              <>
-                <span class="stage-number">0{i + 1}</span>
-                <h3>{stage.title}</h3>
-                <p>{stage.body}</p>
-              </>
-            </li>
-          ))
-        }
-      </ol>
     </section>
     <section
       id="parteneri"
@@ -700,7 +748,7 @@ const org = {
   }
   .methodology {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 24px;
     counter-reset: stage;
   }
@@ -734,7 +782,7 @@ const org = {
   }
   .partner-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 0;
   }
   .partner-grid li {

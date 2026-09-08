@@ -6,10 +6,16 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://smartcontrol.ro',
+  redirects: {
+    '/servicii': '/#servicii',
+    '/en/servicii': '/en/#servicii',
+    '/solutii': '/#produse',
+    '/en/solutii': '/en/#produse',
+  },
   // Error documents are routable deployment internals and must not be
   // advertised as indexable content. The approved privacy routes are content.
   integrations: [sitemap({ filter: (page) => ![
-    '/en/404/',
+    '/en/404/', '/servicii/', '/en/servicii/', '/solutii/', '/en/solutii/',
   ].some((path) => page.endsWith(path)) })],
   // RO is the default locale at `/`; EN lives under `/en/`. Full parity.
   i18n: {

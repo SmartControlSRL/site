@@ -146,3 +146,23 @@ Orchestrator rulings on every open question raised by the design extraction
 - Page agents own ONLY their page files under `src/pages/` (+ their EN twin).
   If a page needs a shared change, it reports it in its result instead of
   editing shared files.
+
+## Homepage-led structure (owner agreement, 2026-09-08)
+
+The owner approved the homepage redesign and a smaller site for large clients
+with multiple connected needs. This supersedes the old locked hub sitemap and
+page-template density: seven marketing pages per language (Home, four service
+details, two products), plus the existing approved privacy notices.
+
+- Home is the expertise overview and contains the company approach and contact.
+- Navigation: Expertiză / Expertise, Produse / Products, Cum lucrăm / How we work,
+  Contact. Overview links target homepage sections; dropdowns retain detail links.
+- Retire Services and Solutions hubs. Permanent redirects preserve old URLs and
+  route to the appropriate homepage sections in both languages. Exclude redirect
+  documents from the sitemap and keep static-host redirect fallbacks.
+- Infrastructure & Cloud covers the full pillar; its five-stage modernisation
+  process stays on the detail page. The homepage describes the broader engagement.
+- Managed Services is the ongoing relationship across the IT environment.
+- Detail pages use concise capability summaries, open layouts, related expertise
+  and motion that respects reduced-motion settings. No new dependency is needed.
+- Existing claims, product-disclosure, privacy and deployment policies still apply.

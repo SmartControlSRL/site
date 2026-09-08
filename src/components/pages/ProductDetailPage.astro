@@ -1,0 +1,196 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import MailtoLink from "../MailtoLink.astro";
+import DetailMotion from "../DetailMotion.astro";
+import {
+  ArrowUpRight,
+  Server,
+  Activity,
+  ShieldCheck,
+  User,
+} from "@lucide/astro";
+import { getLangFromUrl, localizedPath, useTranslations } from "../../i18n/ui";
+import { productPages, type ProductKey } from "../../content/product-pages";
+import "../../styles/detail.css";
+interface Props {
+  product: ProductKey;
+}
+const { product } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const en = lang === "en";
+const t = useTranslations(lang);
+const p = (path: string) => localizedPath(lang, path);
+const copy = productPages[product][lang];
+const otherKey = product === "seknet" ? "s-vpn" : "seknet";
+const other = productPages[otherKey][lang];
+const icons =
+  product === "seknet"
+    ? [Server, Activity, ShieldCheck]
+    : [User, ShieldCheck, Server];
+const subject =
+  product === "seknet" ? t("subject.demo.seknet") : t("subject.demo.svpn");
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: copy.name,
+  description: copy.description,
+  url: new URL(p("/solutii/" + product), "https://smartcontrol.ro").href,
+  brand: { "@type": "Brand", name: "Smart Control" },
+  manufacturer: { "@type": "Organization", name: "Smart Control SRL" },
+};
+---
+
+<BaseLayout title={copy.title} description={copy.description}>
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(schema)}
+  />
+  <div class="detail-page">
+    <header class="detail-hero product-hero">
+      <div class="detail-wrap detail-hero-grid">
+        <div>
+          <p class="detail-kicker">
+            {en ? "Smart Control product" : "Produs Smart Control"} / {
+              copy.name
+            }
+          </p><h1>{copy.name}.<br /><span>{copy.headline}</span></h1><p
+            class="detail-lead"
+          >
+            {copy.intro}
+          </p><div class="detail-actions">
+            <MailtoLink variant="button" dark subject={subject}
+              >{t("cta.demo.seknet")}<ArrowUpRight size={20} /></MailtoLink>
+          </div>
+        </div>
+        <figure class="product-signal" data-route-visual data-detail-enter>
+          <ol>
+            {
+              copy.signal.map((label, i) => {
+                const Icon = icons[i];
+                return (
+                  <li>
+                    <>
+                      <span>
+                        <Icon size={25} stroke-width={1.5} />
+                      </span>
+                      <strong>{label}</strong>
+                    </>
+                  </li>
+                );
+              })
+            }
+          </ol><figcaption>
+            {en ? "Conceptual overview" : "Schemă conceptuală"} / {copy.name}
+          </figcaption>
+        </figure>
+      </div>
+    </header>
+    <section class="detail-wrap detail-section" id="capabilitati">
+      <div class="detail-intro" data-detail-enter>
+        <div>
+          <p class="detail-kicker">{copy.name}</p><h2>{copy.contextTitle}</h2>
+        </div><p>{copy.context}</p>
+      </div>
+      <div class="detail-capabilities">
+        {
+          copy.capabilities.map((item, i) => {
+            const Icon = icons[i];
+            return (
+              <article class="detail-capability" data-detail-enter>
+                <>
+                  <h3>
+                    <Icon size={24} stroke-width={1.5} />
+                    {item.title}
+                  </h3>
+                  <p>{item.body}</p>
+                </>
+              </article>
+            );
+          })
+        }
+      </div>
+    </section>
+    <section class="detail-section detail-wash">
+      <div class="detail-wrap">
+        <div class="detail-intro" data-detail-enter>
+          <div>
+            <p class="detail-kicker">
+              {en ? "Implementation & support" : "Implementare & suport"}
+            </p><h2>
+              {
+                en
+                  ? "A product within your environment."
+                  : "Un produs în contextul tău IT."
+              }
+            </h2>
+          </div><p>
+            {
+              en
+                ? "We discuss the fit, integration and ongoing support with your team. The scope and responsibilities are defined for your engagement."
+                : "Discutăm cu echipa ta potrivirea, integrarea și suportul continuu. Scopul și responsabilitățile sunt definite pentru colaborarea voastră."
+            }
+          </p>
+        </div>
+        <ol class="detail-steps">
+          {
+            copy.journey.map((step, i) => (
+              <li class="detail-step" data-detail-enter>
+                <>
+                  <span class="detail-step-number">0{i + 1}</span>
+                  <h3>{step.title}</h3>
+                  <p>{step.body}</p>
+                </>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+    <section class="detail-wrap detail-section">
+      <div class="detail-intro">
+        <div>
+          <p class="detail-kicker">
+            {en ? "Connected expertise" : "Expertiză conectată"}
+          </p><h2>
+            {en ? "Build the wider picture." : "Completează perspectiva."}
+          </h2>
+        </div>
+      </div><div class="detail-related">
+        <a href={p(copy.relatedHref)}
+          ><h3>{copy.relatedTitle}<ArrowUpRight size={20} /></h3><p>
+            {copy.relatedBody}
+          </p></a
+        >
+        <a href={p("/solutii/" + otherKey)}
+          ><h3>{other.name}<ArrowUpRight size={20} /></h3><p>
+            {other.intro}
+          </p></a
+        >
+      </div>
+    </section>
+    <section class="detail-section detail-close">
+      <div class="detail-wrap detail-close-grid">
+        <div>
+          <h2>
+            {
+              en
+                ? `Explore ${copy.name} with your team.`
+                : `Descoperă ${copy.name} cu echipa ta.`
+            }
+          </h2><p>
+            {
+              en
+                ? "Tell us about your environment. We will discuss your requirements and show you the product in a demo."
+                : "Spune-ne despre mediul tău IT. Discutăm cerințele și îți prezentăm produsul într-un demo."
+            }
+          </p>
+        </div><div class="detail-actions">
+          <MailtoLink variant="button" dark subject={subject}
+            >{t("cta.demo.seknet")}<ArrowUpRight size={20} /></MailtoLink>
+        </div>
+      </div>
+    </section>
+  </div>
+  <DetailMotion />
+</BaseLayout>

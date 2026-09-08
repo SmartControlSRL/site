@@ -1,0 +1,41 @@
+<script>
+  let stop = () => {};
+  function wireDetailMotion() {
+    stop();
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+    const animations = new Set<Animation>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          observer.unobserve(entry.target);
+          if (reduced.matches) continue;
+          const animation = entry.target.animate(
+            [{ transform: "translateY(16px)" }, { transform: "translateY(0)" }],
+            { duration: 650, easing: "cubic-bezier(.16,1,.3,1)" },
+          );
+          animations.add(animation);
+          animation.finished
+            .then(() => animations.delete(animation))
+            .catch(() => {});
+        }
+      },
+      { threshold: 0.12 },
+    );
+    document
+      .querySelectorAll("[data-detail-enter]")
+      .forEach((node) => observer.observe(node));
+    const cancel = () => {
+      animations.forEach((animation) => animation.cancel());
+      animations.clear();
+    };
+    reduced.addEventListener("change", cancel);
+    stop = () => {
+      observer.disconnect();
+      cancel();
+      reduced.removeEventListener("change", cancel);
+    };
+  }
+  document.addEventListener("astro:page-load", wireDetailMotion);
+  document.addEventListener("astro:before-swap", () => stop());
+</script>

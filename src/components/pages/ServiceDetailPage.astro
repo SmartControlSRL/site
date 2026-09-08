@@ -1,137 +1,204 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import CtaBand from '../CtaBand.astro';
-import Eyebrow from '../Eyebrow.astro';
-import IconChip from '../IconChip.astro';
-import MailtoLink from '../MailtoLink.astro';
-import ModuleCard from '../ModuleCard.astro';
-import RouteFlowVisual from '../RouteFlowVisual.astro';
-import SectionHeading from '../SectionHeading.astro';
-import TextLink from '../TextLink.astro';
-import { getLangFromUrl, localizedPath, useTranslations } from '../../i18n/ui';
-import type { ServicePageContent } from '../../content/service-pages';
-
-interface Props { content: ServicePageContent }
-
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TextLink from "../TextLink.astro";
+import MailtoLink from "../MailtoLink.astro";
+import DetailMotion from "../DetailMotion.astro";
+import { ArrowUpRight } from "@lucide/astro";
+import { getLangFromUrl, localizedPath, useTranslations } from "../../i18n/ui";
+import { homeCopy } from "../../content/home-page";
+import type { ServicePageContent } from "../../content/service-pages";
+import "../../styles/detail.css";
+interface Props {
+  content: ServicePageContent;
+}
 const { content } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
+const en = lang === "en";
 const t = useTranslations(lang);
 const p = (path: string) => localizedPath(lang, path);
-const capabilitiesId = 'capabilities';
+const related = homeCopy[lang].services.filter(
+  (item) => !content.canonicalPath.includes(item.href),
+);
+const cloud = content.canonicalPath.includes("/cloud");
+const managed = content.canonicalPath.includes("/managed");
 const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'Service',
+  "@context": "https://schema.org",
+  "@type": "Service",
   name: content.schemaName,
   description: content.description,
   serviceType: content.schemaServiceType,
-  url: new URL(content.canonicalPath, 'https://smartcontrol.ro').href,
-  provider: { '@type': 'Organization', name: 'Smart Control SRL', url: 'https://smartcontrol.ro/' },
+  url: new URL(content.canonicalPath, "https://smartcontrol.ro").href,
+  provider: {
+    "@type": "Organization",
+    name: "Smart Control SRL",
+    url: "https://smartcontrol.ro/",
+  },
 };
 ---
 
 <BaseLayout title={content.title} description={content.description}>
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
-
-  <header class="bg-page">
-    <div class="container pb-[64px] pt-[120px]">
-      <Eyebrow>{content.hero.eyebrow}</Eyebrow>
-      <h1 class="mt-6 max-w-[900px] text-[clamp(2.4rem,1.6rem+3vw,3.75rem)] font-extrabold leading-[1.1] text-midnight">
-        {content.hero.lead} <span class="text-bright">{content.hero.accent}</span>{content.hero.tail}
-      </h1>
-      <p class="mt-6 max-w-[720px] text-[18px] leading-[1.7] text-cool">{content.hero.body}</p>
-      <div data-service-hero-actions class="mt-9 flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:items-center">
-        <MailtoLink variant="button" subject={t('subject.assessment')}>{t('cta.assessment')}</MailtoLink>
-        <TextLink href={`#${capabilitiesId}`}>{content.hero.secondary}</TextLink>
-      </div>
-    </div>
-  </header>
-
-  {
-    content.context && (
-      <section class="bg-surface py-[44px] sm:py-[64px]">
-        <div class="container grid gap-5 md:grid-cols-2">
-          {content.context.map((item) => (
-            <article class="rounded-xl border border-border bg-page p-8">
-              <h2 class="text-[18px] font-bold text-navy">{item.title}</h2>
-              <p class="mt-3 text-[14px] leading-[1.65] text-cool">{item.body}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-    )
-  }
-
-  <RouteFlowVisual
-    id="workflow"
-    eyebrow={content.flow.eyebrow}
-    heading={content.flow.heading}
-    description={content.flow.description}
-    caption={content.flow.caption}
-    steps={content.flow.steps}
-    surface="page"
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(schema)}
   />
-
-  {
-    content.proof && (
-      <section class="bg-surface py-[48px] sm:py-[72px]">
-        <div class="container">
-          <SectionHeading heading={content.proof.heading}>{content.proof.body}</SectionHeading>
-          <div class="mt-9 grid gap-5 md:grid-cols-3">
-            {content.proof.items.map(({ title, body, Icon }) => (
-              <ModuleCard title={title} body={body}>
-                <Icon slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
-              </ModuleCard>
-            ))}
+  <div class="detail-page">
+    <header class="detail-hero">
+      <div class="detail-wrap detail-hero-grid">
+        <div>
+          <p class="detail-kicker">{content.hero.eyebrow}</p>
+          <h1>
+            {content.hero.lead}
+            <span>{content.hero.accent}</span>{content.hero.tail}
+          </h1>
+          <p class="detail-lead">{content.hero.body}</p>
+          <div class="detail-actions" data-service-hero-actions>
+            <MailtoLink variant="button" subject={t("subject.assessment")}
+              >{t("cta.assessment")}</MailtoLink
+            >
+            <TextLink href="#capabilities" class="!text-base">{en ? "Explore expertise" : "Explorează expertiza"}</TextLink>
           </div>
         </div>
-      </section>
-    )
-  }
-
-  <section id={capabilitiesId} class="scroll-mt-24 bg-page py-[56px] sm:py-[80px]">
-    <div class="container">
-      <SectionHeading eyebrow={content.capabilities.eyebrow} heading={content.capabilities.heading} />
-      <div class="mt-9 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <aside
+          class="detail-index"
+          aria-label={en ? "Areas of expertise" : "Domenii de expertiză"}
+        >
+          {
+            content.capabilities.items.slice(0, 4).map((item, index) => (
+              <p>
+                <span>0{index + 1}</span>
+                {item.title}
+              </p>
+            ))
+          }
+        </aside>
+      </div>
+    </header>
+    <section class="detail-wrap detail-section" id="capabilities">
+      <div class="detail-intro" data-detail-enter>
+        <div>
+          <p class="detail-kicker">{en ? "Scope" : "Ce acoperim"}</p><h2>
+            {content.capabilities.heading}
+          </h2>
+        </div>
+        <p>
+          {
+            en
+              ? "We agree the scope around your existing environment and priorities. These capabilities can form part of a wider engagement across infrastructure, security, software and operations."
+              : "Stabilim scopul în funcție de mediul existent și de prioritățile organizației. Aceste capabilități pot face parte dintr-o colaborare mai amplă, care reunește infrastructura, securitatea, software-ul și operarea."
+          }
+        </p>
+      </div>
+      <div class="detail-capabilities">
         {
-          content.capabilities.items.map((capability, index) => {
-            const Icon = capability.Icon;
-            return (
-              <ModuleCard title={capability.title} index={String(index + 1).padStart(2, '0')} body={capability.body} items={capability.items}>
-                <Icon slot="icon" class="h-[22px] w-[22px] text-navy" stroke-width={1.5} />
-              </ModuleCard>
-            );
-          })
+          content.capabilities.items.map(({ title, body, Icon }) => (
+            <article class="detail-capability" data-detail-enter>
+              <>
+                <h3>
+                  <Icon size={24} stroke-width={1.5} />
+                  {title}
+                </h3>
+                <p>{body}</p>
+              </>
+            </article>
+          ))
         }
       </div>
-    </div>
-  </section>
-
-  {
-    content.supporting && (
-      <section class="bg-surface py-[48px] sm:py-[72px]">
-        <div class="container">
-          <SectionHeading eyebrow={content.supporting.eyebrow} heading={content.supporting.heading}>{content.supporting.body}</SectionHeading>
-          <div class="mt-10 grid gap-5 md:grid-cols-2">
-            {content.supporting.cards.map((card) => {
-              const Icon = card.Icon;
-              return (
-                <article class="rounded-xl border border-border bg-page p-8 shadow-sm">
-                  <div class="flex items-center gap-3">
-                    <IconChip><Icon class="h-5 w-5 text-navy" stroke-width={1.5} /></IconChip>
-                    <h3 class="text-[19px] font-bold text-navy">{card.name}</h3>
-                  </div>
-                  <p class="mt-4 text-[14px] leading-[1.65] text-cool">{card.body}</p>
-                  <div class="mt-5"><TextLink href={p(card.href)}>{card.linkLabel}</TextLink></div>
-                </article>
-              );
-            })}
-          </div>
+    </section>
+    <section
+      class="detail-section detail-wash"
+      id={cloud ? "flux" : "workflow"}
+    >
+      <div class="detail-wrap">
+        <div class="detail-intro" data-detail-enter>
+          <div>
+            <p class="detail-kicker">{content.flow.eyebrow}</p><h2>
+              {content.flow.heading}
+            </h2>
+          </div><p>{content.flow.description}</p>
         </div>
-      </section>
-    )
-  }
-
-  <CtaBand id="contact" heading={content.cta.heading} cta={t('cta.assessment')} subject={t('subject.assessment')}>
-    {content.cta.body}
-  </CtaBand>
+        <figure data-route-visual>
+          <ol class="detail-steps">
+            {
+              content.flow.steps.map((step, index) => (
+                <li class="detail-step" data-step data-detail-enter>
+                  <>
+                    <span class="detail-step-number">
+                      0{index + 1} / {step.label}
+                    </span>
+                    <h3>{step.title}</h3>
+                    <p>{step.body}</p>
+                  </>
+                </li>
+              ))
+            }
+          </ol>
+          <figcaption class="detail-caption">{content.flow.caption}</figcaption>
+        </figure>
+      </div>
+    </section>
+    <section class="detail-wrap detail-section">
+      <div class="detail-intro" data-detail-enter>
+        <div>
+          <p class="detail-kicker">
+            {en ? "Connected expertise" : "Expertiză conectată"}
+          </p><h2>
+            {
+              managed
+                ? en
+                  ? "One relationship across your IT."
+                  : "O relație pentru întregul mediu IT."
+                : en
+                  ? "Part of the bigger picture."
+                  : "Parte dintr-un plan comun."
+            }
+          </h2>
+        </div><p>
+          {
+            en
+              ? "Smart Control coordinates the specialists and technology partners your engagement requires. Responsibilities, service levels and indicators are agreed together and defined contractually."
+              : "Smart Control coordonează specialiștii și partenerii tehnologici necesari colaborării. Responsabilitățile, nivelurile de servicii și indicatorii sunt agreați împreună și definiți contractual."
+          }
+        </p>
+      </div>
+      <div class="detail-related">
+        {
+          related.map((item) => (
+            <a href={p(item.href)}>
+              <>
+                <h3>
+                  {item.title}
+                  <ArrowUpRight size={20} />
+                </h3>
+                <p>{item.body}</p>
+              </>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+    <section class="detail-section detail-close">
+      <div class="detail-wrap detail-close-grid">
+        <div>
+          <h2>
+            {
+              en
+                ? "Start with your environment."
+                : "Pornim de la mediul tău IT."
+            }
+          </h2><p>
+            {
+              en
+                ? "Tell us what needs to change. Together, we define the assessment scope and the next steps."
+                : "Spune-ne ce trebuie să se schimbe. Definim împreună scopul assessment-ului și pașii următori."
+            }
+          </p>
+        </div><div class="detail-actions">
+          <MailtoLink variant="button" dark subject={t("subject.assessment")}
+            >{t("cta.assessment")}<ArrowUpRight size={20} /></MailtoLink>
+        </div>
+      </div>
+    </section>
+  </div>
+  <DetailMotion />
 </BaseLayout>

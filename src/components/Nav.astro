@@ -6,81 +6,99 @@
 // Mobile/tablet (<1024px): hamburger toggles a light slide-down panel
 // (aria-expanded, ESC closes, body scroll-lock while open). The 1024px desktop
 // threshold keeps the full EN row on one line and avoids the 768px collision.
-import { ChevronDown, Menu, X } from '@lucide/astro';
-import { getLangFromUrl, useTranslations, localizedPath, altLocalePath } from '../i18n/ui';
-import MailtoLink from './MailtoLink.astro';
+import { ChevronDown, Menu, X } from "@lucide/astro";
+import {
+  getLangFromUrl,
+  useTranslations,
+  localizedPath,
+  altLocalePath,
+} from "../i18n/ui";
+import MailtoLink from "./MailtoLink.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const p = (path: string) => localizedPath(lang, path);
 
-// Two dropdown groups (parent links to the hub/index, panel lists the child
-// pages) + a plain Contact anchor. This surfaces every service/solution page
-// one hover/tap deep and gives /servicii + /solutii their entry points.
+// Overview links lead to homepage sections; dropdowns retain direct detail access.
 const navItems = [
   {
-    href: p('/servicii'),
-    label: t('nav.services'),
+    href: p("/#servicii"),
+    label: t("nav.services"),
     children: [
-      { href: p('/servicii/cloud'), label: t('nav.cloud') },
-      { href: p('/servicii/securitate'), label: t('footer.service.security') },
-      { href: p('/servicii/software'), label: t('footer.service.software') },
-      { href: p('/servicii/managed'), label: t('footer.service.managed') },
+      { href: p("/servicii/cloud"), label: t("nav.cloud") },
+      { href: p("/servicii/securitate"), label: t("footer.service.security") },
+      { href: p("/servicii/software"), label: t("footer.service.software") },
+      { href: p("/servicii/managed"), label: t("footer.service.managed") },
     ],
   },
   {
-    href: p('/solutii'),
-    label: t('nav.products'),
+    href: p("/#produse"),
+    label: t("nav.products"),
     children: [
-      { href: p('/solutii/seknet'), label: t('nav.seknet') },
-      { href: p('/solutii/s-vpn'), label: t('nav.svpn') },
+      { href: p("/solutii/seknet"), label: t("nav.seknet") },
+      { href: p("/solutii/s-vpn"), label: t("nav.svpn") },
     ],
   },
-  { href: p('/#contact'), label: t('nav.contact') },
+  { href: p("/#cum-lucram"), label: t("nav.approach") },
+  { href: p("/#contact"), label: t("nav.contact") },
 ];
 
 // Active-page underline: compare against the current pathname (ignore anchors).
-const here = Astro.url.pathname.replace(/\/$/, '') || '/';
-const cleanPath = (href: string) => href.split('#')[0].replace(/\/$/, '') || '/';
+const here = Astro.url.pathname.replace(/\/$/, "") || "/";
+const cleanPath = (href: string) =>
+  href.split("#")[0].replace(/\/$/, "") || "/";
 // Exact match — for leaf links (children, Contact).
 const isActive = (href: string) => {
+  if (href.includes("#")) return false;
   const clean = cleanPath(href);
-  return clean !== '/' && clean !== p('/') && here === clean;
-};
-// Tree match — a parent is active on its hub page or any descendant page.
-const inTree = (href: string) => {
-  const clean = cleanPath(href);
-  if (clean === '/' || clean === p('/')) return false;
-  return here === clean || here.startsWith(clean + '/');
+  return clean !== "/" && clean !== p("/") && here === clean;
 };
 
 // Language switch → the alternate-locale version of this page.
 const path = Astro.url.pathname;
 const altHref = altLocalePath(path);
-const altLang = lang === 'ro' ? 'en' : 'ro';
+const altLang = lang === "ro" ? "en" : "ro";
 ---
 
 <header class="fixed inset-x-0 top-0 z-50">
   <nav
     data-nav-shrink
-    aria-label={t('a11y.nav')}
+    aria-label={t("a11y.nav")}
     class="border-b border-transparent bg-surface px-4 py-[18px] transition-[padding,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] sm:px-6 lg:px-10"
   >
-    <div class="mx-auto flex max-w-[1180px] items-center justify-between gap-8">
+    <div class="mx-auto flex max-w-[1180px] items-center justify-between gap-5">
       <!-- Logo -->
-      <a href={p('/')} class="flex shrink-0 items-center gap-[11px]" aria-label={t('a11y.home')}>
-        <img src="/smartcontrol-mark-96.png" alt="" width="34" height="34" class="h-[34px] w-[34px]" decoding="async" />
+      <a
+        href={p("/")}
+        class="flex shrink-0 items-center gap-[11px]"
+        aria-label={t("a11y.home")}
+      >
+        <img
+          src="/smartcontrol-mark-96.png"
+          alt=""
+          width="34"
+          height="34"
+          class="h-[34px] w-[34px]"
+          decoding="async"
+        />
         <span class="flex flex-col leading-none">
-          <span data-brand-wordmark class="text-[17px] font-bold tracking-[-0.3px] text-navy">Smart<span class="text-bright">Control</span></span>
+          <span
+            data-brand-wordmark
+            class="text-[17px] font-bold tracking-[-0.3px] text-navy"
+            >Smart<span class="text-bright">Control</span></span
+          >
           <span class="mt-[3px] flex items-center gap-1.5" aria-hidden="true">
             <span class="h-px w-4 shrink-0 bg-bright"></span>
-            <span class="font-mono text-[9px] font-semibold uppercase tracking-[2px] text-royal">IT ENTERPRISE</span>
+            <span
+              class="font-mono text-[9px] font-semibold uppercase tracking-[2px] text-royal"
+              >IT ENTERPRISE</span
+            >
           </span>
         </span>
       </a>
 
       <!-- Desktop links -->
-      <ul data-nav-desktop class="hidden items-center gap-7 lg:flex">
+      <ul data-nav-desktop class="hidden items-center gap-5 lg:flex">
         {
           navItems.map((item) =>
             item.children ? (
@@ -88,12 +106,12 @@ const altLang = lang === 'ro' ? 'en' : 'ro';
                 <a
                   data-nav-dropdown-trigger
                   href={item.href}
-                  aria-current={isActive(item.href) ? 'page' : undefined}
+                  aria-current={isActive(item.href) ? "page" : undefined}
                   class:list={[
-                    'inline-flex items-center gap-[5px] border-b-2 pb-[3px] text-[13.5px] no-underline transition-colors hover:border-bright hover:text-navy',
-                    inTree(item.href)
-                      ? 'border-bright font-semibold text-navy'
-                      : 'border-transparent font-medium text-slate',
+                    "inline-flex items-center gap-[5px] border-b-2 pb-[3px] text-[13.5px] no-underline transition-colors hover:border-bright hover:text-navy",
+                    item.children.some((child) => isActive(child.href))
+                      ? "border-bright font-semibold text-navy"
+                      : "border-transparent font-medium text-slate",
                   ]}
                 >
                   {item.label}
@@ -113,10 +131,12 @@ const altLang = lang === 'ro' ? 'en' : 'ro';
                       <li>
                         <a
                           href={c.href}
-                          aria-current={isActive(c.href) ? 'page' : undefined}
+                          aria-current={isActive(c.href) ? "page" : undefined}
                           class:list={[
-                            'block rounded-md px-3 py-2.5 text-[13.5px] no-underline transition-colors hover:bg-blue-wash hover:text-navy',
-                            isActive(c.href) ? 'font-semibold text-navy' : 'font-medium text-slate',
+                            "block rounded-md px-3 py-2.5 text-[13.5px] no-underline transition-colors hover:bg-blue-wash hover:text-navy",
+                            isActive(c.href)
+                              ? "font-semibold text-navy"
+                              : "font-medium text-slate",
                           ]}
                         >
                           {c.label}
@@ -130,18 +150,18 @@ const altLang = lang === 'ro' ? 'en' : 'ro';
               <li>
                 <a
                   href={item.href}
-                  aria-current={isActive(item.href) ? 'page' : undefined}
+                  aria-current={isActive(item.href) ? "page" : undefined}
                   class:list={[
-                    'border-b-2 pb-[3px] text-[13.5px] no-underline transition-colors hover:border-bright hover:text-navy',
+                    "border-b-2 pb-[3px] text-[13.5px] no-underline transition-colors hover:border-bright hover:text-navy",
                     isActive(item.href)
-                      ? 'border-bright font-semibold text-navy'
-                      : 'border-transparent font-medium text-slate',
+                      ? "border-bright font-semibold text-navy"
+                      : "border-transparent font-medium text-slate",
                   ]}
                 >
                   {item.label}
                 </a>
               </li>
-            )
+            ),
           )
         }
       </ul>
@@ -155,15 +175,19 @@ const altLang = lang === 'ro' ? 'en' : 'ro';
           aria-labelledby="language-switch-token language-switch-action"
           class="text-[13.5px] font-semibold text-cool transition-colors hover:text-navy"
         >
-          <span id="language-switch-token" lang={altLang}>{t('lang.switch')}</span>
-          <span id="language-switch-action" lang={lang} class="sr-only">{t('lang.switch.action')}</span>
+          <span id="language-switch-token" lang={altLang}
+            >{t("lang.switch")}</span
+          >
+          <span id="language-switch-action" lang={lang} class="sr-only"
+            >{t("lang.switch.action")}</span
+          >
         </a>
         <MailtoLink
           variant="button"
-          subject={t('subject.assessment')}
+          subject={t("subject.assessment")}
           class="!hidden !px-[18px] !py-[9px] !text-[13.5px] lg:!inline-flex"
         >
-          {t('cta.assessment')}
+          {t("cta.assessment")}
         </MailtoLink>
 
         <!-- Mobile hamburger -->
@@ -172,13 +196,23 @@ const altLang = lang === 'ro' ? 'en' : 'ro';
           data-nav-toggle
           aria-expanded="false"
           aria-controls="nav-mobile-panel"
-          aria-label={t('nav.menu.open')}
-          data-label-open={t('nav.menu.open')}
-          data-label-close={t('nav.menu.close')}
+          aria-label={t("nav.menu.open")}
+          data-label-open={t("nav.menu.open")}
+          data-label-close={t("nav.menu.close")}
           class="flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-navy transition-colors hover:bg-blue-wash lg:hidden"
         >
-          <Menu data-nav-icon-open class="h-[22px] w-[22px]" stroke-width={1.5} aria-hidden="true" />
-          <X data-nav-icon-close class="hidden h-[22px] w-[22px]" stroke-width={1.5} aria-hidden="true" />
+          <Menu
+            data-nav-icon-open
+            class="h-[22px] w-[22px]"
+            stroke-width={1.5}
+            aria-hidden="true"
+          />
+          <X
+            data-nav-icon-close
+            class="hidden h-[22px] w-[22px]"
+            stroke-width={1.5}
+            aria-hidden="true"
+          />
         </button>
       </div>
     </div>
@@ -198,10 +232,12 @@ const altLang = lang === 'ro' ? 'en' : 'ro';
             <li>
               <a
                 href={item.href}
-                aria-current={isActive(item.href) ? 'page' : undefined}
+                aria-current={isActive(item.href) ? "page" : undefined}
                 class:list={[
-                  'block rounded-md px-3 py-3 text-[15px] transition-colors hover:bg-blue-wash',
-                  inTree(item.href) ? 'font-semibold text-navy' : 'font-medium text-slate',
+                  "block rounded-md px-3 py-3 text-[15px] transition-colors hover:bg-blue-wash",
+                  item.children.some((child) => isActive(child.href))
+                    ? "font-semibold text-navy"
+                    : "font-medium text-slate",
                 ]}
               >
                 {item.label}
@@ -211,10 +247,12 @@ const altLang = lang === 'ro' ? 'en' : 'ro';
                   <li>
                     <a
                       href={c.href}
-                      aria-current={isActive(c.href) ? 'page' : undefined}
+                      aria-current={isActive(c.href) ? "page" : undefined}
                       class:list={[
-                        'block rounded-md px-3 py-2.5 text-[14px] transition-colors hover:bg-blue-wash hover:text-navy',
-                        isActive(c.href) ? 'font-semibold text-navy' : 'font-medium text-cool',
+                        "block rounded-md px-3 py-2.5 text-[14px] transition-colors hover:bg-blue-wash hover:text-navy",
+                        isActive(c.href)
+                          ? "font-semibold text-navy"
+                          : "font-medium text-cool",
                       ]}
                     >
                       {c.label}
@@ -227,21 +265,27 @@ const altLang = lang === 'ro' ? 'en' : 'ro';
             <li>
               <a
                 href={item.href}
-                aria-current={isActive(item.href) ? 'page' : undefined}
+                aria-current={isActive(item.href) ? "page" : undefined}
                 class:list={[
-                  'block rounded-md px-3 py-3 text-[15px] transition-colors hover:bg-blue-wash',
-                  isActive(item.href) ? 'font-semibold text-navy' : 'font-medium text-slate',
+                  "block rounded-md px-3 py-3 text-[15px] transition-colors hover:bg-blue-wash",
+                  isActive(item.href)
+                    ? "font-semibold text-navy"
+                    : "font-medium text-slate",
                 ]}
               >
                 {item.label}
               </a>
             </li>
-          )
+          ),
         )
       }
       <li class="mt-2 px-3">
-        <MailtoLink variant="button" subject={t('subject.assessment')} class="w-full">
-          {t('cta.assessment')}
+        <MailtoLink
+          variant="button"
+          subject={t("subject.assessment")}
+          class="w-full"
+        >
+          {t("cta.assessment")}
         </MailtoLink>
       </li>
     </ul>
@@ -256,76 +300,93 @@ const altLang = lang === 'ro' ? 'en' : 'ro';
   let mobileNavAborter: AbortController | undefined;
   function wireMobileNav() {
     mobileNavAborter?.abort();
-    const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
-    const panel = document.querySelector<HTMLElement>('[data-nav-panel]');
+    const toggle =
+      document.querySelector<HTMLButtonElement>("[data-nav-toggle]");
+    const panel = document.querySelector<HTMLElement>("[data-nav-panel]");
     if (!toggle || !panel) return;
     mobileNavAborter = new AbortController();
     const { signal } = mobileNavAborter;
-    const iconOpen = toggle.querySelector<SVGElement>('[data-nav-icon-open]');
-    const iconClose = toggle.querySelector<SVGElement>('[data-nav-icon-close]');
+    const iconOpen = toggle.querySelector<SVGElement>("[data-nav-icon-open]");
+    const iconClose = toggle.querySelector<SVGElement>("[data-nav-icon-close]");
 
     let open = false;
     let desktop = window.innerWidth >= 1024;
     const set = (next: boolean) => {
       open = next;
-      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute("aria-expanded", String(open));
       const label = open ? toggle.dataset.labelClose : toggle.dataset.labelOpen;
-      if (label) toggle.setAttribute('aria-label', label);
+      if (label) toggle.setAttribute("aria-label", label);
       panel.hidden = !open;
-      iconOpen?.classList.toggle('hidden', open);
-      iconClose?.classList.toggle('hidden', !open);
-      document.body.style.overflow = open ? 'hidden' : '';
+      iconOpen?.classList.toggle("hidden", open);
+      iconClose?.classList.toggle("hidden", !open);
+      document.body.style.overflow = open ? "hidden" : "";
     };
     set(false);
 
-    toggle.addEventListener('click', () => set(!open), { signal });
-    window.addEventListener('resize', () => {
-      const nextDesktop = window.innerWidth >= 1024;
-      if (nextDesktop !== desktop) set(false);
-      desktop = nextDesktop;
-    }, { signal });
+    toggle.addEventListener("click", () => set(!open), { signal });
+    window.addEventListener(
+      "resize",
+      () => {
+        const nextDesktop = window.innerWidth >= 1024;
+        if (nextDesktop !== desktop) set(false);
+        desktop = nextDesktop;
+      },
+      { signal },
+    );
     panel
-      .querySelectorAll('a')
-      .forEach((a) => a.addEventListener('click', () => set(false), { signal }));
+      .querySelectorAll("a")
+      .forEach((a) =>
+        a.addEventListener("click", () => set(false), { signal }),
+      );
     document.addEventListener(
-      'keydown',
+      "keydown",
       (e) => {
-        if (e.key === 'Escape' && open) {
+        if (e.key === "Escape" && open) {
           set(false);
           toggle.focus();
         }
       },
-      { signal }
+      { signal },
     );
   }
 
-  document.addEventListener('astro:page-load', wireMobileNav);
+  document.addEventListener("astro:page-load", wireMobileNav);
 
   // Desktop dropdowns: Escape dismisses the panel and returns focus to its
   // trigger. Inline hiding overrides :focus-within until focus/pointer leaves
   // the group, then resets so the next interaction can open it normally.
-  document.addEventListener('keydown', (e) => {
-    if (e.key !== 'Escape') return;
-    document.querySelectorAll<HTMLElement>('[data-nav-dropdown]').forEach((panel) => {
-      const group = panel.closest<HTMLElement>('li');
-      if (!group) return;
-      const focused = document.activeElement instanceof HTMLElement && group.contains(document.activeElement);
-      if (focused || group.matches(':hover')) {
-        const trigger = group.querySelector<HTMLElement>('[data-nav-dropdown-trigger]');
-        panel.style.visibility = 'hidden';
-        panel.style.opacity = '0';
-        panel.style.pointerEvents = 'none';
-        if (focused) trigger?.focus({ preventScroll: true });
-        const reset = () => {
-          panel.style.visibility = '';
-          panel.style.opacity = '';
-          panel.style.pointerEvents = '';
-        };
-        group.addEventListener('focusout', (event) => {
-          if (!group.contains(event.relatedTarget as Node | null)) reset();
-        }, { once: true });
-        group.addEventListener('mouseleave', reset, { once: true });
-      }
-    });
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    document
+      .querySelectorAll<HTMLElement>("[data-nav-dropdown]")
+      .forEach((panel) => {
+        const group = panel.closest<HTMLElement>("li");
+        if (!group) return;
+        const focused =
+          document.activeElement instanceof HTMLElement &&
+          group.contains(document.activeElement);
+        if (focused || group.matches(":hover")) {
+          const trigger = group.querySelector<HTMLElement>(
+            "[data-nav-dropdown-trigger]",
+          );
+          panel.style.visibility = "hidden";
+          panel.style.opacity = "0";
+          panel.style.pointerEvents = "none";
+          if (focused) trigger?.focus({ preventScroll: true });
+          const reset = () => {
+            panel.style.visibility = "";
+            panel.style.opacity = "";
+            panel.style.pointerEvents = "";
+          };
+          group.addEventListener(
+            "focusout",
+            (event) => {
+              if (!group.contains(event.relatedTarget as Node | null)) reset();
+            },
+            { once: true },
+          );
+          group.addEventListener("mouseleave", reset, { once: true });
+        }
+      });
   });
 </script>
