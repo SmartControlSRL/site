@@ -17,11 +17,16 @@ const configurations = {
     label: "Software",
     contain: true,
   },
+  "managed-services": {
+    route: "/servicii/managed/",
+    label: "Managed",
+    contain: true,
+  },
 };
 const key = process.argv[2];
 assert(
   Object.hasOwn(configurations, key),
-  "Usage: node scripts/check-service-video.mjs network-security|software-automation",
+  "Usage: node scripts/check-service-video.mjs network-security|software-automation|managed-services",
 );
 const config = configurations[key];
 
@@ -138,28 +143,28 @@ async function containedFrame(page) {
   assert.equal(
     frame.videoFit,
     "contain",
-    "Software video crops its supplied composition",
+    `${config.label} video crops its supplied composition`,
   );
   assert.equal(
     frame.imageFit,
     "contain",
-    "Software poster crops its supplied composition",
+    `${config.label} poster crops its supplied composition`,
   );
   assert.equal(
     frame.videoPosition,
     frame.imagePosition,
-    "Software poster/video alignment differs",
+    `${config.label} poster/video alignment differs`,
   );
   for (const kind of ["video", "image"])
     assert(
       frame[kind].every(
         (value, index) => Math.abs(value - frame.root[index]) <= 1,
       ),
-      `Software ${kind} does not fill the same media container`,
+      `${config.label} ${kind} does not fill the same media container`,
     );
   assert(
     Math.abs(frame.videoAspect - frame.imageAspect) < 0.001,
-    "Software poster/video aspect ratios would jump at playback",
+    `${config.label} poster/video aspect ratios would jump at playback`,
   );
   return frame.root;
 }
@@ -236,7 +241,7 @@ try {
         assert.deepEqual(
           await containedFrame(page),
           mediaFrame,
-          "Software media shifts when playback pauses",
+          `${config.label} media shifts when playback pauses`,
         );
       assert.equal(
         await button.innerText(),

@@ -27,12 +27,13 @@
     "verify:indexing": "node scripts/verify-indexing.mjs",
     "generate:social": "node scripts/generate-social-cards.mjs",
     "qa:static": "npm run check && npm run build && npm run check:links && npm run check:email && npm run check:claims && npm run check:deployment && npm run check:indexing && npm run check:localization",
-    "qa:browser": "npm run check:homepage && npm run check:cloud-video && npm run check:security-video && npm run check:software-video && npm run check:stack-teardown && npm run check:nav-responsive && npm run audit:site",
+    "qa:browser": "npm run check:homepage && npm run check:cloud-video && npm run check:security-video && npm run check:software-video && npm run check:managed-video && npm run check:stack-teardown && npm run check:nav-responsive && npm run audit:site",
     "qa": "npm run qa:static && npm run qa:browser",
     "check:homepage": "node scripts/check-homepage.mjs",
     "check:cloud-video": "node scripts/check-cloud-video.mjs",
     "check:security-video": "node scripts/check-service-video.mjs network-security",
-    "check:software-video": "node scripts/check-service-video.mjs software-automation"
+    "check:software-video": "node scripts/check-service-video.mjs software-automation",
+    "check:managed-video": "node scripts/check-service-video.mjs managed-services"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",

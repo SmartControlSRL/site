@@ -4,7 +4,12 @@ import { Pause, Play } from "@lucide/astro";
 import { getLangFromUrl } from "../i18n/ui";
 
 interface Props {
-  variant: "cloud" | "homepage" | "network-security" | "software-automation";
+  variant:
+    | "cloud"
+    | "homepage"
+    | "network-security"
+    | "software-automation"
+    | "managed-services";
 }
 const { variant } = Astro.props;
 const homepage = variant === "homepage";
@@ -13,9 +18,12 @@ const artwork = {
   homepage: "homepage-connected",
   "network-security": "network-security",
   "software-automation": "software-automation",
+  "managed-services": "managed-services",
 } as const;
 const poster =
-  variant === "network-security" || variant === "software-automation"
+  variant === "network-security" ||
+  variant === "software-automation" ||
+  variant === "managed-services"
     ? { name: `${variant}-video`, width: 1280, height: 720 }
     : undefined;
 const en = getLangFromUrl(Astro.url) === "en";
