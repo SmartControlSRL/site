@@ -4,23 +4,30 @@ import { Pause, Play } from "@lucide/astro";
 import { getLangFromUrl } from "../i18n/ui";
 
 interface Props {
-  variant: "cloud" | "homepage";
+  variant: "cloud" | "homepage" | "network-security";
 }
 const { variant } = Astro.props;
 const homepage = variant === "homepage";
+const artwork = {
+  cloud: "architecture-light",
+  homepage: "homepage-connected",
+  "network-security": "network-security",
+} as const;
+const poster =
+  variant === "network-security"
+    ? { name: "network-security-video", width: 1280, height: 720 }
+    : undefined;
 const en = getLangFromUrl(Astro.url) === "en";
 const pause = en ? "Pause video" : "Pauză video";
 const play = en ? "Play video" : "Redă video-ul";
 ---
 
-<AmbientArtwork
-  artwork={homepage ? "homepage-connected" : "architecture-light"}
->
+<AmbientArtwork artwork={artwork[variant]} poster={poster}>
   <video
     id={`${variant}-hero-video`}
     class="hero-video"
     data-hero-video={variant}
-    data-cloud-video={homepage ? undefined : ""}
+    data-cloud-video={variant === "cloud" ? "" : undefined}
     data-homepage-video={homepage ? "" : undefined}
     data-src={`/videos/${variant}-hero-1280.mp4`}
     data-src-mobile={`/videos/${variant}-hero-800.mp4`}
@@ -40,7 +47,7 @@ const play = en ? "Play video" : "Redă video-ul";
     { "hero-video-toggle--homepage": homepage },
   ]}
   data-hero-video-toggle
-  data-cloud-video-toggle={homepage ? undefined : ""}
+  data-cloud-video-toggle={variant === "cloud" ? "" : undefined}
   data-homepage-video-toggle={homepage ? "" : undefined}
   data-label-pause={pause}
   data-label-play={play}

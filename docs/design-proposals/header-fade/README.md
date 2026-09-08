@@ -28,4 +28,7 @@ Original WebP assets, headings, CTAs and homepage interactions are unchanged.
 Validation: `npm run qa:static` and `npm run qa:browser` pass. The all-route audit
 covers 18 routes × six profiles with zero contrast failures and 216 existing logo
 exemptions. The `check:cloud-video` regression covers actual playback/loop, pause,
-media loading/fallback and navigation lifecycle. Other detail headers remain static.
+media loading/fallback and navigation lifecycle. These frames and results record
+the initial Cloud-only pilot. The subsequent [homepage video](../homepage-video/README.md)
+and [Networking & Security video](../security-video/README.md) have their own
+current playback frames and review notes.

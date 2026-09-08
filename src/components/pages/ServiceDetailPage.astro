@@ -1,6 +1,6 @@
 ---
 import AmbientArtwork from "../AmbientArtwork.astro";
-import CloudHeroArtwork from "../CloudHeroArtwork.astro";
+import HeroVideoArtwork from "../HeroVideoArtwork.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TextLink from "../TextLink.astro";
 import MailtoLink from "../MailtoLink.astro";
@@ -22,6 +22,11 @@ const related = homeCopy[lang].services.filter(
   (item) => !content.canonicalPath.includes(item.href),
 );
 const cloud = content.canonicalPath.includes("/cloud");
+const videoVariant = cloud
+  ? "cloud"
+  : content.canonicalPath.includes("/securitate")
+    ? "network-security"
+    : undefined;
 const managed = content.canonicalPath.includes("/managed");
 const schema = {
   "@context": "https://schema.org",
@@ -47,8 +52,8 @@ const schema = {
   <div class="detail-page">
     <header class="detail-hero service-hero">
       {
-        cloud ? (
-          <CloudHeroArtwork />
+        videoVariant ? (
+          <HeroVideoArtwork variant={videoVariant} />
         ) : (
           <AmbientArtwork artwork={content.hero.artwork} />
         )

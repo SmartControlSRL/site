@@ -9,8 +9,14 @@ interface Props {
     | "optical-dark"
     | "homepage-connected";
   lazy?: boolean;
+  poster?: { name: string; width: number; height: number };
 }
-const { artwork: name, lazy = false } = Astro.props;
+const { artwork: name, lazy = false, poster } = Astro.props;
+const still = poster ?? {
+  name,
+  width: name === "homepage-connected" ? 1280 : 1600,
+  height: name === "homepage-connected" ? 720 : 900,
+};
 const productArtwork =
   name === "seknet-observability" || name === "svpn-connection";
 const variant = name === "optical-dark" || productArtwork ? "dark" : "light";
@@ -33,11 +39,14 @@ const variant = name === "optical-dark" || productArtwork ? "dark" : "light";
   aria-hidden="true"
 >
   <picture>
-    <source media="(max-width: 600px)" srcset={`/images/${name}-800.webp`} />
+    <source
+      media="(max-width: 600px)"
+      srcset={`/images/${still.name}-800.webp`}
+    />
     <img
-      src={`/images/${name}-${name === "homepage-connected" ? 1280 : 1600}.webp`}
-      width={name === "homepage-connected" ? 1280 : 1600}
-      height={name === "homepage-connected" ? 720 : 900}
+      src={`/images/${still.name}-${still.width}.webp`}
+      width={still.width}
+      height={still.height}
       alt=""
       loading={lazy ? "lazy" : "eager"}
       decoding="async"
