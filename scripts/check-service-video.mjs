@@ -1,10 +1,29 @@
-// Security-specific media integration. Detailed controller lifecycle and
+// Service-specific media integration. Detailed controller lifecycle and
 // autoplay behavior remain covered by check-cloud-video.mjs.
 import assert from "node:assert/strict";
 import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
 import { extname, join } from "node:path";
 import { chromium } from "playwright";
+
+const configurations = {
+  "network-security": {
+    route: "/servicii/securitate/",
+    label: "Security",
+    contain: false,
+  },
+  "software-automation": {
+    route: "/servicii/software/",
+    label: "Software",
+    contain: true,
+  },
+};
+const key = process.argv[2];
+assert(
+  Object.hasOwn(configurations, key),
+  "Usage: node scripts/check-service-video.mjs network-security|software-automation",
+);
+const config = configurations[key];
 
 const mime = {
   ".html": "text/html",
@@ -33,8 +52,8 @@ const server = createServer(async (request, response) => {
 });
 await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
 const base = `http://127.0.0.1:${server.address().port}`;
-const route = "/servicii/securitate/";
-const selector = '[data-hero-video="network-security"]';
+const route = config.route;
+const selector = `[data-hero-video="${key}"]`;
 const toggle = "[data-hero-video-toggle]";
 const errors = [];
 let browser;
@@ -68,21 +87,21 @@ async function playback(page, playing, query = selector) {
 
 async function fallback(page) {
   const image = page.locator(".detail-hero .ambient-artwork img");
-  assert(await image.isVisible(), "Security poster is hidden");
+  assert(await image.isVisible(), `${config.label} poster is hidden`);
   assert(
     await image.evaluate(
       (element) => element.complete && element.naturalWidth > 0,
     ),
-    "Security poster failed to load",
+    `${config.label} poster failed to load`,
   );
   assert.match(
     await image.evaluate((element) => element.currentSrc),
-    /\/images\/network-security-video-(800|1280)\.webp$/,
+    new RegExp(`/images/${key}-video-(800|1280)\\.webp$`),
   );
   assert.equal(
     await page.locator(selector).getAttribute("src"),
     null,
-    "Fallback still loads Security video",
+    `Fallback still loads ${config.label} video`,
   );
   assert(
     await page.locator(toggle).isHidden(),
@@ -94,6 +113,55 @@ async function fallback(page) {
       .locator('.detail-hero .detail-actions a[href^="mailto:"]')
       .isVisible(),
   );
+}
+
+async function containedFrame(page) {
+  const frame = await page.locator(selector).evaluate((video) => {
+    const root = video.closest(".ambient-artwork");
+    const image = root.querySelector("img");
+    const box = (element) => {
+      const rect = element.getBoundingClientRect();
+      return [rect.x + scrollX, rect.y + scrollY, rect.width, rect.height];
+    };
+    return {
+      root: box(root),
+      video: box(video),
+      image: box(image),
+      videoFit: getComputedStyle(video).objectFit,
+      imageFit: getComputedStyle(image).objectFit,
+      videoPosition: getComputedStyle(video).objectPosition,
+      imagePosition: getComputedStyle(image).objectPosition,
+      videoAspect: video.videoWidth / video.videoHeight,
+      imageAspect: image.naturalWidth / image.naturalHeight,
+    };
+  });
+  assert.equal(
+    frame.videoFit,
+    "contain",
+    "Software video crops its supplied composition",
+  );
+  assert.equal(
+    frame.imageFit,
+    "contain",
+    "Software poster crops its supplied composition",
+  );
+  assert.equal(
+    frame.videoPosition,
+    frame.imagePosition,
+    "Software poster/video alignment differs",
+  );
+  for (const kind of ["video", "image"])
+    assert(
+      frame[kind].every(
+        (value, index) => Math.abs(value - frame.root[index]) <= 1,
+      ),
+      `Software ${kind} does not fill the same media container`,
+    );
+  assert(
+    Math.abs(frame.videoAspect - frame.imageAspect) < 0.001,
+    "Software poster/video aspect ratios would jump at playback",
+  );
+  return frame.root;
 }
 
 try {
@@ -113,25 +181,22 @@ try {
       const button = page.locator(toggle);
       const size = width <= 600 ? 800 : 1280;
       assert.equal(await video.count(), 1);
-      assert.equal(
-        await video.getAttribute("id"),
-        "network-security-hero-video",
-      );
+      assert.equal(await video.getAttribute("id"), `${key}-hero-video`);
       assert.equal(
         await video.getAttribute("src"),
-        `/videos/network-security-hero-${size}.mp4`,
+        `/videos/${key}-hero-${size}.mp4`,
       );
       assert.match(
         await page
           .locator(".detail-hero .ambient-artwork img")
           .evaluate((image) => image.currentSrc),
-        new RegExp(`/images/network-security-video-${size}\\.webp$`),
+        new RegExp(`/images/${key}-video-${size}\\.webp$`),
       );
       assert(
         await video.evaluate(
           (element) => element.muted && element.playsInline && element.loop,
         ),
-        "Security media must be muted, inline and looping",
+        `${config.label} media must be muted, inline and looping`,
       );
       assert.equal(
         await button.innerText(),
@@ -164,8 +229,15 @@ try {
         geometry.fits && geometry.usable && !geometry.overlaps,
         `${prefix + route}@${width}: invalid control geometry ${JSON.stringify(geometry)}`,
       );
+      const mediaFrame = config.contain ? await containedFrame(page) : null;
       await button.click();
       await playback(page, false);
+      if (config.contain)
+        assert.deepEqual(
+          await containedFrame(page),
+          mediaFrame,
+          "Software media shifts when playback pauses",
+        );
       assert.equal(
         await button.innerText(),
         prefix ? "Play video" : "Redă video-ul",
@@ -208,13 +280,13 @@ try {
     assert.deepEqual(
       requests,
       [],
-      `${mode}: Security fallback downloads media`,
+      `${mode}: ${config.label} fallback downloads media`,
     );
     await context.close();
   }
 
   const failure = await browser.newContext();
-  await failure.route("**/videos/network-security-hero-*.mp4", (request) =>
+  await failure.route(`**/videos/${key}-hero-*.mp4`, (request) =>
     request.fulfill({ status: 404, body: "missing" }),
   );
   const failedPage = await failure.newPage();
@@ -234,7 +306,7 @@ try {
   await page.goto(base + route);
   await playback(page, true);
   await page.locator(toggle).click();
-  const oldSecurity = await page.locator(selector).elementHandle();
+  const oldService = await page.locator(selector).elementHandle();
   const originalDocument = await page.evaluateHandle(() => document);
   await page.locator('footer a[href="/servicii/cloud/"]').first().click();
   await page.waitForURL(base + "/servicii/cloud/");
@@ -244,11 +316,11 @@ try {
     "Expected Astro client navigation",
   );
   assert(
-    await oldSecurity.evaluate(
+    await oldService.evaluate(
       (video) =>
         !video.isConnected && video.paused && !video.hasAttribute("src"),
     ),
-    "Old Security video remains loaded after navigation",
+    `Old ${config.label} video remains loaded after navigation`,
   );
   await page.locator(toggle).click();
   const oldCloud = await page.locator("[data-cloud-video]").elementHandle();
@@ -265,18 +337,19 @@ try {
   assert.equal(
     await page.locator(toggle).innerText(),
     "Redă video-ul",
-    "Security pause was not restored",
+    `${config.label} pause was not restored`,
   );
   assert.equal(
     await page.locator(selector).getAttribute("src"),
     null,
-    "Paused Security video downloaded on re-entry",
+    `Paused ${config.label} video downloaded on re-entry`,
   );
   await page.locator(toggle).press("Space");
   await playback(page, true);
   assert.equal(
-    await page.evaluate(() =>
-      sessionStorage.getItem("smartcontrol-network-security-video-paused"),
+    await page.evaluate(
+      (key) => sessionStorage.getItem(`smartcontrol-${key}-video-paused`),
+      key,
     ),
     "false",
   );
@@ -286,7 +359,7 @@ try {
   assert.equal(
     await page.locator(toggle).innerText(),
     "Redă video-ul",
-    "Security resume changed Cloud preference",
+    `${config.label} resume changed Cloud preference`,
   );
   assert.equal(
     await page.locator("[data-cloud-video]").getAttribute("src"),
@@ -297,28 +370,34 @@ try {
   const others = await browser.newPage();
   const requests = [];
   others.on("request", (request) => {
-    if (request.url().includes("/videos/network-security-hero-"))
+    if (request.url().includes(`/videos/${key}-hero-`))
       requests.push(request.url());
   });
   for (const prefix of ["", "/en"])
     for (const path of [
       "/",
+      "/servicii/cloud/",
+      "/servicii/securitate/",
       "/servicii/software/",
       "/servicii/managed/",
       "/solutii/seknet/",
       "/solutii/s-vpn/",
-    ]) {
+    ].filter((path) => path !== route)) {
       await others.goto(base + prefix + path, { waitUntil: "networkidle" });
       assert.equal(
         await others.locator(selector).count(),
         0,
-        `${prefix + path}: unexpected Security video`,
+        `${prefix + path}: unexpected ${config.label} video`,
       );
     }
-  assert.deepEqual(requests, [], "Unrelated pages download Security video");
-  assert.deepEqual(errors, [], "Security browser errors");
+  assert.deepEqual(
+    requests,
+    [],
+    `Unrelated pages download ${config.label} video`,
+  );
+  assert.deepEqual(errors, [], `${config.label} browser errors`);
   console.log(
-    "Security video check passed: RO/EN at 320/390/1280px, correct media/poster sources, actual playback/loop, keyboard pause and geometry, reduced-motion/no-JS/save-data without downloads, error fallback, Astro teardown and independent Cloud/Security preferences, Security-only media scope.",
+    `${config.label} video check passed: RO/EN at 320/390/1280px, correct media/poster sources, actual playback/loop, keyboard pause and geometry${config.contain ? ", matching contained media/poster frames" : ""}, reduced-motion/no-JS/save-data without downloads, error fallback, Astro teardown and independent Cloud/${config.label} preferences, service-only media scope.`,
   );
 } finally {
   await browser?.close();

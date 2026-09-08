@@ -22,11 +22,13 @@ const related = homeCopy[lang].services.filter(
   (item) => !content.canonicalPath.includes(item.href),
 );
 const cloud = content.canonicalPath.includes("/cloud");
-const videoVariant = cloud
-  ? "cloud"
-  : content.canonicalPath.includes("/securitate")
-    ? "network-security"
-    : undefined;
+const videoVariants = {
+  "architecture-light": "cloud",
+  "network-security": "network-security",
+  "software-automation": "software-automation",
+  "managed-services": undefined,
+} as const;
+const videoVariant = videoVariants[content.hero.artwork];
 const managed = content.canonicalPath.includes("/managed");
 const schema = {
   "@context": "https://schema.org",

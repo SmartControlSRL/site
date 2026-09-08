@@ -65,13 +65,15 @@ preview noindex and the production hosting plan remain intact.
 Detail headers retain their approved still images with soft gradient edges. The
 service-header background also blends into the white section below. The rejected
 SVG/CSS header animation treatment has been removed. The owner-supplied Veo clip
-is integrated on Cloud, Home and Networking & Security in both languages. Each
+is integrated on Cloud, Home, Networking & Security and Software & Automation
+in both languages. Each
 uses its own supplied clip. They share playback controls and lifecycle handling, with separate
 session pause preferences. No MP4 is loaded without JavaScript, with reduced
 motion or with save-data. See the [Cloud header review](../header-fade/README.md)
 and [homepage video review](../homepage-video/README.md). The
 [Networking & Security video review](../security-video/README.md) records its
-source animation artefact and loop treatment.
+source animation artefact and loop treatment. The [Software video review](../software-video/README.md)
+records its preserved sequence and matching poster/video framing.
 
 ## Review evidence
 

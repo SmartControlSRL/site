@@ -71,11 +71,11 @@ const variant = name === "optical-dark" || productArtwork ? "dark" : "light";
   .ambient-artwork img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: var(--artwork-fit, cover);
     object-position: center right;
   }
-  .ambient-artwork--contained img {
-    object-fit: contain;
+  .ambient-artwork--contained {
+    --artwork-fit: contain;
   }
   .ambient-artwork--homepage picture {
     position: absolute;
