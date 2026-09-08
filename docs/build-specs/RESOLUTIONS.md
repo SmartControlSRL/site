@@ -176,3 +176,8 @@ light navigation/footer, accurate diagrams and claims policy. Asset prompts and
 delivery files are recorded in `docs/design-proposals/homepage/generated-artwork.md`.
 Product-page navigation now uses the relevant product demo action, keeping one
 conversion purpose throughout the page.
+
+The owner subsequently rejected sharing one header image across the four service
+pages. Give each service a distinct subject and composition within the same light
+blue palette; retain the architectural image only on Infrastructure & Cloud.
+Assign artwork explicitly per service and preserve the mapping across RO and EN.

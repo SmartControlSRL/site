@@ -10,6 +10,7 @@ export const cloudPages: Record<Lang, ServicePageContent> = {
     schemaName: "Infrastructură & Cloud",
     schemaServiceType: "Enterprise infrastructure and cloud services",
     hero: {
+      artwork: "architecture-light",
       eyebrow: "Infrastructură & Cloud",
       lead: "O bază solidă.",
       accent: "Loc pentru evoluție.",
@@ -90,6 +91,7 @@ export const cloudPages: Record<Lang, ServicePageContent> = {
     schemaName: "Infrastructure & Cloud",
     schemaServiceType: "Enterprise infrastructure and cloud services",
     hero: {
+      artwork: "architecture-light",
       eyebrow: "Infrastructure & Cloud",
       lead: "A solid foundation.",
       accent: "Room to evolve.",

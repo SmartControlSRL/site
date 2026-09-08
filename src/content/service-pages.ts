@@ -26,6 +26,7 @@ import type { FlowStep } from '../components/RouteFlowVisual.astro';
 type IconComponent = typeof Server;
 
 export type ServicePageKey = 'security' | 'software' | 'managed';
+export type ServiceArtwork = 'architecture-light' | 'network-security' | 'software-automation' | 'managed-services';
 
 export interface Capability {
   title: string;
@@ -49,6 +50,7 @@ export interface ServicePageContent {
   schemaName: string;
   schemaServiceType: string | string[];
   hero: {
+    artwork: ServiceArtwork;
     eyebrow: string;
     lead: string;
     accent: string;
@@ -91,6 +93,7 @@ const security: Record<Lang, ServicePageContent> = {
     schemaName: 'Networking & Security',
     schemaServiceType: 'Enterprise Networking and Security Services',
     hero: {
+      artwork: 'network-security',
       eyebrow: 'Networking & Security',
       lead: 'Monitorizăm rețeaua.',
       accent: 'Coordonăm răspunsul.',
@@ -139,6 +142,7 @@ const security: Record<Lang, ServicePageContent> = {
     schemaName: 'Networking & Security',
     schemaServiceType: 'Enterprise Networking and Security Services',
     hero: {
+      artwork: 'network-security',
       eyebrow: 'Networking & Security',
       lead: 'We monitor the network.',
       accent: 'We coordinate the response.',
@@ -189,7 +193,7 @@ const software: Record<Lang, ServicePageContent> = {
     canonicalPath: '/servicii/software/',
     schemaName: 'Software & Automatizare',
     schemaServiceType: ['Custom Software Development', 'DevOps', 'DevSecOps', 'Application Modernisation', 'AI Automation'],
-    hero: { eyebrow: 'Software & Automatizare', lead: 'Dezvoltare software', accent: 'end-to-end', body: 'De la arhitectura inițială până la deployment în producție: dezvoltare custom, DevSecOps, modernizare și automatizare cu AI, cu responsabilități clare pe întregul ciclu de livrare.', secondary: 'Vezi capabilitățile' },
+    hero: { artwork: 'software-automation', eyebrow: 'Software & Automatizare', lead: 'Dezvoltare software', accent: 'end-to-end', body: 'De la arhitectura inițială până la deployment în producție: dezvoltare custom, DevSecOps, modernizare și automatizare cu AI, cu responsabilități clare pe întregul ciclu de livrare.', secondary: 'Vezi capabilitățile' },
     flow: {
       eyebrow: 'Ciclu de livrare',
       heading: 'Un traseu clar de la problemă la operare',
@@ -230,7 +234,7 @@ const software: Record<Lang, ServicePageContent> = {
     canonicalPath: '/en/servicii/software/',
     schemaName: 'Software & Automation',
     schemaServiceType: ['Custom Software Development', 'DevOps', 'DevSecOps', 'Application Modernisation', 'AI Automation'],
-    hero: { eyebrow: 'Software & Automation', lead: 'End-to-end', accent: 'software delivery', body: 'From initial architecture to production deployment: custom development, DevSecOps, modernisation, and AI automation, with clear responsibilities across the delivery lifecycle.', secondary: 'View capabilities' },
+    hero: { artwork: 'software-automation', eyebrow: 'Software & Automation', lead: 'End-to-end', accent: 'software delivery', body: 'From initial architecture to production deployment: custom development, DevSecOps, modernisation, and AI automation, with clear responsibilities across the delivery lifecycle.', secondary: 'View capabilities' },
     flow: {
       eyebrow: 'Delivery lifecycle',
       heading: 'A clear path from problem to operation',
@@ -274,7 +278,7 @@ const managed: Record<Lang, ServicePageContent> = {
     canonicalPath: '/servicii/managed/',
     schemaName: 'Servicii Gestionate — Smart Control',
     schemaServiceType: 'Managed IT Services',
-    hero: { eyebrow: 'Servicii Gestionate', lead: 'Dincolo de implementare.', accent: 'Alături de echipa ta.', body: 'Conectăm operarea, monitorizarea și suportul într-o relație continuă pentru mediul IT. Responsabilitățile și nivelurile de servicii sunt definite contractual.', secondary: 'Vezi capabilitățile' },
+    hero: { artwork: 'managed-services', eyebrow: 'Servicii Gestionate', lead: 'Dincolo de implementare.', accent: 'Alături de echipa ta.', body: 'Conectăm operarea, monitorizarea și suportul într-o relație continuă pentru mediul IT. Responsabilitățile și nivelurile de servicii sunt definite contractual.', secondary: 'Vezi capabilitățile' },
     flow: {
       eyebrow: 'Model operațional',
       heading: 'Un ciclu comun pentru operare și îmbunătățire',
@@ -316,7 +320,7 @@ const managed: Record<Lang, ServicePageContent> = {
     canonicalPath: '/en/servicii/managed/',
     schemaName: 'Managed Services — Smart Control',
     schemaServiceType: 'Managed IT Services',
-    hero: { eyebrow: 'Managed Services', lead: 'Beyond implementation.', accent: 'Alongside your team.', body: 'We connect operations, monitoring and support in an ongoing relationship across your IT environment. Responsibilities and service levels are defined contractually.', secondary: 'View capabilities' },
+    hero: { artwork: 'managed-services', eyebrow: 'Managed Services', lead: 'Beyond implementation.', accent: 'Alongside your team.', body: 'We connect operations, monitoring and support in an ongoing relationship across your IT environment. Responsibilities and service levels are defined contractually.', secondary: 'View capabilities' },
     flow: {
       eyebrow: 'Operating model',
       heading: 'One cycle for operations and improvement',

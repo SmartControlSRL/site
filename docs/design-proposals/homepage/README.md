@@ -35,10 +35,13 @@ The diagrams describe concepts and contain no invented telemetry or customer dat
 
 ## Artwork and final UI review
 
-The service heroes use a light architectural material study; product heroes and
-Home's product band use a dark optical-glass image. An independent asset agent
-generated both with the built-in image tool. Optimised desktop images total
-72,876 bytes, with smaller mobile variants. [Prompts and files](generated-artwork.md).
+Each service has its own light hero artwork: architectural planes for
+Infrastructure & Cloud, routed connections for Networking & Security, modular
+assembly for Software & Automation, and a circular mechanism for Managed Services.
+The same service uses the same image in both languages. Product heroes and Home's
+product band use a dark optical-glass image. An independent asset agent generated
+the artwork with the built-in image tool. All images have optimised desktop and
+mobile WebP variants. [Prompts and files](generated-artwork.md).
 
 The review shortened service heroes, removed repeated capability lists and the
 redundant homepage process strip, balanced product capability/related grids,

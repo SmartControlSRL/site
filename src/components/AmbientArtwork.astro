@@ -1,21 +1,30 @@
 ---
+import type { ServiceArtwork } from "../content/service-pages";
+
 interface Props {
-  variant: "light" | "dark";
+  artwork: ServiceArtwork | "optical-dark";
   lazy?: boolean;
 }
-const { variant, lazy = false } = Astro.props;
-const name = variant === "light" ? "architecture-light" : "optical-dark";
+const { artwork: name, lazy = false } = Astro.props;
+const variant = name === "optical-dark" ? "dark" : "light";
 ---
 
 <picture
-  class:list={["ambient-artwork", `ambient-artwork--${variant}`]}
+  class:list={[
+    "ambient-artwork",
+    `ambient-artwork--${variant}`,
+    {
+      "ambient-artwork--contained":
+        name === "software-automation" || name === "managed-services",
+    },
+  ]}
   aria-hidden="true"
 >
   <source media="(max-width: 600px)" srcset={`/images/${name}-800.webp`} />
   <img
     src={`/images/${name}-1600.webp`}
-    width="1672"
-    height="941"
+    width="1600"
+    height="900"
     alt=""
     loading={lazy ? "lazy" : "eager"}
     decoding="async"
@@ -35,6 +44,9 @@ const name = variant === "light" ? "architecture-light" : "optical-dark";
     height: 100%;
     object-fit: cover;
     object-position: center right;
+  }
+  .ambient-artwork--contained img {
+    object-fit: contain;
   }
   .ambient-artwork::after {
     content: "";
