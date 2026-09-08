@@ -7,6 +7,7 @@
 | Command | Gate |
 |---|---|
 | `npm run check:homepage` | Homepage geometry, early CTA, motion controls, reduced motion, route re-entry and no-JS contact in RO/EN |
+| `npm run check:artwork-motion` | All 12 detail routes, image/effect timelines, keyboard pause, offscreen suspension, reduced motion, no-JS, session preference and Astro teardown |
 | `npm run check` | Astro/type diagnostics |
 | `npm run build` | Production static generation |
 | `npm run check:links` | Internal links, fragments, hreflang, RO/EN parity, sitemap and the #26-approved 404 contract |
@@ -27,7 +28,14 @@ The only current contrast exemption is the bright-blue `Control` portion of the 
 
 The audit expects generated `/404` and `/en/404/` documents to return HTTP 404. Their parity, metadata, sitemap and linking rules are owned by `scripts/check-links.mjs`. Navigation errors, unexpected status codes, browser page errors, missing LCP and smoke-test failures are blocking.
 
-`npm run qa:browser` runs the three focused component regressions before the all-route browser audit. All four browser checks are part of `npm run qa` and therefore block CI.
+`npm run qa:browser` runs four focused component regressions before the all-route browser audit. All five browser checks are part of `npm run qa` and therefore block CI.
+
+The artwork regression verifies actual changing image transforms and animation
+timelines, frozen timelines while paused/offscreen, 320/390/1280px geometry,
+localised controls, live reduced-motion changes, no-JS content, cancellation on
+Astro route swaps and a pause preference preserved within the browser session.
+Visibility changes also pause the runtime; verify real tab hiding manually because
+automated Chromium does not reliably produce background-tab visibility changes.
 
 Service and product detail structures use typed localized records in
 `src/content/` and render through `src/components/pages/`. The localisation

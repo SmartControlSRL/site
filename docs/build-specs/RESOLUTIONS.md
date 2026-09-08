@@ -185,3 +185,13 @@ Assign artwork explicitly per service and preserve the mapping across RO and EN.
 The same correction applies to products: SEKNET and S-VPN each have their own dark
 hero image, distinct from the homepage product-band background. Give the artwork
 visible space and preserve the labelled conceptual summaries and demo actions.
+
+### Header artwork motion (owner request, 2026-09-08)
+
+The owner approved the new header images and requested animation using specialised
+agents. Preserve the approved images and add restrained, image-aligned motion to
+all six service/product detail headers in both languages. Use separate service
+and product motion work plus independent lifecycle/accessibility QA. Provide a
+pause control, honour reduced motion, suspend work offscreen and in hidden tabs,
+and clean up on Astro navigation. No video downloads or new animation dependency
+are needed for the chosen SVG/CSS and Web Animations implementation.

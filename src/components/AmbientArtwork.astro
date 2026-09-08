@@ -1,6 +1,10 @@
 ---
 import type { ServiceArtwork } from "../content/service-pages";
 import type { ProductArtwork } from "../content/product-pages";
+import { Pause, Play } from "@lucide/astro";
+import ServiceArtworkEffects from "./artwork/ServiceArtworkEffects.astro";
+import ProductArtworkEffects from "./artwork/ProductArtworkEffects.astro";
+import { getLangFromUrl } from "../i18n/ui";
 
 interface Props {
   artwork: ServiceArtwork | ProductArtwork | "optical-dark";
@@ -10,9 +14,15 @@ const { artwork: name, lazy = false } = Astro.props;
 const productArtwork =
   name === "seknet-observability" || name === "svpn-connection";
 const variant = name === "optical-dark" || productArtwork ? "dark" : "light";
+const animated = name !== "optical-dark";
+const en = getLangFromUrl(Astro.url) === "en";
+const pauseLabel = en ? "Pause animation" : "Oprește animația";
+const resumeLabel = en ? "Resume animation" : "Reia animația";
+const artworkId = `artwork-${name}`;
 ---
 
-<picture
+<div
+  id={artworkId}
   class:list={[
     "ambient-artwork",
     `ambient-artwork--${variant}`,
@@ -24,19 +34,63 @@ const variant = name === "optical-dark" || productArtwork ? "dark" : "light";
         productArtwork,
     },
   ]}
+  data-artwork-name={name}
+  data-artwork-animated={animated ? "" : undefined}
+  data-artwork-state="static"
   aria-hidden="true"
 >
-  <source media="(max-width: 600px)" srcset={`/images/${name}-800.webp`} />
-  <img
-    src={`/images/${name}-1600.webp`}
-    width="1600"
-    height="900"
-    alt=""
-    loading={lazy ? "lazy" : "eager"}
-    decoding="async"
-    fetchpriority="low"
-  />
-</picture>
+  <div class="artwork-layer" data-artwork-layer>
+    <picture>
+      <source media="(max-width: 600px)" srcset={`/images/${name}-800.webp`} />
+      <img
+        src={`/images/${name}-1600.webp`}
+        width="1600"
+        height="900"
+        alt=""
+        loading={lazy ? "lazy" : "eager"}
+        decoding="async"
+        fetchpriority="low"
+      />
+    </picture>
+    {
+      animated &&
+        (productArtwork ? (
+          <ProductArtworkEffects artwork={name as ProductArtwork} />
+        ) : (
+          <ServiceArtworkEffects artwork={name as ServiceArtwork} />
+        ))
+    }
+  </div>
+</div>
+{
+  animated && (
+    <button
+      type="button"
+      class="artwork-toggle"
+      data-artwork-toggle={name}
+      data-label-pause={pauseLabel}
+      data-label-resume={resumeLabel}
+      aria-controls={artworkId}
+      aria-label={pauseLabel}
+      aria-pressed="false"
+      title={pauseLabel}
+      hidden
+    >
+      <Pause
+        size={17}
+        stroke-width={1.8}
+        aria-hidden="true"
+        data-artwork-pause-icon
+      />
+      <Play
+        size={17}
+        stroke-width={1.8}
+        aria-hidden="true"
+        data-artwork-play-icon
+      />
+    </button>
+  )
+}
 <style>
   .ambient-artwork {
     position: absolute;
@@ -44,6 +98,27 @@ const variant = name === "optical-dark" || productArtwork ? "dark" : "light";
     overflow: hidden;
     pointer-events: none;
     z-index: 0;
+    --artwork-play-state: paused;
+  }
+  .ambient-artwork[data-artwork-state="running"] {
+    --artwork-play-state: running;
+  }
+  .artwork-layer {
+    position: absolute;
+    inset: 0;
+    transform-origin: 80% 50%;
+  }
+  .artwork-layer picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .ambient-artwork :global(.artwork-effects) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
   }
   .ambient-artwork img {
     width: 100%;
@@ -77,10 +152,13 @@ const variant = name === "optical-dark" || productArtwork ? "dark" : "light";
     );
   }
   @media (min-width: 901px) {
-    .ambient-artwork--product img {
+    .ambient-artwork--product img,
+    .ambient-artwork--product :global(.artwork-effects) {
       position: absolute;
       top: 50%;
       right: 0;
+      bottom: auto;
+      left: auto;
       width: 85%;
       height: auto;
       max-height: 100%;
@@ -110,4 +188,53 @@ const variant = name === "optical-dark" || productArtwork ? "dark" : "light";
       background: color-mix(in srgb, var(--color-midnight) 78%, transparent);
     }
   }
+  .artwork-toggle {
+    position: absolute;
+    top: 16px;
+    right: clamp(20px, 2vw, 32px);
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--color-border-blue);
+    border-radius: 50%;
+    background: var(--color-surface);
+    color: var(--color-navy);
+    cursor: pointer;
+  }
+  .artwork-toggle:hover {
+    background: var(--color-page);
+  }
+  .artwork-toggle:focus-visible {
+    outline: 3px solid var(--color-bright);
+    outline-offset: 4px;
+  }
+  .artwork-toggle[hidden],
+  .artwork-toggle :global([data-artwork-play-icon]),
+  .artwork-toggle[aria-pressed="true"] :global([data-artwork-pause-icon]) {
+    display: none;
+  }
+  .artwork-toggle[aria-pressed="true"] :global([data-artwork-play-icon]) {
+    display: block;
+  }
+  .ambient-artwork[data-artwork-state="static"]
+    :global([data-artwork-effects] *) {
+    animation: none !important;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .artwork-toggle,
+    .ambient-artwork :global([data-artwork-effects]) {
+      display: none !important;
+    }
+    .artwork-layer {
+      transform: none !important;
+    }
+    .ambient-artwork :global([data-artwork-effects] *) {
+      animation: none !important;
+    }
+  }
 </style>
+<script>
+  import "../scripts/artwork-motion";
+</script>

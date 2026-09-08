@@ -27,9 +27,10 @@
     "verify:indexing": "node scripts/verify-indexing.mjs",
     "generate:social": "node scripts/generate-social-cards.mjs",
     "qa:static": "npm run check && npm run build && npm run check:links && npm run check:email && npm run check:claims && npm run check:deployment && npm run check:indexing && npm run check:localization",
-    "qa:browser": "npm run check:homepage && npm run check:stack-teardown && npm run check:nav-responsive && npm run audit:site",
+    "qa:browser": "npm run check:homepage && npm run check:artwork-motion && npm run check:stack-teardown && npm run check:nav-responsive && npm run audit:site",
     "qa": "npm run qa:static && npm run qa:browser",
-    "check:homepage": "node scripts/check-homepage.mjs"
+    "check:homepage": "node scripts/check-homepage.mjs",
+    "check:artwork-motion": "node scripts/check-artwork-motion.mjs"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
