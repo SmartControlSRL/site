@@ -4,6 +4,7 @@
 // The two locale-specific 404 files are deployment error documents rather
 // than navigable routes. They remain fully link-checked, but are explicitly
 // excluded from parity and sitemap expectations and must not emit route SEO.
+import { retiredRoutes } from './retired-routes.mjs';
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { hasRobotsMeta } from './robots-directives.mjs';
@@ -20,6 +21,7 @@ const pages = [];
 
 const errors = [];
 const routeOf = (fp) => '/' + fp.replace(/^dist\//, '').replace(/index\.html$/, '').replace(/\.html$/, '');
+const REDIRECT_ROUTES = new Set(Object.keys(retiredRoutes));
 const ERROR_DOCUMENT_ROUTES = new Set(['/404', '/en/404/']);
 const ERROR_DOCUMENT_TARGETS = new Set(['/404', '/404/', '/en/404', '/en/404/']);
 
@@ -98,8 +100,8 @@ for (const r of routes) {
 // sitemap coverage
 const sm = readFileSync(join(DIST, 'sitemap-0.xml'), 'utf8');
 for (const r of routes) {
-  const inSitemap = sm.includes(`https://smartcontrol.ro${r}`);
-  if (ERROR_DOCUMENT_ROUTES.has(r)) {
+  const inSitemap = sm.includes(`<loc>https://smartcontrol.ro${r}</loc>`);
+  if (ERROR_DOCUMENT_ROUTES.has(r) || REDIRECT_ROUTES.has(r)) {
     if (inSitemap) errors.push(`sitemap: non-indexable route must be excluded ${r}`);
     continue;
   }

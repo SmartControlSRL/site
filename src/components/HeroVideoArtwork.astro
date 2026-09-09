@@ -1,0 +1,157 @@
+---
+import AmbientArtwork from "./AmbientArtwork.astro";
+import { Pause, Play } from "@lucide/astro";
+import { getLangFromUrl } from "../i18n/ui";
+
+interface Props {
+  variant:
+    | "cloud"
+    | "homepage"
+    | "network-security"
+    | "software-automation"
+    | "managed-services"
+    | "seknet"
+    | "s-vpn";
+}
+const { variant } = Astro.props;
+const homepage = variant === "homepage";
+const artwork = {
+  cloud: "architecture-light",
+  homepage: "homepage-connected",
+  "network-security": "network-security",
+  "software-automation": "software-automation",
+  "managed-services": "managed-services",
+  seknet: "seknet-observability",
+  "s-vpn": "svpn-connection",
+} as const;
+const poster =
+  variant === "network-security" ||
+  variant === "software-automation" ||
+  variant === "managed-services" ||
+  variant === "seknet" ||
+  variant === "s-vpn"
+    ? { name: `${variant}-video`, width: 1280, height: 720 }
+    : undefined;
+const en = getLangFromUrl(Astro.url) === "en";
+const pause = en ? "Pause video" : "Pauză video";
+const play = en ? "Play video" : "Redă video-ul";
+---
+
+<AmbientArtwork artwork={artwork[variant]} poster={poster}>
+  <video
+    id={`${variant}-hero-video`}
+    class="hero-video"
+    data-hero-video={variant}
+    data-cloud-video={variant === "cloud" ? "" : undefined}
+    data-homepage-video={homepage ? "" : undefined}
+    data-src={`/videos/${variant}-hero-1280.mp4`}
+    data-src-mobile={`/videos/${variant}-hero-800.mp4`}
+    preload="none"
+    muted
+    playsinline
+    loop
+    width="1280"
+    height="720"
+    aria-hidden="true"
+    tabindex="-1"></video>
+</AmbientArtwork>
+<button
+  type="button"
+  class:list={[
+    "hero-video-toggle",
+    {
+      "hero-video-toggle--homepage": homepage,
+      "hero-video-toggle--dark": variant === "seknet" || variant === "s-vpn",
+    },
+  ]}
+  data-hero-video-toggle
+  data-cloud-video-toggle={variant === "cloud" ? "" : undefined}
+  data-homepage-video-toggle={homepage ? "" : undefined}
+  data-label-pause={pause}
+  data-label-play={play}
+  data-paused="false"
+  aria-controls={`${variant}-hero-video`}
+  hidden
+>
+  <Pause size={15} stroke-width={1.5} aria-hidden="true" data-video-pause />
+  <Play size={15} stroke-width={1.5} aria-hidden="true" data-video-play />
+  <span data-video-label>{pause}</span>
+</button>
+
+<style>
+  .hero-video {
+    position: absolute;
+    inset-block: 0;
+    left: var(--artwork-left, 0);
+    width: var(--artwork-width, 100%);
+    max-width: none;
+    height: 100%;
+    object-fit: var(--artwork-fit, cover);
+    object-position: center right;
+    opacity: 0;
+    transition: opacity 450ms ease;
+  }
+  .hero-video[data-ready="true"] {
+    opacity: 1;
+  }
+  .hero-video-toggle {
+    position: absolute;
+    right: max(20px, calc((100% - 1180px) / 2));
+    bottom: 14px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding-inline: 12px;
+    border-radius: 6px;
+    color: var(--color-navy);
+    background: var(--color-surface);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .hero-video-toggle:hover {
+    background: var(--color-page);
+  }
+  .hero-video-toggle--dark {
+    color: var(--color-sky);
+    background: var(--color-midnight);
+    border: 1px solid var(--color-royal);
+  }
+  .hero-video-toggle--dark:hover {
+    background: var(--color-navy);
+  }
+  .hero-video-toggle:focus-visible {
+    outline: 3px solid var(--color-bright);
+    outline-offset: 3px;
+  }
+  .hero-video-toggle[hidden],
+  .hero-video-toggle :global([data-video-play]),
+  .hero-video-toggle[data-paused="true"] :global([data-video-pause]) {
+    display: none;
+  }
+  .hero-video-toggle[data-paused="true"] :global([data-video-play]) {
+    display: block;
+  }
+  @media (max-width: 900px) {
+    .hero-video-toggle {
+      top: 12px;
+      bottom: auto;
+    }
+    .hero-video-toggle--homepage {
+      top: auto;
+      bottom: 6px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-video,
+    .hero-video-toggle {
+      display: none;
+      transition: none;
+    }
+  }
+</style>
+<script>
+  import "../scripts/hero-video";
+</script>

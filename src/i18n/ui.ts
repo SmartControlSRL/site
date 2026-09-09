@@ -15,9 +15,10 @@ export type Lang = keyof typeof languages;
 export const ui = {
   ro: {
     // — Nav —
-    'nav.services': 'Servicii',
-    'nav.products': 'Soluții',
-    'nav.cloud': 'Cloud & Modernizare',
+    'nav.services': 'Expertiză',
+    'nav.products': 'Produse',
+    'nav.approach': 'Cum lucrăm',
+    'nav.cloud': 'Infrastructură & Cloud',
     'nav.seknet': 'SEKNET',
     'nav.svpn': 'S-VPN',
     'nav.contact': 'Contact',
@@ -37,10 +38,9 @@ export const ui = {
     'subject.demo.svpn': 'Demo S-VPN',
     // — Footer —
     'footer.tagline': 'Trusted Service Delivery Partner',
-    'footer.blurb':
-      'Servicii IT enterprise și securitate cibernetică pentru companii din România și internațional, coordonate de echipa Smart Control.',
+    "footer.blurb": "Servicii IT enterprise și securitate cibernetică pentru companii din România și internațional, coordonate de echipa Smart Control.",
     'footer.col.services': 'Servicii',
-    'footer.col.solutions': 'Soluții',
+    'footer.col.solutions': 'Produse',
     'footer.col.contact': 'Contact',
     'footer.service.infra': 'Infrastructură & Cloud',
     'footer.service.security': 'Networking & Security',
@@ -61,9 +61,10 @@ export const ui = {
   },
   en: {
     // — Nav —
-    'nav.services': 'Services',
-    'nav.products': 'Solutions',
-    'nav.cloud': 'Cloud & Modernisation',
+    'nav.services': 'Expertise',
+    'nav.products': 'Products',
+    'nav.approach': 'How we work',
+    'nav.cloud': 'Infrastructure & Cloud',
     'nav.seknet': 'SEKNET',
     'nav.svpn': 'S-VPN',
     'nav.contact': 'Contact',
@@ -81,10 +82,9 @@ export const ui = {
     'subject.demo.seknet': 'Demo SEKNET',
     'subject.demo.svpn': 'Demo S-VPN',
     'footer.tagline': 'Trusted Service Delivery Partner',
-    'footer.blurb':
-      'Enterprise IT services and cybersecurity for companies in Romania and abroad, coordinated by the Smart Control team.',
+    "footer.blurb": "Enterprise IT services and cybersecurity for companies in Romania and abroad, coordinated by the Smart Control team.",
     'footer.col.services': 'Services',
-    'footer.col.solutions': 'Solutions',
+    'footer.col.solutions': 'Products',
     'footer.col.contact': 'Contact',
     'footer.service.infra': 'Infrastructure & Cloud',
     'footer.service.security': 'Networking & Security',

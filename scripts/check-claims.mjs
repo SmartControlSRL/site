@@ -1,3 +1,4 @@
+import { applyBrandClaimScope } from './claims-brand-scope.mjs';
 import { createHash } from 'node:crypto';
 import { readdir, readFile, stat } from 'node:fs/promises';
 import { extname, relative, resolve } from 'node:path';
@@ -43,8 +44,9 @@ for (const file of files) {
     const patterns = publicOutput
       ? [...claim.patterns, ...(claim.publicOnlyPatterns ?? [])]
       : claim.patterns;
+    const claimText = applyBrandClaimScope(text, rel, claim.id, policy.approvedCopy);
     for (const source of patterns) {
-      if (new RegExp(source, 'iu').test(text)) {
+      if (new RegExp(source, 'iu').test(claimText)) {
         failures.push(`${rel}: ${claim.id} — ${claim.reason}`);
         break;
       }

@@ -2,6 +2,7 @@
 
 // Deterministic indexing-policy validation over checked-in preview/production
 // server configuration and the generated static site. No network is used.
+import { retiredRoutes } from './retired-routes.mjs';
 import { readFile, readdir } from 'node:fs/promises';
 import { join, relative, resolve, sep } from 'node:path';
 import { hasRobotsDirective, hasRobotsMeta, nginxHeaderHasDirective } from './robots-directives.mjs';
@@ -69,8 +70,24 @@ assert(/location\s+=\s+\/en\/404\/index\.html\s*{\s*internal;/s.test(nginx), 'pr
 const htmlFiles = (await filesBelow(DIST)).filter((file) => file.endsWith('.html'));
 const errorRoutes = new Set(['/404', '/en/404/']);
 const approvedPrivacyRoutes = new Set(['/confidentialitate/', '/en/privacy/']);
-const contentFiles = htmlFiles.filter((file) => !errorRoutes.has(routeOf(file)));
+const redirectRoutes = new Set(Object.keys(retiredRoutes));
+const contentFiles = htmlFiles.filter((file) => !errorRoutes.has(routeOf(file)) && !redirectRoutes.has(routeOf(file)));
 const generatedUrls = new Set(contentFiles.map((file) => `${PRODUCTION_ORIGIN}${routeOf(file)}`));
+for (const [route, destination] of Object.entries(retiredRoutes)) {
+  const html = await readFile(resolve(DIST, route.slice(1), 'index.html'), 'utf8');
+  assert(hasRobotsMeta(html, 'noindex'), `${route}: retired route must be noindex`);
+  assert(html.includes(`content="0;url=${destination}"`), `${route}: static fallback must redirect immediately`);
+  assert(html.includes(`href="${destination}"`), `${route}: static fallback must offer a usable destination link`);
+  const target = new URL(destination, PRODUCTION_ORIGIN);
+  const targetHtml = await readFile(resolve(DIST, target.pathname.slice(1), 'index.html'), 'utf8');
+  assert(targetHtml.includes(`id="${target.hash.slice(1)}"`), `${route}: destination section must exist`);
+  for (const source of [route, route.slice(0,-1)]) {
+    const preview = previewConfig.redirects?.find((rule) => rule.source === source);
+    assert(preview?.destination === destination && preview?.permanent === true, `${source}: preview permanent redirect differs`);
+    assert(nginx.includes(`location = ${source} {\n    return 301 ${destination};`), `${source}: production permanent redirect differs`);
+  }
+}
+
 let topLevelStructuredUrls = 0;
 
 for (const file of contentFiles) {

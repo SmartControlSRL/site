@@ -6,6 +6,8 @@
 
 | Command | Gate |
 |---|---|
+| `npm run check:homepage` | Homepage geometry, early CTA, motion controls, reduced motion, route re-entry and no-JS contact in RO/EN |
+| `npm run check:cloud-video` | Cloud-only media, responsive playback/loop, keyboard pause, no-download fallbacks, media errors and Astro teardown |
 | `npm run check` | Astro/type diagnostics |
 | `npm run build` | Production static generation |
 | `npm run check:links` | Internal links, fragments, hreflang, RO/EN parity, sitemap and the #26-approved 404 contract |
@@ -20,18 +22,25 @@
 | `npm run audit:site` | Generated-route HTTP, contrast, performance and browser smoke coverage |
 | `npm run audit:dependencies` | Complete dependency audit against the time-bounded register plus a clean production-omitted audit |
 
-The site audit discovers HTML routes from `dist/`; no hand-maintained route list is used. It tests 1280px and 390px viewports in normal motion, reduced motion and no-JS profiles. Normal-motion runs initialize the page, traverse it, and rescan focus, hover, current-link, stepper-scroll and page-end states. Contrast calculation includes cumulative ancestor opacity. Decorative non-text graphics and `aria-hidden` content are excluded; large text uses WCAG AA’s 3:1 threshold rather than an exemption.
+The site audit discovers content and error routes from `dist/`. The explicitly retired overview routes in `scripts/retired-routes.mjs` are validated as redirects by the indexing gate. It tests 1280px and 390px viewports in normal motion, reduced motion and no-JS profiles. Normal-motion runs initialize the page, traverse it, and rescan focus, hover, current-link, stepper-scroll and page-end states. Contrast calculation includes cumulative ancestor opacity. Decorative non-text graphics and `aria-hidden` content are excluded; large text uses WCAG AA’s 3:1 threshold rather than an exemption.
 
 The only current contrast exemption is the bright-blue `Control` portion of the locked Smart Control wordmark. It is recorded with an owner and expiry in `config/site-audit-policy.json`; ordinary bright-blue text is not exempt. All other contrast failures block CI. LCP is observed before navigation with a buffered `PerformanceObserver`, must be present for every non-error route in the desktop normal-motion profile, and must not exceed 2.5 seconds in the local deterministic harness.
 
 The audit expects generated `/404` and `/en/404/` documents to return HTTP 404. Their parity, metadata, sitemap and linking rules are owned by `scripts/check-links.mjs`. Navigation errors, unexpected status codes, browser page errors, missing LCP and smoke-test failures are blocking.
 
-`npm run qa:browser` runs the two focused component regressions before the all-route browser audit. All three browser checks are part of `npm run qa` and therefore block CI.
+`npm run qa:browser` runs four focused component regressions before the all-route browser audit. All five browser checks are part of `npm run qa` and therefore block CI.
 
-Repeated service-detail and hub structures use typed localized records in
+The Cloud video regression checks advancing media time and a real loop, pause by
+click/Space, offscreen suspension, session persistence, live reduced motion and
+Astro teardown. Initial reduced motion, no-JS and save-data runs must make zero
+MP4 requests. Media failure and blocked autoplay are also exercised. Hidden-tab
+handling is implemented; real background-tab transitions still require manual
+verification because automated Chromium does not reliably expose that state.
+
+Service and product detail structures use typed localized records in
 `src/content/` and render through `src/components/pages/`. The localisation
-gate rejects copied page markup on those routes and checks the unique Cloud and
-product-detail route pairs at generated-output level. Contribution rules and
+gate rejects copied page markup on those routes and checks all seven RO/EN marketing
+route pairs at generated-output level. Contribution rules and
 the semantic-parity definition live in `docs/localization-and-content.md`.
 
 CI additionally runs `npm run check:nginx-runtime` after the build. The image is

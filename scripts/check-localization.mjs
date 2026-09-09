@@ -9,12 +9,10 @@ const failures = [];
 
 const pairs = [
   ['/', '/en/'],
-  ['/servicii/', '/en/servicii/'],
   ['/servicii/cloud/', '/en/servicii/cloud/'],
   ['/servicii/securitate/', '/en/servicii/securitate/'],
   ['/servicii/software/', '/en/servicii/software/'],
   ['/servicii/managed/', '/en/servicii/managed/'],
-  ['/solutii/', '/en/solutii/'],
   ['/solutii/seknet/', '/en/solutii/seknet/'],
   ['/solutii/s-vpn/', '/en/solutii/s-vpn/'],
 ];
@@ -108,15 +106,16 @@ for (const route of ['/', '/en/']) {
 }
 
 const sharedWrappers = [
-  'src/pages/servicii/index.astro', 'src/pages/en/servicii/index.astro',
-  'src/pages/solutii/index.astro', 'src/pages/en/solutii/index.astro',
+  'src/pages/servicii/cloud.astro', 'src/pages/en/servicii/cloud.astro',
+  'src/pages/solutii/seknet.astro', 'src/pages/en/solutii/seknet.astro',
+  'src/pages/solutii/s-vpn.astro', 'src/pages/en/solutii/s-vpn.astro',
   'src/pages/servicii/securitate.astro', 'src/pages/en/servicii/securitate.astro',
   'src/pages/servicii/software.astro', 'src/pages/en/servicii/software.astro',
   'src/pages/servicii/managed.astro', 'src/pages/en/servicii/managed.astro',
 ];
 for (const source of sharedWrappers) {
   const text = await readFile(resolve(root, source), 'utf8');
-  if (!/components\/pages\/(?:ServiceDetailPage|ServicesHubPage|SolutionsHubPage)\.astro/iu.test(text)) {
+  if (!/components\/pages\/(?:ServiceDetailPage|ProductDetailPage)\.astro/iu.test(text)) {
     failures.push(`${source}: duplicated page markup replaced the shared typed template`);
   }
 }

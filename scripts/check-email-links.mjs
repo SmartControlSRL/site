@@ -2,6 +2,8 @@ import { readdir, readFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 import { CONTACT_MAILTO, isCanonicalContactHref } from './contact-policy.mjs';
 
+import { retiredRoutes } from './retired-routes.mjs';
+
 const distDir = new URL('../dist/', import.meta.url);
 
 async function htmlFiles(dir) {
@@ -54,7 +56,7 @@ for (const file of files) {
     if (href.includes('?subject=') && /\s/.test(href)) failures.push(`${route}: mail subject is not URL-encoded`);
   }
 
-  if (!errorDocuments.has(route) && !hasContactLink) {
+  if (!errorDocuments.has(route) && !retiredRoutes['/' + route.replace(/index\.html$/, '')] && !hasContactLink) {
     failures.push(`${route}: missing the exact static contact destination ${CONTACT_MAILTO}`);
   }
 }
