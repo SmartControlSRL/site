@@ -1,5 +1,6 @@
 ---
 import AmbientArtwork from "../AmbientArtwork.astro";
+import HeroVideoArtwork from "../HeroVideoArtwork.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import MailtoLink from "../MailtoLink.astro";
 import DetailMotion from "../DetailMotion.astro";
@@ -53,7 +54,11 @@ const schema = {
   />
   <div class="detail-page product-page">
     <header class="detail-hero product-hero">
-      <AmbientArtwork artwork={productArtwork[product]} />
+      {product === "seknet" ? (
+        <HeroVideoArtwork variant="seknet" />
+      ) : (
+        <AmbientArtwork artwork={productArtwork[product]} />
+      )}
       <div class="detail-wrap detail-hero-grid">
         <div>
           <p class="detail-kicker">

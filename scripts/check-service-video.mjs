@@ -1,4 +1,4 @@
-// Service-specific media integration. Detailed controller lifecycle and
+// Page-specific media integration. Detailed controller lifecycle and
 // autoplay behavior remain covered by check-cloud-video.mjs.
 import assert from "node:assert/strict";
 import { createServer } from "node:http";
@@ -22,11 +22,17 @@ const configurations = {
     label: "Managed",
     contain: true,
   },
+  seknet: {
+    route: "/solutii/seknet/",
+    label: "SEKNET",
+    contain: true,
+    product: true,
+  },
 };
 const key = process.argv[2];
 assert(
   Object.hasOwn(configurations, key),
-  "Usage: node scripts/check-service-video.mjs network-security|software-automation|managed-services",
+  "Usage: node scripts/check-service-video.mjs network-security|software-automation|managed-services|seknet",
 );
 const config = configurations[key];
 
@@ -136,6 +142,8 @@ async function containedFrame(page) {
       imageFit: getComputedStyle(image).objectFit,
       videoPosition: getComputedStyle(video).objectPosition,
       imagePosition: getComputedStyle(image).objectPosition,
+      videoMask: getComputedStyle(video).maskImage,
+      imageMask: getComputedStyle(image).maskImage,
       videoAspect: video.videoWidth / video.videoHeight,
       imageAspect: image.naturalWidth / image.naturalHeight,
     };
@@ -155,13 +163,26 @@ async function containedFrame(page) {
     frame.imagePosition,
     `${config.label} poster/video alignment differs`,
   );
-  for (const kind of ["video", "image"])
+  if (config.product) {
     assert(
-      frame[kind].every(
-        (value, index) => Math.abs(value - frame.root[index]) <= 1,
-      ),
-      `${config.label} ${kind} does not fill the same media container`,
+      frame.video.every((value, index) => Math.abs(value - frame.image[index]) <= 1),
+      `${config.label} video and poster have different display frames`,
     );
+    const [x, y, width, height] = frame.video;
+    const [rootX, rootY, rootWidth, rootHeight] = frame.root;
+    assert(x >= rootX - 1 && y >= rootY - 1 && x + width <= rootX + rootWidth + 1 && y + height <= rootY + rootHeight + 1,
+      `${config.label} media extends outside its artwork container`);
+    assert.equal(frame.videoMask, frame.imageMask, `${config.label} video/poster edge fades differ`);
+    assert.match(frame.videoMask, /linear-gradient/, `${config.label} edge fade is missing`);
+  } else {
+    for (const kind of ["video", "image"])
+      assert(
+        frame[kind].every(
+          (value, index) => Math.abs(value - frame.root[index]) <= 1,
+        ),
+        `${config.label} ${kind} does not fill the same media container`,
+      );
+  }
   assert(
     Math.abs(frame.videoAspect - frame.imageAspect) < 0.001,
     `${config.label} poster/video aspect ratios would jump at playback`,
@@ -174,7 +195,7 @@ try {
   // Fresh contexts verify actual responsive source selection, not a resize of
   // an already downloaded desktop video.
   for (const prefix of ["", "/en"]) {
-    for (const width of [320, 390, 1280]) {
+    for (const width of config.product ? [320, 390, 768, 1280] : [320, 390, 1280]) {
       const context = await browser.newContext({
         viewport: { width, height: 900 },
       });
@@ -217,7 +238,7 @@ try {
           usable: box.width >= 24 && box.height >= 24,
           overlaps: [
             ...document.querySelectorAll(
-              ".detail-hero h1, .detail-hero .detail-lead, .detail-hero .detail-actions a",
+              ".detail-hero h1, .detail-hero .detail-lead, .detail-hero .detail-actions a, .product-signal",
             ),
           ].some((target) => {
             const copy = target.getBoundingClientRect();
@@ -402,7 +423,7 @@ try {
   );
   assert.deepEqual(errors, [], `${config.label} browser errors`);
   console.log(
-    `${config.label} video check passed: RO/EN at 320/390/1280px, correct media/poster sources, actual playback/loop, keyboard pause and geometry${config.contain ? ", matching contained media/poster frames" : ""}, reduced-motion/no-JS/save-data without downloads, error fallback, Astro teardown and independent Cloud/${config.label} preferences, service-only media scope.`,
+    `${config.label} video check passed: RO/EN at ${config.product ? "320/390/768/1280" : "320/390/1280"}px, correct media/poster sources, actual playback/loop, keyboard pause and geometry${config.contain ? ", matching contained media/poster frames" : ""}, reduced-motion/no-JS/save-data without downloads, error fallback, Astro teardown and independent Cloud/${config.label} preferences, page-specific media scope.`,
   );
 } finally {
   await browser?.close();

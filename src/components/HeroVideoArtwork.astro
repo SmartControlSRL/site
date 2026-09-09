@@ -9,7 +9,8 @@ interface Props {
     | "homepage"
     | "network-security"
     | "software-automation"
-    | "managed-services";
+    | "managed-services"
+    | "seknet";
 }
 const { variant } = Astro.props;
 const homepage = variant === "homepage";
@@ -19,11 +20,13 @@ const artwork = {
   "network-security": "network-security",
   "software-automation": "software-automation",
   "managed-services": "managed-services",
+  seknet: "seknet-observability",
 } as const;
 const poster =
   variant === "network-security" ||
   variant === "software-automation" ||
-  variant === "managed-services"
+  variant === "managed-services" ||
+  variant === "seknet"
     ? { name: `${variant}-video`, width: 1280, height: 720 }
     : undefined;
 const en = getLangFromUrl(Astro.url) === "en";
@@ -53,7 +56,7 @@ const play = en ? "Play video" : "Redă video-ul";
   type="button"
   class:list={[
     "hero-video-toggle",
-    { "hero-video-toggle--homepage": homepage },
+    { "hero-video-toggle--homepage": homepage, "hero-video-toggle--dark": variant === "seknet" },
   ]}
   data-hero-video-toggle
   data-cloud-video-toggle={variant === "cloud" ? "" : undefined}
@@ -104,6 +107,14 @@ const play = en ? "Play video" : "Redă video-ul";
   }
   .hero-video-toggle:hover {
     background: var(--color-page);
+  }
+  .hero-video-toggle--dark {
+    color: var(--color-sky);
+    background: var(--color-midnight);
+    border: 1px solid var(--color-royal);
+  }
+  .hero-video-toggle--dark:hover {
+    background: var(--color-navy);
   }
   .hero-video-toggle:focus-visible {
     outline: 3px solid var(--color-bright);
