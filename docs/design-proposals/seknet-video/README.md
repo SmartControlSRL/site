@@ -3,17 +3,18 @@
 The owner supplied `Create_an_eight_second_silent (4).mp4` for SEKNET on
 9 September 2026. It is integrated on `/solutii/seknet/` and
 `/en/solutii/seknet/`. Light pulses travel from the three nodes into the central
-element. The source composition and visible provider mark are retained.
+element. The source composition is retained. The visible provider watermark was later
+removed at the owner’s request; [processing record](../product-watermark-removal/README.md).
 
 ## Media and presentation
 
 - Source: 1280 × 720, 24 fps, approximately 10.005 seconds, H.264 with AAC audio.
 - Web versions: silent H.264 High/yuv420p, 228 frames, 9.5 seconds, MP4 faststart.
-  Desktop is 639,124 bytes; mobile is 199,646 bytes at 800 × 450.
+  Desktop is 638,878 bytes; mobile is 199,730 bytes at 800 × 450.
 - A half-second crossfade blends the tail into the opening segment. It softens
   the final light pulse at the loop boundary without changing playback speed.
 - WebP fallbacks are taken from the first decoded frame of each delivered video:
-  21,922 bytes at 1280 × 720 and 11,220 bytes at 800 × 450.
+  21,566 bytes at 1280 × 720 and 11,124 bytes at 800 × 450.
 - Video and poster share the product artwork's contained fit, right alignment,
   vertical centring and top/bottom fade. Both use 85% width on desktop and full
   width below 901 px, so playback starts without a framing jump.

@@ -3,16 +3,17 @@
 The owner supplied `Create_an_eight_second_silent (5).mp4` for S-VPN on
 9 September 2026. It is integrated on `/solutii/s-vpn/` and
 `/en/solutii/s-vpn/`. The light pulse travels through the connection between
-two fixed blocks. The original composition and visible provider mark remain.
+two fixed blocks. The original composition remains. The visible provider watermark was later
+removed at the owner’s request; [processing record](../product-watermark-removal/README.md).
 
 ## Media and presentation
 
 - Silent H.264 MP4, 240 frames at 24 fps, 10 seconds, faststart.
-  Desktop: 424,301 bytes at 1280 × 720. Mobile: 116,581 bytes at 800 × 450.
+  Desktop: 424,044 bytes at 1280 × 720. Mobile: 117,423 bytes at 800 × 450.
 - The complete sequence plays at its original speed and loops directly.
   Closely aligned endpoints make a crossfade unnecessary for this clip.
 - WebP fallbacks use the delivered videos' opening frames:
-  15,850 bytes at 1280 × 720 and 7,570 bytes at 800 × 450.
+  15,680 bytes at 1280 × 720 and 7,512 bytes at 800 × 450.
 - Video and poster share the product artwork's contained fit, right alignment,
   vertical centring and top/bottom fade, with 85% width on desktop and full
   width below 901 px. Starting playback does not change the composition.

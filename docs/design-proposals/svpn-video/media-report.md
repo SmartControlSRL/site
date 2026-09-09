@@ -7,10 +7,10 @@ Source SHA-256:
 
 | Delivered public file | Dimensions | Bytes | Encoding |
 | --- | --- | ---: | --- |
-| `videos/s-vpn-hero-1280.mp4` | 1280 × 720 | 424,301 | H.264 High, yuv420p, CRF 23 |
-| `videos/s-vpn-hero-800.mp4` | 800 × 450 | 116,581 | H.264 High, yuv420p, CRF 24 |
-| `images/s-vpn-video-1280.webp` | 1280 × 720 | 15,850 | WebP quality 86, effort 6 |
-| `images/s-vpn-video-800.webp` | 800 × 450 | 7,570 | WebP quality 86, effort 6 |
+| `videos/s-vpn-hero-1280.mp4` | 1280 × 720 | 424,044 | H.264 High, yuv420p, CRF 23 |
+| `videos/s-vpn-hero-800.mp4` | 800 × 450 | 117,423 | H.264 High, yuv420p, CRF 24 |
+| `images/s-vpn-video-1280.webp` | 1280 × 720 | 15,680 | WebP quality 86, effort 6 |
+| `images/s-vpn-video-800.webp` | 800 × 450 | 7,512 | WebP quality 86, effort 6 |
 
 Both videos decode completely: 240 frames at constant 24 fps, exactly 10 seconds.
 Only the video stream is present. Source metadata and chapters are omitted;
@@ -26,17 +26,20 @@ so this integration uses a direct loop without a crossfade or time remapping.
 
 The source contact sheet and delivered endpoint pairs were visually reviewed.
 Small reflection and brightness differences remain. The delivered first/last
-frame mean absolute RGB differences are approximately 1.089/255 at 1280 and
-1.052/255 at 800. These measurements describe the seam; they do not establish
+frame mean absolute RGB differences are approximately 1.088/255 at 1280 and
+1.045/255 at 800. These measurements describe the seam; they do not establish
 an imperceptible transition.
 
-No crop, geometry retouch, watermark removal or generated replacement was used.
+At the owner’s request, the visible provider watermark is now removed with a
+local pixel mask before encoding. The composition is not cropped.
+[Removal record and mask](../product-watermark-removal/README.md).
 Each poster comes from its delivered video's opening frame. The original
 `svpn-connection-1600.webp` and `svpn-connection-800.webp` references are retained.
 
 ## Reproduction
 
-FFmpeg 7.1 desktop filter: `setpts=PTS-STARTPTS,fps=24`.
+FFmpeg 7.1 desktop filter:
+`removelogo=docs/design-proposals/product-watermark-removal/mask.png,setpts=PTS-STARTPTS,fps=24`.
 Mobile adds `scale=800:450:flags=lanczos`.
 
 Select `0:v:0`, remove audio/subtitle/data streams and source metadata/chapters,
@@ -47,7 +50,7 @@ Temporary tooling and original input media are outside the committed website.
 
 ## Delivered SHA-256
 
-- `s-vpn-hero-1280.mp4`: `6b80571296c14f644b2f6ef43f49115fd8312d7c6e4794ef6c9551d22b129dae`
-- `s-vpn-video-1280.webp`: `354576827459dfba70736b1444118edd750ddbfb0d15f96c307c0b443285e68c`
-- `s-vpn-hero-800.mp4`: `370bdda303cbc20cbe1c04cbbddb8ed63e6b128a2bac54338490359a43e8b474`
-- `s-vpn-video-800.webp`: `a27d60337d5396fa557b180ceb0fc70596e9cb16ff78465c6d8be7c6e9fa9ec8`
+- `s-vpn-hero-1280.mp4`: `4551046d301017481c5b39343818255695f028d783076e5301a74a1aac144320`
+- `s-vpn-video-1280.webp`: `d47465dac5477995d280ba1562f07f31be0388e3cb840fae50e9b6a0ee1dd5f6`
+- `s-vpn-hero-800.mp4`: `2743260419d1c941254ce3c92f5f7e28c3a776d6cebb9c92e786180bface478f`
+- `s-vpn-video-800.webp`: `6d4cbac2033ad3a68e20f26c7e4a2097b0efa1e78ab4f6e6e70d460bfc6697b7`

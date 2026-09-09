@@ -7,10 +7,10 @@ Source SHA-256:
 
 | Delivered public file | Dimensions | Bytes | Encoding |
 | --- | --- | ---: | --- |
-| `videos/seknet-hero-1280.mp4` | 1280 × 720 | 639,124 | H.264 High, yuv420p, CRF 23 |
-| `videos/seknet-hero-800.mp4` | 800 × 450 | 199,646 | H.264 High, yuv420p, CRF 24 |
-| `images/seknet-video-1280.webp` | 1280 × 720 | 21,922 | WebP quality 86, effort 6 |
-| `images/seknet-video-800.webp` | 800 × 450 | 11,220 | WebP quality 86, effort 6 |
+| `videos/seknet-hero-1280.mp4` | 1280 × 720 | 638,878 | H.264 High, yuv420p, CRF 23 |
+| `videos/seknet-hero-800.mp4` | 800 × 450 | 199,730 | H.264 High, yuv420p, CRF 24 |
+| `images/seknet-video-1280.webp` | 1280 × 720 | 21,566 | WebP quality 86, effort 6 |
+| `images/seknet-video-800.webp` | 800 × 450 | 11,124 | WebP quality 86, effort 6 |
 
 Both videos decode completely: 228 frames at constant 24 fps, exactly 9.5 seconds.
 Only the video stream is present. Source metadata and chapters are omitted;
@@ -30,10 +30,12 @@ Source contact sheets, endpoint pairs and six samples spanning the last second
 of the delivered video were reviewed. The blend gradually attenuates the pulse;
 no conspicuous doubled structural edge was apparent in those samples. Residual
 lighting/detail differences remain. The delivered first/last-frame mean absolute
-RGB differences are approximately 1.051/255 at 1280 and 1.207/255 at 800; these
+RGB differences are approximately 1.043/255 at 1280 and 1.194/255 at 800; these
 values describe the seam, not a guarantee of an imperceptible transition.
 
-No geometry retouch, crop, watermark removal or generated replacement was used.
+At the owner’s request, the visible provider watermark is now removed with a
+local pixel mask before the existing loop treatment. The composition is not
+cropped. [Removal record and mask](../product-watermark-removal/README.md).
 Each poster comes from its delivered video's opening frame, so it matches that
 video's composition. Original `seknet-observability-1600.webp` and
 `seknet-observability-800.webp` are retained.
@@ -43,7 +45,7 @@ video's composition. Original `seknet-observability-1600.webp` and
 FFmpeg 7.1 filter graph for the desktop encode:
 
 ```text
-[0:v]split=2[main][intro];
+[0:v]removelogo=docs/design-proposals/product-watermark-removal/mask.png,split=2[main][intro];
 [main]trim=start_frame=12:end_frame=240,setpts=PTS-STARTPTS,fps=24,settb=1/24[a];
 [intro]trim=start_frame=0:end_frame=12,setpts=PTS-STARTPTS,fps=24,settb=1/24[b];
 [a][b]xfade=transition=fade:duration=0.5:offset=9,format=yuv420p[out]
@@ -58,7 +60,7 @@ Temporary tooling and original input media are outside the committed website.
 
 ## Delivered SHA-256
 
-- `seknet-hero-1280.mp4`: `c2a2f7cacd8382aad1c8c3bb4ebaeecc3748d9182a8338dfc69024374e7d6453`
-- `seknet-hero-800.mp4`: `41348d78973fb35b06c852405047f345bc7ccae3d454cb963755c3305509dbac`
-- `seknet-video-1280.webp`: `215964181b45501c1c704895b7b6f3955d8643e6bf22c11c3c2264345293ae7c`
-- `seknet-video-800.webp`: `8300e031460cdb22c78b025bc395f40097e520a9bdd5646c373f9ed17f584237`
+- `seknet-hero-1280.mp4`: `78db9b33af39e52f535b01956e85ae54538e388bb2a4dcdd474f4351ad8972b5`
+- `seknet-hero-800.mp4`: `0018422c1fd7f4d0588b0435b795f4c9e9eca002febade02bac44b4d3f07a847`
+- `seknet-video-1280.webp`: `fc285cedf3629cedb509ab4723c5a5f2d1d8213d3f0bb0c19d55577a683ce00a`
+- `seknet-video-800.webp`: `18b3fb64f803c2b7ad02d32bd4275d4e704045634b6df4e726a15fbc4b88e601`
