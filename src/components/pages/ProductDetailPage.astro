@@ -1,5 +1,4 @@
 ---
-import AmbientArtwork from "../AmbientArtwork.astro";
 import HeroVideoArtwork from "../HeroVideoArtwork.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import MailtoLink from "../MailtoLink.astro";
@@ -14,7 +13,6 @@ import {
 import { getLangFromUrl, localizedPath, useTranslations } from "../../i18n/ui";
 import {
   productPages,
-  productArtwork,
   type ProductKey,
 } from "../../content/product-pages";
 import "../../styles/detail.css";
@@ -54,11 +52,7 @@ const schema = {
   />
   <div class="detail-page product-page">
     <header class="detail-hero product-hero">
-      {product === "seknet" ? (
-        <HeroVideoArtwork variant="seknet" />
-      ) : (
-        <AmbientArtwork artwork={productArtwork[product]} />
-      )}
+      <HeroVideoArtwork variant={product} />
       <div class="detail-wrap detail-hero-grid">
         <div>
           <p class="detail-kicker">

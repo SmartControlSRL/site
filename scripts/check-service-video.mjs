@@ -28,11 +28,17 @@ const configurations = {
     contain: true,
     product: true,
   },
+  "s-vpn": {
+    route: "/solutii/s-vpn/",
+    label: "S-VPN",
+    contain: true,
+    product: true,
+  },
 };
 const key = process.argv[2];
 assert(
   Object.hasOwn(configurations, key),
-  "Usage: node scripts/check-service-video.mjs network-security|software-automation|managed-services|seknet",
+  "Usage: node scripts/check-service-video.mjs network-security|software-automation|managed-services|seknet|s-vpn",
 );
 const config = configurations[key];
 

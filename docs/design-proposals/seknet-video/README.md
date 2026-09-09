@@ -24,7 +24,8 @@ element. The source composition and visible provider mark are retained.
 The shared controller defers loading until playback is allowed, pauses offscreen
 and in hidden documents, and unloads media during Astro navigation. Reduced
 motion, no JavaScript, save-data and media failures retain the poster. S-VPN
-remains a static header. Approved editorial copy and the original reference
+was still static at this integration; its later supplied video is recorded
+[separately](../svpn-video/README.md). Approved editorial copy and the original reference
 stills are unchanged.
 
 [Source hashes, encoding and loop review](media-report.md).
