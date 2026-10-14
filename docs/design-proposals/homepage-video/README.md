@@ -1,5 +1,8 @@
 # Homepage: connected-sculpture video
 
+> **Superseded (2026-10-14)** by the [hero stack animation](../homepage-hero-stack/README.md).
+> The MP4s and posters described below have been removed from `public/`.
+
 The owner supplied `Create_an_eight_second_silent.mp4` for the homepage. It
 replaces the previous animated infrastructure map on `/` and `/en/`. The four
 connected modules rotate together beside the headline on desktop. On screens
