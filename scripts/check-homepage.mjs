@@ -255,6 +255,12 @@ try {
     assert.equal(await state(page), "static");
     assert.deepEqual(await still(page, `${route} reduced`), expectedTags);
     await page.emulateMedia({ reducedMotion: "no-preference" });
+    // The media-query change event is async; wait for the intro to restart.
+    await button.waitFor({ state: "visible" });
+    await page.waitForFunction(
+      (sel) => document.querySelector(sel)?.dataset.state === "intro",
+      stackSelector,
+    );
     await moving(page);
     assert.equal(await page.locator(".service-link").count(), 4);
     assert.equal(await page.locator(".product-link").count(), 2);
