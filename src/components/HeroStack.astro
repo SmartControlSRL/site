@@ -71,6 +71,9 @@ const particles = [
             data-n={n}
             style={`--from-top:${3 - n};z-index:${n + 2}`}
           >
+            <span class="hs-glow">
+              <span />
+            </span>
             <span class="hs-frost" />
             <img
               src="/images/hero-stack-slab-640.webp"
@@ -172,10 +175,18 @@ const particles = [
   .hs-slab:not([data-n="3"]) .hs-art {
     opacity: 0.36;
   }
-  .hs-slab[data-n="3"] {
-    filter: drop-shadow(
-      0 0 16px color-mix(in srgb, var(--color-bright) 60%, transparent)
-    );
+  .hs-glow {
+    opacity: 0;
+    filter: blur(18px);
+  }
+  .hs-glow span {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--color-bright) 85%, transparent);
+    mask: url("/images/hero-stack-slab-640.webp") center / 100% 100% no-repeat;
+  }
+  .hs-slab[data-n="3"] .hs-glow {
+    opacity: 1;
   }
   .hs-frost,
   .hs-sheen {
@@ -183,7 +194,7 @@ const particles = [
   }
   .hs-frost {
     backdrop-filter: blur(3px);
-    background: rgb(255 255 255 / 0.28);
+    background: color-mix(in srgb, var(--color-surface) 28%, transparent);
   }
   .hs-sheen {
     overflow: hidden;
@@ -198,7 +209,7 @@ const particles = [
     background: linear-gradient(
       100deg,
       transparent,
-      rgb(255 255 255 / 0.85) 50%,
+      color-mix(in srgb, var(--color-surface) 85%, transparent) 50%,
       transparent
     );
     transform: skewX(-18deg);
@@ -245,7 +256,7 @@ const particles = [
     opacity: 0;
     background: radial-gradient(
       circle,
-      #fff 0 25%,
+      var(--color-surface) 0 25%,
       color-mix(in srgb, var(--color-sky) 90%, transparent) 45%,
       transparent 70%
     );
@@ -303,7 +314,7 @@ const particles = [
   }
   .hero-stack-toggle {
     position: absolute;
-    right: max(20px, calc((100% - 1180px) / 2));
+    right: 0;
     bottom: 14px;
     z-index: 2;
     display: inline-flex;

@@ -90,12 +90,20 @@ before then.
 
 **Navigation.** Astro navigation and `pagehide` cancel every animation and timer.
 
+**Settled state.** When the intro ends, every intro animation is cancelled and
+its inline styles are cleared, so the CSS still state is the single source of
+truth. Without this, resuming after a pause (Play, scrolling back, switching
+tabs) would rewind and replay the intro. The glow is a sibling layer rather than
+a `filter` on the slab, so the slab never becomes a backdrop root and the frost
+keeps blurring the layers beneath.
+
 ## Validation
 
 `scripts/check-homepage.mjs` was rewritten for the stack. It checks:
 
 - RO/EN intro → idle;
 - that animations advance;
+- that the scene stays settled after pause/play and after scrolling away and back;
 - click and Space pause and resume;
 - reduced-motion and no-JS still states with all four engraved labels (exact
   RO/EN text);

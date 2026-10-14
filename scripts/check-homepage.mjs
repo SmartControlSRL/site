@@ -81,6 +81,30 @@ async function moving(page) {
   );
 }
 
+// After the intro the scene must stay settled: resuming (Play, scrolling back,
+// tab switch) must never rewind and replay the intro on top of the idle loop.
+async function settled(page, label) {
+  await page.waitForTimeout(150);
+  const result = await page.locator(stackSelector).evaluate((el) => ({
+    state: el.dataset.state,
+    slabOpacity: getComputedStyle(el.querySelector(".hs-slab")).opacity,
+    cameraTransform: getComputedStyle(el.querySelector(".hs-camera")).transform,
+    replaying: el
+      .getAnimations({ subtree: true })
+      .filter(
+        (a) =>
+          a.playState === "running" &&
+          a.effect.target?.closest?.(".hs-camera") &&
+          a.effect.getComputedTiming().duration > 3000 &&
+          a.effect.getComputedTiming().iterations !== Infinity,
+      ).length,
+  }));
+  assert.equal(result.state, "idle", `${label}: left the idle state`);
+  assert.equal(result.slabOpacity, "1", `${label}: intro replayed (L1 hidden)`);
+  assert.equal(result.cameraTransform, "none", `${label}: camera intro replayed`);
+  assert.equal(result.replaying, 0, `${label}: intro animations running again`);
+}
+
 async function frozen(page) {
   await page.waitForTimeout(80);
   const playStates = await page
@@ -220,6 +244,11 @@ try {
     await button.press("Space");
     await moving(page);
     assert.equal(await button.innerText(), pauseLabel);
+    await settled(page, `${route} pause/play`);
+    await page.evaluate(() => scrollTo(0, 3000));
+    await page.waitForTimeout(200);
+    await page.evaluate(() => scrollTo(0, 0));
+    await settled(page, `${route} scroll away/back`);
 
     await page.emulateMedia({ reducedMotion: "reduce" });
     await button.waitFor({ state: "hidden" });

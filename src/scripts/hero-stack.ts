@@ -10,7 +10,6 @@ const PREF_KEY = "smartcontrol-homepage-animation-paused";
 const STEP = 1500;
 const T0 = 500;
 const EASE_OUT = "cubic-bezier(0.16, 1, 0.3, 1)";
-const GLOW = "drop-shadow(0 0 16px rgb(68 135 220 / 0.6))";
 let memoryPaused = false;
 let stop = () => {};
 
@@ -31,6 +30,11 @@ function wireHeroStack() {
     ...root.querySelectorAll<T>(sel),
   ];
   const slabs = $$(".hs-slab");
+  const token = (name: string) =>
+    getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const NAVY = token("--color-navy");
+  const BRIGHT = token("--color-bright");
+  const SURFACE = token("--color-surface");
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
   const saveData = (
     navigator as Navigator & { connection?: { saveData?: boolean } }
@@ -56,17 +60,27 @@ function wireHeroStack() {
     el: Element | null,
     frames: Frames,
     options: KeyframeAnimationOptions,
-  ) => el?.animate(frames, { fill: "both", easing: EASE_OUT, ...options });
+  ) => el?.animate(frames, { fill: "forwards", easing: EASE_OUT, ...options });
+  const hold = { fill: "both" } as const;
 
-  function still() {
+  // Drop every animation and intro-only inline style: the markup's CSS is the
+  // single source of truth for the settled scene.
+  function reset() {
     root!.getAnimations({ subtree: true }).forEach((a) => a.cancel());
     clearTimeout(scanTimer);
+    scanTimer = 0;
     $$<SVGElement>(".hs-art *").forEach((el) => {
+      el.removeAttribute("pathLength");
       el.style.strokeDasharray = "";
       el.style.strokeDashoffset = "";
       el.style.opacity = "";
+      delete el.dataset.draw;
     });
     $$(".hs-art").forEach((el) => (el.style.opacity = ""));
+  }
+
+  function still() {
+    reset();
     root!.dataset.state = "static";
     started = false;
     idle = false;
@@ -93,6 +107,7 @@ function wireHeroStack() {
     $$(".hs-art").forEach((el) => (el.style.opacity = "1"));
     const total = T0 + 4 * STEP + 1400;
     animate($(".hs-ambient"), [{ opacity: 0 }, { opacity: 1 }], {
+      ...hold,
       duration: total,
       easing: "ease-in-out",
     });
@@ -102,7 +117,11 @@ function wireHeroStack() {
         { transform: "translate(-30px, 46px) scale(1.16) rotate(-2.2deg)" },
         { transform: "none" },
       ],
-      { duration: total + 600, easing: "cubic-bezier(0.33, 0, 0.15, 1)" },
+      {
+        ...hold,
+        duration: total + 600,
+        easing: "cubic-bezier(0.33, 0, 0.15, 1)",
+      },
     );
     animate(
       $(".hs-shadow"),
@@ -110,7 +129,7 @@ function wireHeroStack() {
         { opacity: 0, transform: "scale(0.6)" },
         { opacity: 1, transform: "none" },
       ],
-      { duration: 1200, delay: T0 + 300 },
+      { ...hold, duration: 1200, delay: T0 + 300 },
     );
     let last: Animation | undefined;
     slabs.forEach((slab, n) => {
@@ -125,10 +144,22 @@ function wireHeroStack() {
             filter: "blur(0)",
             offset: 0.72,
           },
-          { opacity: 1, transform: "translateY(0)", filter: GLOW },
+          { opacity: 1, transform: "translateY(0)", filter: "none" },
         ],
-        { duration: 1000, delay: s, easing: "cubic-bezier(0.3, 0.7, 0.2, 1)" },
+        {
+          ...hold,
+          duration: 1000,
+          delay: s,
+          easing: "cubic-bezier(0.3, 0.7, 0.2, 1)",
+        },
       );
+      // The glow is a sibling layer, not a filter on the slab, so the slab
+      // never becomes a backdrop root and the frost keeps blurring what's below.
+      animate(slab.querySelector(".hs-glow"), [{ opacity: 0 }, { opacity: 1 }], {
+        ...hold,
+        duration: 600,
+        delay: s + 700,
+      });
       slab.querySelector(".hs-ring")?.animate(
         [
           { opacity: 0, transform: "scale(1)" },
@@ -161,6 +192,7 @@ function wireHeroStack() {
                 { strokeDashoffset: 0, opacity: 1 },
               ],
               {
+                ...hold,
                 duration: 750,
                 delay: d,
                 easing: "cubic-bezier(0.6, 0, 0.2, 1)",
@@ -168,6 +200,7 @@ function wireHeroStack() {
             );
           else
             animate(el, [{ opacity: 0 }, { opacity: 1 }], {
+              ...hold,
               duration: 500,
               delay: d + 200,
             });
@@ -176,17 +209,17 @@ function wireHeroStack() {
         last = animate(
           t,
           [
-            { opacity: 0, fill: "#ffffff" },
-            { opacity: 1, fill: "#4487dc", offset: 0.4 },
+            { opacity: 0, fill: SURFACE },
+            { opacity: 1, fill: BRIGHT, offset: 0.4 },
             { opacity: 1 },
           ],
-          { duration: 420, delay: s + 950 + k * 26, easing: "linear" },
+          { ...hold, duration: 420, delay: s + 950 + k * 26, easing: "linear" },
         );
       });
       if (n > 0) {
         packet(4 - n, 3 - n, s + 600, 650);
         const prev = slabs[n - 1];
-        animate(prev, [{ filter: GLOW }, { filter: "blur(0.5px)" }], {
+        animate(prev.querySelector(".hs-glow"), [{ opacity: 1 }, { opacity: 0 }], {
           duration: 900,
           delay: s + 700,
         });
@@ -202,7 +235,11 @@ function wireHeroStack() {
     });
     last?.finished.then(
       () => {
-        if (!disposed && root!.dataset.state === "intro") startIdle();
+        if (disposed || root!.dataset.state !== "intro") return;
+        // Settle: filled intro animations would rewind on the next play(),
+        // so drop them and let the CSS final state take over.
+        reset();
+        startIdle();
       },
       () => {},
     );
@@ -294,7 +331,7 @@ function wireHeroStack() {
       .querySelectorAll(".hs-tag tspan:not(.hs-code)")
       .forEach((t) =>
         t.animate(
-          [{ fill: "#0e1f5b" }, { fill: "#4487dc" }, { fill: "#0e1f5b" }],
+          [{ fill: NAVY }, { fill: BRIGHT }, { fill: NAVY }],
           o,
         ),
       );
@@ -337,11 +374,12 @@ function wireHeroStack() {
       startIdle();
     }
     const animations = root!.getAnimations({ subtree: true });
+    // Only touch animations in flight: play() on a finished one would rewind it.
     if (running()) {
-      animations.forEach((a) => a.play());
+      animations.forEach((a) => a.playState === "paused" && a.play());
       if (idle && !scanTimer) scheduleScan(400);
     } else {
-      animations.forEach((a) => a.pause());
+      animations.forEach((a) => a.playState === "running" && a.pause());
       clearTimeout(scanTimer);
       scanTimer = 0;
     }
