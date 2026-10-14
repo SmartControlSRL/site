@@ -281,16 +281,20 @@ const TOPS = [118, 202, 286, 370];
         }
         <div class="sctd-controls">
           <div class="sctd-note"><i class="sctd-dot sctd-dot--ops"></i>{note}</div>
-          <button
-            class="sctd-cycle"
-            type="button"
-            data-sctd-cycle
-            data-pause-label={cyclePauseLabel}
-            data-resume-label={cycleResumeLabel}
-            hidden
-          >
-            <span data-sctd-cycle-label>{cyclePauseLabel}</span>
-          </button>
+          {/* Ambient auto-cycle only pairs with the plate visual; without it the
+              rows are plain visitor-driven disclosures (no moving content). */}
+          {visual && (
+            <button
+              class="sctd-cycle"
+              type="button"
+              data-sctd-cycle
+              data-pause-label={cyclePauseLabel}
+              data-resume-label={cycleResumeLabel}
+              hidden
+            >
+              <span data-sctd-cycle-label>{cyclePauseLabel}</span>
+            </button>
+          )}
         </div>
       </div>
     </div>
