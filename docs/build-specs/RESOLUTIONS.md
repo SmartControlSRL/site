@@ -5,6 +5,7 @@ Orchestrator rulings on every open question raised by the design extraction
 `docs/build-specs/*.md` conflicts with this file, THIS FILE WINS.
 
 ## Fidelity & sizing
+
 1. **Export desktop values are canonical at ≥1100px viewport**: 16px base body,
    **1180px container with 40px inline padding** (24px below 768px), export
    heading sizes (38/40/64px etc.) as the max of fluid `clamp()`. The earlier
@@ -17,6 +18,7 @@ Orchestrator rulings on every open question raised by the design extraction
    hamburger + slide-down panel (brand-styled, focus-trapped, ESC closes).
 
 ## Motion
+
 4. **Vanilla `motion.js` port is the stack** (already at `src/scripts/motion.js`,
    verbatim). NO GSAP. Wire via BaseLayout `<script>` on `astro:page-load`,
    cleanups on `astro:before-swap` (View Transitions enabled via `ClientRouter`).
@@ -29,6 +31,7 @@ Orchestrator rulings on every open question raised by the design extraction
    move into `global.css`.
 
 ## Copy & content
+
 9. **RO copy follows the specs** (diacritics exact), except claims blocked by
    `CLAIMS.md`. Certification counts/badges and ISO 27701 are stripped; Asset
    Management is stripped. SEKNET's cross-sell pairs with **S-VPN** instead.
@@ -39,8 +42,9 @@ Orchestrator rulings on every open question raised by the design extraction
     terms stay English; no marketing fluff; diacritics N/A). Full parity.
 
 ## CTAs & email
-13. **Primary CTAs go straight to mailto** (no #contact anchor hops): nav CTA +
-    hero assessment CTAs → `office@smartcontrol.ro` subject `Solicitare assessment`;
+
+13. **Primary CTAs go straight to mailto** (no #contact anchor hops): hero
+    assessment CTAs → `office@smartcontrol.ro` subject `Solicitare assessment`;
     product hero demo CTAs → subject `Demo SEKNET` / `Demo S-VPN`. In-page
     secondary anchors (e.g. "vezi modulele") stay anchors. A product page keeps
     the export pattern: hero = demo ask, closing band = assessment ask.
@@ -55,10 +59,13 @@ Orchestrator rulings on every open question raised by the design extraction
     a11y) — keep the pill shell + mailto button only.
 
 ## Chrome (shared)
+
 16. **Nav = export nav**: fixed, shrink-on-scroll (initNavShrink), active-page
     underline, items: Servicii, Cloud & Modernizare, SEKNET, S-VPN, Contact +
-    assessment CTA button + RO/EN switch (from scaffold). Cloud is top-level in
-    nav; route stays `/servicii/cloud`.
+    RO/EN switch (from scaffold). Cloud is top-level in nav; route stays
+    `/servicii/cloud`. **Owner update 2026-10-14:** no CTA button in the nav
+    (desktop or mobile menu) — page CTA bands keep the asks; the C-001 founding-year label moves
+    out of the logo to a mono label beside the language switch (CLAIMS C-001).
 17. **Footer = export 4-col footer**, minus dead links: NO "Termeni și
     condiții", NO "Cookies", NO "Asset Management". Privacy →
     `/confidentialitate` (`/en/privacy`). Service/product links point to the
@@ -68,6 +75,7 @@ Orchestrator rulings on every open question raised by the design extraction
     without it). Teal remains available for badges if a page spec shows it.
 
 ## Components & tokens
+
 19. Shared primitives live in `src/components/`: Eyebrow, SectionHeading
     (word-fill H2), NetworkCanvas, CtaBand (dark, canvas + glow + mailto),
     ModuleCard (light + dark variants), StatStrip/StatBlock, SpecTable,
@@ -86,6 +94,7 @@ Orchestrator rulings on every open question raised by the design extraction
     apply over fidelity. Bright stays for rules/eyebrows/large display text.
 
 ## Out of scope for pages
+
 23. No analytics script (Umami deferred until the EU instance exists).
 24. `vercel.json` (noindex) + `robots.txt` + sitemap integration already done.
 25. Do NOT touch: package.json, astro.config.mjs, tsconfig, vercel.json.
@@ -141,6 +150,7 @@ Orchestrator rulings on every open question raised by the design extraction
     for future revisions but does not gate publication of this approved source.
 
 ## File ownership (conflict avoidance)
+
 - Foundation agent owns: `global.css`, `BaseLayout.astro`, `Nav.astro`,
   `Footer.astro`, `src/components/*`, `src/scripts/*`, `src/i18n/ui.ts`, OG image.
 - Page agents own ONLY their page files under `src/pages/` (+ their EN twin).

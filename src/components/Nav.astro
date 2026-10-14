@@ -1,6 +1,7 @@
 ---
 // Export nav (RESOLUTIONS §16): fixed top, ALWAYS light (logo on white), logo +
-// links + assessment CTA (obfuscated mailto) + RO/EN switch. Active-page
+// links + C-001 brand label + RO/EN switch. No CTA button in the nav (owner
+// call 2026-10-14) — assessment/demo asks live in page CTA bands. Active-page
 // underline by pathname. initNavShrink (wired in BaseLayout) tightens padding +
 // adds a hairline/shadow past 24px scroll — it targets [data-nav-shrink].
 // Mobile/tablet (<1024px): hamburger toggles a light slide-down panel
@@ -13,7 +14,6 @@ import {
   localizedPath,
   altLocalePath,
 } from "../i18n/ui";
-import MailtoLink from "./MailtoLink.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -55,17 +55,7 @@ const isActive = (href: string) => {
 };
 
 // Language switch → the alternate-locale version of this page.
-const path = Astro.url.pathname;
-const altHref = altLocalePath(path);
-const productKey = path.includes("/solutii/seknet")
-  ? "seknet"
-  : path.includes("/solutii/s-vpn")
-    ? "svpn"
-    : null;
-const navSubject = productKey
-  ? t(`subject.demo.${productKey}`)
-  : t("subject.assessment");
-const navCta = productKey ? t(`cta.demo.${productKey}`) : t("cta.assessment");
+const altHref = altLocalePath(Astro.url.pathname);
 const altLang = lang === "ro" ? "en" : "ro";
 ---
 
@@ -90,21 +80,11 @@ const altLang = lang === "ro" ? "en" : "ro";
           class="h-[34px] w-[34px]"
           decoding="async"
         />
-        <span class="flex flex-col leading-none">
-          <span
-            data-brand-wordmark
-            class="text-[17px] font-bold tracking-[-0.3px] text-navy"
-            >Smart<span class="text-bright">Control</span></span
-          >
-          <span class="mt-[3px] flex items-center gap-1.5" aria-hidden="true">
-            <span class="h-px w-4 shrink-0 bg-bright"></span>
-            <span
-              data-brand-since
-              class="font-mono text-[9px] font-semibold uppercase tracking-[2px] text-royal"
-              >DIN 2003</span
-            >
-          </span>
-        </span>
+        <span
+          data-brand-wordmark
+          class="text-[17px] font-bold leading-none tracking-[-0.3px] text-navy"
+          >Smart<span class="text-bright">Control</span></span
+        >
       </a>
 
       <!-- Desktop links -->
@@ -178,6 +158,16 @@ const altLang = lang === "ro" ? "en" : "ro";
 
       <!-- Right cluster -->
       <div class="flex shrink-0 items-center gap-3">
+        <!-- C-001 brand label (CLAIMS.md): exact wording, same on RO/EN, header only -->
+        <span class="hidden items-center gap-1.5 lg:flex" lang="ro">
+          <span class="h-px w-4 shrink-0 bg-bright" aria-hidden="true"></span>
+          <span
+            data-brand-since
+            class="font-mono text-[10px] font-semibold uppercase tracking-[2px] text-royal"
+            >DIN 2003</span
+          >
+          <span class="ml-1.5 h-4 w-px bg-border" aria-hidden="true"></span>
+        </span>
         <a
           href={altHref}
           lang={altLang}
@@ -192,14 +182,6 @@ const altLang = lang === "ro" ? "en" : "ro";
             >{t("lang.switch.action")}</span
           >
         </a>
-        <MailtoLink
-          variant="button"
-          subject={navSubject}
-          class="!hidden !px-[18px] !py-[9px] !text-[13.5px] lg:!inline-flex"
-        >
-          {navCta}
-        </MailtoLink>
-
         <!-- Mobile hamburger -->
         <button
           type="button"
@@ -289,10 +271,16 @@ const altLang = lang === "ro" ? "en" : "ro";
           ),
         )
       }
-      <li class="mt-2 px-3">
-        <MailtoLink variant="button" subject={navSubject} class="w-full">
-          {navCta}
-        </MailtoLink>
+      <li
+        class="mt-2 flex items-center gap-1.5 border-t border-divider px-3 pt-4"
+        lang="ro"
+      >
+        <span class="h-px w-4 shrink-0 bg-bright" aria-hidden="true"></span>
+        <span
+          data-brand-since
+          class="font-mono text-[10px] font-semibold uppercase tracking-[2px] text-royal"
+          >DIN 2003</span
+        >
       </li>
     </ul>
   </div>
