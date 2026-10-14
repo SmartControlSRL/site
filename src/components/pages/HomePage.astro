@@ -75,54 +75,69 @@ const org = {
         />
       </div>
     </header>
-    <section
-      id="servicii"
-      class="home-wrap home-section"
-      aria-labelledby="home-services-heading"
-    >
-      <div class="section-intro" data-home-enter>
-        <div>
+    <div class="home-band">
+      <section
+        id="servicii"
+        class="home-wrap home-section"
+        aria-labelledby="home-services-heading"
+      >
+        <div class="services-intro" data-home-enter>
           <p class="home-kicker">{copy.servicesLabel}</p><h2
             id="home-services-heading"
           >
             {copy.servicesTitle}
-          </h2>
-        </div><p class="section-lead">{copy.servicesIntro}</p>
-      </div>
-      <div class="service-grid">
-        {
-          copy.services.map((service, index) => {
-            const Icon = icons[index];
-            return (
-              <a href={p(service.href)} class="service-link" data-home-enter>
-                <>
-                  <div class="service-top">
-                    <>
-                      <Icon size={27} stroke-width={1.5} />
-                      <span class="service-index">0{index + 1}</span>
-                    </>
-                  </div>
+          </h2><p class="section-lead">{copy.servicesIntro}</p>
+        </div>
+        <div class="service-bento">
+          {
+            copy.services.map((service, index) => {
+              const Icon = icons[index];
+              const shape = ["feature", "side", "side", "wide"][index];
+              return (
+                <a
+                  href={p(service.href)}
+                  class:list={["service-link", `service-link--${shape}`]}
+                  data-home-enter
+                >
+                  <Icon
+                    class="service-icon"
+                    size={index === 0 ? 32 : 26}
+                    stroke-width={1.5}
+                  />
                   <h3>
                     {service.title}
                     <ArrowUpRight class="service-arrow" size={24} />
                   </h3>
                   <p>{service.body}</p>
                   <span class="service-detail">{service.detail}</span>
-                </>
-              </a>
-            );
-          })
-        }
-      </div>
-    </section>
+                  {index === 0 && (
+                    <img
+                      class="service-visual"
+                      src="/images/architecture-light-800.webp"
+                      width="800"
+                      height="450"
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )}
+                </a>
+              );
+            })
+          }
+        </div>
+      </section>
+    </div>
     <div class="home-stack">
       <StackTeardown
+        visual={false}
         eyebrow={copy.stackLabel}
         heading={copy.stackTitle}
         layers={copy.layers.map((layer) => ({ ...layer, href: p(layer.href) }))}
         note={copy.stackNote}>{copy.stackBody}</StackTeardown
       >
     </div>
+    <div class="home-band">
     <section
       id="cum-lucram"
       class="home-wrap home-section home-cloud"
@@ -159,6 +174,7 @@ const org = {
         }
       </ol>
     </section>
+    </div>
     <section
       id="produse"
       class="home-products home-section"
@@ -179,12 +195,7 @@ const org = {
           {
             copy.products.map((product, index) => (
               <article class="product" data-home-enter>
-                <div class="product-label">
-                  <>
-                    <span>{product.label}</span>
-                    <span aria-hidden="true">0{index + 1}</span>
-                  </>
-                </div>
+                <p class="product-label">{product.label}</p>
                 <>
                   <h3>{product.name}</h3>
                   <p class="product-body">{product.body}</p>
@@ -240,7 +251,7 @@ const org = {
               {copy.partnersTitle}
             </h2>
           </div><p class="section-lead">{copy.partnersBody}</p>
-        </div><ul class="partner-grid">
+        </div><ul class="partner-flow">
           {technologyPartners.map((name) => <li>{name}</li>)}
         </ul>
       </div>
@@ -432,31 +443,72 @@ const org = {
     color: var(--color-slate);
     max-width: 440px;
   }
-  .service-grid {
+  .home-band {
+    background: var(--color-page);
+  }
+  .services-intro {
+    max-width: 760px;
+    margin-bottom: 44px;
+  }
+  .services-intro .section-lead {
+    max-width: 560px;
+    margin-top: 20px;
+  }
+  /* Asymmetric bento: Cloud (the flagship) is the tall tile, Managed runs wide. */
+  .service-bento {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 64px;
-    row-gap: 12px;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    grid-template-areas:
+      "feature side1"
+      "feature side2"
+      "wide wide";
+    gap: 20px;
   }
   .service-link {
-    display: block;
-    border-top: 1px solid var(--color-border-blue);
-    padding: 30px 0 28px;
-    color: var(--color-navy);
     position: relative;
-  }
-  .service-top {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 30px 32px 28px;
+    border-radius: var(--radius-xl);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    color: var(--color-navy);
+    transition:
+      box-shadow 0.25s,
+      transform 0.25s;
   }
-  .service-top > svg {
+  .service-link:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+  }
+  .service-link--feature {
+    grid-area: feature;
+    padding: 40px 40px 0;
+  }
+  .service-link--side:nth-child(2) {
+    grid-area: side1;
+  }
+  .service-link--side:nth-child(3) {
+    grid-area: side2;
+  }
+  .service-link--wide {
+    grid-area: wide;
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    grid-template-areas:
+      "icon body"
+      "title body"
+      "title detail";
+    column-gap: 56px;
+    align-items: start;
+  }
+  .service-icon {
     color: var(--color-mid-blue);
+    margin-bottom: 18px;
   }
-  .service-index {
-    font: 12px var(--font-mono);
-    color: var(--color-royal);
+  .service-link--wide .service-icon {
+    grid-area: icon;
   }
   .service-link h3 {
     font-size: 23px;
@@ -467,25 +519,21 @@ const org = {
     justify-content: space-between;
     gap: 12px;
   }
+  .service-link--feature h3 {
+    font-size: clamp(1.75rem, 2.6vw, 2.25rem);
+    letter-spacing: -0.04em;
+  }
+  .service-link--wide h3 {
+    grid-area: title;
+    align-self: start;
+    justify-content: flex-start;
+  }
   .service-arrow {
     flex-shrink: 0;
     transition: transform 0.25s;
   }
   .service-link:hover .service-arrow {
     transform: translate(4px, -4px);
-  }
-  .service-link::after {
-    content: "";
-    position: absolute;
-    top: -1px;
-    left: 0;
-    height: 2px;
-    width: 0;
-    background: var(--color-bright);
-    transition: width 0.3s;
-  }
-  .service-link:hover::after {
-    width: 100%;
   }
   .service-link p {
     font-size: 16px;
@@ -494,14 +542,41 @@ const org = {
     margin-top: 13px;
     max-width: 580px;
   }
+  .service-link--feature p {
+    font-size: 17px;
+    max-width: 460px;
+  }
+  .service-link--wide p {
+    grid-area: body;
+    margin-top: 0;
+  }
   .service-detail {
     display: block;
     margin-top: 19px;
     font-size: 13px;
     color: var(--color-royal);
   }
-  .home-stack {
-    background: var(--color-page);
+  .service-link--side .service-detail {
+    margin-top: auto;
+    padding-top: 19px;
+  }
+  .service-link--wide .service-detail {
+    grid-area: detail;
+  }
+  .service-visual {
+    display: block;
+    width: calc(100% + 80px);
+    max-width: none;
+    margin: 28px -40px 0;
+    margin-top: auto;
+    aspect-ratio: 16 / 8;
+    object-fit: cover;
+    object-position: center 60%;
+    mask-image: linear-gradient(180deg, transparent, black 30%);
+  }
+  .home-stack,
+  .home-stack :global(section) {
+    background: var(--color-surface);
   }
   .home-stack :global(section) {
     padding-block: 88px;
@@ -555,14 +630,10 @@ const org = {
     grid-template-columns: 1fr 1fr;
     gap: 64px;
   }
-  .product {
-    border-top: 1px solid color-mix(in srgb, var(--color-sky) 30%, transparent);
-    padding-top: 28px;
+  .product:nth-child(2) {
+    margin-top: 72px;
   }
   .product-label {
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
     font: 12px var(--font-mono);
     color: var(--color-sky);
   }
@@ -664,60 +735,89 @@ const org = {
   .cloud-link {
     margin-top: 18px;
   }
+  /* Real sequence, so numbers stay; the steps descend as a connected stair. */
   .methodology {
+    isolation: isolate;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    counter-reset: stage;
+    gap: 32px;
+    padding-bottom: 8px;
   }
   .methodology li {
-    border-top: 2px solid var(--color-border-blue);
-    padding-top: 22px;
+    position: relative;
+    padding-top: 30px;
+  }
+  .methodology li:nth-child(2) {
+    margin-top: 56px;
+  }
+  .methodology li:nth-child(3) {
+    margin-top: 112px;
+  }
+  .methodology li::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background: var(--color-bright);
+  }
+  .methodology li:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: calc(100% + 32px);
+    height: 56px;
+    border-top: 1.5px solid var(--color-border-blue);
+    border-right: 1.5px solid var(--color-border-blue);
+    border-top-right-radius: var(--radius-sm);
+    z-index: -1;
   }
   .stage-number {
     font: 14px var(--font-mono);
     color: var(--color-royal);
   }
   .methodology h3 {
-    font-size: 17px;
-    line-height: 1.4;
+    font-size: 19px;
+    line-height: 1.35;
     font-weight: 600;
-    margin-top: 22px;
+    margin-top: 14px;
     letter-spacing: -0.3px;
   }
   .methodology p {
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.7;
     color: var(--color-slate);
     margin-top: 10px;
-  }
-  .methodology li.home-entered {
-    animation: rail-in 0.8s ease both;
+    max-width: 320px;
   }
   .home-partners {
-    padding-block: 72px 88px;
-    border-top: 1px solid var(--color-border-blue);
+    padding-block: 88px;
   }
-  .partner-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-  }
-  .partner-grid li {
+  .partner-flow {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    min-height: 76px;
-    padding: 12px;
-    border-bottom: 1px solid var(--color-border-blue);
-    font-size: 18px;
+    row-gap: 18px;
+    max-width: 1040px;
+  }
+  .partner-flow li {
+    display: inline-flex;
+    align-items: center;
+    font-size: clamp(1.25rem, 2.1vw, 1.75rem);
     font-weight: 600;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.04em;
     color: var(--color-slate);
   }
-  .partner-grid li:nth-child(-n + 5) {
-    border-top: 1px solid var(--color-border-blue);
+  .partner-flow li:not(:last-child)::after {
+    content: "";
+    width: 6px;
+    height: 6px;
+    margin-inline: 26px;
+    background: var(--color-bright);
+    transform: rotate(45deg);
   }
   .home-contact {
     padding-block: 80px;
@@ -763,33 +863,27 @@ const org = {
       transform: translateX(400%);
     }
   }
-  @keyframes rail-in {
-    from {
-      border-top-color: var(--color-bright);
-    }
-    to {
-      border-top-color: var(--color-border-blue);
-    }
-  }
   @media (max-width: 1000px) {
     .section-intro {
       gap: 40px;
     }
-    .service-grid,
     .product-grid {
       gap: 32px;
     }
+    .service-link--wide {
+      column-gap: 32px;
+    }
     .methodology {
-      gap: 14px;
+      gap: 20px;
+    }
+    .methodology li:not(:last-child)::after {
+      width: calc(100% + 20px);
     }
     .methodology h3 {
-      font-size: 15px;
+      font-size: 16px;
     }
     .product-body {
       min-height: 110px;
-    }
-    .partner-grid li {
-      font-size: 16px;
     }
   }
   @media (max-width: 760px) {
@@ -805,9 +899,30 @@ const org = {
       font-size: 16px;
       max-width: 560px;
     }
-    .service-grid {
+    .service-bento {
       grid-template-columns: 1fr;
-      gap: 0;
+      grid-template-areas: none;
+      gap: 14px;
+    }
+    .service-link,
+    .service-link--feature,
+    .service-link--side:nth-child(2),
+    .service-link--side:nth-child(3) {
+      grid-area: auto;
+      padding: 24px 22px;
+    }
+    .service-link--feature {
+      padding-bottom: 0;
+    }
+    .service-link--wide {
+      display: flex;
+    }
+    .service-link--wide p {
+      margin-top: 13px;
+    }
+    .service-visual {
+      width: calc(100% + 44px);
+      margin-inline: -22px;
     }
     .service-link h3 {
       font-size: 21px;
@@ -824,6 +939,9 @@ const org = {
     .product-grid {
       grid-template-columns: 1fr;
       gap: 40px;
+    }
+    .product:nth-child(2) {
+      margin-top: 0;
     }
     .product-body {
       min-height: 0;
@@ -842,10 +960,16 @@ const org = {
       display: grid;
       grid-template-columns: 38px 1fr;
       column-gap: 14px;
-      border-top: 0;
       border-left: 2px solid var(--color-border-blue);
       padding: 0 0 28px 20px;
-      margin-left: 5px;
+      margin: 0 0 0 5px;
+    }
+    .methodology li::before,
+    .methodology li:not(:last-child)::after {
+      content: none;
+    }
+    .methodology li:nth-child(n) {
+      margin-top: 0;
     }
     .stage-number {
       margin-top: 4px;
@@ -865,17 +989,11 @@ const org = {
     .home-partners {
       padding-block: 60px;
     }
-    .partner-grid {
-      grid-template-columns: repeat(3, 1fr);
+    .partner-flow {
+      row-gap: 12px;
     }
-    .partner-grid li {
-      font-size: 14px;
-      min-height: 68px;
-      padding: 10px 5px;
-    }
-    .partner-grid li:nth-child(4),
-    .partner-grid li:nth-child(5) {
-      border-top: 0;
+    .partner-flow li:not(:last-child)::after {
+      margin-inline: 16px;
     }
     .contact-layout {
       grid-template-columns: 1fr;
@@ -889,14 +1007,14 @@ const org = {
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .home-entered .flow-line span,
-    .methodology li.home-entered {
+    .home-entered .flow-line span {
       animation: none;
     }
     .flow-line span {
       transform: none;
       width: 100%;
     }
+    .service-link,
     .service-arrow,
     .home-text-link svg,
     .product-link svg {
