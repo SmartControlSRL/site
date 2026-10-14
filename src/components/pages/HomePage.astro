@@ -2,7 +2,7 @@
 import AmbientArtwork from "../AmbientArtwork.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import MailtoLink from "../MailtoLink.astro";
-import HeroVideoArtwork from "../HeroVideoArtwork.astro";
+import HeroStack from "../HeroStack.astro";
 import StackTeardown from "../StackTeardown.astro";
 import { homeCopy, technologyPartners } from "../../content/home-page";
 import {
@@ -68,8 +68,12 @@ const org = {
             >
           </div>
         </div>
+        <HeroStack
+          layers={copy.layers
+            .map(({ code, name }) => ({ code, name }))
+            .reverse()}
+        />
       </div>
-      <HeroVideoArtwork variant="homepage" />
     </header>
     <section
       id="servicii"
@@ -284,6 +288,7 @@ const org = {
   .home-hero {
     position: relative;
     isolation: isolate;
+    overflow-x: clip;
     background: linear-gradient(
       180deg,
       var(--color-page) 0%,
@@ -296,6 +301,7 @@ const org = {
     z-index: 1;
     display: flex;
     align-items: center;
+    gap: 24px;
     min-height: 620px;
     padding-block: 76px 88px;
   }
@@ -369,6 +375,7 @@ const org = {
   }
   @media (max-width: 900px) {
     .hero-layout {
+      flex-wrap: wrap;
       min-height: auto;
       padding-block: 48px 16px;
     }

@@ -1,0 +1,361 @@
+---
+// Homepage hero: the four IT layers (L1→L4) assemble as frosted-glass slabs,
+// each with its line-art and an engraved edge label, then idle with a slow
+// scan (see docs/design-proposals/homepage-hero-stack). Markup is the final
+// state, so no-JS / reduced-motion / session-paused visitors get a still
+// image; src/scripts/hero-stack.ts drives the intro and the idle loop with
+// WAAPI. Decorative: the same layers are described in the "Arhitectură IT"
+// section below, so the visual is aria-hidden.
+import { Pause, Play } from "@lucide/astro";
+import { heroStackArt } from "../content/hero-stack-art";
+import { getLangFromUrl } from "../i18n/ui";
+
+interface Props {
+  /** Layers in display order L1 (bottom) → L4 (top). */
+  layers: { code: string; name: string }[];
+}
+const { layers } = Astro.props;
+const en = getLangFromUrl(Astro.url) === "en";
+const pause = en ? "Pause animation" : "Pauză animație";
+const play = en ? "Play animation" : "Redă animația";
+
+// Top-face corners of the slab render (viewBox 2236×1214): top, right, left.
+// The 280×280 drawing space maps onto that face with one affine matrix.
+const T = [1105, 14];
+const R = [2214, 578];
+const L = [22, 578];
+const matrix = [
+  (R[0] - T[0]) / 280,
+  (R[1] - T[1]) / 280,
+  (L[0] - T[0]) / 280,
+  (L[1] - T[1]) / 280,
+  T[0],
+  T[1],
+]
+  .map((v) => +v.toFixed(4))
+  .join(" ");
+
+// Engraved label along the front-left edge; shrink long names to fit the edge.
+const tags = layers.map(({ code, name }) => {
+  const text = `${code}  ${name.toLocaleUpperCase(en ? "en" : "ro")}`;
+  const size = Math.min(13, +((242 / text.length - 1.6) / 0.6).toFixed(1));
+  // One tspan per character so the script can type it; built as a string
+  // because template whitespace between tspans would render as spaces.
+  const escape = (c: string) =>
+    c === "&" ? "&amp;" : c === "<" ? "&lt;" : c === " " ? "\u00a0" : c;
+  const html = [...text]
+    .map(
+      (c, i) =>
+        `<tspan${i < code.length ? ' class="hs-code"' : ""}>${escape(c)}</tspan>`,
+    )
+    .join("");
+  return { html, size };
+});
+
+// Fixed (not random) so SSR output is stable.
+const particles = [
+  [22, 70], [31, 44], [38, 82], [46, 58], [52, 30], [57, 76], [63, 48],
+  [68, 88], [72, 36], [77, 64], [81, 52], [85, 80], [88, 40], [26, 54],
+];
+---
+
+<div class="hero-stack" data-hero-stack aria-hidden="true">
+  <div class="hs-ambient"></div>
+  <div class="hs-camera">
+    <div class="hs-stack">
+      <div class="hs-shadow"></div>
+      {
+        tags.map((tag, n) => (
+          <div
+            class="hs-slab"
+            data-n={n}
+            style={`--from-top:${3 - n};z-index:${n + 2}`}
+          >
+            <span class="hs-frost" />
+            <img
+              src="/images/hero-stack-slab-640.webp"
+              srcset="/images/hero-stack-slab-640.webp 640w, /images/hero-stack-slab-1160.webp 1160w"
+              sizes="(max-width: 900px) 84vw, 540px"
+              width="1160"
+              height="631"
+              alt=""
+              decoding="async"
+            />
+            <svg class="hs-art" viewBox="0 0 2236 1214" fill="none">
+              <g transform={`matrix(${matrix})`} set:html={heroStackArt[n]} />
+            </svg>
+            <span class="hs-sheen" />
+            <span class="hs-ring" />
+            <span class="hs-edge" />
+            <svg class="hs-tag" viewBox="0 0 2236 1214">
+              <g transform={`matrix(${matrix})`}>
+                <text
+                  x="24"
+                  y="262"
+                  font-size={tag.size}
+                  set:html={tag.html}
+                />
+              </g>
+            </svg>
+          </div>
+        ))
+      }
+      <div class="hs-packet"></div>
+      {
+        particles.map(([x, y]) => (
+          <span class="hs-particle" style={`left:${x}%;top:${y}%`} />
+        ))
+      }
+    </div>
+  </div>
+</div>
+<button
+  type="button"
+  class="hero-stack-toggle"
+  data-hero-stack-toggle
+  data-label-pause={pause}
+  data-label-play={play}
+  data-paused="false"
+  hidden
+>
+  <Pause size={15} stroke-width={1.5} aria-hidden="true" data-stack-pause />
+  <Play size={15} stroke-width={1.5} aria-hidden="true" data-stack-play />
+  <span data-stack-label>{pause}</span>
+</button>
+
+<style>
+  .hero-stack {
+    --hs-w: clamp(360px, 40vw, 540px);
+    --hs-h: calc(var(--hs-w) * 0.5429);
+    --hs-gap: calc(var(--hs-w) * 0.1655);
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    height: calc(var(--hs-h) + 3 * var(--hs-gap) + 90px);
+    pointer-events: none;
+  }
+  .hs-ambient {
+    position: absolute;
+    inset: -8% -12%;
+    background: radial-gradient(
+      44% 40% at 55% 52%,
+      color-mix(in srgb, var(--color-sky) 38%, transparent),
+      transparent 70%
+    );
+  }
+  .hs-camera {
+    position: absolute;
+    inset: 0;
+    transform-origin: 55% 55%;
+  }
+  .hs-stack {
+    position: absolute;
+    top: 46px;
+    left: calc(50% - var(--hs-w) / 2);
+    width: var(--hs-w);
+    height: calc(var(--hs-h) + 3 * var(--hs-gap));
+  }
+  .hs-slab {
+    position: absolute;
+    left: 0;
+    top: calc(var(--from-top) * var(--hs-gap));
+    width: var(--hs-w);
+    height: var(--hs-h);
+  }
+  .hs-slab > * {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  /* Final (static) state: older layers recede, the top layer glows. */
+  .hs-slab:not([data-n="3"]) .hs-art {
+    opacity: 0.36;
+  }
+  .hs-slab[data-n="3"] {
+    filter: drop-shadow(
+      0 0 16px color-mix(in srgb, var(--color-bright) 60%, transparent)
+    );
+  }
+  .hs-frost,
+  .hs-sheen {
+    clip-path: polygon(49.4% 1.2%, 99% 47.6%, 50.6% 94.1%, 1% 47.6%);
+  }
+  .hs-frost {
+    backdrop-filter: blur(3px);
+    background: rgb(255 255 255 / 0.28);
+  }
+  .hs-sheen {
+    overflow: hidden;
+    mix-blend-mode: screen;
+  }
+  .hs-sheen::before {
+    content: "";
+    position: absolute;
+    inset-block: -20%;
+    left: -40%;
+    width: 34%;
+    background: linear-gradient(
+      100deg,
+      transparent,
+      rgb(255 255 255 / 0.85) 50%,
+      transparent
+    );
+    transform: skewX(-18deg);
+  }
+  /* Glows follow the slab's exact silhouette via its alpha. */
+  .hs-ring,
+  .hs-edge {
+    opacity: 0;
+    mask: url("/images/hero-stack-slab-640.webp") center / 100% 100% no-repeat;
+  }
+  .hs-ring {
+    background: var(--color-bright);
+    filter: blur(3px);
+    mix-blend-mode: screen;
+  }
+  .hs-edge {
+    background: radial-gradient(
+      120% 120% at 50% 50%,
+      transparent 55%,
+      var(--color-bright)
+    );
+    filter: blur(1.5px);
+  }
+  .hs-shadow {
+    position: absolute;
+    left: 12%;
+    width: 76%;
+    height: 80px;
+    top: calc(3 * var(--hs-gap) + var(--hs-h) - 34px);
+    background: radial-gradient(
+      closest-side,
+      color-mix(in srgb, var(--color-navy) 26%, transparent),
+      transparent
+    );
+    filter: blur(8px);
+  }
+  .hs-packet {
+    position: absolute;
+    z-index: 30;
+    left: calc(50% - 7px);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    opacity: 0;
+    background: radial-gradient(
+      circle,
+      #fff 0 25%,
+      color-mix(in srgb, var(--color-sky) 90%, transparent) 45%,
+      transparent 70%
+    );
+    box-shadow: 0 0 18px 4px
+      color-mix(in srgb, var(--color-bright) 55%, transparent);
+  }
+  .hs-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    opacity: 0;
+    background: var(--color-sky);
+    box-shadow: 0 0 6px var(--color-sky);
+  }
+  .hero-stack :global(.hs-i) {
+    stroke: var(--color-navy);
+    stroke-opacity: 0.74;
+  }
+  .hero-stack :global(.hs-h) {
+    stroke: var(--color-bright);
+  }
+  .hero-stack :global(.hs-hf) {
+    fill: var(--color-bright);
+  }
+  .hero-stack :global(.hs-if) {
+    fill: var(--color-navy);
+    fill-opacity: 0.6;
+  }
+  .hs-art :global(*) {
+    stroke-width: 1.4;
+    vector-effect: non-scaling-stroke;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .hs-tag text {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    letter-spacing: 1.6px;
+    fill: var(--color-navy);
+  }
+  .hs-tag :global(.hs-code) {
+    fill: var(--color-bright);
+  }
+  /* No script yet: reveal the final state softly instead of popping in. The
+     script sets data-state and takes over before this fallback starts. */
+  .hero-stack:not([data-state]) .hs-camera {
+    opacity: 0;
+    animation: hs-reveal 600ms ease 1.2s forwards;
+  }
+  @keyframes hs-reveal {
+    to {
+      opacity: 1;
+    }
+  }
+  .hero-stack-toggle {
+    position: absolute;
+    right: max(20px, calc((100% - 1180px) / 2));
+    bottom: 14px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding-inline: 12px;
+    border-radius: 6px;
+    color: var(--color-navy);
+    background: var(--color-surface);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .hero-stack-toggle:hover {
+    background: var(--color-page);
+  }
+  .hero-stack-toggle:focus-visible {
+    outline: 3px solid var(--color-bright);
+    outline-offset: 3px;
+  }
+  .hero-stack-toggle[hidden],
+  .hero-stack-toggle :global([data-stack-play]),
+  .hero-stack-toggle[data-paused="true"] :global([data-stack-pause]) {
+    display: none;
+  }
+  .hero-stack-toggle[data-paused="true"] :global([data-stack-play]) {
+    display: block;
+  }
+  @media (max-width: 900px) {
+    .hero-stack {
+      --hs-w: min(84vw, 420px);
+      flex-basis: 100%;
+      height: calc(var(--hs-h) + 3 * var(--hs-gap) + 70px);
+    }
+    .hs-stack {
+      top: 30px;
+    }
+    .hero-stack-toggle {
+      bottom: 6px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-stack:not([data-state]) .hs-camera {
+      opacity: 1;
+      animation: none;
+    }
+    .hero-stack-toggle {
+      display: none;
+    }
+  }
+</style>
+<script>
+  import "../scripts/hero-stack";
+</script>
