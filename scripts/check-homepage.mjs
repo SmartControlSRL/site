@@ -251,8 +251,13 @@ try {
     await settled(page, `${route} scroll away/back`);
 
     await page.emulateMedia({ reducedMotion: "reduce" });
+    // CSS hides the toggle at once; the script settles on the (async)
+    // media-query change event, so wait for its state, not the button.
     await button.waitFor({ state: "hidden" });
-    assert.equal(await state(page), "static");
+    await page.waitForFunction(
+      (sel) => document.querySelector(sel)?.dataset.state === "static",
+      stackSelector,
+    );
     assert.deepEqual(await still(page, `${route} reduced`), expectedTags);
     await page.emulateMedia({ reducedMotion: "no-preference" });
     // The media-query change event is async; wait for the intro to restart.
