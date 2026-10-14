@@ -10,6 +10,7 @@
 // Usage:
 //   node scripts/audit.mjs --dir dist --policy config/site-audit-policy.json --out artifacts/site-audit.json
 //   node scripts/audit.mjs --dir dist --url https://staging.example --policy config/site-audit-policy.json
+import { retiredRoutes } from './retired-routes.mjs';
 import { chromium } from 'playwright';
 import http from 'node:http';
 import { access, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
@@ -34,6 +35,7 @@ const MIME = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css',
   '.png': 'image/png', '.svg': 'image/svg+xml', '.ico': 'image/x-icon',
   '.woff2': 'font/woff2', '.webp': 'image/webp', '.xml': 'application/xml', '.txt': 'text/plain',
+  '.mp4': 'video/mp4',
 };
 
 async function filesBelow(dir) {
@@ -57,7 +59,7 @@ async function discoverRoutes(root) {
   const routes = (await filesBelow(root))
     .filter((file) => file.endsWith('.html'))
     .map((file) => routeOf(file, root));
-  return [...new Set(routes)].sort((a, b) => a.localeCompare(b));
+  return [...new Set(routes)].filter((route) => !retiredRoutes[route]).sort((a, b) => a.localeCompare(b));
 }
 
 async function existingFile(candidates) {
@@ -288,12 +290,15 @@ async function smokeTests(browser, base) {
   try {
     const response = await page.goto(`${base}/`, { waitUntil: 'domcontentloaded' });
     if (response?.status() !== 200) failures.push(`ClientRouter start returned ${response?.status() ?? 'no response'}`);
-    const services = page.locator('a[href="/servicii/"]:visible').first();
-    if (!await services.count()) failures.push('ClientRouter smoke link /servicii/ is missing');
+    const services = page.locator('a[href="/servicii/cloud/"]:visible').first();
+    if (!await services.count()) failures.push('ClientRouter smoke link /servicii/cloud/ is missing');
     else {
       await services.click();
-      await page.waitForURL((url) => url.pathname === '/servicii/', { timeout: 5000 });
+      await page.waitForURL((url) => url.pathname === '/servicii/cloud/', { timeout: 5000 });
       if (!await page.locator('main').count()) failures.push('ClientRouter navigation did not render <main>');
+      await page.locator('nav a[href="/#servicii"]').click();
+      await page.waitForURL((url) => url.pathname === '/' && url.hash === '#servicii', { timeout: 5000 });
+      if (!await page.locator('#servicii').isVisible()) failures.push('Expertise navigation did not reach the homepage overview');
     }
   } catch (error) { failures.push(`ClientRouter navigation failed: ${error.message}`); }
   await desktop.close();
@@ -317,8 +322,8 @@ async function smokeTests(browser, base) {
     try {
       await reducedPage.goto(`${base}${route}`, { waitUntil: 'domcontentloaded' });
       await reducedPage.waitForTimeout(150);
-      const opacity = await reducedPage.locator('[data-step-body]').evaluateAll((elements) => elements.map((element) => getComputedStyle(element).opacity));
-      if (!opacity.length) failures.push(`${route}: reduced-motion stepper is missing`);
+      const opacity = await reducedPage.locator('.detail-step p').evaluateAll((elements) => elements.map((element) => getComputedStyle(element).opacity));
+      if (opacity.length !== 5) failures.push(`${route}: reduced-motion workflow must retain five readable stages`);
       if (opacity.some((value) => Number.parseFloat(value) < 0.99)) failures.push(`${route}: reduced-motion stepper hides content (${opacity.join(', ')})`);
     } catch (error) { failures.push(`${route}: reduced-motion smoke failed: ${error.message}`); }
   }

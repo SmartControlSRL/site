@@ -7,11 +7,38 @@ drift.
 ## Sources of truth
 
 - Shared chrome and CTA labels: `src/i18n/ui.ts`.
-- Services hub and solutions hub: `src/content/hub-pages.ts`.
+- Homepage sections: `src/content/home-page.ts` and
+  `src/components/pages/HomePage.astro`.
 - Security, Software, and Managed Services detail pages:
   `src/content/service-pages.ts`.
 - Shared renderers: `src/components/pages/`.
-- Unique Cloud and product-detail copy: the corresponding `.astro` page pair.
+- Cloud copy: `src/content/cloud-page.ts`.
+- Product copy: `src/content/product-pages.ts`.
+
+## Editorial baseline
+
+The site owner clarified on 2026-09-08 that much of the wording on `main` had
+already been approved internally. The baseline for this redesign is
+`origin/main` at `c551648`. Preserve its headings, service and product
+descriptions, delivery responsibilities, contact copy and metadata when moving
+content into shared records. A design change is not permission to rewrite copy.
+
+The request for a restrained tone still applies. Treat external company sites
+as references for future, specific suggestions; they do not supersede approved
+Smart Control wording. Present substantive editorial changes individually for
+agreement before implementation. Mechanical spelling corrections and layout
+adjustments must preserve meaning. The navigation brand subline follows the
+owner's explicit restoration request recorded under C-001 in CLAIMS.
+
+[Comparison with main and retained layout adaptations](design-proposals/copy-review/README.md).
+
+The owner subsequently approved implementation of the independently reviewed
+editorial audit (A01–A09) on 2026-09-08. The specific exceptions to the baseline
+are recorded in [the editorial revision](design-proposals/editorial-revision/README.md).
+Infrastructure & Cloud presents the full pillar documented in the approved
+Services hub, with modernisation kept as a dedicated section. Networking uses
+only the technologies already named on Home and the approved network-operations
+description. This approval does not authorise unrelated copy or service claims.
 
 Update both locales in the same typed record. Do not copy a shared template
 back into locale-specific page files. Route-specific layout may be added

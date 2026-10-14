@@ -1,0 +1,952 @@
+---
+import AmbientArtwork from "../AmbientArtwork.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import MailtoLink from "../MailtoLink.astro";
+import HeroVideoArtwork from "../HeroVideoArtwork.astro";
+import StackTeardown from "../StackTeardown.astro";
+import { homeCopy, technologyPartners } from "../../content/home-page";
+import {
+  Server,
+  ShieldCheck,
+  Code,
+  Workflow,
+  User,
+  Activity,
+  ArrowUpRight,
+  ArrowRight,
+} from "@lucide/astro";
+import { getLangFromUrl, useTranslations, localizedPath } from "../../i18n/ui";
+const lang = getLangFromUrl(Astro.url);
+const en = lang === "en";
+const t = useTranslations(lang);
+const copy = homeCopy[lang];
+const p = (path: string) => localizedPath(lang, path);
+const engagement = copy.process.steps;
+const icons = [Server, ShieldCheck, Code, Workflow];
+const description = copy.description;
+const org = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Smart Control SRL",
+  url: en ? "https://smartcontrol.ro/en/" : "https://smartcontrol.ro/",
+  logo: "https://smartcontrol.ro/smartcontrol-mark.png",
+  description: copy.organizationDescription,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Intrarea Aviator Teodor Iliescu 37",
+    postalCode: "011672",
+    addressLocality: "București",
+    addressCountry: "RO",
+  },
+};
+---
+
+<BaseLayout
+  title="Smart Control — Trusted Service Delivery Partner"
+  description={description}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(org)} />
+  <div class="home-redesign">
+    <header class="home-hero">
+      <div class="home-wrap hero-layout">
+        <div class="hero-copy">
+          <p class="home-kicker hero-in">Trusted Service Delivery Partner</p>
+          <h1 class="hero-in-2">
+            {copy.hero.lead}<br /><span>{copy.hero.accent}</span>
+          </h1>
+          <p class="hero-lead hero-in-3">{copy.hero.body}</p>
+          <div class="hero-actions hero-in-4">
+            <MailtoLink
+              variant="button"
+              subject={t("subject.assessment")}
+              class="home-primary"
+              >{t("cta.assessment")}<ArrowUpRight size={19} /></MailtoLink
+            ><a class="home-text-link" href="#servicii"
+              >{en ? "View services" : "Vezi serviciile"}<ArrowRight
+                size={18}
+              /></a
+            >
+          </div>
+        </div>
+      </div>
+      <HeroVideoArtwork variant="homepage" />
+    </header>
+    <section
+      id="servicii"
+      class="home-wrap home-section"
+      aria-labelledby="home-services-heading"
+    >
+      <div class="section-intro" data-home-enter>
+        <div>
+          <p class="home-kicker">{copy.servicesLabel}</p><h2
+            id="home-services-heading"
+          >
+            {copy.servicesTitle}
+          </h2>
+        </div><p class="section-lead">{copy.servicesIntro}</p>
+      </div>
+      <div class="service-grid">
+        {
+          copy.services.map((service, index) => {
+            const Icon = icons[index];
+            return (
+              <a href={p(service.href)} class="service-link" data-home-enter>
+                <>
+                  <div class="service-top">
+                    <>
+                      <Icon size={27} stroke-width={1.5} />
+                      <span class="service-index">0{index + 1}</span>
+                    </>
+                  </div>
+                  <h3>
+                    {service.title}
+                    <ArrowUpRight class="service-arrow" size={24} />
+                  </h3>
+                  <p>{service.body}</p>
+                  <span class="service-detail">{service.detail}</span>
+                </>
+              </a>
+            );
+          })
+        }
+      </div>
+    </section>
+    <div class="home-stack">
+      <StackTeardown
+        eyebrow={copy.stackLabel}
+        heading={copy.stackTitle}
+        layers={copy.layers.map((layer) => ({ ...layer, href: p(layer.href) }))}
+        note={copy.stackNote}>{copy.stackBody}</StackTeardown
+      >
+    </div>
+    <section
+      id="cum-lucram"
+      class="home-wrap home-section home-cloud"
+      aria-labelledby="home-cloud-heading"
+    >
+      <div class="section-intro" data-home-enter>
+        <div>
+          <p class="home-kicker">{copy.process.eyebrow}</p><h2
+            id="home-cloud-heading"
+          >
+            {copy.process.heading}
+          </h2>
+        </div><div>
+          <p class="section-lead">{copy.process.description}</p><a
+            href={p("/servicii/managed")}
+            class="home-text-link cloud-link"
+            >{en ? "Managed Services" : "Servicii Gestionate"}<ArrowUpRight
+              size={20}
+            /></a
+          >
+        </div>
+      </div>
+      <ol class="methodology">
+        {
+          engagement.map((stage, i) => (
+            <li data-home-enter>
+              <>
+                <span class="stage-number">0{i + 1}</span>
+                <h3>{stage.title}</h3>
+                <p>{stage.body}</p>
+              </>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+    <section
+      id="produse"
+      class="home-products home-section"
+      aria-labelledby="home-products-heading"
+    >
+      <AmbientArtwork artwork="optical-dark" lazy />
+      <div class="home-wrap">
+        <div class="section-intro" data-home-enter>
+          <div>
+            <p class="home-kicker">{copy.productsLabel}</p><h2
+              id="home-products-heading"
+            >
+              {copy.productsTitle}
+            </h2>
+          </div><p class="section-lead">{copy.productsIntro}</p>
+        </div>
+        <div class="product-grid">
+          {
+            copy.products.map((product, index) => (
+              <article class="product" data-home-enter>
+                <div class="product-label">
+                  <>
+                    <span>{product.label}</span>
+                    <span aria-hidden="true">0{index + 1}</span>
+                  </>
+                </div>
+                <>
+                  <h3>{product.name}</h3>
+                  <p class="product-body">{product.body}</p>
+                </>
+                <figure
+                  class:list={[
+                    "product-flow",
+                    index === 1 && "product-flow--vpn",
+                  ]}
+                >
+                  <div class="flow-line" aria-hidden="true">
+                    <span />
+                  </div>
+                  <div class="flow-nodes">
+                    {product.steps.map((step, i) => {
+                      const Icon =
+                        index === 0
+                          ? [Server, Activity, ShieldCheck][i]
+                          : [User, ShieldCheck, Server][i];
+                      return (
+                        <div>
+                          <span class="flow-icon">
+                            <Icon size={26} stroke-width={1.5} />
+                          </span>
+                          <span>{step}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <figcaption>{product.caption}</figcaption>
+                </figure>
+                <a class="product-link" href={p(product.href)}>
+                  {copy.explore} {product.name}
+                  <ArrowUpRight size={21} />
+                </a>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+    <section
+      id="parteneri"
+      class="home-partners"
+      aria-labelledby="home-partners-heading"
+    >
+      <div class="home-wrap">
+        <div class="section-intro" data-home-enter>
+          <div>
+            <p class="home-kicker">{copy.partnersLabel}</p><h2
+              id="home-partners-heading"
+            >
+              {copy.partnersTitle}
+            </h2>
+          </div><p class="section-lead">{copy.partnersBody}</p>
+        </div><ul class="partner-grid">
+          {technologyPartners.map((name) => <li>{name}</li>)}
+        </ul>
+      </div>
+    </section>
+    <section
+      id="contact"
+      class="home-contact"
+      aria-labelledby="home-contact-heading"
+    >
+      <div class="home-wrap contact-layout">
+        <div data-home-enter>
+          <p class="home-kicker">{copy.contactLabel}</p><h2
+            id="home-contact-heading"
+          >
+            {copy.contactTitle}
+          </h2><p class="contact-body">{copy.contactBody}</p>
+        </div><div class="contact-actions">
+          <MailtoLink
+            variant="button"
+            dark
+            subject={t("subject.assessment")}
+            class="home-primary"
+            >{t("cta.assessment")}<ArrowUpRight size={20} /></MailtoLink
+          ><MailtoLink dark class="contact-email" /><span
+            >{en ? "Bucharest, Romania" : "București, România"}</span
+          >
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+<style>
+  .home-redesign {
+    color: var(--color-navy);
+  }
+  .home-wrap {
+    width: min(100% - 80px, 1180px);
+    margin-inline: auto;
+  }
+  .hero-copy {
+    min-width: 0;
+    width: 52%;
+    max-width: 600px;
+  }
+  .home-hero {
+    position: relative;
+    isolation: isolate;
+    background: linear-gradient(
+      180deg,
+      var(--color-page) 0%,
+      var(--color-page) 52%,
+      var(--color-surface) 100%
+    );
+  }
+  .hero-layout {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    min-height: 620px;
+    padding-block: 76px 88px;
+  }
+  .home-kicker {
+    font: 500 12px/1.6 var(--font-mono);
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--color-royal);
+  }
+  h1 {
+    font-size: clamp(2.6rem, 4.3vw, 3.75rem);
+    line-height: 1.02;
+    letter-spacing: -0.065em;
+    font-weight: 600;
+    margin-top: 25px;
+    color: var(--color-midnight);
+  }
+  h1 span {
+    color: var(--color-mid-blue);
+  }
+  .hero-lead {
+    font-size: 18px;
+    line-height: 1.65;
+    max-width: 580px;
+    margin-top: 28px;
+    color: var(--color-slate);
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 22px;
+    margin-top: 30px;
+  }
+  .home-redesign :global(.home-primary) {
+    gap: 14px;
+    min-height: 52px;
+    padding-inline: 23px;
+    font-size: 15px;
+    border-radius: var(--radius-sm);
+  }
+  .home-text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    min-height: 44px;
+    color: var(--color-royal);
+  }
+  .home-text-link svg {
+    transition: transform 0.2s;
+  }
+  .home-text-link:hover svg {
+    transform: translateX(4px);
+  }
+  .home-text-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 5px;
+  }
+  @media (max-width: 1000px) {
+    h1 {
+      font-size: clamp(2.6rem, 5.4vw, 3.5rem);
+    }
+    .hero-actions {
+      gap: 12px;
+    }
+    .hero-lead {
+      font-size: 17px;
+    }
+  }
+  @media (max-width: 900px) {
+    .hero-layout {
+      min-height: auto;
+      padding-block: 48px 16px;
+    }
+    .hero-copy {
+      width: 100%;
+      max-width: 620px;
+    }
+  }
+  @media (max-width: 760px) {
+    .home-wrap {
+      width: calc(100% - 40px);
+    }
+    h1 {
+      font-size: clamp(2.35rem, 8.5vw, 3.5rem);
+    }
+    .hero-lead {
+      max-width: 520px;
+      font-size: 16px;
+      margin-top: 22px;
+    }
+    .hero-layout {
+      padding-top: 32px;
+    }
+    .hero-actions {
+      margin-top: 20px;
+    }
+    .home-kicker {
+      font-size: 11px;
+      letter-spacing: 1.2px;
+    }
+  }
+  h2 {
+    font-size: clamp(2rem, 3.4vw, 2.875rem);
+    line-height: 1.13;
+    letter-spacing: -0.045em;
+    font-weight: 600;
+    white-space: pre-line;
+    color: var(--color-midnight);
+    margin-top: 18px;
+  }
+  .home-section {
+    padding-block: 88px;
+  }
+  .section-intro {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 80px;
+    align-items: end;
+    margin-bottom: 48px;
+  }
+  .section-lead {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--color-slate);
+    max-width: 440px;
+  }
+  .service-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 64px;
+    row-gap: 12px;
+  }
+  .service-link {
+    display: block;
+    border-top: 1px solid var(--color-border-blue);
+    padding: 30px 0 28px;
+    color: var(--color-navy);
+    position: relative;
+  }
+  .service-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .service-top > svg {
+    color: var(--color-mid-blue);
+  }
+  .service-index {
+    font: 12px var(--font-mono);
+    color: var(--color-royal);
+  }
+  .service-link h3 {
+    font-size: 23px;
+    font-weight: 600;
+    letter-spacing: -0.6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .service-arrow {
+    flex-shrink: 0;
+    transition: transform 0.25s;
+  }
+  .service-link:hover .service-arrow {
+    transform: translate(4px, -4px);
+  }
+  .service-link::after {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 0;
+    height: 2px;
+    width: 0;
+    background: var(--color-bright);
+    transition: width 0.3s;
+  }
+  .service-link:hover::after {
+    width: 100%;
+  }
+  .service-link p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--color-slate);
+    margin-top: 13px;
+    max-width: 580px;
+  }
+  .service-detail {
+    display: block;
+    margin-top: 19px;
+    font-size: 13px;
+    color: var(--color-royal);
+  }
+  .home-stack {
+    background: var(--color-page);
+  }
+  .home-stack :global(section) {
+    padding-block: 88px;
+  }
+  .home-stack :global(h2) {
+    font-weight: 600;
+    letter-spacing: -0.045em;
+    white-space: pre-line;
+    font-size: clamp(2rem, 3.4vw, 2.875rem);
+  }
+  .home-stack :global(.eyebrow) {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+  }
+  .home-stack :global(.eyebrow--rule) {
+    border: 0;
+    padding: 0;
+  }
+  .home-stack :global(.sctd-note) {
+    font-family: var(--font-sans);
+    font-size: 13px;
+  }
+  .home-products {
+    background: var(--color-midnight);
+    color: var(--color-surface);
+    position: relative;
+    overflow: hidden;
+  }
+  .home-products > .home-wrap {
+    position: relative;
+    z-index: 1;
+  }
+  .home-products :global(.ambient-artwork) {
+    opacity: 0.38;
+  }
+  .home-products .section-lead,
+  .home-products .product-body {
+    color: var(--color-border-blue);
+  }
+  .home-products h2 {
+    color: var(--color-surface);
+  }
+  .home-products .home-kicker {
+    color: var(--color-sky);
+  }
+  .home-products .section-lead {
+    color: var(--color-on-dark);
+  }
+  .product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+  }
+  .product {
+    border-top: 1px solid color-mix(in srgb, var(--color-sky) 30%, transparent);
+    padding-top: 28px;
+  }
+  .product-label {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    font: 12px var(--font-mono);
+    color: var(--color-sky);
+  }
+  .product h3 {
+    font-size: 46px;
+    letter-spacing: -2px;
+    font-weight: 600;
+    margin-top: 16px;
+  }
+  .product-body {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--color-on-dark);
+    margin-top: 12px;
+    min-height: 82px;
+    max-width: 580px;
+  }
+  .product-flow {
+    position: relative;
+    margin-block: 32px 24px;
+    padding: 26px 10px 14px;
+    background: var(--color-console);
+    border-radius: var(--radius-md);
+  }
+  .flow-nodes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    position: relative;
+  }
+  .flow-nodes > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 13px;
+    text-align: center;
+    font-size: 13px;
+  }
+  .flow-icon {
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    border: 1px solid color-mix(in srgb, var(--color-sky) 40%, transparent);
+    border-radius: var(--radius-md);
+    background: var(--color-console);
+    color: var(--color-sky);
+  }
+  .flow-nodes > div:nth-child(2) .flow-icon {
+    background: var(--color-navy);
+    border-color: var(--color-bright);
+  }
+  .flow-line {
+    position: absolute;
+    top: 58px;
+    left: 17%;
+    right: 17%;
+    height: 1px;
+    background: var(--color-royal);
+    overflow: hidden;
+  }
+  .flow-line span {
+    display: block;
+    height: 100%;
+    width: 35%;
+    background: var(--color-sky);
+    transform: translateX(-110%);
+  }
+  .home-entered .flow-line span {
+    animation: product-signal 3.5s ease-in-out 1 forwards;
+  }
+  .product-flow--vpn .flow-icon {
+    border-radius: 50%;
+  }
+  .product-flow figcaption {
+    font-size: 12px;
+    color: var(--color-on-dark);
+    text-align: center;
+    margin-top: 22px;
+  }
+  .product-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-sky);
+    min-height: 48px;
+  }
+  .product-link:hover {
+    color: var(--color-surface);
+  }
+  .product-link svg {
+    transition: transform 0.2s;
+  }
+  .product-link:hover svg {
+    transform: translate(3px, -3px);
+  }
+  .cloud-link {
+    margin-top: 18px;
+  }
+  .methodology {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    counter-reset: stage;
+  }
+  .methodology li {
+    border-top: 2px solid var(--color-border-blue);
+    padding-top: 22px;
+  }
+  .stage-number {
+    font: 14px var(--font-mono);
+    color: var(--color-royal);
+  }
+  .methodology h3 {
+    font-size: 17px;
+    line-height: 1.4;
+    font-weight: 600;
+    margin-top: 22px;
+    letter-spacing: -0.3px;
+  }
+  .methodology p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--color-slate);
+    margin-top: 10px;
+  }
+  .methodology li.home-entered {
+    animation: rail-in 0.8s ease both;
+  }
+  .home-partners {
+    padding-block: 72px 88px;
+    border-top: 1px solid var(--color-border-blue);
+  }
+  .partner-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .partner-grid li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 76px;
+    padding: 12px;
+    border-bottom: 1px solid var(--color-border-blue);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    color: var(--color-slate);
+  }
+  .partner-grid li:nth-child(-n + 5) {
+    border-top: 1px solid var(--color-border-blue);
+  }
+  .home-contact {
+    padding-block: 80px;
+    background: var(--color-navy);
+    color: var(--color-surface);
+  }
+  .home-contact .home-kicker {
+    color: var(--color-sky);
+  }
+  .home-contact h2 {
+    color: var(--color-surface);
+  }
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .contact-body {
+    font-size: 17px;
+    color: var(--color-on-dark);
+    line-height: 1.7;
+    margin-top: 22px;
+    max-width: 560px;
+  }
+  .contact-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    justify-self: end;
+  }
+  .contact-actions > span {
+    font-size: 13px;
+    color: var(--color-on-dark);
+  }
+  .home-redesign :global(.contact-email) {
+    font-size: 17px;
+    color: var(--color-sky);
+  }
+  @keyframes product-signal {
+    to {
+      transform: translateX(400%);
+    }
+  }
+  @keyframes rail-in {
+    from {
+      border-top-color: var(--color-bright);
+    }
+    to {
+      border-top-color: var(--color-border-blue);
+    }
+  }
+  @media (max-width: 1000px) {
+    .section-intro {
+      gap: 40px;
+    }
+    .service-grid,
+    .product-grid {
+      gap: 32px;
+    }
+    .methodology {
+      gap: 14px;
+    }
+    .methodology h3 {
+      font-size: 15px;
+    }
+    .product-body {
+      min-height: 110px;
+    }
+    .partner-grid li {
+      font-size: 16px;
+    }
+  }
+  @media (max-width: 760px) {
+    .home-section {
+      padding-block: 60px;
+    }
+    .section-intro {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .section-lead {
+      font-size: 16px;
+      max-width: 560px;
+    }
+    .service-grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .service-link h3 {
+      font-size: 21px;
+    }
+    .service-link p {
+      font-size: 16px;
+    }
+    .home-stack :global(section) {
+      padding-block: 60px;
+    }
+    .home-stack :global(.sctd-grid) {
+      margin-top: 24px;
+    }
+    .product-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .product-body {
+      min-height: 0;
+    }
+    .product h3 {
+      font-size: 40px;
+    }
+    .product-flow {
+      margin-top: 24px;
+    }
+    .methodology {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .methodology li {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      column-gap: 14px;
+      border-top: 0;
+      border-left: 2px solid var(--color-border-blue);
+      padding: 0 0 28px 20px;
+      margin-left: 5px;
+    }
+    .stage-number {
+      margin-top: 4px;
+    }
+    .methodology h3 {
+      font-size: 17px;
+      margin: 0;
+    }
+    .methodology p {
+      grid-column: 2;
+      margin-top: 5px;
+      font-size: 15px;
+    }
+    .methodology li:last-child {
+      padding-bottom: 0;
+    }
+    .home-partners {
+      padding-block: 60px;
+    }
+    .partner-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .partner-grid li {
+      font-size: 14px;
+      min-height: 68px;
+      padding: 10px 5px;
+    }
+    .partner-grid li:nth-child(4),
+    .partner-grid li:nth-child(5) {
+      border-top: 0;
+    }
+    .contact-layout {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .contact-actions {
+      justify-self: start;
+    }
+    .home-contact {
+      padding-block: 60px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .home-entered .flow-line span,
+    .methodology li.home-entered {
+      animation: none;
+    }
+    .flow-line span {
+      transform: none;
+      width: 100%;
+    }
+    .service-arrow,
+    .home-text-link svg,
+    .product-link svg {
+      transition: none;
+    }
+  }
+</style>
+<script>
+  let dispose = () => {};
+  function initHomeMotion() {
+    dispose();
+    const root = document.querySelector(".home-redesign");
+    if (!root) return;
+    const media = matchMedia("(prefers-reduced-motion: reduce)");
+    const controller = new AbortController();
+    const animations = new Set<Animation>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          observer.unobserve(entry.target);
+          entry.target.classList.add("home-entered");
+          if (!media.matches) {
+            const animation = entry.target.animate(
+              [
+                { transform: "translateY(16px)" },
+                { transform: "translateY(0)" },
+              ],
+              { duration: 650, easing: "cubic-bezier(.16,1,.3,1)" },
+            );
+            animations.add(animation);
+            animation.onfinish = () => animations.delete(animation);
+          }
+        }
+      },
+      { threshold: 0.08 },
+    );
+    root
+      .querySelectorAll("[data-home-enter]")
+      .forEach((element) => observer.observe(element));
+    media.addEventListener(
+      "change",
+      () => {
+        if (media.matches) {
+          animations.forEach((animation) => animation.cancel());
+          animations.clear();
+        }
+      },
+      { signal: controller.signal },
+    );
+    dispose = () => {
+      observer.disconnect();
+      controller.abort();
+      animations.forEach((animation) => animation.cancel());
+      animations.clear();
+    };
+  }
+  document.addEventListener("astro:page-load", initHomeMotion);
+  document.addEventListener("astro:before-swap", () => dispose());
+</script>

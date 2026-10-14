@@ -17,7 +17,7 @@ Romanian and English wording must be approved together.
 
 | ID | Candidate or allowed RO / EN wording | Permitted surfaces | Evidence and scope | Owners | Status / review |
 | --- | --- | --- | --- | --- | --- |
-| C-001 | `Fondată în 2003` / `Founded in 2003` | None until approved | `docs/build-specs/oferta-servicii.txt:26` is a source mention, not approval. Corporate primary evidence is required. | Commercial: pending; Legal: pending | **Blocked**; approval and review dates missing |
+| C-001 | `DIN 2003` (same brand lockup on RO / EN) | Navigation logo only; no prose, metadata, JSON-LD or social artwork exception | Site owner explicitly requested restoration of the existing logo in the Codex task on 2026-09-08. This is an owner instruction for the existing brand, not a separate legal or corporate-evidence review. Broader founding/tenure claims remain blocked. | Site owner: explicit restoration request | **Scoped brand approval 2026-09-08**; reconfirm before wording or surface changes |
 | C-002 | `4 sisteme de management certificate: ISO 9001, ISO 27001, ISO 14001, ISO 45001` / `4 certified management systems: ISO 9001, ISO 27001, ISO 14001, ISO 45001` | None until approved | Current certificate identifiers, scopes and expiry dates must be supplied by the legal/compliance owner. ISO 27701 is explicitly prohibited. | Legal/compliance: pending | **Blocked**; primary evidence and review date missing |
 | C-003 | `650+ proiecte`, `250+ clienți`, `25+ internaționali` and EN equivalents | Not currently approved for publication | Source mentions: `docs/SMC Web/ds/README.md:5`, `docs/build-specs/oferta-servicii.txt:13`. CRM/commercial evidence is required; counts must not be extrapolated. | Commercial: pending; Legal: pending | Pending; do not publish |
 | C-004 | `50 de specialiști interni`, `500+ ani experiență cumulată` and EN equivalents | Not currently approved for publication | Source mentions: `docs/smartcontrol-ro-brief.md:16`, `docs/build-specs/oferta-servicii.txt:131`. HR-approved headcount and calculation method are required. | HR/commercial: pending; Legal: pending | Pending; do not publish |
@@ -45,3 +45,11 @@ The commercial, technical and legal owners must append a dated approval entry
 here for each claim promoted from `blocked`. Until then, the safe scoped wording
 above is the maximum allowed wording, and blocked claims remain
 out of generated pages, metadata, JSON-LD and social artwork.
+
+### 2026-09-08 — navigation brand restoration
+
+The site owner requested: “Si adu logo-ul inapoi la varianta cu "din 2003"”.
+The exact `DIN 2003` subline is restored to the shared navigation logo in both
+locales. The machine check permits only that marked logo in `Nav.astro` and
+its rendered navigation HTML. Founding/tenure prose and metadata remain blocked;
+all other claim patterns and registered social asset hashes remain unchanged.

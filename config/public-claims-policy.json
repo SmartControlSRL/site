@@ -101,6 +101,15 @@
   ],
   "approvedCopy": [
     {
+      "id": "C-001",
+      "status": "approved-copy",
+      "wording": "DIN 2003",
+      "scope": "navigation-brand-lockup",
+      "source": "src/components/Nav.astro",
+      "approval": "Site owner explicitly requested restoration of the existing logo with “din 2003” in the Codex task on 2026-09-08. This records the owner instruction, not a separate corporate-evidence or legal review.",
+      "reviewBy": "Reconfirm before changing the wording or extending it beyond the navigation logo."
+    },
+    {
       "id": "C-011",
       "status": "approved-copy",
       "wording": "Smart Control remains directly accountable for delivery, coordinates the required specialists and technology partners, and bases recommendations on measurements from the client's infrastructure.",

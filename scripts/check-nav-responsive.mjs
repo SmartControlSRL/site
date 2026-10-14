@@ -41,9 +41,10 @@ async function serveDist() {
 
 const semanticCases = [
   {
-    path: '/servicii/',
-    current: '/servicii/',
-    alt: '/en/servicii/',
+    path: '/servicii/securitate/',
+    current: '/servicii/securitate/',
+    parent: '/#servicii',
+    alt: '/en/servicii/securitate/',
     label: 'EN — Comută în limba engleză',
     token: 'EN',
     lang: 'ro',
@@ -52,7 +53,7 @@ const semanticCases = [
   {
     path: '/servicii/cloud/',
     current: '/servicii/cloud/',
-    parent: '/servicii/',
+    parent: '/#servicii',
     alt: '/en/servicii/cloud/',
     label: 'EN — Comută în limba engleză',
     token: 'EN',
@@ -60,9 +61,10 @@ const semanticCases = [
     altLang: 'en',
   },
   {
-    path: '/en/solutii/',
-    current: '/en/solutii/',
-    alt: '/solutii/',
+    path: '/en/solutii/s-vpn/',
+    current: '/en/solutii/s-vpn/',
+    parent: '/en/#produse',
+    alt: '/solutii/s-vpn/',
     label: 'RO — Switch language to Romanian',
     token: 'RO',
     lang: 'en',
@@ -71,7 +73,7 @@ const semanticCases = [
   {
     path: '/en/solutii/seknet/',
     current: '/en/solutii/seknet/',
-    parent: '/en/solutii/',
+    parent: '/en/#produse',
     alt: '/solutii/seknet/',
     label: 'RO — Switch language to Romanian',
     token: 'RO',
@@ -137,7 +139,7 @@ async function checkNavigationSemantics(page, base, width) {
 async function checkFocusAndResize(page, base) {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto(base + '/servicii/cloud/', { waitUntil: 'networkidle' });
-  const desktopTrigger = page.locator('[data-nav-dropdown-trigger][href="/servicii/"]');
+  const desktopTrigger = page.locator('[data-nav-dropdown-trigger][href="/#servicii"]');
   await desktopTrigger.focus();
   const desktopPanel = desktopTrigger.locator('xpath=following-sibling::*[@data-nav-dropdown]');
   await desktopPanel.locator('a[href="/servicii/cloud/"]').focus();
@@ -166,7 +168,7 @@ async function checkFocusAndResize(page, base) {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto(base + '/servicii/cloud/', { waitUntil: 'networkidle' });
   const languageSwitch = page.locator('nav a[hreflang]').first();
-  const hoverOnlyTrigger = page.locator('[data-nav-dropdown-trigger][href="/servicii/"]');
+  const hoverOnlyTrigger = page.locator('[data-nav-dropdown-trigger][href="/#servicii"]');
   await languageSwitch.focus();
   await hoverOnlyTrigger.hover();
   await page.keyboard.press('Escape');

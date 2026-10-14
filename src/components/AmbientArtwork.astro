@@ -1,0 +1,179 @@
+---
+import type { ServiceArtwork } from "../content/service-pages";
+import type { ProductArtwork } from "../content/product-pages";
+
+interface Props {
+  artwork:
+    | ServiceArtwork
+    | ProductArtwork
+    | "optical-dark"
+    | "homepage-connected";
+  lazy?: boolean;
+  poster?: { name: string; width: number; height: number };
+}
+const { artwork: name, lazy = false, poster } = Astro.props;
+const still = poster ?? {
+  name,
+  width: name === "homepage-connected" ? 1280 : 1600,
+  height: name === "homepage-connected" ? 720 : 900,
+};
+const productArtwork =
+  name === "seknet-observability" || name === "svpn-connection";
+const variant = name === "optical-dark" || productArtwork ? "dark" : "light";
+---
+
+<div
+  class:list={[
+    "ambient-artwork",
+    `ambient-artwork--${variant}`,
+    {
+      "ambient-artwork--product": productArtwork,
+      "ambient-artwork--homepage": name === "homepage-connected",
+      "ambient-artwork--contained":
+        name === "software-automation" ||
+        name === "managed-services" ||
+        productArtwork,
+    },
+  ]}
+  data-artwork-name={name}
+  aria-hidden="true"
+>
+  <picture>
+    <source
+      media="(max-width: 600px)"
+      srcset={`/images/${still.name}-800.webp`}
+    />
+    <img
+      src={`/images/${still.name}-${still.width}.webp`}
+      width={still.width}
+      height={still.height}
+      alt=""
+      loading={lazy ? "lazy" : "eager"}
+      decoding="async"
+      fetchpriority="low"
+    />
+  </picture>
+  <slot />
+</div>
+<style>
+  .ambient-artwork {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .ambient-artwork picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .ambient-artwork img {
+    width: 100%;
+    height: 100%;
+    object-fit: var(--artwork-fit, cover);
+    object-position: center right;
+  }
+  .ambient-artwork--contained {
+    --artwork-fit: contain;
+  }
+  .ambient-artwork--homepage picture {
+    position: absolute;
+    left: var(--artwork-left, 0);
+    width: var(--artwork-width, 100%);
+  }
+  .ambient-artwork--light {
+    mask-image: linear-gradient(
+      180deg,
+      transparent 0%,
+      black 12%,
+      black 50%,
+      rgb(0 0 0 / 0.88) 64%,
+      rgb(0 0 0 / 0.42) 80%,
+      transparent 100%
+    );
+  }
+  .ambient-artwork--product img,
+  .ambient-artwork--product :global(.hero-video) {
+    position: absolute;
+    top: 50%;
+    bottom: auto;
+    left: auto;
+    right: 0;
+    height: auto;
+    max-height: 100%;
+    transform: translateY(-50%);
+    mask-image: linear-gradient(
+      180deg,
+      transparent 0%,
+      black 18%,
+      black 72%,
+      rgb(0 0 0 / 0.5) 86%,
+      transparent 100%
+    );
+  }
+  .ambient-artwork::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+  .ambient-artwork--light::after {
+    background: linear-gradient(
+      90deg,
+      var(--color-page) 0%,
+      var(--color-page) 35%,
+      color-mix(in srgb, var(--color-page) 90%, transparent) 48%,
+      transparent 76%
+    );
+  }
+  .ambient-artwork--dark::after {
+    background: linear-gradient(
+      90deg,
+      var(--color-midnight) 0%,
+      color-mix(in srgb, var(--color-midnight) 96%, transparent) 35%,
+      color-mix(in srgb, var(--color-midnight) 35%, transparent) 100%
+    );
+  }
+  @media (min-width: 901px) {
+    .ambient-artwork--product img,
+    .ambient-artwork--product :global(.hero-video) {
+      width: 85%;
+    }
+    .ambient-artwork--product::after {
+      background: linear-gradient(
+        90deg,
+        var(--color-midnight) 0%,
+        var(--color-midnight) 35%,
+        color-mix(in srgb, var(--color-midnight) 96%, transparent) 52%,
+        transparent 76%
+      );
+    }
+  }
+  @media (max-width: 900px) {
+    .ambient-artwork--light {
+      opacity: 0.2;
+    }
+    .ambient-artwork--dark::after {
+      background: color-mix(in srgb, var(--color-midnight) 78%, transparent);
+    }
+    .ambient-artwork--homepage {
+      --artwork-width: 182%;
+      --artwork-left: -82%;
+      position: relative;
+      inset: auto;
+      height: clamp(250px, 78vw, 420px);
+      opacity: 1;
+      mask-image: linear-gradient(
+        180deg,
+        transparent 0%,
+        black 14%,
+        black 66%,
+        rgb(0 0 0 / 0.6) 84%,
+        transparent 100%
+      );
+    }
+    .ambient-artwork--homepage::after {
+      background: none;
+    }
+  }
+</style>

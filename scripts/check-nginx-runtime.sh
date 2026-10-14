@@ -58,7 +58,17 @@ assert_status 200 /
 assert_body / '<html lang="ro">'
 assert_status 200 /en/
 assert_body /en/ '<html lang="en">'
-assert_status 301 /servicii
+for route in /servicii /servicii/ /solutii /solutii/ /en/servicii /en/servicii/ /en/solutii /en/solutii/; do
+  assert_status 301 "$route"
+  case "$route" in
+    /en/servicii*) destination='/en/#servicii' ;;
+    /en/solutii*) destination='/en/#produse' ;;
+    /servicii*) destination='/#servicii' ;;
+    /solutii*) destination='/#produse' ;;
+  esac
+  headers="$(curl --silent --head "$ORIGIN$route")"
+  [[ "$headers" == *"$destination"* ]] || { echo "Wrong redirect for $route" >&2; exit 1; }
+done
 assert_status 404 /__nginx-runtime-missing
 assert_body /__nginx-runtime-missing 'Pagina nu a fost găsită'
 assert_status 404 /en/__nginx-runtime-missing

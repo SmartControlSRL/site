@@ -29,7 +29,7 @@ each data-attr does), the i18n helpers, and the rules every page coder obeys.
    (`#4487DC`) is ONLY for rules, eyebrows, large display headings, accent
    glyphs — never readable link text on white. `<TextLink>` and `<MailtoLink>`
    already do this.
-5. **Date handling (RESOLUTIONS §10):** omit founding/tenure figures until C-001
+5. **Date handling (RESOLUTIONS §10):** omit founding/tenure prose until C-001
    is approved; keep © year dynamic.
 6. **CTA wording = export wording (RESOLUTIONS §11):** "Solicită assessment"
    (assessment ask), "Solicită un demo" (product demo ask). Pulled from
@@ -301,3 +301,6 @@ asset and localized alternative text for Open Graph and Twitter metadata;
 artwork change fails the claims gate. Regenerate intentionally with
 `npm run generate:social`, then review the rendered cards and update both
 policy hashes in the same change.
+
+The site owner’s scoped C-001 approval restores the existing navigation brand
+subline only; see the current CLAIMS register.

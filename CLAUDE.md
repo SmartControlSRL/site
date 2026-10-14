@@ -100,4 +100,4 @@ Read `docs/SMC Web/ds/README.md` in full before building UI. The key constraints
 
 ## Claims and trust evidence
 
-`docs/build-specs/CLAIMS.md` is the publication gate. Founding date and tenure, headcount, cumulative experience, project/client totals, commercial assessment terms, product performance figures and certification status are blocked until the evidence, scope, named owner, approval date and review date are recorded. GDPR / NIS 2 / DORA are regulatory frameworks, never certifications or ISO equivalents.
+`docs/build-specs/CLAIMS.md` is the publication gate. Founding date and tenure, headcount, cumulative experience, project/client totals, commercial assessment terms, product performance figures and certification status are blocked until the evidence, scope, named owner, approval date and review date are recorded. The existing navigation brand subline has a narrowly scoped owner approval under C-001; it does not authorise founding-date prose or metadata. GDPR / NIS 2 / DORA are regulatory frameworks, never certifications or ISO equivalents.

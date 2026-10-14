@@ -32,7 +32,7 @@ Orchestrator rulings on every open question raised by the design extraction
 9. **RO copy follows the specs** (diacritics exact), except claims blocked by
    `CLAIMS.md`. Certification counts/badges and ISO 27701 are stripped; Asset
    Management is stripped. SEKNET's cross-sell pairs with **S-VPN** instead.
-10. **Founding/tenure figures are omitted** until C-001 is approved; © year is dynamic.
+10. **Founding/tenure prose is omitted**. The original navigation brand subline is restored under the site owner’s scoped C-001 instruction recorded in CLAIMS; © year is dynamic.
 11. **CTA wording = export wording** ("Solicită un demo", "Solicită assessment").
     CLAUDE.md's "Cere un demo" is superseded — export copy was approved.
 12. **EN pages**: translate the RO copy per the brand voice rules (technical
@@ -146,3 +146,95 @@ Orchestrator rulings on every open question raised by the design extraction
 - Page agents own ONLY their page files under `src/pages/` (+ their EN twin).
   If a page needs a shared change, it reports it in its result instead of
   editing shared files.
+
+## Homepage-led structure (owner agreement, 2026-09-08)
+
+The owner approved the homepage redesign and a smaller site for large clients
+with multiple connected needs. This supersedes the old locked hub sitemap and
+page-template density: seven marketing pages per language (Home, four service
+details, two products), plus the existing approved privacy notices.
+
+- Home is the expertise overview and contains the company approach and contact.
+- Navigation: Expertiză / Expertise, Produse / Products, Cum lucrăm / How we work,
+  Contact. Overview links target homepage sections; dropdowns retain detail links.
+- Retire Services and Solutions hubs. Permanent redirects preserve old URLs and
+  route to the appropriate homepage sections in both languages. Exclude redirect
+  documents from the sitemap and keep static-host redirect fallbacks.
+- Infrastructure & Cloud covers the full pillar; its five-stage modernisation
+  process stays on the detail page. The homepage describes the broader engagement.
+- Managed Services is the ongoing relationship across the IT environment.
+- Detail pages use concise capability summaries, open layouts, related expertise
+  and motion that respects reduced-motion settings. No new dependency is needed.
+- Existing claims, product-disclosure, privacy and deployment policies still apply.
+
+### Artwork and UI refinement (owner request, 2026-09-08)
+
+The owner requested a further UI and copy check with generated imagery from a
+separate agent. Decorative generated material studies are approved within this
+redesign, superseding the older no-imagery restriction. Preserve the palette,
+light navigation/footer, accurate diagrams and claims policy. Asset prompts and
+delivery files are recorded in `docs/design-proposals/homepage/generated-artwork.md`.
+Product-page navigation now uses the relevant product demo action, keeping one
+conversion purpose throughout the page.
+
+The owner subsequently rejected sharing one header image across the four service
+pages. Give each service a distinct subject and composition within the same light
+blue palette; retain the architectural image only on Infrastructure & Cloud.
+Assign artwork explicitly per service and preserve the mapping across RO and EN.
+
+The same correction applies to products: SEKNET and S-VPN each have their own dark
+hero image, distinct from the homepage product-band background. Give the artwork
+visible space and preserve the labelled conceptual summaries and demo actions.
+
+### Header artwork motion (owner request, 2026-09-08)
+
+The owner approved the new header images and requested animation using specialised
+agents. Preserve the approved images and add restrained, image-aligned motion to
+all six service/product detail headers in both languages. Use separate service
+and product motion work plus independent lifecycle/accessibility QA. Provide a
+pause control, honour reduced motion, suspend work offscreen and in hidden tabs,
+and clean up on Astro navigation. No video downloads or new animation dependency
+are needed for the chosen SVG/CSS and Web Animations implementation.
+
+### Header motion rejected; soft edges and one video pilot (owner request, 2026-09-08)
+
+This supersedes the preceding header-motion treatment. Remove the SVG/CSS light
+effects, image drift, controller and pause controls from all six detail headers.
+Preserve the approved original images and fade their edges gradually. Service
+headers also blend their page wash into the white section below; product images
+fade into the existing dark hero on desktop and mobile.
+
+Use a separate video agent for a real image-to-video pilot on Infrastructure &
+Cloud only. The pilot is pending a connected video generator; the current session
+has no callable video-generation tool. A production brief is prepared, but no video
+has been generated or embedded. Do not substitute CSS movement or an encoded zoom
+of a still for this requested pilot.
+
+### Owner-supplied Cloud video pilot (2026-09-08)
+
+The owner generated the Cloud clip in Veo and supplied it for the agreed one-page
+pilot. Integrate on Cloud in RO/EN, using a short reviewed loop blend, silent web
+encodes, the existing gradient edges and the approved still as fallback. Preserve
+other headers as static images. Provide a localised pause control, defer media
+loading until playback is allowed, honour reduced motion/save-data, and release
+the video on route changes. The missing video-generator connection is resolved
+by the supplied media; no plugin installation is needed.
+
+### Reviewed editorial audit implementation (owner approval, 2026-09-08)
+
+After the main-copy restoration and an independent review, the owner requested
+implementation of the revised A01–A09 proposals in the existing PR. The approved
+scope and wording decisions are recorded in
+`docs/design-proposals/editorial-revision/README.md`.
+
+Use the main Services hub's full Infrastructure & Cloud scope and retain the
+five-stage modernisation workflow, including its optional Fast Track qualifier.
+Replace the time-dependent hardware-price/budget argument with equivalent RO/EN
+copy about reviewing existing infrastructure and applications. Networking scope
+comes from the approved homepage technologies and network-operations description.
+In Romanian descriptive prose, “punerea în producție” and “predarea” supersede
+“deployment” and “handover” in the specific Software passages identified by the
+audit; the established technical terms and primary CTA matrix otherwise remain.
+Retain the original Software responsibility heading, specific contractual
+conditions and product conceptual labels. Recover S-VPN's associated services
+without implying they are automatically included with the product.
