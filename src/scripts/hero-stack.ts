@@ -3,14 +3,13 @@ export {};
 // Homepage hero stack (HeroStack.astro). The markup is the final state; this
 // plays the build-up intro once per visit, then an idle loop (breathing
 // layers, flowing dashes, a scan climbing the stack). Everything is WAAPI so
-// one getAnimations() call pauses it: user toggle (session preference),
-// off-screen, hidden tab. Reduced motion / Save-Data keep the still state.
+// one getAnimations() call pauses it off-screen and in a hidden tab. Reduced
+// motion / Save-Data keep the still state. No pause control, by owner decision
+// (2026-10-15; see docs/design-proposals/homepage-hero-stack).
 
-const PREF_KEY = "smartcontrol-homepage-animation-paused";
 const STEP = 1500;
 const T0 = 500;
 const EASE_OUT = "cubic-bezier(0.16, 1, 0.3, 1)";
-let memoryPaused = false;
 let stop = () => {};
 
 type Frames = Keyframe[];
@@ -19,11 +18,7 @@ function wireHeroStack() {
   stop();
   stop = () => {};
   const root = document.querySelector<HTMLElement>("[data-hero-stack]");
-  const button = document.querySelector<HTMLButtonElement>(
-    "[data-hero-stack-toggle]",
-  );
-  if (!root || !button) return;
-  const label = button.querySelector<HTMLElement>("[data-stack-label]");
+  if (!root) return;
   const $ = <T extends Element = HTMLElement>(sel: string) =>
     root.querySelector<T>(sel)!;
   const $$ = <T extends Element = HTMLElement>(sel: string) => [
@@ -40,12 +35,6 @@ function wireHeroStack() {
     navigator as Navigator & { connection?: { saveData?: boolean } }
   ).connection?.saveData;
 
-  let userPaused = memoryPaused;
-  try {
-    userPaused = sessionStorage.getItem(PREF_KEY) === "true";
-  } catch {
-    /* Storage blocked: keep the in-memory preference. */
-  }
   let visible = true;
   let disposed = false;
   let started = false;
@@ -55,7 +44,7 @@ function wireHeroStack() {
 
   const allowed = () =>
     !disposed && !reduced.matches && !saveData && "animate" in root;
-  const running = () => allowed() && visible && !document.hidden && !userPaused;
+  const running = () => allowed() && visible && !document.hidden;
   const animate = (
     el: Element | null,
     frames: Frames,
@@ -351,27 +340,13 @@ function wireHeroStack() {
 
   function sync() {
     if (disposed) return;
-    button!.hidden = !allowed();
-    button!.dataset.paused = String(userPaused);
-    if (label)
-      label.textContent = userPaused
-        ? button!.dataset.labelPlay!
-        : button!.dataset.labelPause!;
     if (!allowed()) {
       still();
       return;
     }
     if (!started) {
-      if (userPaused) {
-        // Session-paused visitors get the still state; Play starts the idle loop.
-        still();
-        root!.dataset.state = "paused";
-        return;
-      }
       started = true;
       intro();
-    } else if (root!.dataset.state === "paused" && running()) {
-      startIdle();
     }
     const animations = root!.getAnimations({ subtree: true });
     // Only touch animations in flight: play() on a finished one would rewind it.
@@ -385,17 +360,6 @@ function wireHeroStack() {
     }
   }
 
-  const toggle = () => {
-    userPaused = !userPaused;
-    memoryPaused = userPaused;
-    try {
-      sessionStorage.setItem(PREF_KEY, String(userPaused));
-    } catch {
-      /* In-memory fallback. */
-    }
-    if (!userPaused && !started) started = true;
-    sync();
-  };
   const observer = new IntersectionObserver(
     (entries) => {
       visible = entries.some((entry) => entry.isIntersecting);
@@ -403,7 +367,6 @@ function wireHeroStack() {
     },
     { threshold: 0.01 },
   );
-  button.addEventListener("click", toggle);
   reduced.addEventListener("change", sync);
   document.addEventListener("visibilitychange", sync);
   observer.observe(root);
@@ -413,7 +376,6 @@ function wireHeroStack() {
     disposed = true;
     observer.disconnect();
     clearTimeout(scanTimer);
-    button.removeEventListener("click", toggle);
     reduced.removeEventListener("change", sync);
     document.removeEventListener("visibilitychange", sync);
     root.getAnimations({ subtree: true }).forEach((a) => a.cancel());

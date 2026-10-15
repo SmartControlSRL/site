@@ -335,7 +335,6 @@ export const technologyPartners = [
   "Oracle",
   "Microsoft",
   "Palo Alto",
-  "Hanasis",
   "IBM",
   "HPE",
   "DELL",

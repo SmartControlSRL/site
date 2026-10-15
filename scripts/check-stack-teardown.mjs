@@ -117,35 +117,29 @@ try {
     await context.close();
   }
 
-  const context = await browser.newContext({ viewport: { width: 390, height: 900 }, reducedMotion: 'no-preference' });
+  // The homepage uses the plate-less split variant (the hero already shows the
+  // stack): no ambient auto-cycle and no cycle control, so nothing moves under
+  // the reader; layers change only when the visitor picks one.
+  const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: 'no-preference' });
   const page = await context.newPage();
   await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'networkidle' });
   const root = page.locator('[data-sctd]');
-  const firstLink = root.locator('.sctd-panel:not([hidden]) .sctd-link');
-  await firstLink.focus();
-  const before = await root.locator('[data-sctd-trigger][aria-expanded="true"]').getAttribute('data-layer');
-  await page.waitForTimeout(3400);
-  const after = await root.locator('[data-sctd-trigger][aria-expanded="true"]').getAttribute('data-layer');
-  assert(before === after, 'cycling advanced while focus was inside the component');
-  assert(await firstLink.evaluate((element) => document.activeElement === element), 'cycling destroyed focused panel content');
-
-  const cycle = root.locator('[data-sctd-cycle]');
-  assert(await cycle.isVisible(), 'normal-motion cycle control is not visible');
-  assert((await cycle.textContent())?.includes('Oprește'), 'RO pause label is missing');
-  assert(await cycle.getAttribute('aria-pressed') === null, 'cycle action exposes contradictory toggle state');
-  await cycle.click();
-  const pausedAt = await root.locator('[data-sctd-trigger][aria-expanded="true"]').getAttribute('data-layer');
+  assert(await root.locator('[data-sctd-cycle]').count() === 0, 'split variant renders an auto-cycle control');
+  assert(await root.locator('.sctd-plate').count() === 0, 'split variant still renders the duplicate plate schema');
   await page.mouse.move(0, 0);
-  await page.locator('body').press('Tab');
-  await page.waitForTimeout(3400);
-  assert(await root.locator('[data-sctd-trigger][aria-expanded="true"]').getAttribute('data-layer') === pausedAt, 'explicit pause did not stop cycling');
+  const before = await root.locator('[data-sctd-trigger][aria-expanded="true"]').getAttribute('data-layer');
+  await page.waitForTimeout(3600);
+  assert(await root.locator('[data-sctd-trigger][aria-expanded="true"]').getAttribute('data-layer') === before, 'split variant auto-cycles');
+  await root.locator('[data-sctd-trigger]').nth(3).click();
+  assert(await root.locator('[data-sctd-trigger]').nth(3).getAttribute('aria-expanded') === 'true', 'click did not open the chosen layer');
+  assert(await root.locator('.sctd-panel:visible').count() === 1, 'expected exactly one open layer after a click');
   await context.close();
 
   const reducedContext = await browser.newContext({ viewport: { width: 390, height: 900 }, reducedMotion: 'reduce' });
   const reducedPage = await reducedContext.newPage();
   await reducedPage.goto(`http://127.0.0.1:${port}/en/`, { waitUntil: 'networkidle' });
   const reducedRoot = reducedPage.locator('[data-sctd]');
-  assert(await reducedRoot.locator('[data-sctd-cycle]').isHidden(), 'reduced-motion mode exposes an unnecessary cycle control');
+  assert(await reducedRoot.locator('[data-sctd-cycle]:visible').count() === 0, 'reduced-motion mode exposes an unnecessary cycle control');
   const reducedBefore = await reducedRoot.locator('[data-sctd-trigger][aria-expanded="true"]').getAttribute('data-layer');
   await reducedPage.waitForTimeout(3400);
   assert(await reducedRoot.locator('[data-sctd-trigger][aria-expanded="true"]').getAttribute('data-layer') === reducedBefore, 'reduced-motion state is not stable');
@@ -163,7 +157,7 @@ try {
   assert(await noJsRoot.locator('.sctd-panel a:visible').count() === 4, 'no-JS fallback hides destination links');
   await noJsContext.close();
 
-  console.log('StackTeardown check passed: disclosures, focus, pause, reduced motion, no-JS fallback, and 320/390/1280px geometry.');
+  console.log('StackTeardown check passed: disclosures, focus, no auto-cycle in the split variant, reduced motion, no-JS fallback, and 320/390/1280px geometry.');
 } finally {
   await browser.close();
   server.close();

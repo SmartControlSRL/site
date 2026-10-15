@@ -1,43 +1,128 @@
 ---
-// Partner marquee: a duplicated track of mono-label wordmarks scrolling left on
-// the scMarquee 50s loop, with edge fade masks. The list is rendered TWICE so
-// translateX(0 → -50%) loops seamlessly. Pauses under reduced-motion (the
-// global reduce block forces animation-duration → 0.01ms, freezing the track).
+// Partner logo strip, CSS only. The first list is the real, accessible
+// content; with motion allowed a cloned, aria-hidden list follows it so
+// translateX(0 → -50%) loops seamlessly, pausing while hovered. Under reduced
+// motion the logos sit still in wrapped rows. No pause control, by owner
+// decision (2026-10-15; see docs/design-proposals/homepage-partner-logos).
+// Logos are the vendors' official artwork in their own colours (unaltered);
+// every logo gets the same optical size from its aspect ratio.
+import { partnerLogos } from "../content/partner-logos";
+
 interface Props {
-  /** Partner names (text wordmarks — no logo images, per brand rule). */
   items: string[];
-  class?: string;
 }
-const { items, class: extra = '' } = Astro.props;
-const loop = [...items, ...items];
+const { items } = Astro.props;
+
+// Equal visual weight: same area for every logo, clamped for very wide/tall marks.
+const AREA = 4600;
+const logos = items.map((name) => {
+  const logo = partnerLogos[name];
+  if (!logo) return { name };
+  const base = Math.min(46, Math.max(22, Math.sqrt(AREA / logo.aspect)));
+  const h = Math.round(base * (logo.scale ?? 1));
+  return { name, src: `/images/partners/${logo.file}`, h, w: Math.round(h * logo.aspect) };
+});
 ---
 
-<div class:list={['relative overflow-hidden', extra]}>
-  <!-- edge fade masks -->
-  <div
-    class="pointer-events-none absolute inset-y-0 left-0 z-[1] w-40"
-    style="background:linear-gradient(90deg,#FFFFFF,rgba(255,255,255,0))"
-  >
-  </div>
-  <div
-    class="pointer-events-none absolute inset-y-0 right-0 z-[1] w-40"
-    style="background:linear-gradient(270deg,#FFFFFF,rgba(255,255,255,0))"
-  >
-  </div>
-
-  <!-- AT-readable partner list — the animated track below is aria-hidden
-       (duplicated items would read twice) -->
-  <ul class="sr-only">
-    {items.map((name) => <li>{name}</li>)}
-  </ul>
-
-  <div class="flex w-max gap-16" style="animation:scMarquee 50s linear infinite" aria-hidden="true">
-    {
-      loop.map((name) => (
-        <span class="whitespace-nowrap font-mono text-[14px] uppercase tracking-[2px] text-cool">
-          {name}
-        </span>
-      ))
-    }
+<div class="logo-marquee" data-logo-marquee>
+  <div class="lm-viewport">
+    <div class="lm-track">
+      {
+        [false, true].map((clone) => (
+          <ul
+            class:list={["lm-list", { "lm-clone": clone }]}
+            aria-hidden={clone ? "true" : undefined}
+          >
+            {logos.map((logo) => (
+              <li>
+                {logo.src ? (
+                  <img
+                    src={logo.src}
+                    alt={clone ? "" : logo.name}
+                    width={logo.w}
+                    height={logo.h}
+                    loading="eager"
+                    decoding="async"
+                  />
+                ) : (
+                  <span class="lm-text">{logo.name}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        ))
+      }
+    </div>
   </div>
 </div>
+
+<style>
+  .lm-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 36px 64px;
+  }
+  .lm-list li {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .lm-list img {
+    display: block;
+    max-width: none;
+  }
+  .lm-text {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    color: var(--color-slate);
+    white-space: nowrap;
+  }
+  .lm-clone {
+    display: none;
+  }
+  /* Marquee whenever motion is allowed; reduced motion keeps the static rows. */
+  @media (prefers-reduced-motion: no-preference) {
+    .lm-viewport {
+      overflow: hidden;
+      mask-image: linear-gradient(
+        90deg,
+        transparent,
+        black 8%,
+        black 92%,
+        transparent
+      );
+    }
+    .lm-track {
+      display: flex;
+      width: max-content;
+      animation: lm-scroll var(--lm-duration, 50s) linear infinite;
+    }
+    .lm-viewport:hover .lm-track {
+      animation-play-state: paused;
+    }
+    .lm-list {
+      flex-wrap: nowrap;
+      padding-right: 64px;
+    }
+    .lm-clone {
+      display: flex;
+    }
+  }
+  @keyframes lm-scroll {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @media (max-width: 760px) {
+    .lm-list {
+      gap: 28px 40px;
+    }
+  }
+  @media (max-width: 760px) and (prefers-reduced-motion: no-preference) {
+    .lm-list {
+      padding-right: 40px;
+    }
+  }
+</style>
