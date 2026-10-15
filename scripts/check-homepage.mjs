@@ -1,7 +1,7 @@
-// Built-homepage regression: the hero stack animation (intro → idle loop),
-// its pause control and session preference, still fallbacks (reduced motion,
-// no JS), useful geometry, and independence from the Cloud video across Astro
-// navigation.
+// Built-homepage regression: the hero stack animation (intro → idle loop, no
+// pause control by owner decision), settling after off-screen resume, still
+// fallbacks (reduced motion, no JS), the partner logo marquee, useful geometry,
+// and teardown across Astro navigation.
 import assert from "node:assert/strict";
 import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
@@ -37,9 +37,7 @@ const server = createServer(async (req, res) => {
 await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
 const base = `http://127.0.0.1:${server.address().port}`;
 const stackSelector = "[data-hero-stack]";
-const toggleSelector = "[data-hero-stack-toggle]";
 const cloudSelector = "[data-cloud-video]";
-const PREF_KEY = "smartcontrol-homepage-animation-paused";
 const errors = [];
 let browser;
 
@@ -81,8 +79,8 @@ async function moving(page) {
   );
 }
 
-// After the intro the scene must stay settled: resuming (Play, scrolling back,
-// tab switch) must never rewind and replay the intro on top of the idle loop.
+// After the intro the scene must stay settled: resuming (scrolling back, tab
+// switch) must never rewind and replay the intro on top of the idle loop.
 async function settled(page, label) {
   await page.waitForTimeout(150);
   const result = await page.locator(stackSelector).evaluate((el) => ({
@@ -105,53 +103,41 @@ async function settled(page, label) {
   assert.equal(result.replaying, 0, `${label}: intro animations running again`);
 }
 
-// Partner strip: 13 official logos with alt text; a marquee with a working
-// pause control when motion is allowed, a static row otherwise.
-async function partners(page, label, { motion, pauseLabel, playLabel }) {
+// Partner strip: 13 official logos with alt text and an aria-hidden clone; a
+// CSS marquee that pauses on hover when motion is allowed, static otherwise.
+async function partners(page, label, { motion }) {
   const root = page.locator("[data-logo-marquee]");
   const info = await root.evaluate((el) => {
     const imgs = [...el.querySelectorAll(".lm-list:not(.lm-clone) img")];
     return {
-      state: el.dataset.state ?? "static",
       logos: imgs.length,
       alts: imgs.every((img) => img.alt.trim().length > 0),
+      loaded: imgs.every((img) => img.complete && img.naturalWidth > 0),
       clonesHidden: [...el.querySelectorAll(".lm-clone")].every(
         (list) => list.getAttribute("aria-hidden") === "true",
       ),
+      cloneShown: getComputedStyle(el.querySelector(".lm-clone")).display !== "none",
+      controls: el.querySelectorAll("button").length,
     };
   });
   assert.equal(info.logos, 13, `${label}: expected 13 partner logos`);
   assert(info.alts, `${label}: partner logo without alt text`);
+  assert(info.loaded, `${label}: partner logo failed to load`);
   assert(info.clonesHidden, `${label}: marquee clone exposed to AT`);
-  const toggle = root.locator("[data-logo-marquee-toggle]");
+  assert.equal(info.controls, 0, `${label}: strip should have no controls`);
+  const play = () =>
+    root.locator(".lm-track").evaluate((el) => el.getAnimations()[0]?.playState ?? "none");
   if (!motion) {
-    assert.equal(info.state, "static", `${label}: strip should be static`);
-    assert(await toggle.isHidden(), `${label}: static strip offers a pause control`);
+    assert(!info.cloneShown, `${label}: static strip shows the clone`);
+    assert.equal(await play(), "none", `${label}: strip animates under reduced motion`);
     return;
   }
-  assert.equal(info.state, "running", `${label}: marquee did not start`);
-  const play = () =>
-    root.locator(".lm-track").evaluate((el) => el.getAnimations()[0]?.playState);
+  assert(info.cloneShown, `${label}: marquee clone missing`);
   assert.equal(await play(), "running", `${label}: marquee not animating`);
-  assert.equal(await toggle.innerText(), pauseLabel);
-  await toggle.click();
-  assert.equal(await play(), "paused", `${label}: pause control did not pause`);
-  assert.equal(await toggle.innerText(), playLabel);
-  await toggle.click();
-  assert.equal(await play(), "running", `${label}: play did not resume while hovering the control`);
-}
-
-async function frozen(page) {
-  await page.waitForTimeout(80);
-  const playStates = await page
-    .locator(stackSelector)
-    .evaluate((el) =>
-      el.getAnimations({ subtree: true }).map((a) => a.playState),
-    );
-  assert(
-    playStates.every((s) => s !== "running"),
-    "Paused hero stack still animates",
-  );
+  await root.locator(".lm-viewport").hover();
+  assert.equal(await play(), "paused", `${label}: hover did not pause`);
+  await page.mouse.move(0, 0);
+  assert.equal(await play(), "running", `${label}: marquee did not resume`);
 }
 
 // Still fallback: all four slabs, their drawings and engraved labels visible.
@@ -188,9 +174,6 @@ async function still(page, label) {
 async function geometry(page, route, width) {
   const result = await page.evaluate(() => {
     const hero = document.querySelector(".home-hero");
-    const control = hero
-      .querySelector("[data-hero-stack-toggle]")
-      .getBoundingClientRect();
     const stack = hero.querySelector(".hs-stack").getBoundingClientRect();
     const copy = hero.querySelector(".hero-copy").getBoundingClientRect();
     const cta = hero.querySelector(".hero-actions a").getBoundingClientRect();
@@ -206,10 +189,6 @@ async function geometry(page, route, width) {
         (box) => box.left < -1 || box.right > innerWidth + 1,
       ),
       ctaBottom: cta.bottom + scrollY,
-      controlInsideViewport:
-        control.left >= 0 && control.right <= innerWidth + 1,
-      controlSize: control.width >= 24 && control.height >= 24,
-      controlOverlapsCopy: overlap(control, copy),
       stackOverlapsCopy: overlap(stack, copy),
       stackInsideViewport: stack.left >= -1 && stack.right <= innerWidth + 1,
     };
@@ -217,14 +196,6 @@ async function geometry(page, route, width) {
   assert(
     !result.overflow && !result.serviceOverflow,
     `${route}@${width}: horizontal overflow`,
-  );
-  assert(
-    result.controlInsideViewport && result.controlSize,
-    `${route}@${width}: unusable animation control geometry`,
-  );
-  assert(
-    !result.controlOverlapsCopy,
-    `${route}@${width}: animation control overlaps hero copy`,
   );
   assert(
     !result.stackOverlapsCopy && result.stackInsideViewport,
@@ -240,10 +211,7 @@ try {
   browser = await chromium.launch();
   for (const route of ["/", "/en/"]) {
     const en = route === "/en/";
-    const pauseLabel = en ? "Pause animation" : "Pauză animație";
-    const playLabel = en ? "Play animation" : "Redă animația";
     const cloudPause = en ? "Pause video" : "Pauză video";
-    const cloudPlay = en ? "Play video" : "Redă video-ul";
     const expectedTags = en
       ? [
           "L1  PHYSICAL INFRASTRUCTURE",
@@ -263,7 +231,6 @@ try {
     const page = await context.newPage();
     page.on("pageerror", (error) => errors.push(`${route}: ${error.message}`));
     await page.goto(base + route, { waitUntil: "networkidle" });
-    const button = page.locator(toggleSelector);
     assert.equal(await page.locator(stackSelector).count(), 1);
     assert.equal(
       await page.locator("[data-homepage-video], .home-hero video").count(),
@@ -273,23 +240,18 @@ try {
     await moving(page);
     await skipIntro(page);
     await moving(page);
-    assert.equal(await button.innerText(), pauseLabel);
-    await button.click();
-    await frozen(page);
-    assert.equal(await button.innerText(), playLabel);
-    await button.press("Space");
-    await moving(page);
-    assert.equal(await button.innerText(), pauseLabel);
-    await settled(page, `${route} pause/play`);
+    assert.equal(
+      await page.locator(".home-hero button").count(),
+      0,
+      "Hero must not render a pause control",
+    );
     await page.evaluate(() => scrollTo(0, 3000));
     await page.waitForTimeout(200);
     await page.evaluate(() => scrollTo(0, 0));
     await settled(page, `${route} scroll away/back`);
 
     await page.emulateMedia({ reducedMotion: "reduce" });
-    // CSS hides the toggle at once; the script settles on the (async)
-    // media-query change event, so wait for its state, not the button.
-    await button.waitFor({ state: "hidden" });
+    // The script settles on the (async) media-query change event.
     await page.waitForFunction(
       (sel) => document.querySelector(sel)?.dataset.state === "static",
       stackSelector,
@@ -297,7 +259,6 @@ try {
     assert.deepEqual(await still(page, `${route} reduced`), expectedTags);
     await page.emulateMedia({ reducedMotion: "no-preference" });
     // The media-query change event is async; wait for the intro to restart.
-    await button.waitFor({ state: "visible" });
     await page.waitForFunction(
       (sel) => document.querySelector(sel)?.dataset.state === "intro",
       stackSelector,
@@ -305,11 +266,7 @@ try {
     await moving(page);
     assert.equal(await page.locator(".service-link").count(), 4);
     assert.equal(await page.locator(".product-link").count(), 2);
-    await partners(page, `${route} partners`, {
-      motion: true,
-      pauseLabel: en ? "Pause logos" : "Pauză logo-uri",
-      playLabel: en ? "Play logos" : "Redă logo-urile",
-    });
+    await partners(page, `${route} partners`, { motion: true });
 
     for (const width of [320, 390, 768, 1280]) {
       await page.setViewportSize({ width, height: 900 });
@@ -318,11 +275,8 @@ try {
       await geometry(page, route, width);
     }
 
-    // Home pause must not leak into the Cloud video, and Astro navigation must
-    // tear the stack down.
+    // Astro navigation must tear the stack down and leave the Cloud video alone.
     const cloudRoute = en ? "/en/servicii/cloud/" : "/servicii/cloud/";
-    await button.click();
-    await frozen(page);
     const originalDocument = await page.evaluateHandle(() => document);
     const oldStack = await page.locator(stackSelector).elementHandle();
     await page.locator(`.service-link[href="${cloudRoute}"]`).click();
@@ -342,50 +296,15 @@ try {
     assert.equal(
       await page.locator("[data-cloud-video-toggle]").innerText(),
       cloudPause,
-      "Homepage pause leaked into Cloud",
+      "Cloud video did not start after leaving Home",
     );
-    await page.locator("[data-cloud-video-toggle]").click();
     await page.locator(`nav a[href="${route}"]`).first().click();
     await page.waitForURL(base + route);
-    await button.waitFor({ state: "visible" });
-    assert.equal(
-      await button.innerText(),
-      playLabel,
-      "Homepage user pause lost on route re-entry",
+    await page.waitForFunction(
+      (sel) => document.querySelector(sel)?.dataset.state === "intro",
+      stackSelector,
     );
-    assert.equal(await state(page), "paused");
-    assert.deepEqual(await still(page, `${route} paused`), expectedTags);
-    await button.press("Space");
     await moving(page);
-    await page.locator(`.service-link[href="${cloudRoute}"]`).click();
-    await page.waitForURL(base + cloudRoute);
-    await page.locator("[data-cloud-video-toggle]").waitFor({ state: "visible" });
-    assert.equal(
-      await page.locator("[data-cloud-video-toggle]").innerText(),
-      cloudPlay,
-      "Resuming Home changed Cloud pause preference",
-    );
-    await page.locator(`nav a[href="${route}"]`).first().click();
-    await page.waitForURL(base + route);
-    await button.waitFor({ state: "visible" });
-    assert.equal(
-      await button.innerText(),
-      pauseLabel,
-      "Cloud pause leaked into resumed Home",
-    );
-
-    await button.click();
-    await page.reload({ waitUntil: "networkidle" });
-    assert.equal(
-      await button.innerText(),
-      playLabel,
-      "Session pause lost on reload",
-    );
-    assert.equal(await state(page), "paused");
-    assert.equal(
-      await page.evaluate((key) => sessionStorage.getItem(key), PREF_KEY),
-      "true",
-    );
     await context.close();
 
     for (const mode of ["no-js", "reduced"]) {
@@ -403,8 +322,10 @@ try {
       // Without JS the still state fades in via the CSS fallback (1.2 s + 0.6 s).
       if (mode === "no-js") await staticPage.waitForTimeout(2100);
       assert.deepEqual(await still(staticPage, `${route} ${mode}`), expectedTags);
-      assert(await staticPage.locator(toggleSelector).isHidden());
-      await partners(staticPage, `${route} ${mode} partners`, { motion: false });
+      // Without JS the marquee still runs (it is CSS); reduced motion stops it.
+      await partners(staticPage, `${route} ${mode} partners`, {
+        motion: mode !== "reduced",
+      });
       assert(await staticPage.locator(".home-hero h1").isVisible());
       assert(
         await staticPage
@@ -427,7 +348,7 @@ try {
   }
   assert.deepEqual(errors, [], "Homepage browser errors");
   console.log(
-    "Homepage check passed: RO/EN hero stack intro → idle loop, click and Space pause, session pause across reload and Astro navigation, independent Cloud video preference and teardown, reduced-motion/no-JS still state with engraved labels, 320/390/768/1280px geometry, contact/CTA visibility.",
+    "Homepage check passed: RO/EN hero stack intro → idle loop with no pause control, settled after scrolling away/back, Astro teardown and Cloud handover, reduced-motion/no-JS still state with engraved labels, partner logo marquee (hover pause, static under reduced motion), 320/390/768/1280px geometry, contact/CTA visibility.",
   );
 } finally {
   await browser?.close();

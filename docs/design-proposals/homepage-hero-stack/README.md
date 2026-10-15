@@ -72,16 +72,17 @@ The previous homepage MP4s and posters (`homepage-hero-*.mp4` and
 "Arhitectură IT" section below carries the same content. `src/scripts/hero-stack.ts`
 plays the intro and the idle loop.
 
-**Pause and preferences**
-
-- A localised pause control works with mouse and keyboard.
-- The pause preference is stored in session storage under
-  `smartcontrol-homepage-animation-paused`, independent of the Cloud video's
-  preference.
+**No pause control (owner decision, 2026-10-15).** The owner asked for the
+pause button to be removed. The idle loop runs indefinitely, so the hero no
+longer meets WCAG 2.2.2 Pause, Stop, Hide (Level A). The owner accepted this
+knowingly. What remains:
+- Reduced motion (OS setting) and Save-Data show the still state, with no motion.
 - Animation pauses when the hero is offscreen or the document is hidden.
 
-**Still state.** Reduced motion and Save-Data keep the still state and hide the
-control. A session-paused visit starts still, and Play resumes the idle loop.
+To restore conformance, either reinstate a control (git history: PR #43) or end
+the motion within 5 s (intro only, no idle loop).
+
+**Still state.** Reduced motion and Save-Data keep the still state.
 
 **No inline JavaScript.** The planned CSP (`script-src 'self'`) allows no inline
 script. Before the script runs, CSS keeps the scene hidden and fades the still
@@ -92,8 +93,8 @@ before then.
 
 **Settled state.** When the intro ends, every intro animation is cancelled and
 its inline styles are cleared, so the CSS still state is the single source of
-truth. Without this, resuming after a pause (Play, scrolling back, switching
-tabs) would rewind and replay the intro. The glow is a sibling layer rather than
+truth. Without this, resuming after an offscreen or hidden-tab pause would
+rewind and replay the intro. The glow is a sibling layer rather than
 a `filter` on the slab, so the slab never becomes a backdrop root and the frost
 keeps blurring the layers beneath.
 
@@ -103,13 +104,12 @@ keeps blurring the layers beneath.
 
 - RO/EN intro → idle;
 - that animations advance;
-- that the scene stays settled after pause/play and after scrolling away and back;
-- click and Space pause and resume;
+- that the scene stays settled after scrolling away and back;
+- that no pause control is rendered;
 - reduced-motion and no-JS still states with all four engraved labels (exact
   RO/EN text);
 - no MP4 requests;
-- session pause across reload and Astro navigation;
-- Home↔Cloud teardown with independent preferences;
+- Home↔Cloud teardown, with the Cloud video starting and the intro replaying on return;
 - 320/390/768/1280px geometry: no overflow, the stack does not overlap the copy,
   and the CTA stays above 750px.
 

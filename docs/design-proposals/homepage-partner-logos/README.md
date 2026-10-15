@@ -54,12 +54,13 @@ only a 259 × 35 PNG.
 
 `LogoMarquee.astro`:
 
-- **Fallback.** The first list is the real content: logos with `alt` text. Without
-  JS or with reduced motion it stays a static wrapped row.
-- **Marquee.** When motion is allowed, the script switches to the marquee. An
-  `aria-hidden` clone list follows, and the track loops (`translateX(0 → -50%)`)
-  with faded edges.
-- **Pausing.** Hovering the strip pauses it. A visible, localised control
-  (Pauză logo-uri / Pause logos) pauses and resumes it, as WCAG 2.2.2 requires.
-  The control sits outside the hover zone, so Play takes effect even with the
-  pointer on it.
+- **CSS only, no script.** The first list is the real content: logos with
+  `alt` text.
+- **Marquee.** When motion is allowed, an `aria-hidden` clone list follows the
+  first, and the track loops (`translateX(0 → -50%)`) with faded edges.
+- **Reduced motion.** The strip stays a static wrapped row.
+- **Pausing.** Hovering the strip pauses it. There is no pause control, by owner
+  decision (2026-10-15). The strip therefore does not meet WCAG 2.2.2 Pause,
+  Stop, Hide (Level A) for keyboard and touch users, and the owner accepted
+  this knowingly. Reinstating a control (see this PR's history) restores
+  conformance.

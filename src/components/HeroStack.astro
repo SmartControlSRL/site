@@ -2,11 +2,10 @@
 // Homepage hero: the four IT layers (L1→L4) assemble as frosted-glass slabs,
 // each with its line-art and an engraved edge label, then idle with a slow
 // scan (see docs/design-proposals/homepage-hero-stack). Markup is the final
-// state, so no-JS / reduced-motion / session-paused visitors get a still
+// state, so no-JS / reduced-motion / Save-Data visitors get a still
 // image; src/scripts/hero-stack.ts drives the intro and the idle loop with
 // WAAPI. Decorative: the same layers are described in the "Arhitectură IT"
 // section below, so the visual is aria-hidden.
-import { Pause, Play } from "@lucide/astro";
 import { heroStackArt } from "../content/hero-stack-art";
 import { getLangFromUrl } from "../i18n/ui";
 
@@ -16,8 +15,6 @@ interface Props {
 }
 const { layers } = Astro.props;
 const en = getLangFromUrl(Astro.url) === "en";
-const pause = en ? "Pause animation" : "Pauză animație";
-const play = en ? "Play animation" : "Redă animația";
 
 // Top-face corners of the slab render (viewBox 2236×1214): top, right, left.
 // The 280×280 drawing space maps onto that face with one affine matrix.
@@ -112,19 +109,6 @@ const particles = [
     </div>
   </div>
 </div>
-<button
-  type="button"
-  class="hero-stack-toggle"
-  data-hero-stack-toggle
-  data-label-pause={pause}
-  data-label-play={play}
-  data-paused="false"
-  hidden
->
-  <Pause size={15} stroke-width={1.5} aria-hidden="true" data-stack-pause />
-  <Play size={15} stroke-width={1.5} aria-hidden="true" data-stack-play />
-  <span data-stack-label>{pause}</span>
-</button>
 
 <style>
   .hero-stack {
@@ -312,38 +296,6 @@ const particles = [
       opacity: 1;
     }
   }
-  .hero-stack-toggle {
-    position: absolute;
-    right: 0;
-    bottom: 14px;
-    z-index: 2;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 44px;
-    padding-inline: 12px;
-    border-radius: 6px;
-    color: var(--color-navy);
-    background: var(--color-surface);
-    font-size: 0.75rem;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  .hero-stack-toggle:hover {
-    background: var(--color-page);
-  }
-  .hero-stack-toggle:focus-visible {
-    outline: 3px solid var(--color-bright);
-    outline-offset: 3px;
-  }
-  .hero-stack-toggle[hidden],
-  .hero-stack-toggle :global([data-stack-play]),
-  .hero-stack-toggle[data-paused="true"] :global([data-stack-pause]) {
-    display: none;
-  }
-  .hero-stack-toggle[data-paused="true"] :global([data-stack-play]) {
-    display: block;
-  }
   @media (max-width: 900px) {
     .hero-stack {
       --hs-w: min(84vw, 420px);
@@ -353,17 +305,11 @@ const particles = [
     .hs-stack {
       top: 30px;
     }
-    .hero-stack-toggle {
-      bottom: 6px;
-    }
   }
   @media (prefers-reduced-motion: reduce) {
     .hero-stack:not([data-state]) .hs-camera {
       opacity: 1;
       animation: none;
-    }
-    .hero-stack-toggle {
-      display: none;
     }
   }
 </style>

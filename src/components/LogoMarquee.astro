@@ -1,22 +1,17 @@
 ---
-// Partner logo strip. The first list is the real, accessible content and the
-// static fallback (no JS / reduced motion): logos wrap in rows. When motion is
-// allowed the script turns it into a continuous marquee: a cloned, aria-hidden
-// list follows the first so translateX(0 → -50%) loops seamlessly. It pauses
-// on hover, on keyboard focus and via a visible control (WCAG 2.2.2). Logos are
-// the vendors' official artwork in their own colours (unaltered); every logo
-// gets the same optical size from its aspect ratio.
-import { Pause, Play } from "@lucide/astro";
+// Partner logo strip, CSS only. The first list is the real, accessible
+// content; with motion allowed a cloned, aria-hidden list follows it so
+// translateX(0 → -50%) loops seamlessly, pausing while hovered. Under reduced
+// motion the logos sit still in wrapped rows. No pause control, by owner
+// decision (2026-10-15; see docs/design-proposals/homepage-partner-logos).
+// Logos are the vendors' official artwork in their own colours (unaltered);
+// every logo gets the same optical size from its aspect ratio.
 import { partnerLogos } from "../content/partner-logos";
-import { getLangFromUrl } from "../i18n/ui";
 
 interface Props {
   items: string[];
 }
 const { items } = Astro.props;
-const en = getLangFromUrl(Astro.url) === "en";
-const pause = en ? "Pause logos" : "Pauză logo-uri";
-const play = en ? "Play logos" : "Redă logo-urile";
 
 // Equal visual weight: same area for every logo, clamped for very wide/tall marks.
 const AREA = 4600;
@@ -59,19 +54,6 @@ const logos = items.map((name) => {
       }
     </div>
   </div>
-  <button
-    type="button"
-    class="lm-toggle"
-    data-logo-marquee-toggle
-    data-label-pause={pause}
-    data-label-play={play}
-    data-paused="false"
-    hidden
-  >
-    <Pause size={15} stroke-width={1.5} aria-hidden="true" data-lm-pause />
-    <Play size={15} stroke-width={1.5} aria-hidden="true" data-lm-play />
-    <span data-lm-label>{pause}</span>
-  </button>
 </div>
 
 <style>
@@ -100,120 +82,47 @@ const logos = items.map((name) => {
   .lm-clone {
     display: none;
   }
-  /* Running marquee (set by the script when motion is allowed). */
-  [data-state="running"] .lm-viewport {
-    overflow: hidden;
-    mask-image: linear-gradient(
-      90deg,
-      transparent,
-      black 8%,
-      black 92%,
-      transparent
-    );
-  }
-  [data-state="running"] .lm-track {
-    display: flex;
-    width: max-content;
-    animation: lm-scroll var(--lm-duration, 50s) linear infinite;
-  }
-  [data-state="running"] .lm-list {
-    flex-wrap: nowrap;
-    padding-right: 64px;
-  }
-  [data-state="running"] .lm-clone {
-    display: flex;
-  }
-  /* Hover pause is scoped to the strip itself, not the toggle beside it, so
-     pressing Play while hovering the button visibly resumes the marquee. */
-  [data-state="running"] .lm-viewport:hover .lm-track,
-  [data-state="running"][data-paused="true"] .lm-track {
-    animation-play-state: paused;
+  /* Marquee whenever motion is allowed; reduced motion keeps the static rows. */
+  @media (prefers-reduced-motion: no-preference) {
+    .lm-viewport {
+      overflow: hidden;
+      mask-image: linear-gradient(
+        90deg,
+        transparent,
+        black 8%,
+        black 92%,
+        transparent
+      );
+    }
+    .lm-track {
+      display: flex;
+      width: max-content;
+      animation: lm-scroll var(--lm-duration, 50s) linear infinite;
+    }
+    .lm-viewport:hover .lm-track {
+      animation-play-state: paused;
+    }
+    .lm-list {
+      flex-wrap: nowrap;
+      padding-right: 64px;
+    }
+    .lm-clone {
+      display: flex;
+    }
   }
   @keyframes lm-scroll {
     to {
       transform: translateX(-50%);
     }
   }
-  .lm-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 44px;
-    margin-top: 20px;
-    padding-inline: 12px;
-    border-radius: var(--radius-sm);
-    color: var(--color-navy);
-    background: var(--color-page);
-    font-size: 0.75rem;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  .lm-toggle:hover {
-    background: var(--color-blue-wash);
-  }
-  .lm-toggle:focus-visible {
-    outline: 3px solid var(--color-bright);
-    outline-offset: 3px;
-  }
-  .lm-toggle[hidden],
-  .lm-toggle :global([data-lm-play]),
-  .lm-toggle[data-paused="true"] :global([data-lm-pause]) {
-    display: none;
-  }
-  .lm-toggle[data-paused="true"] :global([data-lm-play]) {
-    display: block;
-  }
   @media (max-width: 760px) {
     .lm-list {
       gap: 28px 40px;
     }
-    [data-state="running"] .lm-list {
+  }
+  @media (max-width: 760px) and (prefers-reduced-motion: no-preference) {
+    .lm-list {
       padding-right: 40px;
     }
   }
-  @media (prefers-reduced-motion: reduce) {
-    [data-state="running"] .lm-track {
-      animation: none;
-    }
-  }
 </style>
-
-<script>
-  let controller: AbortController | undefined;
-  function wireLogoMarquee() {
-    controller?.abort();
-    const root = document.querySelector<HTMLElement>("[data-logo-marquee]");
-    const button = root?.querySelector<HTMLButtonElement>(
-      "[data-logo-marquee-toggle]",
-    );
-    if (!root || !button) return;
-    controller = new AbortController();
-    const { signal } = controller;
-    const label = button.querySelector<HTMLElement>("[data-lm-label]");
-    const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => {
-      const motion = !reduced.matches;
-      if (motion) root.dataset.state = "running";
-      else delete root.dataset.state;
-      button.hidden = !motion;
-      const paused = button.dataset.paused === "true";
-      root.dataset.paused = String(paused);
-      if (label)
-        label.textContent = paused
-          ? button.dataset.labelPlay!
-          : button.dataset.labelPause!;
-    };
-    button.addEventListener(
-      "click",
-      () => {
-        button.dataset.paused = String(button.dataset.paused !== "true");
-        sync();
-      },
-      { signal },
-    );
-    reduced.addEventListener("change", sync, { signal });
-    sync();
-  }
-  document.addEventListener("astro:page-load", wireLogoMarquee);
-  document.addEventListener("astro:before-swap", () => controller?.abort());
-</script>
