@@ -103,7 +103,7 @@ async function settled(page, label) {
   assert.equal(result.replaying, 0, `${label}: intro animations running again`);
 }
 
-// Partner strip: 13 official logos with alt text and an aria-hidden clone; a
+// Partner strip: 14 official logos with alt text and an aria-hidden clone; a
 // CSS marquee that pauses on hover when motion is allowed, static otherwise.
 async function partners(page, label, { motion }) {
   const root = page.locator("[data-logo-marquee]");
@@ -120,7 +120,12 @@ async function partners(page, label, { motion }) {
       controls: el.querySelectorAll("button").length,
     };
   });
-  assert.equal(info.logos, 13, `${label}: expected 13 partner logos`);
+  assert.equal(info.logos, 14, `${label}: expected 14 partner logos`);
+  assert.equal(
+    await root.locator(".lm-list:not(.lm-clone) .lm-text").count(),
+    0,
+    `${label}: a partner still renders as text`,
+  );
   assert(info.alts, `${label}: partner logo without alt text`);
   assert(info.loaded, `${label}: partner logo failed to load`);
   assert(info.clonesHidden, `${label}: marquee clone exposed to AT`);

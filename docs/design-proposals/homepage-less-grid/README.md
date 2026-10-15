@@ -15,7 +15,7 @@ asymmetry, varied scale and stepped geometry, not organic shapes.
 | Arhitectură IT | Exploded-plate schema plus layer list. This duplicated the new hero stack. | `StackTeardown visual={false}`: a sticky intro beside the layer rows. The rows step out like strata (L4 indented most, L1 at the base). The rows stay visitor-driven disclosures. The ambient auto-cycle and its pause control are dropped in this variant: without the plates, cycling only opened and closed rows and shifted content under the reader. The cycle also never advanced while the pointer or focus was in the (now full-width) section, so the control appeared to do nothing.                                                  |
 | Cum lucrăm     | 3 equal columns with top rails                                             | A connected staircase. Each step sits lower and a stepped line joins the squares. The numbers stay because the order is real. Mobile keeps the vertical rail.                                                                                      |
 | Products       | Equal columns, hairline, `01`/`02`                                         | No ordinal numbers or hairline. S-VPN is offset downward.                                                                                                                                                                                          |
-| Partners       | 4×4 table of names with rules                                              | One flowing line of names with small rotated-square separators.                                                                                                                                                                                    |
+| Partners       | 4×4 table of names with rules                                              | An auto-scrolling strip of the partners' official logos (details in [homepage-partner-logos](../homepage-partner-logos/README.md)).                                                                                                                                                                                    |
 
 The section backgrounds now alternate:
 
@@ -36,7 +36,7 @@ Other notes:
 
 The full `npm run qa` passes. That includes:
 
-- the homepage check and the StackTeardown contract (disclosures, focus, pause,
+- the homepage check and the StackTeardown contract (disclosures, focus, no auto-cycle,
   reduced motion, no-JS, geometry at 320/390/1280px);
 - navigation/responsive checks;
 - the site audit, with 0 contrast failures.

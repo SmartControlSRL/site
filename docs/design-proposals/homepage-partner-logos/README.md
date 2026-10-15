@@ -32,23 +32,24 @@ A side-by-side render showed each cleaned file identical to its original.
 | VMware by Broadcom | vmware.com header (`vmware-logo-grey.svg`)            |
 | Fujitsu            | global.fujitsu header (Fujitsu CDN)                   |
 | Oracle             | oracle.com header (inline SVG)                        |
+| Microsoft          | "Microsoft Partner" mark supplied by the owner (PNG, margins trimmed only), saved as lossless WebP `microsoft-partner.webp` |
 | Palo Alto Networks | paloaltonetworks.com brand page (`pan-logo-dark.svg`) |
 | IBM                | ibm.com/design/language 8-bar logo page (`ibm.svg`)   |
 | HPE                | hpe.com header (`logo-lm.svg`, static version)        |
 | Dell Technologies  | dell.com/ro-ro header (inline SVG)                    |
 
-Files are in `public/images/partners/` (about 45 KB in total). Sizing lives in
+Files are in `public/images/partners/` (about 52 KB in total). Sizing lives in
 `src/content/partner-logos.ts`:
 
 - each logo gets the same optical area, computed from its aspect ratio;
 - small per-logo scales balance marks that read heavier (Fortinet, IBM, Lenovo)
   or lighter (Hitachi Vantara) than their area suggests.
 
-**Pending:** no Microsoft or Hanasis artwork is in place, and both render as
-text. Microsoft publishes only a 216 × 46 PNG publicly; its SVG is in the
-login-gated brand kit. The only "Hanasis" found is a South Korean POS and
-industrial PC maker. The owner needs to confirm the partner, and its site has
-only a 259 × 35 PNG.
+Microsoft publishes only a 216 × 46 PNG publicly; its vector art is in the
+login-gated brand kit. The owner therefore supplied the "Microsoft Partner"
+mark directly (2026-10-15). On the same day the owner removed Hanasis from the
+partner list. The only company found under that name was a South Korean POS
+and industrial PC maker.
 
 ## Behaviour
 
