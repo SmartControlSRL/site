@@ -2,6 +2,7 @@
 import AmbientArtwork from "../AmbientArtwork.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import MailtoLink from "../MailtoLink.astro";
+import LogoMarquee from "../LogoMarquee.astro";
 import HeroStack from "../HeroStack.astro";
 import StackTeardown from "../StackTeardown.astro";
 import { homeCopy, technologyPartners } from "../../content/home-page";
@@ -251,9 +252,7 @@ const org = {
               {copy.partnersTitle}
             </h2>
           </div><p class="section-lead">{copy.partnersBody}</p>
-        </div><ul class="partner-flow">
-          {technologyPartners.map((name) => <li>{name}</li>)}
-        </ul>
+        </div><LogoMarquee items={technologyPartners} />
       </div>
     </section>
     <section
@@ -796,29 +795,6 @@ const org = {
   .home-partners {
     padding-block: 88px;
   }
-  .partner-flow {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    row-gap: 18px;
-    max-width: 1040px;
-  }
-  .partner-flow li {
-    display: inline-flex;
-    align-items: center;
-    font-size: clamp(1.25rem, 2.1vw, 1.75rem);
-    font-weight: 600;
-    letter-spacing: -0.04em;
-    color: var(--color-slate);
-  }
-  .partner-flow li:not(:last-child)::after {
-    content: "";
-    width: 6px;
-    height: 6px;
-    margin-inline: 26px;
-    background: var(--color-bright);
-    transform: rotate(45deg);
-  }
   .home-contact {
     padding-block: 80px;
     background: var(--color-navy);
@@ -988,12 +964,6 @@ const org = {
     }
     .home-partners {
       padding-block: 60px;
-    }
-    .partner-flow {
-      row-gap: 12px;
-    }
-    .partner-flow li:not(:last-child)::after {
-      margin-inline: 16px;
     }
     .contact-layout {
       grid-template-columns: 1fr;

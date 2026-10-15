@@ -105,6 +105,42 @@ async function settled(page, label) {
   assert.equal(result.replaying, 0, `${label}: intro animations running again`);
 }
 
+// Partner strip: 13 official logos with alt text; a marquee with a working
+// pause control when motion is allowed, a static row otherwise.
+async function partners(page, label, { motion, pauseLabel, playLabel }) {
+  const root = page.locator("[data-logo-marquee]");
+  const info = await root.evaluate((el) => {
+    const imgs = [...el.querySelectorAll(".lm-list:not(.lm-clone) img")];
+    return {
+      state: el.dataset.state ?? "static",
+      logos: imgs.length,
+      alts: imgs.every((img) => img.alt.trim().length > 0),
+      clonesHidden: [...el.querySelectorAll(".lm-clone")].every(
+        (list) => list.getAttribute("aria-hidden") === "true",
+      ),
+    };
+  });
+  assert.equal(info.logos, 13, `${label}: expected 13 partner logos`);
+  assert(info.alts, `${label}: partner logo without alt text`);
+  assert(info.clonesHidden, `${label}: marquee clone exposed to AT`);
+  const toggle = root.locator("[data-logo-marquee-toggle]");
+  if (!motion) {
+    assert.equal(info.state, "static", `${label}: strip should be static`);
+    assert(await toggle.isHidden(), `${label}: static strip offers a pause control`);
+    return;
+  }
+  assert.equal(info.state, "running", `${label}: marquee did not start`);
+  const play = () =>
+    root.locator(".lm-track").evaluate((el) => el.getAnimations()[0]?.playState);
+  assert.equal(await play(), "running", `${label}: marquee not animating`);
+  assert.equal(await toggle.innerText(), pauseLabel);
+  await toggle.click();
+  assert.equal(await play(), "paused", `${label}: pause control did not pause`);
+  assert.equal(await toggle.innerText(), playLabel);
+  await toggle.click();
+  assert.equal(await play(), "running", `${label}: play did not resume while hovering the control`);
+}
+
 async function frozen(page) {
   await page.waitForTimeout(80);
   const playStates = await page
@@ -269,6 +305,11 @@ try {
     await moving(page);
     assert.equal(await page.locator(".service-link").count(), 4);
     assert.equal(await page.locator(".product-link").count(), 2);
+    await partners(page, `${route} partners`, {
+      motion: true,
+      pauseLabel: en ? "Pause logos" : "Pauză logo-uri",
+      playLabel: en ? "Play logos" : "Redă logo-urile",
+    });
 
     for (const width of [320, 390, 768, 1280]) {
       await page.setViewportSize({ width, height: 900 });
@@ -363,6 +404,7 @@ try {
       if (mode === "no-js") await staticPage.waitForTimeout(2100);
       assert.deepEqual(await still(staticPage, `${route} ${mode}`), expectedTags);
       assert(await staticPage.locator(toggleSelector).isHidden());
+      await partners(staticPage, `${route} ${mode} partners`, { motion: false });
       assert(await staticPage.locator(".home-hero h1").isVisible());
       assert(
         await staticPage

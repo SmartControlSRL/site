@@ -1,43 +1,219 @@
 ---
-// Partner marquee: a duplicated track of mono-label wordmarks scrolling left on
-// the scMarquee 50s loop, with edge fade masks. The list is rendered TWICE so
-// translateX(0 → -50%) loops seamlessly. Pauses under reduced-motion (the
-// global reduce block forces animation-duration → 0.01ms, freezing the track).
+// Partner logo strip. The first list is the real, accessible content and the
+// static fallback (no JS / reduced motion): logos wrap in rows. When motion is
+// allowed the script turns it into a continuous marquee: a cloned, aria-hidden
+// list follows the first so translateX(0 → -50%) loops seamlessly. It pauses
+// on hover, on keyboard focus and via a visible control (WCAG 2.2.2). Logos are
+// the vendors' official artwork in their own colours (unaltered); every logo
+// gets the same optical size from its aspect ratio.
+import { Pause, Play } from "@lucide/astro";
+import { partnerLogos } from "../content/partner-logos";
+import { getLangFromUrl } from "../i18n/ui";
+
 interface Props {
-  /** Partner names (text wordmarks — no logo images, per brand rule). */
   items: string[];
-  class?: string;
 }
-const { items, class: extra = '' } = Astro.props;
-const loop = [...items, ...items];
+const { items } = Astro.props;
+const en = getLangFromUrl(Astro.url) === "en";
+const pause = en ? "Pause logos" : "Pauză logo-uri";
+const play = en ? "Play logos" : "Redă logo-urile";
+
+// Equal visual weight: same area for every logo, clamped for very wide/tall marks.
+const AREA = 4600;
+const logos = items.map((name) => {
+  const logo = partnerLogos[name];
+  if (!logo) return { name };
+  const base = Math.min(46, Math.max(22, Math.sqrt(AREA / logo.aspect)));
+  const h = Math.round(base * (logo.scale ?? 1));
+  return { name, src: `/images/partners/${logo.file}`, h, w: Math.round(h * logo.aspect) };
+});
 ---
 
-<div class:list={['relative overflow-hidden', extra]}>
-  <!-- edge fade masks -->
-  <div
-    class="pointer-events-none absolute inset-y-0 left-0 z-[1] w-40"
-    style="background:linear-gradient(90deg,#FFFFFF,rgba(255,255,255,0))"
+<div class="logo-marquee" data-logo-marquee>
+  <div class="lm-viewport">
+    <div class="lm-track">
+      {
+        [false, true].map((clone) => (
+          <ul
+            class:list={["lm-list", { "lm-clone": clone }]}
+            aria-hidden={clone ? "true" : undefined}
+          >
+            {logos.map((logo) => (
+              <li>
+                {logo.src ? (
+                  <img
+                    src={logo.src}
+                    alt={clone ? "" : logo.name}
+                    width={logo.w}
+                    height={logo.h}
+                    loading="eager"
+                    decoding="async"
+                  />
+                ) : (
+                  <span class="lm-text">{logo.name}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        ))
+      }
+    </div>
+  </div>
+  <button
+    type="button"
+    class="lm-toggle"
+    data-logo-marquee-toggle
+    data-label-pause={pause}
+    data-label-play={play}
+    data-paused="false"
+    hidden
   >
-  </div>
-  <div
-    class="pointer-events-none absolute inset-y-0 right-0 z-[1] w-40"
-    style="background:linear-gradient(270deg,#FFFFFF,rgba(255,255,255,0))"
-  >
-  </div>
-
-  <!-- AT-readable partner list — the animated track below is aria-hidden
-       (duplicated items would read twice) -->
-  <ul class="sr-only">
-    {items.map((name) => <li>{name}</li>)}
-  </ul>
-
-  <div class="flex w-max gap-16" style="animation:scMarquee 50s linear infinite" aria-hidden="true">
-    {
-      loop.map((name) => (
-        <span class="whitespace-nowrap font-mono text-[14px] uppercase tracking-[2px] text-cool">
-          {name}
-        </span>
-      ))
-    }
-  </div>
+    <Pause size={15} stroke-width={1.5} aria-hidden="true" data-lm-pause />
+    <Play size={15} stroke-width={1.5} aria-hidden="true" data-lm-play />
+    <span data-lm-label>{pause}</span>
+  </button>
 </div>
+
+<style>
+  .lm-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 36px 64px;
+  }
+  .lm-list li {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .lm-list img {
+    display: block;
+    max-width: none;
+  }
+  .lm-text {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    color: var(--color-slate);
+    white-space: nowrap;
+  }
+  .lm-clone {
+    display: none;
+  }
+  /* Running marquee (set by the script when motion is allowed). */
+  [data-state="running"] .lm-viewport {
+    overflow: hidden;
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      black 8%,
+      black 92%,
+      transparent
+    );
+  }
+  [data-state="running"] .lm-track {
+    display: flex;
+    width: max-content;
+    animation: lm-scroll var(--lm-duration, 50s) linear infinite;
+  }
+  [data-state="running"] .lm-list {
+    flex-wrap: nowrap;
+    padding-right: 64px;
+  }
+  [data-state="running"] .lm-clone {
+    display: flex;
+  }
+  /* Hover pause is scoped to the strip itself, not the toggle beside it, so
+     pressing Play while hovering the button visibly resumes the marquee. */
+  [data-state="running"] .lm-viewport:hover .lm-track,
+  [data-state="running"][data-paused="true"] .lm-track {
+    animation-play-state: paused;
+  }
+  @keyframes lm-scroll {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .lm-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    margin-top: 20px;
+    padding-inline: 12px;
+    border-radius: var(--radius-sm);
+    color: var(--color-navy);
+    background: var(--color-page);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .lm-toggle:hover {
+    background: var(--color-blue-wash);
+  }
+  .lm-toggle:focus-visible {
+    outline: 3px solid var(--color-bright);
+    outline-offset: 3px;
+  }
+  .lm-toggle[hidden],
+  .lm-toggle :global([data-lm-play]),
+  .lm-toggle[data-paused="true"] :global([data-lm-pause]) {
+    display: none;
+  }
+  .lm-toggle[data-paused="true"] :global([data-lm-play]) {
+    display: block;
+  }
+  @media (max-width: 760px) {
+    .lm-list {
+      gap: 28px 40px;
+    }
+    [data-state="running"] .lm-list {
+      padding-right: 40px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-state="running"] .lm-track {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  let controller: AbortController | undefined;
+  function wireLogoMarquee() {
+    controller?.abort();
+    const root = document.querySelector<HTMLElement>("[data-logo-marquee]");
+    const button = root?.querySelector<HTMLButtonElement>(
+      "[data-logo-marquee-toggle]",
+    );
+    if (!root || !button) return;
+    controller = new AbortController();
+    const { signal } = controller;
+    const label = button.querySelector<HTMLElement>("[data-lm-label]");
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => {
+      const motion = !reduced.matches;
+      if (motion) root.dataset.state = "running";
+      else delete root.dataset.state;
+      button.hidden = !motion;
+      const paused = button.dataset.paused === "true";
+      root.dataset.paused = String(paused);
+      if (label)
+        label.textContent = paused
+          ? button.dataset.labelPlay!
+          : button.dataset.labelPause!;
+    };
+    button.addEventListener(
+      "click",
+      () => {
+        button.dataset.paused = String(button.dataset.paused !== "true");
+        sync();
+      },
+      { signal },
+    );
+    reduced.addEventListener("change", sync, { signal });
+    sync();
+  }
+  document.addEventListener("astro:page-load", wireLogoMarquee);
+  document.addEventListener("astro:before-swap", () => controller?.abort());
+</script>
