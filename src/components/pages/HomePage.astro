@@ -52,7 +52,11 @@ const org = {
         <div class="hero-copy">
           <p class="home-kicker hero-in">Trusted Service Delivery Partner</p>
           <h1 class="hero-in-2">
-            {copy.hero.lead}<br /><span>{copy.hero.accent}</span>
+            {
+              copy.hero.lead
+                .split(/(?<=\.)\s+/)
+                .map((line) => <span class="hero-line">{`${line} `}</span>)
+            }<span class="hero-line hero-accent">{copy.hero.accent}</span>
           </h1>
           <p class="hero-lead hero-in-3">{copy.hero.body}</p>
           <div class="hero-actions hero-in-4">
@@ -314,7 +318,11 @@ const org = {
     margin-top: 25px;
     color: var(--color-midnight);
   }
-  h1 span {
+  /* One word per line: Infrastructură. / Securitate. / Software. */
+  .hero-line {
+    display: block;
+  }
+  .hero-accent {
     color: var(--color-mid-blue);
   }
   .hero-lead {
