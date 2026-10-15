@@ -1,10 +1,10 @@
 ---
-import AmbientArtwork from "../AmbientArtwork.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import MailtoLink from "../MailtoLink.astro";
 import LogoMarquee from "../LogoMarquee.astro";
 import HeroStack from "../HeroStack.astro";
 import StackTeardown from "../StackTeardown.astro";
+import ProductVisual from "../ProductVisual.astro";
 import { homeCopy, technologyPartners } from "../../content/home-page";
 import { productPages } from "../../content/product-pages";
 import {
@@ -180,7 +180,6 @@ const org = {
       class="home-products home-section"
       aria-labelledby="home-products-heading"
     >
-      <AmbientArtwork artwork="optical-dark" lazy />
       <div class="home-wrap">
         <div class="section-intro" data-home-enter>
           <div>
@@ -191,25 +190,17 @@ const org = {
             </h2>
           </div><p class="section-lead">{copy.productsIntro}</p>
         </div>
-        <div class="product-grid">
+        <div class="product-rows">
           {
             copy.products.map((product, index) => {
               const key = index === 0 ? "seknet" : "s-vpn";
               const page = productPages[key][lang];
-              const visual = `/images/${key}-video`;
               return (
-                <article class="product" data-home-enter>
-                  <img
-                    class="product-visual"
-                    src={`${visual}-800.webp`}
-                    srcset={`${visual}-800.webp 800w, ${visual}-1280.webp 1280w`}
-                    sizes="(max-width: 760px) 92vw, 560px"
-                    width="1280"
-                    height="720"
-                    alt=""
-                    loading="lazy"
-                    decoding="async"
-                  />
+                <article
+                  class:list={["product", { "product--flip": index === 1 }]}
+                  data-home-enter
+                >
+                  <ProductVisual kind={key} />
                   <div class="product-content">
                     <p class="product-label">{product.label}</p>
                     <h3>{product.name}</h3>
@@ -593,7 +584,13 @@ const org = {
     font-size: 13px;
   }
   .home-products {
-    background: var(--color-midnight);
+    background:
+      radial-gradient(
+        60% 50% at 80% 10%,
+        color-mix(in srgb, var(--color-bright) 14%, transparent),
+        transparent 70%
+      ),
+      var(--color-midnight);
     color: var(--color-surface);
     position: relative;
     overflow: hidden;
@@ -601,9 +598,6 @@ const org = {
   .home-products > .home-wrap {
     position: relative;
     z-index: 1;
-  }
-  .home-products :global(.ambient-artwork) {
-    opacity: 0.38;
   }
   .home-products .section-lead,
   .home-products .product-body {
@@ -618,37 +612,26 @@ const org = {
   .home-products .section-lead {
     color: var(--color-on-dark);
   }
-  .product-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: start;
+  /* Products alternate sides: each gets its own row and code-drawn scene. */
+  .product-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 72px;
   }
-  /* Each product is a showcase card led by its own hero visual. */
   .product {
-    overflow: hidden;
-    border-radius: var(--radius-xl);
-    background: var(--color-console);
-    border: 1px solid color-mix(in srgb, var(--color-sky) 16%, transparent);
-    box-shadow: var(--shadow-xl);
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+    gap: 64px;
+    align-items: center;
   }
-  .product:nth-child(2) {
-    margin-top: 72px;
+  .product--flip {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr);
   }
-  .product-visual {
-    display: block;
-    width: 100%;
-    aspect-ratio: 16 / 8;
-    object-fit: cover;
-    object-position: 70% 50%;
-    mask-image: linear-gradient(180deg, black 60%, transparent);
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .product:hover .product-visual {
-    transform: scale(1.03);
+  .product--flip > :global(.pv) {
+    order: 2;
   }
   .product-content {
-    padding: 4px 36px 32px;
+    max-width: 500px;
   }
   .product-label {
     font: 12px var(--font-mono);
@@ -693,12 +676,10 @@ const org = {
     color: var(--color-sky);
   }
   .product-link {
-    display: flex;
-    justify-content: space-between;
+    display: inline-flex;
+    gap: 14px;
     align-items: center;
     margin-top: 26px;
-    padding-top: 18px;
-    border-top: 1px solid color-mix(in srgb, var(--color-sky) 18%, transparent);
     font-size: 16px;
     font-weight: 600;
     color: var(--color-sky);
@@ -820,8 +801,9 @@ const org = {
     .section-intro {
       gap: 40px;
     }
-    .product-grid {
-      gap: 32px;
+    .product,
+    .product--flip {
+      gap: 36px;
     }
     .service-link--wide {
       column-gap: 32px;
@@ -886,18 +868,19 @@ const org = {
     .home-stack :global(.sctd-grid) {
       margin-top: 24px;
     }
-    .product-grid {
-      grid-template-columns: 1fr;
-      gap: 40px;
+    .product-rows {
+      gap: 56px;
     }
-    .product:nth-child(2) {
-      margin-top: 0;
+    .product,
+    .product--flip {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .product--flip > :global(.pv) {
+      order: 0;
     }
     .product h3 {
       font-size: 40px;
-    }
-    .product-content {
-      padding: 4px 22px 24px;
     }
     .methodology {
       grid-template-columns: 1fr;
@@ -948,9 +931,6 @@ const org = {
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .product-visual {
-      transition: none;
-    }
     .service-link,
     .service-arrow,
     .home-text-link svg,

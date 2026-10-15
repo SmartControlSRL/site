@@ -1,0 +1,414 @@
+---
+// Code-drawn product scenes for the homepage products band (dark zone).
+// SEKNET — "observability lens": six infrastructure nodes feed signals into a
+// central core that pulses as each one arrives. S-VPN — "controlled tunnel":
+// a user's request travels to the S-VPN gate, the policy checks light, then
+// it continues to exactly one resource. Timing (6.4 s cycle): a request
+// reaches the gate at ~26 %, the checks light 24–34 %, and the granted pulse
+// leaves at 2.2 s; the second user follows half a cycle later. Geometry lives in a 560×380 box; the
+// SVG lines and the HTML nodes share its percentage coordinates. CSS-only
+// motion, removed entirely under prefers-reduced-motion. Decorative
+// (aria-hidden): the product copy beside it carries the meaning.
+import {
+  AppWindow,
+  Cloud,
+  Database,
+  KeyRound,
+  Laptop,
+  Network,
+  Server,
+  ShieldCheck,
+  Smartphone,
+  Wifi,
+  MonitorSmartphone,
+} from "@lucide/astro";
+
+interface Props {
+  kind: "seknet" | "s-vpn";
+}
+const { kind } = Astro.props;
+const W = 560;
+const H = 380;
+const pct = (x: number, y: number) => `left:${(x / W) * 100}%;top:${(y / H) * 100}%`;
+
+const core = { x: 280, y: 190 };
+const seknetNodes = [
+  { x: 92, y: 84, Icon: Server },
+  { x: 64, y: 196, Icon: Network },
+  { x: 108, y: 304, Icon: Database },
+  { x: 468, y: 84, Icon: Cloud },
+  { x: 496, y: 196, Icon: MonitorSmartphone },
+  { x: 452, y: 304, Icon: Wifi },
+];
+
+const users = [
+  { x: 76, y: 124, Icon: Laptop },
+  { x: 76, y: 262, Icon: Smartphone },
+];
+const gate = { x: 280, y: 190 };
+const resources = [
+  { x: 486, y: 92, Icon: Server },
+  { x: 486, y: 190, Icon: Database },
+  { x: 486, y: 288, Icon: AppWindow },
+];
+---
+
+<div class:list={["pv", `pv--${kind}`]} aria-hidden="true">
+  <svg class="pv-lines" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none">
+    {
+      kind === "seknet" &&
+        seknetNodes.map((n, i) => (
+          <>
+            <line class="pv-rail" x1={n.x} y1={n.y} x2={core.x} y2={core.y} />
+            <line
+              class="pv-pulse"
+              style={`--d:${i * 0.55}s`}
+              x1={n.x}
+              y1={n.y}
+              x2={core.x}
+              y2={core.y}
+              pathLength="100"
+            />
+          </>
+        ))
+    }
+    {
+      kind === "s-vpn" && (
+        <>
+          {users.map((u, i) => (
+            <>
+              <line class="pv-rail" x1={u.x} y1={u.y} x2={gate.x} y2={gate.y} />
+              <line
+                class="pv-pulse pv-pulse--in"
+                style={`--d:${i * 3.2}s`}
+                x1={u.x}
+                y1={u.y}
+                x2={gate.x}
+                y2={gate.y}
+                pathLength="100"
+              />
+            </>
+          ))}
+          {resources.map((r, i) => (
+            <>
+              <line
+                class="pv-rail pv-rail--locked"
+                x1={gate.x}
+                y1={gate.y}
+                x2={r.x}
+                y2={r.y}
+              />
+              {i !== 2 && (
+                <line
+                  class="pv-pulse pv-pulse--out"
+                  style={`--d:${i === 0 ? 2.2 : 5.4}s`}
+                  x1={gate.x}
+                  y1={gate.y}
+                  x2={r.x}
+                  y2={r.y}
+                  pathLength="100"
+                />
+              )}
+            </>
+          ))}
+        </>
+      )
+    }
+  </svg>
+
+  {
+    kind === "seknet" && (
+      <>
+        {seknetNodes.map(({ x, y, Icon }, i) => (
+          <span class="pv-node" style={`${pct(x, y)};--d:${i * 0.55}s`}>
+            <Icon size={20} stroke-width={1.5} />
+          </span>
+        ))}
+        <span class="pv-ring" style={pct(core.x, core.y)} />
+        <span class="pv-ring pv-ring--2" style={pct(core.x, core.y)} />
+        <span class="pv-core" style={pct(core.x, core.y)}>
+          <span class="pv-core-inner">
+            <ShieldCheck size={30} stroke-width={1.5} />
+            <span class="pv-core-label">SEKNET</span>
+          </span>
+        </span>
+      </>
+    )
+  }
+  {
+    kind === "s-vpn" && (
+      <>
+        {users.map(({ x, y, Icon }, i) => (
+          <span class="pv-node pv-node--user" style={`${pct(x, y)};--d:${i * 3.2}s`}>
+            <Icon size={20} stroke-width={1.5} />
+          </span>
+        ))}
+        {resources.map(({ x, y, Icon }, i) => (
+          <span
+            class:list={["pv-node pv-node--resource", { "pv-node--idle": i === 2 }]}
+            style={`${pct(x, y)};--d:${i === 0 ? 2.2 : 5.4}s`}
+          >
+            <Icon size={20} stroke-width={1.5} />
+          </span>
+        ))}
+        <span class="pv-gate" style={pct(gate.x, gate.y)}>
+          <KeyRound size={26} stroke-width={1.5} />
+          <span class="pv-core-label">S-VPN</span>
+          <span class="pv-checks">
+            <i />
+            <i />
+            <i />
+          </span>
+        </span>
+      </>
+    )
+  }
+</div>
+
+<style>
+  .pv {
+    --pv-cycle: 6.4s;
+    position: relative;
+    aspect-ratio: 560 / 380;
+    border-radius: var(--radius-xl);
+    background:
+      radial-gradient(
+        55% 60% at 50% 50%,
+        color-mix(in srgb, var(--color-bright) 16%, transparent),
+        transparent 70%
+      ),
+      color-mix(in srgb, var(--color-console) 70%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-sky) 14%, transparent);
+    overflow: hidden;
+  }
+  .pv-lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .pv-rail {
+    stroke: color-mix(in srgb, var(--color-sky) 26%, transparent);
+    stroke-width: 1.2;
+    vector-effect: non-scaling-stroke;
+  }
+  .pv-rail--locked {
+    stroke-dasharray: 3 5;
+  }
+  /* A short bright dash that travels along the rail. */
+  .pv-pulse {
+    stroke: var(--color-sky);
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+    stroke-dasharray: 9 100;
+    stroke-dashoffset: 9;
+    opacity: 0;
+    filter: drop-shadow(0 0 4px var(--color-bright));
+    animation: pv-travel var(--pv-cycle) var(--d, 0s) infinite;
+  }
+  @keyframes pv-travel {
+    0% {
+      stroke-dashoffset: 9;
+      opacity: 0;
+    }
+    4% {
+      opacity: 1;
+    }
+    26% {
+      stroke-dashoffset: -100;
+      opacity: 1;
+    }
+    27%,
+    100% {
+      stroke-dashoffset: -100;
+      opacity: 0;
+    }
+  }
+  .pv-node,
+  .pv-core,
+  .pv-gate,
+  .pv-ring {
+    position: absolute;
+    translate: -50% -50%;
+  }
+  .pv-node {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-lg);
+    color: var(--color-sky);
+    background: var(--color-console);
+    border: 1px solid color-mix(in srgb, var(--color-sky) 34%, transparent);
+    animation: pv-ping var(--pv-cycle) var(--d, 0s) infinite;
+  }
+  .pv-node--user {
+    border-radius: 50%;
+  }
+  .pv-node--resource {
+    animation-name: pv-arrive;
+  }
+  .pv-node--idle {
+    animation: none;
+    opacity: 0.55;
+  }
+  @keyframes pv-ping {
+    0%,
+    100% {
+      box-shadow: none;
+      border-color: color-mix(in srgb, var(--color-sky) 34%, transparent);
+    }
+    3% {
+      box-shadow: 0 0 18px color-mix(in srgb, var(--color-bright) 70%, transparent);
+      border-color: var(--color-bright);
+    }
+    14% {
+      box-shadow: none;
+      border-color: color-mix(in srgb, var(--color-sky) 34%, transparent);
+    }
+  }
+  @keyframes pv-arrive {
+    0%,
+    24%,
+    100% {
+      box-shadow: none;
+      border-color: color-mix(in srgb, var(--color-sky) 34%, transparent);
+      color: var(--color-sky);
+    }
+    27% {
+      box-shadow: 0 0 22px color-mix(in srgb, var(--color-bright) 80%, transparent);
+      border-color: var(--color-bright);
+      color: var(--color-surface);
+    }
+    42% {
+      box-shadow: none;
+    }
+  }
+  .pv-core,
+  .pv-gate {
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 6px;
+    color: var(--color-surface);
+    background: linear-gradient(
+      145deg,
+      var(--color-navy),
+      color-mix(in srgb, var(--color-bright) 55%, var(--color-navy))
+    );
+    border: 1px solid color-mix(in srgb, var(--color-sky) 60%, transparent);
+    box-shadow:
+      0 0 0 6px color-mix(in srgb, var(--color-bright) 10%, transparent),
+      0 0 40px color-mix(in srgb, var(--color-bright) 45%, transparent);
+  }
+  .pv-core {
+    width: 112px;
+    height: 112px;
+    border-radius: 28px;
+    rotate: 45deg;
+  }
+  .pv-core-inner {
+    display: grid;
+    place-items: center;
+    gap: 6px;
+    rotate: -45deg;
+  }
+  .pv-gate {
+    width: 92px;
+    height: 150px;
+    border-radius: 20px;
+  }
+  .pv-core-label {
+    font: 600 10px/1 var(--font-mono);
+    letter-spacing: 0.18em;
+    color: var(--color-sky);
+  }
+  .pv-ring {
+    width: 112px;
+    height: 112px;
+    border-radius: 28px;
+    rotate: 45deg;
+    border: 1px solid var(--color-bright);
+    opacity: 0;
+    animation: pv-ring calc(var(--pv-cycle) / 6) linear infinite;
+    animation-delay: calc(var(--pv-cycle) * 0.26);
+  }
+  .pv-ring--2 {
+    animation-delay: calc(var(--pv-cycle) * 0.26 + var(--pv-cycle) / 12);
+  }
+  @keyframes pv-ring {
+    from {
+      scale: 1;
+      opacity: 0.7;
+    }
+    to {
+      scale: 1.9;
+      opacity: 0;
+    }
+  }
+  .pv-checks {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .pv-checks i {
+    width: 7px;
+    height: 7px;
+    border-radius: 2px;
+    background: color-mix(in srgb, var(--color-sky) 30%, transparent);
+    animation: pv-check var(--pv-cycle) infinite;
+  }
+  .pv-checks i:nth-child(2) {
+    animation-delay: 0.12s;
+  }
+  .pv-checks i:nth-child(3) {
+    animation-delay: 0.24s;
+  }
+  @keyframes pv-check {
+    0%,
+    20%,
+    38%,
+    70%,
+    88%,
+    100% {
+      background: color-mix(in srgb, var(--color-sky) 30%, transparent);
+    }
+    24%,
+    34%,
+    74%,
+    84% {
+      background: var(--color-sky);
+    }
+  }
+  @media (max-width: 560px) {
+    .pv-node {
+      width: 38px;
+      height: 38px;
+    }
+    .pv-node :global(svg) {
+      width: 16px;
+      height: 16px;
+    }
+    .pv-core,
+    .pv-ring {
+      width: 84px;
+      height: 84px;
+      border-radius: 22px;
+    }
+    .pv-gate {
+      width: 72px;
+      height: 118px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pv-pulse,
+    .pv-ring {
+      display: none;
+    }
+    .pv-node,
+    .pv-checks i {
+      animation: none;
+    }
+  }
+</style>
