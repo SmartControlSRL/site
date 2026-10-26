@@ -244,7 +244,7 @@ try {
           usable: box.width >= 24 && box.height >= 24,
           overlaps: [
             ...document.querySelectorAll(
-              ".detail-hero h1, .detail-hero .detail-lead, .detail-hero .detail-actions a, .product-signal",
+              ".detail-hero h1, .detail-hero .detail-lead, .detail-hero .detail-actions a, .prd-signal li",
             ),
           ].some((target) => {
             const copy = target.getBoundingClientRect();

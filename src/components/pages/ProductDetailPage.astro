@@ -3,12 +3,15 @@ import HeroVideoArtwork from "../HeroVideoArtwork.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import MailtoLink from "../MailtoLink.astro";
 import DetailMotion from "../DetailMotion.astro";
+import ProductVisual from "../ProductVisual.astro";
 import {
   ArrowUpRight,
-  Server,
   Activity,
   ShieldCheck,
-  User,
+  LayoutDashboard,
+  KeyRound,
+  SlidersHorizontal,
+  Network,
 } from "@lucide/astro";
 import { getLangFromUrl, localizedPath, useTranslations } from "../../i18n/ui";
 import {
@@ -16,6 +19,7 @@ import {
   type ProductKey,
 } from "../../content/product-pages";
 import "../../styles/detail.css";
+import "../../styles/product.css";
 interface Props {
   product: ProductKey;
 }
@@ -27,12 +31,16 @@ const p = (path: string) => localizedPath(lang, path);
 const copy = productPages[product][lang];
 const otherKey = product === "seknet" ? "s-vpn" : "seknet";
 const other = productPages[otherKey][lang];
+// One icon per capability, in content order.
 const icons =
   product === "seknet"
-    ? [Server, Activity, ShieldCheck]
-    : [User, ShieldCheck, Server];
+    ? [Activity, ShieldCheck, LayoutDashboard]
+    : [KeyRound, SlidersHorizontal, Network];
 const subject =
   product === "seknet" ? t("subject.demo.seknet") : t("subject.demo.svpn");
+// Sections alternate wash/white; the related band takes whichever the
+// optional associated-services band leaves.
+const relatedWash = !copy.associatedServices;
 const schema = {
   "@context": "https://schema.org",
   "@type": "Product",
@@ -63,82 +71,82 @@ const schema = {
             class="detail-lead"
           >
             {copy.intro}
-          </p><div class="detail-actions">
+          </p><ol class="prd-signal" data-detail-enter>
+            {copy.signal.map((label) => <li><span>{label}</span></li>)}
+          </ol><div class="detail-actions">
             <MailtoLink variant="button" dark subject={subject}
               >{t("cta.demo.seknet")}<ArrowUpRight size={20} /></MailtoLink
             >
           </div>
         </div>
-        <figure class="product-signal" data-route-visual data-detail-enter>
-          <ol>
+      </div>
+    </header>
+    <section
+      class="detail-section detail-wash"
+      id="capabilitati"
+      aria-labelledby="prd-overview-heading"
+    >
+      <div class="detail-wrap prd-overview-grid">
+        <div class="prd-overview-intro" data-detail-enter>
+          <p class="detail-kicker">{copy.name}</p><h2
+            id="prd-overview-heading"
+          >
+            {copy.contextTitle}
+          </h2><p class="prd-lead">{copy.context}</p>
+        </div>
+        <div>
+          <figure class="prd-scene" data-route-visual data-detail-enter>
+            <ProductVisual kind={product} tone="light" />
+            <figcaption>
+              {en ? "Conceptual overview" : "Schemă conceptuală"} / <span
+                >{copy.name}</span
+              >
+            </figcaption>
+          </figure>
+          <ul class="prd-capabilities">
             {
-              copy.signal.map((label, i) => {
+              copy.capabilities.map((item, i) => {
                 const Icon = icons[i];
                 return (
-                  <li>
-                    <>
-                      <span>
-                        <Icon size={25} stroke-width={1.5} />
-                      </span>
-                      <strong>{label}</strong>
-                    </>
+                  <li class="prd-capability" data-detail-enter>
+                    <span class="prd-capability-icon" aria-hidden="true">
+                      <Icon size={22} stroke-width={1.5} />
+                    </span>
+                    <div>
+                      <h3>{item.title}</h3>
+                      <p>{item.body}</p>
+                    </div>
                   </li>
                 );
               })
             }
-          </ol><figcaption>
-            {en ? "Conceptual overview" : "Schemă conceptuală"} / <span
-              >{copy.name}</span
-            >
-          </figcaption>
-        </figure>
-      </div>
-    </header>
-    <section class="detail-wrap detail-section" id="capabilitati">
-      <div class="detail-intro" data-detail-enter>
-        <div>
-          <p class="detail-kicker">{copy.name}</p><h2>{copy.contextTitle}</h2>
-        </div><p>{copy.context}</p>
-      </div>
-      <div class="detail-capabilities">
-        {
-          copy.capabilities.map((item, i) => {
-            const Icon = icons[i];
-            return (
-              <article class="detail-capability" data-detail-enter>
-                <>
-                  <h3>
-                    <Icon size={24} stroke-width={1.5} />
-                    {item.title}
-                  </h3>
-                  <p>{item.body}</p>
-                </>
-              </article>
-            );
-          })
-        }
+          </ul>
+        </div>
       </div>
     </section>
-    <section class="detail-section detail-wash">
+    <section
+      class="detail-section prd-journey"
+      aria-labelledby="prd-journey-heading"
+    >
       <div class="detail-wrap">
-        <div class="detail-intro" data-detail-enter>
-          <div>
-            <p class="detail-kicker">
-              {copy.journeyEyebrow}
-            </p><h2>{copy.journeyTitle}</h2>
-          </div><p>{copy.journeyIntro}</p>
+        <div class="prd-journey-intro" data-detail-enter>
+          <p class="detail-kicker">{copy.journeyEyebrow}</p><h2
+            id="prd-journey-heading"
+          >
+            {copy.journeyTitle}
+          </h2><p class="prd-lead">{copy.journeyIntro}</p>
         </div>
-        <ol class="detail-steps">
+        <ol class="prd-timeline">
           {
             copy.journey.map((step, i) => (
-              <li class="detail-step" data-detail-enter>
-                <>
-                  <span class="detail-step-number">
-                    0{i + 1} / {step.label}
-                  </span>
-                  <h3>{step.title}</h3>
-                  <p>{step.body}</p>
-                </>
+              <li class="prd-stop" data-detail-enter>
+                <p class="prd-stop-label">
+                  <span aria-hidden="true">0{i + 1}</span>
+                  {step.label}
+                </p>
+                <span class="prd-stop-node" aria-hidden="true" />
+                <h3>{step.title}</h3>
+                <p class="prd-stop-body">{step.body}</p>
               </li>
             ))
           }
@@ -147,24 +155,38 @@ const schema = {
     </section>
     {
       copy.associatedServices && (
-        <section class="detail-wrap detail-section" aria-labelledby="associated-services-heading">
-          <div class="detail-intro" data-detail-enter>
-            <div>
+        <section
+          class="detail-section detail-wash prd-assist"
+          aria-labelledby="associated-services-heading"
+        >
+          <div class="detail-wrap prd-assist-grid">
+            <div data-detail-enter>
               <p class="detail-kicker">{copy.associatedServices.eyebrow}</p>
-              <h2 id="associated-services-heading">{copy.associatedServices.heading}</h2>
+              <h2 id="associated-services-heading">
+                {copy.associatedServices.heading}
+              </h2>
+              <p class="prd-lead">{copy.associatedServices.body}</p>
             </div>
-            <p>{copy.associatedServices.body}</p>
+            <div data-detail-enter>
+              <ul class="prd-chips">
+                {copy.associatedServices.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <ul class="detail-scope-list" data-detail-enter>
-            {copy.associatedServices.items.map((item) => <li>{item}</li>)}
-          </ul>
         </section>
       )
     }
-    <section class="detail-wrap detail-section">
-      <div class="detail-intro">
-        <div>
-          <p class="detail-kicker">Smart Control</p><h2>
+    <section
+      class:list={["detail-section prd-related", { "detail-wash": relatedWash }]}
+      aria-labelledby="prd-related-heading"
+    >
+      <div class="detail-wrap prd-related-grid">
+        <div class="prd-related-intro" data-detail-enter>
+          <p class="detail-kicker">Smart Control</p><h2
+            id="prd-related-heading"
+          >
             {
               en
                 ? "Related services and products"
@@ -172,15 +194,24 @@ const schema = {
             }
           </h2>
         </div>
-      </div><div class="detail-related">
-        <a href={p(copy.relatedHref)}
-          ><h3>{copy.relatedTitle}<ArrowUpRight size={20} /></h3><p>
-            {copy.relatedBody}
+        <a
+          class="prd-card prd-card--product"
+          href={p("/solutii/" + otherKey)}
+          aria-labelledby="prd-related-product"
+          data-detail-enter
+          ><h3 class="prd-wordmark" id="prd-related-product">
+            {other.name}<ArrowUpRight size={22} />
+          </h3><p class="prd-card-headline">{other.headline}</p><p>
+            {other.intro}
           </p></a
         >
-        <a href={p("/solutii/" + otherKey)}
-          ><h3>{other.name}<ArrowUpRight size={20} /></h3><p>
-            {other.intro}
+        <a
+          class="prd-card prd-card--service"
+          href={p(copy.relatedHref)}
+          aria-labelledby="prd-related-service"
+          data-detail-enter
+          ><h3 id="prd-related-service">{copy.relatedTitle}<ArrowUpRight size={20} /></h3><p>
+            {copy.relatedBody}
           </p></a
         >
       </div>
