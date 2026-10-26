@@ -9,6 +9,9 @@
 // SVG lines and the HTML nodes share its percentage coordinates. CSS-only
 // motion, removed entirely under prefers-reduced-motion. Decorative
 // (aria-hidden): the product copy beside it carries the meaning.
+// `tone="light"` redraws the same scene for a light section (the product
+// pages' overview): a white card with royal nodes and the navy core kept as
+// the single dark accent. Dark stays the default for the homepage band.
 import {
   AppWindow,
   Cloud,
@@ -25,8 +28,9 @@ import {
 
 interface Props {
   kind: "seknet" | "s-vpn";
+  tone?: "dark" | "light";
 }
-const { kind } = Astro.props;
+const { kind, tone = "dark" } = Astro.props;
 const W = 560;
 const H = 380;
 const pct = (x: number, y: number) => `left:${(x / W) * 100}%;top:${(y / H) * 100}%`;
@@ -53,7 +57,7 @@ const resources = [
 ];
 ---
 
-<div class:list={["pv", `pv--${kind}`]} aria-hidden="true">
+<div class:list={["pv", `pv--${kind}`, { "pv--light": tone === "light" }]} aria-hidden="true">
   <svg class="pv-lines" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none">
     {
       kind === "seknet" &&
@@ -168,6 +172,12 @@ const resources = [
 <style>
   .pv {
     --pv-cycle: 6.4s;
+    --pv-node-border: color-mix(in srgb, var(--color-sky) 34%, transparent);
+    --pv-node-icon: var(--color-sky);
+    --pv-node-hot: var(--color-surface);
+    --pv-glow: color-mix(in srgb, var(--color-bright) 70%, transparent);
+    --pv-glow-strong: color-mix(in srgb, var(--color-bright) 80%, transparent);
+    --pv-node-rest: none;
     position: relative;
     aspect-ratio: 560 / 380;
     border-radius: var(--radius-xl);
@@ -238,9 +248,9 @@ const resources = [
     width: 48px;
     height: 48px;
     border-radius: var(--radius-lg);
-    color: var(--color-sky);
+    color: var(--pv-node-icon);
     background: var(--color-console);
-    border: 1px solid color-mix(in srgb, var(--color-sky) 34%, transparent);
+    border: 1px solid var(--pv-node-border);
     animation: pv-ping var(--pv-cycle) var(--d, 0s) infinite;
   }
   .pv-node--user {
@@ -256,33 +266,33 @@ const resources = [
   @keyframes pv-ping {
     0%,
     100% {
-      box-shadow: none;
-      border-color: color-mix(in srgb, var(--color-sky) 34%, transparent);
+      box-shadow: var(--pv-node-rest);
+      border-color: var(--pv-node-border);
     }
     3% {
-      box-shadow: 0 0 18px color-mix(in srgb, var(--color-bright) 70%, transparent);
+      box-shadow: 0 0 18px var(--pv-glow);
       border-color: var(--color-bright);
     }
     14% {
-      box-shadow: none;
-      border-color: color-mix(in srgb, var(--color-sky) 34%, transparent);
+      box-shadow: var(--pv-node-rest);
+      border-color: var(--pv-node-border);
     }
   }
   @keyframes pv-arrive {
     0%,
     24%,
     100% {
-      box-shadow: none;
-      border-color: color-mix(in srgb, var(--color-sky) 34%, transparent);
-      color: var(--color-sky);
+      box-shadow: var(--pv-node-rest);
+      border-color: var(--pv-node-border);
+      color: var(--pv-node-icon);
     }
     27% {
-      box-shadow: 0 0 22px color-mix(in srgb, var(--color-bright) 80%, transparent);
+      box-shadow: 0 0 22px var(--pv-glow-strong);
       border-color: var(--color-bright);
-      color: var(--color-surface);
+      color: var(--pv-node-hot);
     }
     42% {
-      box-shadow: none;
+      box-shadow: var(--pv-node-rest);
     }
   }
   .pv-core,
@@ -380,6 +390,46 @@ const resources = [
     84% {
       background: var(--color-sky);
     }
+  }
+  /* Light tone: same geometry and timing, calmer glow, white card. */
+  .pv--light {
+    --pv-node-border: var(--color-border-blue);
+    --pv-node-icon: var(--color-royal);
+    --pv-node-hot: var(--color-bright);
+    --pv-glow: color-mix(in srgb, var(--color-bright) 30%, transparent);
+    --pv-glow-strong: color-mix(in srgb, var(--color-bright) 38%, transparent);
+    background:
+      radial-gradient(
+        52% 58% at 50% 50%,
+        var(--color-blue-wash),
+        transparent 72%
+      ),
+      var(--color-surface);
+    border: 0;
+    box-shadow: var(--shadow-lg);
+  }
+  .pv--light .pv-rail {
+    stroke: color-mix(in srgb, var(--color-royal) 24%, transparent);
+  }
+  .pv--light .pv-pulse {
+    stroke: var(--color-bright);
+    filter: none;
+  }
+  .pv--light {
+    --pv-node-rest: var(--shadow-sm);
+  }
+  .pv--light .pv-node {
+    background: var(--color-surface);
+    box-shadow: var(--pv-node-rest);
+  }
+  .pv--light .pv-node--idle {
+    opacity: 0.6;
+  }
+  .pv--light .pv-core,
+  .pv--light .pv-gate {
+    box-shadow:
+      0 0 0 6px color-mix(in srgb, var(--color-bright) 12%, transparent),
+      var(--shadow-lg);
   }
   @media (max-width: 560px) {
     .pv-node {

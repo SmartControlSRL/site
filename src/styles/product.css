@@ -1,0 +1,477 @@
+/* Product detail template (SEKNET, S-VPN). Shared hero/section/CTA base
+   comes from detail.css; everything product-specific lives here under the
+   `prd-` prefix. Rhythm: dark hero → wash overview → white journey →
+   (wash associated services) → related → dark CTA. */
+
+.prd-lead {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--color-slate);
+}
+
+/* ── Hero: the conceptual flow as mono pills joined by a rail ─────────── */
+.prd-signal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  row-gap: 10px;
+  margin-top: 28px;
+}
+.prd-signal li {
+  display: flex;
+  align-items: center;
+}
+.prd-signal li + li::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-royal), var(--color-bright));
+}
+.prd-signal span {
+  padding: 8px 12px;
+  border: 1px solid var(--color-royal);
+  border-radius: var(--radius-sm);
+  font: 500 0.75rem/1 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sky);
+  background: color-mix(in srgb, var(--color-midnight) 80%, transparent);
+}
+.prd-signal li:last-child span {
+  border-color: var(--color-bright);
+}
+
+/* ── Overview: sticky intro beside the scene and a stepped card stack ─── */
+.prd-overview-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 72px;
+  align-items: start;
+}
+.prd-overview-intro {
+  position: sticky;
+  top: 120px;
+}
+.prd-overview-intro h2 {
+  margin-top: 16px;
+}
+.prd-overview-intro .prd-lead {
+  margin-top: 24px;
+  max-width: 460px;
+}
+.prd-scene figcaption {
+  margin-top: 14px;
+  font: 500 0.75rem/1.5 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-royal);
+}
+.prd-scene figcaption span {
+  white-space: nowrap;
+}
+.prd-capabilities {
+  display: grid;
+  gap: 16px;
+  margin-top: 40px;
+}
+.prd-capability {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+  width: min(100%, 520px);
+  padding: 24px 28px;
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+/* Strata: each card steps further right, the last one meets the edge. */
+.prd-capability:nth-child(2) {
+  margin-inline-start: auto;
+  margin-inline-end: 12%;
+}
+.prd-capability:nth-child(3) {
+  margin-inline-start: auto;
+}
+.prd-capability-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--color-blue-wash);
+  color: var(--color-royal);
+}
+.prd-capability h3 {
+  font-size: 1.125rem;
+  line-height: 1.4;
+  font-weight: 600;
+}
+.prd-capability p {
+  margin-top: 8px;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--color-slate);
+}
+
+/* ── Journey: connected vertical timeline with a mono gutter ──────────── */
+.prd-journey-intro {
+  max-width: 640px;
+}
+.prd-journey-intro h2 {
+  margin-top: 16px;
+}
+.prd-journey-intro .prd-lead {
+  margin-top: 20px;
+}
+.prd-timeline {
+  --node: 22px;
+  margin-top: 56px;
+  margin-inline-start: clamp(0px, 8vw, 120px);
+}
+.prd-stop {
+  position: relative;
+  display: grid;
+  grid-template-columns: 170px var(--node) minmax(0, 0.9fr) minmax(0, 1.1fr);
+  column-gap: 32px;
+  align-items: start;
+  padding-bottom: 48px;
+}
+.prd-stop:last-child {
+  padding-bottom: 0;
+}
+/* Rail segment from this node to the next one. */
+.prd-stop:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: calc(170px + 32px + var(--node) / 2 - 1px);
+  top: calc(var(--node) + 6px);
+  bottom: 6px;
+  width: 2px;
+  background: var(--color-border-blue);
+}
+.prd-stop:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: calc(170px + 32px + var(--node) / 2 - 1px);
+  top: calc(var(--node) + 6px);
+  bottom: 6px;
+  width: 2px;
+  background: var(--color-bright);
+  transform-origin: top;
+}
+.prd-stop-label {
+  display: grid;
+  gap: 6px;
+  padding-top: 2px;
+  font: 500 0.75rem/1.3 var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-slate);
+  text-align: right;
+}
+.prd-stop-label span {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--color-royal);
+}
+.prd-stop-node {
+  width: var(--node);
+  height: var(--node);
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-bright);
+  background: var(--color-surface);
+  display: grid;
+  place-items: center;
+}
+.prd-stop-node::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--color-bright);
+}
+.prd-stop h3 {
+  font-size: 1.25rem;
+  line-height: 1.35;
+  font-weight: 600;
+}
+.prd-stop-body {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-slate);
+  max-width: 440px;
+}
+/* The rail fills as the journey scrolls through view (progressive). */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .prd-stop:not(:last-child)::after {
+      animation: prd-rail linear both;
+      animation-timeline: view();
+      animation-range: entry 40% cover 55%;
+    }
+  }
+}
+@keyframes prd-rail {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+/* ── Associated services (S-VPN): stacked intro + offset chip cluster ─── */
+.prd-assist-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  gap: 72px;
+  align-items: center;
+}
+.prd-assist h2 {
+  margin-top: 16px;
+}
+.prd-assist .prd-lead {
+  margin-top: 24px;
+  max-width: 560px;
+}
+.prd-chips {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+/* Chips step right like the overview strata, at a smaller scale. */
+.prd-chips li:nth-child(even) {
+  margin-inline-start: 32px;
+}
+.prd-chips li {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--color-navy);
+}
+.prd-chips li::before {
+  content: "›";
+  color: var(--color-bright);
+  font-weight: 700;
+}
+
+/* ── Related: intro + one wide product wordmark card + a narrower card ── */
+.prd-related-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 5fr) minmax(0, 3.6fr);
+  gap: 28px;
+  align-items: start;
+}
+.prd-related-intro {
+  padding-top: 8px;
+}
+.prd-related-intro h2 {
+  margin-top: 16px;
+  max-width: 11ch;
+}
+.prd-card {
+  display: block;
+  padding: 32px;
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  color: var(--color-navy);
+  transition: box-shadow 0.2s;
+}
+.prd-related:not(.detail-wash) .prd-card {
+  box-shadow: var(--shadow-lg);
+}
+.prd-card:hover {
+  box-shadow: var(--shadow-xl);
+}
+.prd-card:focus-visible {
+  outline: 3px solid var(--color-bright);
+  outline-offset: 3px;
+}
+.prd-card h3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.prd-card svg {
+  flex-shrink: 0;
+  color: var(--color-royal);
+  transition: transform 0.2s;
+}
+.prd-card:hover svg {
+  transform: translate(3px, -3px);
+}
+.prd-card p {
+  margin-top: 12px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-slate);
+}
+.prd-card--product {
+  padding-top: 36px;
+  background: linear-gradient(
+    135deg,
+    var(--color-blue-wash) 0%,
+    var(--color-surface) 55%
+  );
+}
+.prd-card .prd-wordmark {
+  font-size: clamp(2.25rem, 4vw, 3.25rem);
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--color-navy);
+}
+.prd-card .prd-card-headline {
+  margin-top: 14px;
+  font-weight: 600;
+  color: var(--color-royal);
+}
+.prd-card--service {
+  margin-top: 72px;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────── */
+@media (max-width: 1099px) {
+  .prd-stop {
+    grid-template-columns: 130px var(--node) minmax(0, 1fr);
+    row-gap: 10px;
+  }
+  .prd-stop:not(:last-child)::before,
+  .prd-stop:not(:last-child)::after {
+    left: calc(130px + 32px + var(--node) / 2 - 1px);
+  }
+  .prd-stop-label {
+    grid-row: 1 / span 2;
+  }
+  .prd-stop-body {
+    grid-column: 3;
+  }
+  .prd-related-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .prd-related-intro {
+    grid-column: 1 / -1;
+  }
+  .prd-related-intro h2 {
+    max-width: none;
+  }
+  .prd-card--service {
+    margin-top: 48px;
+  }
+}
+@media (max-width: 900px) {
+  .prd-overview-grid,
+  .prd-assist-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .prd-assist-grid {
+    gap: 28px;
+  }
+  .prd-overview-intro {
+    position: static;
+  }
+  .prd-scene {
+    max-width: 560px;
+  }
+  .prd-capability,
+  .prd-capability:nth-child(2) {
+    width: auto;
+    margin-inline: 0;
+  }
+  .prd-capability:nth-child(2) {
+    margin-inline-start: 20px;
+  }
+  .prd-capability:nth-child(3) {
+    margin-inline-start: 40px;
+  }
+  .prd-timeline {
+    margin-inline-start: 0;
+  }
+}
+@media (max-width: 640px) {
+  .prd-signal {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .prd-signal li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .prd-signal li + li::before {
+    width: 1px;
+    height: 12px;
+    margin-inline-start: 16px;
+  }
+  .prd-stop {
+    grid-template-columns: var(--node) minmax(0, 1fr);
+    column-gap: 20px;
+    padding-bottom: 36px;
+  }
+  .prd-stop:not(:last-child)::before,
+  .prd-stop:not(:last-child)::after {
+    left: calc(var(--node) / 2 - 1px);
+  }
+  .prd-stop-label {
+    grid-row: auto;
+    grid-column: 2;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    text-align: left;
+  }
+  .prd-stop-label span {
+    font-size: 1rem;
+  }
+  .prd-stop-node {
+    grid-row: 1;
+    grid-column: 1;
+  }
+  .prd-stop h3,
+  .prd-stop-body {
+    grid-column: 2;
+  }
+  .prd-related-grid {
+    grid-template-columns: 1fr;
+  }
+  .prd-card--service {
+    margin-top: 0;
+  }
+  .prd-card {
+    padding: 26px 24px;
+  }
+  .prd-capability {
+    padding: 20px;
+    gap: 16px;
+  }
+  .prd-capability:nth-child(2) {
+    margin-inline-start: 12px;
+  }
+  .prd-capability:nth-child(3) {
+    margin-inline-start: 24px;
+  }
+  .prd-chips li:nth-child(even) {
+    margin-inline-start: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .prd-card,
+  .prd-card svg {
+    transition: none;
+  }
+  .prd-card:hover svg {
+    transform: none;
+  }
+}
