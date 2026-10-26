@@ -7,7 +7,8 @@
 | Command | Gate |
 |---|---|
 | `npm run check:homepage` | Homepage geometry, early CTA, motion controls, reduced motion, route re-entry and no-JS contact in RO/EN |
-| `npm run check:cloud-video` | Cloud-only media, responsive playback/loop, keyboard pause, no-download fallbacks, media errors and Astro teardown |
+| `npm run check:service-scenes` | Cloud/Security/Software hero scenes: intro → idle with no pause control, off-screen pause and settling, reduced-motion/Save-Data/no-JS still state with exact RO/EN labels, no MP4 requests, layout switch, 320–1440px geometry and label size, Astro teardown |
+| `npm run check:managed-video` (also `check:seknet-video`, `check:svpn-video`) | Remaining hero videos: responsive playback/loop, keyboard pause, no-download fallbacks, media errors, per-page preferences and Astro teardown |
 | `npm run check` | Astro/type diagnostics |
 | `npm run build` | Production static generation |
 | `npm run check:links` | Internal links, fragments, hreflang, RO/EN parity, sitemap and the #26-approved 404 contract |
@@ -30,12 +31,16 @@ The audit expects generated `/404` and `/en/404/` documents to return HTTP 404. 
 
 `npm run qa:browser` runs four focused component regressions before the all-route browser audit. All five browser checks are part of `npm run qa` and therefore block CI.
 
-The Cloud video regression checks advancing media time and a real loop, pause by
-click/Space, offscreen suspension, session persistence, live reduced motion and
-Astro teardown. Initial reduced motion, no-JS and save-data runs must make zero
-MP4 requests. Media failure and blocked autoplay are also exercised. Hidden-tab
-handling is implemented; real background-tab transitions still require manual
-verification because automated Chromium does not reliably expose that state.
+The hero video regressions (Managed, SEKNET, S-VPN) check advancing media time
+and a real loop, pause by click/Space, live reduced motion and Astro teardown;
+the Managed run also covers the shared controller's offscreen suspension,
+session persistence and blocked autoplay. Initial reduced motion, no-JS and
+save-data runs must make zero MP4 requests. Media failure is also exercised.
+The service scene regression covers the code-animated Cloud, Security and
+Software headers (see `docs/design-proposals/service-hero-scenes`). Hidden-tab
+handling is implemented for both; real background-tab transitions still require
+manual verification because automated Chromium does not reliably expose that
+state.
 
 Service and product detail structures use typed localized records in
 `src/content/` and render through `src/components/pages/`. The localisation

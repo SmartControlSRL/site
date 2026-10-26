@@ -37,7 +37,7 @@ const server = createServer(async (req, res) => {
 await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
 const base = `http://127.0.0.1:${server.address().port}`;
 const stackSelector = "[data-hero-stack]";
-const cloudSelector = "[data-cloud-video]";
+const cloudSelector = '[data-scene="cloud"]';
 const errors = [];
 let browser;
 
@@ -216,7 +216,6 @@ try {
   browser = await chromium.launch();
   for (const route of ["/", "/en/"]) {
     const en = route === "/en/";
-    const cloudPause = en ? "Pause video" : "Pauză video";
     const expectedTags = en
       ? [
           "L1  PHYSICAL INFRASTRUCTURE",
@@ -280,7 +279,7 @@ try {
       await geometry(page, route, width);
     }
 
-    // Astro navigation must tear the stack down and leave the Cloud video alone.
+    // Astro navigation must tear the stack down and start the Cloud scene.
     const cloudRoute = en ? "/en/servicii/cloud/" : "/servicii/cloud/";
     const originalDocument = await page.evaluateHandle(() => document);
     const oldStack = await page.locator(stackSelector).elementHandle();
@@ -297,11 +296,15 @@ try {
       ),
       `${route}: Astro swap leaves the old stack animating`,
     );
-    await page.locator("[data-cloud-video-toggle]").waitFor({ state: "visible" });
-    assert.equal(
-      await page.locator("[data-cloud-video-toggle]").innerText(),
-      cloudPause,
-      "Cloud video did not start after leaving Home",
+    await page.waitForFunction(
+      (sel) => document.querySelector(sel)?.dataset.state === "intro",
+      cloudSelector,
+    );
+    assert(
+      await page
+        .locator(cloudSelector)
+        .evaluate((el) => el.getAnimations({ subtree: true }).length > 0),
+      "Cloud scene did not start after leaving Home",
     );
     await page.locator(`nav a[href="${route}"]`).first().click();
     await page.waitForURL(base + route);
@@ -353,7 +356,7 @@ try {
   }
   assert.deepEqual(errors, [], "Homepage browser errors");
   console.log(
-    "Homepage check passed: RO/EN hero stack intro → idle loop with no pause control, settled after scrolling away/back, Astro teardown and Cloud handover, reduced-motion/no-JS still state with engraved labels, partner logo marquee (hover pause, static under reduced motion), 320/390/768/1280px geometry, contact/CTA visibility.",
+    "Homepage check passed: RO/EN hero stack intro → idle loop with no pause control, settled after scrolling away/back, Astro teardown and Cloud scene handover, reduced-motion/no-JS still state with engraved labels, partner logo marquee (hover pause, static under reduced motion), 320/390/768/1280px geometry, contact/CTA visibility.",
   );
 } finally {
   await browser?.close();

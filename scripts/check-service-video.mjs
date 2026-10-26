@@ -1,5 +1,8 @@
-// Page-specific media integration. Detailed controller lifecycle and
-// autoplay behavior remain covered by check-cloud-video.mjs.
+// Page-specific media integration for the pages that keep a hero video
+// (Managed, SEKNET, S-VPN). Cloud, Security and Software use code-animated
+// scenes instead (check-service-scenes.mjs). The shared controller's
+// lifecycle (off-screen suspension, blocked autoplay, session preference
+// across reloads) is exercised on Managed.
 import assert from "node:assert/strict";
 import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
@@ -7,16 +10,6 @@ import { extname, join } from "node:path";
 import { chromium } from "playwright";
 
 const configurations = {
-  "network-security": {
-    route: "/servicii/securitate/",
-    label: "Security",
-    contain: false,
-  },
-  "software-automation": {
-    route: "/servicii/software/",
-    label: "Software",
-    contain: true,
-  },
   "managed-services": {
     route: "/servicii/managed/",
     label: "Managed",
@@ -38,9 +31,13 @@ const configurations = {
 const key = process.argv[2];
 assert(
   Object.hasOwn(configurations, key),
-  "Usage: node scripts/check-service-video.mjs network-security|software-automation|managed-services|seknet|s-vpn",
+  "Usage: node scripts/check-service-video.mjs managed-services|seknet|s-vpn",
 );
 const config = configurations[key];
+// Another video page, to prove preferences and teardown stay per page.
+const otherKey = key === "managed-services" ? "seknet" : "managed-services";
+const other = configurations[otherKey];
+const otherSelector = `[data-hero-video="${otherKey}"]`;
 
 const mime = {
   ".html": "text/html",
@@ -330,8 +327,8 @@ try {
   await fallback(failedPage);
   await failure.close();
 
-  // A new page key must not inherit Cloud's preference or leave its media
-  // alive when Astro replaces the body.
+  // A new page key must not inherit another page's preference or leave its
+  // media alive when Astro replaces the body.
   const context = await browser.newContext();
   const page = await context.newPage();
   page.on("pageerror", (error) => errors.push(error.message));
@@ -340,9 +337,9 @@ try {
   await page.locator(toggle).click();
   const oldService = await page.locator(selector).elementHandle();
   const originalDocument = await page.evaluateHandle(() => document);
-  await page.locator('footer a[href="/servicii/cloud/"]').first().click();
-  await page.waitForURL(base + "/servicii/cloud/");
-  await playback(page, true, "[data-cloud-video]");
+  await page.locator(`footer a[href="${other.route}"]`).first().click();
+  await page.waitForURL(base + other.route);
+  await playback(page, true, otherSelector);
   assert(
     await originalDocument.evaluate((previous) => previous === document),
     "Expected Astro client navigation",
@@ -355,16 +352,16 @@ try {
     `Old ${config.label} video remains loaded after navigation`,
   );
   await page.locator(toggle).click();
-  const oldCloud = await page.locator("[data-cloud-video]").elementHandle();
+  const oldOther = await page.locator(otherSelector).elementHandle();
   await page.locator(`footer a[href="${route}"]`).first().click();
   await page.waitForURL(base + route);
   await page.locator(toggle).waitFor({ state: "visible" });
   assert(
-    await oldCloud.evaluate(
+    await oldOther.evaluate(
       (video) =>
         !video.isConnected && video.paused && !video.hasAttribute("src"),
     ),
-    "Old Cloud video remains loaded after navigation",
+    `Old ${other.label} video remains loaded after navigation`,
   );
   assert.equal(
     await page.locator(toggle).innerText(),
@@ -385,19 +382,70 @@ try {
     ),
     "false",
   );
-  await page.locator('footer a[href="/servicii/cloud/"]').first().click();
-  await page.waitForURL(base + "/servicii/cloud/");
+  await page.locator(`footer a[href="${other.route}"]`).first().click();
+  await page.waitForURL(base + other.route);
   await page.locator(toggle).waitFor({ state: "visible" });
   assert.equal(
     await page.locator(toggle).innerText(),
     "Redă video-ul",
-    `${config.label} resume changed Cloud preference`,
+    `${config.label} resume changed the ${other.label} preference`,
   );
-  assert.equal(
-    await page.locator("[data-cloud-video]").getAttribute("src"),
-    null,
-  );
+  assert.equal(await page.locator(otherSelector).getAttribute("src"), null);
   await context.close();
+
+  if (key === "managed-services") {
+    // Shared controller lifecycle: suspended off-screen, resumed on return.
+    const lifecycle = await browser.newContext();
+    const lifePage = await lifecycle.newPage();
+    lifePage.on("pageerror", (error) => errors.push(error.message));
+    await lifePage.goto(base + route, { waitUntil: "networkidle" });
+    await playback(lifePage, true);
+    await lifePage.evaluate(() =>
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "instant" }),
+    );
+    await playback(lifePage, false);
+    await lifePage.evaluate(() =>
+      window.scrollTo({ top: 0, behavior: "instant" }),
+    );
+    await playback(lifePage, true);
+    // A session pause survives a reload without downloading the video.
+    await lifePage.locator(toggle).click();
+    await lifePage.reload({ waitUntil: "networkidle" });
+    assert.equal(
+      await lifePage.locator(selector).getAttribute("src"),
+      null,
+      "Session pause still downloads video",
+    );
+    assert.equal(await lifePage.locator(toggle).innerText(), "Redă video-ul");
+    await lifePage.locator(toggle).click();
+    await playback(lifePage, true);
+    await lifecycle.close();
+
+    // Blocked autoplay falls back to the paused state with a usable control.
+    const blocked = await browser.newContext();
+    await blocked.addInitScript(() => {
+      const play = HTMLMediaElement.prototype.play;
+      let first = true;
+      HTMLMediaElement.prototype.play = function () {
+        if (first) {
+          first = false;
+          return Promise.reject(
+            new DOMException("Autoplay blocked", "NotAllowedError"),
+          );
+        }
+        return play.call(this);
+      };
+    });
+    const blockedPage = await blocked.newPage();
+    await blockedPage.goto(base + route);
+    await blockedPage.waitForFunction(
+      (query) => document.querySelector(query).dataset.paused === "true",
+      toggle,
+    );
+    await blockedPage.locator(toggle).click();
+    await playback(blockedPage, true);
+    await blocked.close();
+  }
 
   const others = await browser.newPage();
   const requests = [];
@@ -429,7 +477,7 @@ try {
   );
   assert.deepEqual(errors, [], `${config.label} browser errors`);
   console.log(
-    `${config.label} video check passed: RO/EN at ${config.product ? "320/390/768/1280" : "320/390/1280"}px, correct media/poster sources, actual playback/loop, keyboard pause and geometry${config.contain ? ", matching contained media/poster frames" : ""}, reduced-motion/no-JS/save-data without downloads, error fallback, Astro teardown and independent Cloud/${config.label} preferences, page-specific media scope.`,
+    `${config.label} video check passed: RO/EN at ${config.product ? "320/390/768/1280" : "320/390/1280"}px, correct media/poster sources, actual playback/loop, keyboard pause and geometry${config.contain ? ", matching contained media/poster frames" : ""}, reduced-motion/no-JS/save-data without downloads, error fallback, Astro teardown and independent ${other.label}/${config.label} preferences${key === "managed-services" ? ", off-screen suspension, session pause across reload, blocked-autoplay fallback" : ""}, page-specific media scope.`,
   );
 } finally {
   await browser?.close();

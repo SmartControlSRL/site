@@ -4,31 +4,15 @@ import { Pause, Play } from "@lucide/astro";
 import { getLangFromUrl } from "../i18n/ui";
 
 interface Props {
-  variant:
-    | "cloud"
-    | "network-security"
-    | "software-automation"
-    | "managed-services"
-    | "seknet"
-    | "s-vpn";
+  variant: "managed-services" | "seknet" | "s-vpn";
 }
 const { variant } = Astro.props;
 const artwork = {
-  cloud: "architecture-light",
-  "network-security": "network-security",
-  "software-automation": "software-automation",
   "managed-services": "managed-services",
   seknet: "seknet-observability",
   "s-vpn": "svpn-connection",
 } as const;
-const poster =
-  variant === "network-security" ||
-  variant === "software-automation" ||
-  variant === "managed-services" ||
-  variant === "seknet" ||
-  variant === "s-vpn"
-    ? { name: `${variant}-video`, width: 1280, height: 720 }
-    : undefined;
+const poster = { name: `${variant}-video`, width: 1280, height: 720 };
 const en = getLangFromUrl(Astro.url) === "en";
 const pause = en ? "Pause video" : "Pauză video";
 const play = en ? "Play video" : "Redă video-ul";
@@ -39,7 +23,6 @@ const play = en ? "Play video" : "Redă video-ul";
     id={`${variant}-hero-video`}
     class="hero-video"
     data-hero-video={variant}
-    data-cloud-video={variant === "cloud" ? "" : undefined}
     data-src={`/videos/${variant}-hero-1280.mp4`}
     data-src-mobile={`/videos/${variant}-hero-800.mp4`}
     preload="none"
@@ -60,7 +43,6 @@ const play = en ? "Play video" : "Redă video-ul";
     },
   ]}
   data-hero-video-toggle
-  data-cloud-video-toggle={variant === "cloud" ? "" : undefined}
   data-label-pause={pause}
   data-label-play={play}
   data-paused="false"

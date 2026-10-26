@@ -1,0 +1,107 @@
+/* Service hero scenes (src/components/scenes). Shared frame: a fixed design
+   box per layout variant, scaled to its column with CSS only (container
+   units), so no-JS / reduced-motion visitors get the same composed still.
+   Scene markup is generated as strings (set:html), hence global selectors,
+   all prefixed by .service-scene. */
+
+.service-scene {
+  position: relative;
+  min-width: 0;
+  pointer-events: none;
+  user-select: none;
+}
+.service-scene .scene-layout {
+  position: relative;
+  container-type: inline-size;
+}
+.service-scene .scene-layout[data-scene-layout="mobile"] {
+  display: none;
+}
+@media (max-width: 600px) {
+  .service-scene .scene-layout[data-scene-layout="desktop"] {
+    display: none;
+  }
+  .service-scene .scene-layout[data-scene-layout="mobile"] {
+    display: block;
+  }
+}
+/* --s scales the design box (--box-w × --box-h, unitless px) to the column:
+   tan(atan2(a, b)) = a / b for two lengths. Capped so wide columns don't
+   blow the art up past its drawn proportions. */
+.service-scene .scene-fit {
+  --s: 0.62;
+  position: relative;
+  height: calc(var(--box-h) * 1px * var(--s));
+}
+@supports (scale: tan(atan2(1px, 2px))) {
+  .service-scene .scene-fit {
+    --s: min(var(--s-max, 1), tan(atan2(100cqi, calc(var(--box-w) * 1px))));
+  }
+}
+.service-scene .scene-box {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: calc(var(--box-w) * 1px);
+  height: calc(var(--box-h) * 1px);
+  margin-left: calc(var(--box-w) * -0.5px);
+  transform: scale(var(--s));
+  transform-origin: 50% 0;
+}
+.service-scene .ambient {
+  position: absolute;
+  inset: -6% -10%;
+  pointer-events: none;
+  background: radial-gradient(
+    46% 44% at 52% 48%,
+    color-mix(in srgb, var(--color-sky) 30%, transparent),
+    color-mix(in srgb, var(--color-sky) 14%, transparent) 32%,
+    transparent 72%
+  );
+}
+.service-scene svg {
+  overflow: visible;
+}
+/* Etched line-art on glass (same classes as the homepage stack). */
+.service-scene .i {
+  stroke: var(--color-navy);
+  stroke-opacity: 0.74;
+}
+.service-scene .h {
+  stroke: var(--color-bright);
+}
+.service-scene .hf {
+  fill: var(--color-bright);
+}
+.service-scene .if {
+  fill: var(--color-navy);
+  fill-opacity: 0.6;
+}
+.service-scene .tag text,
+.service-scene text.lbl {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  fill: var(--color-navy);
+}
+.service-scene .tag .code,
+.service-scene text.lbl .code {
+  fill: var(--color-bright);
+}
+
+/* No script yet: reveal the final state softly instead of popping in. The
+   script sets data-state and takes over before this fallback starts. */
+.service-scene:not([data-state]) > * {
+  opacity: 0;
+  animation: scene-reveal 600ms ease 1.2s forwards;
+}
+@keyframes scene-reveal {
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .service-scene:not([data-state]) > * {
+    opacity: 1;
+    animation: none;
+  }
+}

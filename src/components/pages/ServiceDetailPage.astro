@@ -1,6 +1,8 @@
 ---
-import AmbientArtwork from "../AmbientArtwork.astro";
 import HeroVideoArtwork from "../HeroVideoArtwork.astro";
+import CloudScene from "../scenes/CloudScene.astro";
+import SecurityScene from "../scenes/SecurityScene.astro";
+import SoftwareScene from "../scenes/SoftwareScene.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TextLink from "../TextLink.astro";
 import MailtoLink from "../MailtoLink.astro";
@@ -22,13 +24,18 @@ const related = homeCopy[lang].services.filter(
   (item) => !content.canonicalPath.includes(item.href),
 );
 const cloud = content.canonicalPath.includes("/cloud");
-const videoVariants = {
-  "architecture-light": "cloud",
-  "network-security": "network-security",
-  "software-automation": "software-automation",
-  "managed-services": "managed-services",
+// Code-animated hero scenes replace the generated videos on three services
+// (owner decision; docs/design-proposals/service-hero-scenes). Managed keeps
+// its video.
+const scenes = {
+  "architecture-light": CloudScene,
+  "network-security": SecurityScene,
+  "software-automation": SoftwareScene,
 } as const;
-const videoVariant = videoVariants[content.hero.artwork];
+const Scene =
+  content.hero.artwork === "managed-services"
+    ? undefined
+    : scenes[content.hero.artwork];
 // Asymmetric bento: one featured tile beside two side tiles, then the rest in
 // alternating 5/7 and 7/5 pairs; an odd leftover runs full width. This keeps
 // 4, 5, 6 and 7 capabilities balanced without an equal-column grid.
@@ -78,14 +85,11 @@ const schema = {
     set:html={JSON.stringify(schema)}
   />
   <div class="detail-page">
-    <header class="detail-hero service-hero">
-      {
-        videoVariant ? (
-          <HeroVideoArtwork variant={videoVariant} />
-        ) : (
-          <AmbientArtwork artwork={content.hero.artwork} />
-        )
-      }
+    <header
+      class:list={["detail-hero service-hero", { "service-hero--scene": Scene }]}
+      data-hero-scene={Scene ? content.hero.artwork : undefined}
+    >
+      {!Scene && <HeroVideoArtwork variant="managed-services" />}
       <div class="detail-wrap detail-hero-grid">
         <div>
           <p class="detail-kicker">{content.hero.eyebrow}</p>
@@ -104,6 +108,7 @@ const schema = {
             >
           </div>
         </div>
+        {Scene && <Scene />}
       </div>
     </header>
     {
