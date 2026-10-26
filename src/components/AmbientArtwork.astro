@@ -3,8 +3,13 @@ import type { ServiceArtwork } from "../content/service-pages";
 import type { ProductArtwork } from "../content/product-pages";
 
 interface Props {
+  // Cloud, Security and Software headers are code-animated scenes
+  // (src/components/scenes); their stills were retired with their videos.
   artwork:
-    | ServiceArtwork
+    | Exclude<
+        ServiceArtwork,
+        "architecture-light" | "network-security" | "software-automation"
+      >
     | ProductArtwork
     | "optical-dark";
   lazy?: boolean;
@@ -24,7 +29,6 @@ const variant = name === "optical-dark" || productArtwork ? "dark" : "light";
     {
       "ambient-artwork--product": productArtwork,
       "ambient-artwork--contained":
-        name === "software-automation" ||
         name === "managed-services" ||
         productArtwork,
     },

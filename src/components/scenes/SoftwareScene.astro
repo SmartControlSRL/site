@@ -1,0 +1,159 @@
+---
+// Software & Automation hero scene (see docs/design-proposals/
+// service-hero-scenes): a delivery pipeline. The markup is the composed final
+// state (a release delivered, every check green), rendered once per layout
+// (desktop diagonal, single-column mobile); src/scripts/scenes/software.ts
+// plays the story on whichever is visible. Decorative, so aria-hidden.
+import { softwareLayout, softwareMarkup } from "./software-scene";
+import { getLangFromUrl } from "../../i18n/ui";
+import "../../styles/scenes.css";
+
+const lang = getLangFromUrl(Astro.url) === "en" ? "en" : "ro";
+const layouts = (["desktop", "mobile"] as const).map((kind) => ({
+  kind,
+  html: softwareMarkup(softwareLayout(kind), lang),
+}));
+---
+
+<div
+  class="service-scene software-scene"
+  data-scene="software"
+  aria-hidden="true"
+>
+  <div class="ambient"></div>
+  {
+    layouts.map(({ kind, html }) => (
+      <div class="scene-layout" data-scene-layout={kind}>
+        <div class="camera" set:html={html} />
+      </div>
+    ))
+  }
+</div>
+
+<style is:global>
+  .service-scene.software-scene .ambient {
+    inset: -10% -6%;
+    background: radial-gradient(
+      50% 44% at 58% 52%,
+      color-mix(in srgb, var(--color-sky) 30%, transparent),
+      transparent 72%
+    );
+  }
+  .software-scene .camera {
+    position: relative;
+    transform-origin: 60% 55%;
+  }
+  .software-scene .scene-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .software-scene [data-scene-layout="mobile"] .scene-svg {
+    width: min(100%, 330px);
+    margin-inline: auto;
+  }
+  .software-scene .stop-navy {
+    stop-color: var(--color-navy);
+  }
+  .software-scene .stop-bright {
+    stop-color: var(--color-bright);
+  }
+  .software-scene .stop-sky {
+    stop-color: var(--color-sky);
+  }
+  .software-scene .etch * {
+    vector-effect: non-scaling-stroke;
+    stroke-width: 1.35px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .software-scene .etch .bold {
+    stroke-width: 2px;
+  }
+  .software-scene .shadow {
+    fill: var(--color-navy);
+    fill-opacity: 0.2;
+  }
+  .software-scene .rail-line {
+    stroke-opacity: 0.3;
+    stroke-width: 0.9;
+  }
+  .software-scene .rail-stop {
+    fill: var(--color-surface);
+    fill-opacity: 0.7;
+    stroke: var(--color-navy);
+    stroke-opacity: 0.34;
+    stroke-width: 0.9;
+  }
+  .software-scene .trail {
+    stroke: var(--color-bright);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-dasharray: 1 1;
+    stroke-dashoffset: 0;
+  }
+  .software-scene .bar3d .lf {
+    fill: var(--color-blue-wash);
+    fill-opacity: 0.92;
+  }
+  .software-scene .bar3d .rf {
+    fill: var(--color-border-blue);
+    fill-opacity: 0.92;
+  }
+  .software-scene .bar3d .lf,
+  .software-scene .bar3d .rf {
+    stroke: var(--color-navy);
+    stroke-opacity: 0.5;
+    stroke-width: 0.8;
+  }
+  .software-scene .bar3d .tf {
+    fill: var(--color-surface);
+    stroke: var(--color-navy);
+    stroke-opacity: 0.6;
+    stroke-width: 0.8;
+  }
+  .software-scene .bar3d.hi .tf {
+    stroke: var(--color-bright);
+    stroke-opacity: 1;
+  }
+  .software-scene .grow,
+  .software-scene .prog,
+  .software-scene .gear {
+    transform-box: fill-box;
+  }
+  .software-scene .grow {
+    transform-origin: 50% 100%;
+  }
+  .software-scene .prog {
+    transform-origin: 0 50%;
+  }
+  .software-scene .gear {
+    transform-origin: 50% 50%;
+  }
+  .software-scene .chip-glow {
+    fill: var(--color-bright);
+    opacity: 0.75;
+  }
+  .software-scene .land-glow {
+    fill-opacity: 0.35;
+  }
+  .software-scene .beam-glow {
+    stroke: var(--color-bright);
+    stroke-width: 5;
+    opacity: 0.8;
+  }
+  .software-scene .beam-line {
+    stroke: var(--color-surface);
+    stroke-width: 1.4;
+  }
+  /* Final (settled) state: the release has landed, transient beats hidden. */
+  .software-scene .chip,
+  .software-scene .beam,
+  .software-scene .land-glow,
+  .software-scene .cl-pass {
+    opacity: 0;
+  }
+</style>
+<script>
+  import "../../scripts/scenes/software";
+</script>

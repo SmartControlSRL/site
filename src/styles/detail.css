@@ -367,6 +367,47 @@
   }
 }
 
+/* Code-animated hero scenes (Cloud, Security, Software): the copy keeps its
+   place under the nav and the scene takes the second column, bleeding into
+   the page margin on wide screens; below 901px it sits under the copy. */
+.service-hero--scene {
+  overflow-x: clip;
+}
+.service-hero--scene .detail-hero-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 24px 40px;
+  align-items: start;
+}
+.service-hero--scene .service-scene {
+  margin-right: calc(-1 * max(16px, (100vw - 1180px) / 2 - 32px));
+}
+/* The layered-defence stack and the delivery pipeline are wide: give them
+   the larger share of the row. */
+@media (min-width: 901px) {
+  .service-hero--scene[data-hero-scene="network-security"] .detail-hero-grid,
+  .service-hero--scene[data-hero-scene="software-automation"]
+    .detail-hero-grid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.25fr);
+  }
+}
+/* 1101–1279px: the pipeline's diagonal is width-bound, so it takes a bit
+   more of the row to keep its engraved labels ≥10px. */
+@media (min-width: 1101px) and (max-width: 1279px) {
+  .service-hero--scene[data-hero-scene="software-automation"]
+    .detail-hero-grid {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.3fr);
+  }
+}
+@media (max-width: 900px) {
+  .service-hero--scene .detail-hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .service-hero--scene .service-scene {
+    margin: 8px auto 0;
+    width: min(100%, 720px);
+  }
+}
+
 /* Scope: a statement block, heading beside a flowing row of mono pills. */
 .svc-scope {
   padding-block: clamp(40px, 5vw, 64px) clamp(56px, 7vw, 88px);
