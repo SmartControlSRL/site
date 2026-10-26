@@ -292,16 +292,22 @@ function tagSVG(
   kind: CloudLayoutKind,
 ) {
   const name = CLOUD_NAMES[lang][n].toLocaleUpperCase(lang);
-  // Mobile drops the number prefix so the name can be engraved larger.
-  const text = kind === "desktop" ? `0${n + 1}  ${name}` : name;
-  const spacing = kind === "desktop" ? 1.6 : 1;
-  const fit = (242 / text.length - spacing) / 0.6; // fills the front edge
-  const want = (kind === "desktop" ? 12.5 : 16) / ((UNIT * W) / RENDER_W);
-  const size = +Math.min(fit, want).toFixed(1);
-  const html = letters(text, (k) =>
-    kind === "desktop" && k < 2 ? "code" : "",
-  );
-  return `<svg class="tag" viewBox="0 0 ${RENDER_W} ${RENDER_H}"><g transform="matrix(${MATRIX})"><text x="24" y="262" font-size="${size}">${html}</text></g></svg>`;
+  const unit = (UNIT * W) / RENDER_W; // scene px per drawing unit
+  // Size that fills the front edge (mono advance 0.6em + tracking), capped
+  // at a comfortable on-screen size for the composition's full scale.
+  const size = (text: string, spacing: number, cap: number) =>
+    +Math.min((242 / text.length - spacing) / 0.6, cap / unit).toFixed(1);
+  // The bare name, engraved large: the stacked layout always, the desktop
+  // one below 1440px (CSS), where the number prefix would push it under 10px.
+  const short = size(name, 1, 16);
+  if (kind === "mobile")
+    return `<svg class="tag" viewBox="0 0 ${RENDER_W} ${RENDER_H}"><g transform="matrix(${MATRIX})"><text x="24" y="262" font-size="${short}">${letters(name)}</text></g></svg>`;
+  const full = size(`0${n + 1}  ${name}`, 1.6, 12.5);
+  const html =
+    letters(`0${n + 1}`, () => "code") +
+    letters("  ", () => "sp") +
+    letters(name);
+  return `<svg class="tag" viewBox="0 0 ${RENDER_W} ${RENDER_H}"><g transform="matrix(${MATRIX})"><text x="24" y="262" font-size="${full}" style="--fs-full:${full}px;--fs-short:${short}px">${html}</text></g></svg>`;
 }
 
 function slabHTML(

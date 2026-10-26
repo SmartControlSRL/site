@@ -293,7 +293,7 @@ export function softwareMarkup(L: SoftwareLayout, lang: "ro" | "en") {
   let fs = 15 / u0;
   ST.forEach((s, i) => {
     const n = SOFTWARE_LABELS[lang][i].length;
-    const fit = 226 / n / 0.72; // mono advance ~0.6em + 0.12em tracking
+    const fit = 226 / n / 0.66; // mono advance ~0.6em + 0.06em tracking
     fs = Math.min(fs, (fit * unit(s)) / u0);
   });
   const lpx = fs * u0; // in scene px
@@ -305,7 +305,7 @@ export function softwareMarkup(L: SoftwareLayout, lang: "ro" | "en") {
     );
     shadows += `<polygon class="shadow" data-i="${i}" points="${sh.join(" ")}" filter="url(#${uid}-soft)"/>`;
     const size = f(lpx / unit(s));
-    const spacing = f(size * 0.12);
+    const spacing = f(size * 0.06);
     let extra = "";
     if (s.id === "prod") {
       // Server stack on the back corner: three mini slabs.

@@ -225,22 +225,38 @@ async function geometry(page, key, route, width) {
       [...root.querySelectorAll("[data-scene-layout]")].find(
         (l) => getComputedStyle(l).display !== "none",
       ) ?? root;
-    // Effective size of each engraved label: on-screen advance per glyph
-    // divided by the mono advance (0.6em + tracking) in user units.
+    // Effective rendered size of each engraved label, measured two ways and
+    // taking the smaller: (1) the glyph cell height from getExtentOfChar
+    // mapped through the screen CTM, scaled from cell to em; (2) the
+    // on-screen advance between first and last visible glyph divided by the
+    // mono advance (0.6em + tracking).
+    const toScreen = (el, x, y) => {
+      const p = new DOMPoint(x, y).matrixTransform(el.getScreenCTM());
+      return [p.x, p.y];
+    };
+    // (Chromium's getScreenCTM includes CSS transforms on HTML ancestors,
+    // such as the scaled design box.)
     const sizes = [...layout.querySelectorAll(".tag text, text.lbl")].map((text) => {
       const spans = [...text.querySelectorAll("tspan")].filter(
         (t) => getComputedStyle(t).display !== "none",
       );
+      const style = getComputedStyle(text);
+      const font = parseFloat(style.fontSize);
+      const spacing = parseFloat(style.letterSpacing) || 0;
+      const first = spans[0];
+      const ext = first.getExtentOfChar(0);
+      const top = toScreen(first, ext.x, ext.y);
+      const bottom = toScreen(first, ext.x, ext.y + ext.height);
+      const cell = Math.hypot(bottom[0] - top[0], bottom[1] - top[1]);
+      const byHeight = (cell * font) / ext.height;
       const c = (t) => {
         const r = t.getBoundingClientRect();
         return [r.x + r.width / 2, r.y + r.height / 2];
       };
-      const [a, b] = [c(spans[0]), c(spans[spans.length - 1])];
+      const [a, b] = [c(first), c(spans[spans.length - 1])];
       const advance = Math.hypot(b[0] - a[0], b[1] - a[1]) / (spans.length - 1);
-      const style = getComputedStyle(text);
-      const font = parseFloat(style.fontSize);
-      const spacing = parseFloat(style.letterSpacing) || 0;
-      return +((advance * font) / (0.6 * font + spacing)).toFixed(1);
+      const byAdvance = (advance * font) / (0.6 * font + spacing);
+      return +Math.min(byHeight, byAdvance).toFixed(1);
     });
     return {
       overflow: document.documentElement.scrollWidth > innerWidth + 1,
@@ -261,11 +277,10 @@ async function geometry(page, key, route, width) {
   if (width <= 900) assert(result.below, `${at}: scene is not below the copy`);
   assert(result.height > 150, `${at}: scene collapsed (${result.height}px)`);
   assert(result.ctaBottom < 750, `${at}: primary CTA too far down (${result.ctaBottom})`);
-  if (width <= 600)
-    assert(
-      result.sizes.every((s) => s >= 10),
-      `${at}: engraved labels below 10px (${result.sizes.join(", ")})`,
-    );
+  assert(
+    result.sizes.every((s) => s >= 10),
+    `${at}: engraved labels below 10px (${result.sizes.join(", ")})`,
+  );
   return result;
 }
 
@@ -333,7 +348,9 @@ try {
         await page.setViewportSize({ width: 1280, height: 900 });
       }
 
-      for (const width of [320, 390, 768, 1024, 1280, 1440]) {
+      // 601–1100 covered at 640/768/900/1024/1100; 1152 sits between the
+      // stacked layout and the full desktop scale.
+      for (const width of [320, 390, 640, 768, 900, 1024, 1100, 1152, 1280, 1440]) {
         await page.setViewportSize({ width, height: width <= 600 ? 844 : 900 });
         await page.reload({ waitUntil: "networkidle" });
         await skipIntro(page, key);

@@ -131,8 +131,23 @@ const layouts = (["desktop", "mobile"] as const).map((kind) => {
   .cloud-scene .tag text {
     letter-spacing: 1.6px;
   }
+  .cloud-scene [data-scene-layout="desktop"] .tag text {
+    font-size: var(--fs-full);
+  }
   .cloud-scene [data-scene-layout="mobile"] .tag text {
     letter-spacing: 1px;
+  }
+  /* Below 1440px the desktop composition is scaled down: drop the number
+     prefix and engrave the bare name larger so it stays ≥10px. */
+  @media (max-width: 1439px) {
+    .cloud-scene [data-scene-layout="desktop"] .tag text {
+      font-size: var(--fs-short);
+      letter-spacing: 1px;
+    }
+    .cloud-scene [data-scene-layout="desktop"] .tag .code,
+    .cloud-scene [data-scene-layout="desktop"] .tag .sp {
+      display: none;
+    }
   }
   /* Final (settled) state; the intro animates from earlier states. */
   .cloud-scene .tower,

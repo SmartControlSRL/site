@@ -17,7 +17,9 @@
 .service-scene .scene-layout[data-scene-layout="mobile"] {
   display: none;
 }
-@media (max-width: 600px) {
+/* The stacked ("mobile") composition runs up to 1100px so engraved labels
+   stay ≥10px on phones, tablets and small laptops (SCENE_MOBILE). */
+@media (max-width: 1100px) {
   .service-scene .scene-layout[data-scene-layout="desktop"] {
     display: none;
   }

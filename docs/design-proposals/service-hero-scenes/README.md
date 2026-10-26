@@ -69,16 +69,34 @@ The trail and ticks then reset for the next release.
 
 ## Review feedback applied
 
-- **Mobile labels (≤600px):** each scene has a phone layout where every
-  engraved label is at least 10px effective. At 320px the minimum is 10.3–10.6px;
-  at 390px it is 12.2–12.9px.
+- **Label legibility at every width:** every engraved label is at least 10px
+  effective from 320 to 1440px. Cloud and Software have a stacked
+  composition, used up to 1100px (phones, tablets and small laptops; beside
+  the copy at 901–1100px, under it below 901px).
   - **Cloud:** one column. The cloud floats above the platform, a riser
     carries the VMs, and DR stands in front of the floor. Labels drop the
-    number prefix.
-  - **Security:** the SVG bleeds to the screen edges and engraves larger
-    labels without the prefix.
+    number prefix. The desktop diagonal shows the `01`–`04` prefixes only
+    from 1440px; below that it hides them and engraves the names larger.
+  - **Security:** one SVG at every width. Below 601px it bleeds to the
+    screen edges and engraves larger labels without the prefix.
   - **Software:** stations in a column beside a vertical rail. The production
     server stack is omitted here because it would cover the security label.
+    On the desktop diagonal, label tracking is tighter (0.06em) and at
+    1101–1279px the scene takes a larger share of the row.
+
+  Measured minimum effective label size (smaller of glyph height via
+  `getExtentOfChar` × screen CTM and glyph advance; RO / EN):
+
+  | Width | Cloud       | Security    | Software    |
+  | ----- | ----------- | ----------- | ----------- |
+  | 320   | 11.1 / 11.0 | 10.4 / 10.4 | 10.4 / 10.4 |
+  | 390   | 12.6 / 12.4 | 12.7 / 12.7 | 12.2 / 12.2 |
+  | 768   | 12.6 / 12.4 | 14.5 / 14.5 | 12.2 / 12.2 |
+  | 1024  | 12.6 / 12.4 | 11.2 / 11.2 | 12.2 / 12.2 |
+  | 1152  | 13.6 / 11.2 | 12.7 / 12.7 | 10.2 / 10.2 |
+  | 1280  | 14.5 / 12.0 | 13.7 / 13.7 | 10.3 / 10.3 |
+  | 1440  | 12.9 / 10.1 | 15.3 / 15.3 | 11.5 / 11.5 |
+
 - **Security:**
   - the first story now finishes within 8 s (before: 9.9 s);
   - the identity-edge light renders above the threat;
@@ -191,9 +209,9 @@ carry the id `scene-intro`, so checks can tell them from idle beats.
     labels;
   - no MP4 requests;
   - the desktop↔mobile layout switch;
-  - geometry at 320/390/768/1024/1280/1440px: no overflow, no copy overlap,
-    the scene under the copy at ≤900px, the CTA above 750px, and labels ≥10px
-    on phones;
+  - geometry at 320/390/640/768/900/1024/1100/1152/1280/1440px: no
+    overflow, no copy overlap, the scene under the copy at ≤900px, the CTA
+    above 750px, and every visible engraved label ≥10px effective;
   - Astro navigation teardown Cloud → Security → Software → Managed (video)
     → Cloud.
 - The scene check ran 3× in a row without failure.
@@ -204,6 +222,7 @@ carry the id `scene-intro`, so checks can tell them from idle beats.
 | Security (RO) | [final](security-ro-desktop-final.png)      | [threat stopped](security-ro-desktop-story.png) | [final](security-ro-mobile-final.png)           | [threat stopped](security-ro-mobile-story.png) |
 | Software (RO) | [final](software-ro-desktop-final.png)      | [security scan](software-ro-desktop-story.png)  | [final](software-ro-mobile-final.png)           | [security scan](software-ro-mobile-story.png)  |
 | English       | [Cloud desktop](cloud-en-desktop-final.png) |                                                 | [Software mobile](software-en-mobile-final.png) |                                                |
+| 1024px (RO)   | [Cloud, stacked](cloud-ro-1024-final.png)   | [Software, stacked](software-ro-1024-final.png) |                                                 |                                                |
 
 "Final" shows the still state, which is also the state after the intro.
 Mid-story frames are the intro seeked to a fixed time. The PNGs are

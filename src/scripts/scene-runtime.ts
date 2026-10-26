@@ -26,8 +26,8 @@ export interface SceneDefinition {
   idle(ctx: SceneContext): void;
 }
 
-/** Layout switch shared with the components' CSS (desktop ↔ mobile markup). */
-export const SCENE_MOBILE = "(max-width: 600px)";
+/** Layout switch shared with scenes.css (desktop ↔ stacked markup). */
+export const SCENE_MOBILE = "(max-width: 1100px)";
 
 interface Timer {
   fn: () => void;
