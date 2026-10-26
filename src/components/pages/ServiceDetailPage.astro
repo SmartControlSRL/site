@@ -45,6 +45,11 @@ const bentoShapes = (count: number) => {
   return shapes.slice(0, count);
 };
 const shapes = bentoShapes(content.capabilities.items.length);
+// Each service draws its own small motif in the featured tile, so the tile
+// does not repeat one decoration across the template: Cloud = stacked plates,
+// Security = a perimeter pane with a gate, Software = pipeline gates,
+// Managed = an orbit around an operated block.
+const motif = content.hero.artwork;
 // Wash/white alternation: capabilities sit on the wash, the workflow on white,
 // proof (when present) on the wash, and related services take whichever
 // background its neighbour does not.
@@ -161,9 +166,41 @@ const schema = {
                     aria-hidden="true"
                     focusable="false"
                   >
-                    <rect class="svc-art-base" x="1" y="83" width="206" height="40" rx="6" />
-                    <rect class="svc-art-mid" x="57" y="47" width="206" height="40" rx="6" />
-                    <rect class="svc-art-top" x="113" y="11" width="206" height="40" rx="6" />
+                    {motif === "architecture-light" && (
+                      <>
+                        <rect class="svc-art-base" x="1" y="83" width="206" height="40" rx="6" />
+                        <rect class="svc-art-mid" x="57" y="47" width="206" height="40" rx="6" />
+                        <rect class="svc-art-top" x="113" y="11" width="206" height="40" rx="6" />
+                      </>
+                    )}
+                    {motif === "network-security" && (
+                      <>
+                        <path class="svc-art-base" d="M150 50 V10 H318 V122 H150 V82" />
+                        <path class="svc-art-line" d="M16 66 H210" />
+                        <rect class="svc-art-accent" x="4" y="60" width="12" height="12" rx="2" />
+                        <rect class="svc-art-top" x="144" y="38" width="12" height="12" rx="2" />
+                        <rect class="svc-art-top" x="144" y="82" width="12" height="12" rx="2" />
+                        <rect class="svc-art-mid" x="210" y="46" width="72" height="40" rx="6" />
+                      </>
+                    )}
+                    {motif === "software-automation" && (
+                      <>
+                        <path class="svc-art-line" d="M4 66 H316" />
+                        <rect class="svc-art-base" x="24" y="52" width="28" height="28" rx="4" />
+                        <rect class="svc-art-base" x="96" y="48" width="36" height="36" rx="6" />
+                        <rect class="svc-art-mid" x="176" y="44" width="44" height="44" rx="6" />
+                        <rect class="svc-art-top" x="262" y="40" width="52" height="52" rx="6" />
+                        <rect class="svc-art-accent" x="282" y="60" width="12" height="12" rx="2" />
+                      </>
+                    )}
+                    {motif === "managed-services" && (
+                      <>
+                        <circle class="svc-art-line" cx="220" cy="66" r="58" />
+                        <rect class="svc-art-mid" x="192" y="46" width="56" height="40" rx="6" />
+                        <rect class="svc-art-accent" x="255" y="19" width="12" height="12" rx="2" />
+                        <rect class="svc-art-top" x="173" y="101" width="12" height="12" rx="2" />
+                      </>
+                    )}
                   </svg>
                 )}
               </article>

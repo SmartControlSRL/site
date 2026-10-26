@@ -38,7 +38,7 @@ export function initNavShrink(nav, opts={}) {
 
 export function initStepper(container, fill, opts={}) {
   if (!container||!fill) return ()=>{}; const dark=!!opts.dark; const steps=container.querySelectorAll('[data-step]');
-  const update=()=>{ const rect=container.getBoundingClientRect(); const px=Math.max(0,Math.min(rect.height,window.innerHeight*.55-rect.top)); fill.style.height=`${px}px`;
+  const update=()=>{ const rect=container.getBoundingClientRect(); const px=reducedMotion()?rect.height:Math.max(0,Math.min(rect.height,window.innerHeight*.55-rect.top)); fill.style.height=`${px}px`;
     steps.forEach((step)=>{ const dot=step.querySelector('[data-step-dot]'); const body=step.querySelector('[data-step-body]'); const active=px>=step.offsetTop+(dot?dot.offsetTop+dot.offsetHeight/2:26)||reducedMotion();
       step.dataset.stepState=active?'active':'inactive';
       if(dot){dot.style.borderColor=active?'var(--color-bright)':(dark?'color-mix(in srgb,var(--color-sky) 55%,transparent)':'var(--color-border-blue)');dot.style.color=active?(dark?'var(--color-surface)':'var(--color-navy)'):(dark?'var(--color-on-dark)':'var(--color-royal)');dot.style.background=active?(dark?'color-mix(in srgb,var(--color-bright) 16%,transparent)':'var(--color-blue-wash)'):(dark?'var(--color-midnight)':'var(--color-surface)');dot.style.boxShadow=active?'0 0 0 3px color-mix(in srgb,var(--color-bright) 16%,transparent)':'none';}

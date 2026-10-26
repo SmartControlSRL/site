@@ -396,7 +396,7 @@
   padding: 12px 18px;
   border-radius: var(--radius-sm);
   background: var(--color-blue-wash);
-  font: 500 0.9375rem/1.45 var(--font-mono);
+  font: 400 0.9375rem/1.45 var(--font-mono);
   letter-spacing: -0.01em;
   color: var(--color-navy);
 }
@@ -404,9 +404,11 @@
 .svc-pills--tokens li {
   padding: 16px 24px;
   font-size: 1.125rem;
+  font-weight: 600;
 }
 .svc-pills li::before {
   content: "›";
+  content: "›" / "";
   font-weight: 700;
   color: var(--color-bright);
 }
@@ -462,8 +464,8 @@
   column-gap: 64px;
   align-items: start;
 }
-.svc-card--wide > p,
-.svc-card--wide > ul {
+.svc-card.svc-card--wide > p,
+.svc-card.svc-card--wide > ul {
   grid-column: 2;
   grid-row: 1 / span 2;
   align-self: center;
@@ -472,7 +474,7 @@
 .svc-card-icon {
   flex-shrink: 0;
   margin-bottom: 18px;
-  color: var(--color-mid-blue);
+  color: var(--color-royal);
 }
 .svc-card h3 {
   font-size: 1.25rem;
@@ -511,6 +513,7 @@
 }
 .svc-ticks li::before {
   content: "›";
+  content: "›" / "";
   position: absolute;
   left: 2px;
   font-weight: 700;
@@ -550,6 +553,14 @@
 .svc-art-top {
   fill: var(--color-surface);
   stroke: var(--color-bright);
+}
+.svc-art-line {
+  fill: none;
+  stroke: var(--color-border-blue);
+}
+.svc-art-accent {
+  fill: var(--color-bright);
+  stroke: none;
 }
 
 /* Workflow: sticky intro beside a vertical timeline. initStepper (motion.js)
@@ -643,7 +654,9 @@
   color: var(--color-slate);
 }
 /* The caption closes the rail: a square terminal, and the note's white
-   background masks the rail below it. */
+   background masks the rail below it. This assumes the workflow sits on a
+   white band (.svc-flow has no .detail-wash); if that changes, change this
+   background to match. */
 .svc-flow-note {
   position: relative;
   z-index: 1;
@@ -662,7 +675,7 @@
   width: 14px;
   height: 14px;
   border: 2px solid var(--color-bright);
-  border-radius: 3px;
+  border-radius: var(--radius-xs);
   background: var(--color-surface);
 }
 
@@ -718,8 +731,8 @@
 }
 .svc-related-grid {
   display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(0, 8fr);
-  gap: 28px 64px;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 2.4fr);
+  gap: 28px 56px;
   align-items: center;
 }
 .svc-related-intro h2 {
@@ -731,23 +744,25 @@
   line-height: 1.7;
   color: var(--color-slate);
 }
+/* One line on desktop: tiles size to their titles and only shrink (wrapping
+   their own title) when the row runs out of room. */
 .svc-related-links {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 14px;
 }
 .svc-related-links li {
-  flex: 1 1 200px;
+  flex: 0 1 auto;
   min-width: 0;
 }
 .svc-related-links a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 28px;
   height: 100%;
   min-height: 64px;
-  padding: 18px 20px;
+  padding: 18px 22px;
   border-radius: var(--radius-xl);
   background: var(--color-surface);
   box-shadow: var(--shadow-sm);
@@ -819,8 +834,8 @@
   .svc-card--wide {
     display: flex;
   }
-  .svc-card--wide > p,
-  .svc-card--wide > ul {
+  .svc-card.svc-card--wide > p,
+  .svc-card.svc-card--wide > ul {
     align-self: stretch;
     margin-top: 12px;
   }
@@ -845,6 +860,12 @@
   .svc-pills--tokens li {
     padding: 12px 18px;
     font-size: 1rem;
+  }
+  .svc-related-links {
+    flex-wrap: wrap;
+  }
+  .svc-related-links li {
+    flex: 1 1 100%;
   }
   .svc-stacked-intro {
     margin-bottom: 36px;
@@ -883,10 +904,6 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  /* No scroll-driven fill: the rail reads as complete. */
-  .svc-rail > [data-stepper-fill] {
-    height: 100% !important;
-  }
   .svc-stage-node,
   .svc-related-links a,
   .svc-related-links svg {
