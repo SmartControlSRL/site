@@ -322,7 +322,7 @@ async function smokeTests(browser, base) {
     try {
       await reducedPage.goto(`${base}${route}`, { waitUntil: 'domcontentloaded' });
       await reducedPage.waitForTimeout(150);
-      const opacity = await reducedPage.locator('.detail-step p').evaluateAll((elements) => elements.map((element) => getComputedStyle(element).opacity));
+      const opacity = await reducedPage.locator('[data-step] p').evaluateAll((elements) => elements.map((element) => getComputedStyle(element).opacity));
       if (opacity.length !== 5) failures.push(`${route}: reduced-motion workflow must retain five readable stages`);
       if (opacity.some((value) => Number.parseFloat(value) < 0.99)) failures.push(`${route}: reduced-motion stepper hides content (${opacity.join(', ')})`);
     } catch (error) { failures.push(`${route}: reduced-motion smoke failed: ${error.message}`); }

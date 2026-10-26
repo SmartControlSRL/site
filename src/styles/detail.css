@@ -102,9 +102,6 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   column-gap: 56px;
 }
-.detail-scope {
-  margin-bottom: 64px;
-}
 .detail-scope-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -165,12 +162,6 @@
   font-size: 1rem;
   line-height: 1.7;
   margin-top: 12px;
-}
-.detail-caption {
-  margin-top: 24px;
-  font-size: 0.875rem;
-  line-height: 1.7;
-  color: var(--color-slate);
 }
 .detail-related {
   display: grid;
@@ -358,5 +349,550 @@
 @media (max-width: 540px) {
   .product-page h1 {
     font-size: 2.25rem;
+  }
+}
+
+/* ------------------------------------------------------------------------
+   Service template (ServiceDetailPage). Each section uses its own
+   composition so the page does not read as one repeated eyebrow / split
+   intro / equal-column formula. Shared .detail-* rules above stay intact
+   for ProductDetailPage.
+   ------------------------------------------------------------------------ */
+
+/* Hero copy sits ~50px under the nav on desktop. Below 901px the video
+   toggle moves to the top-right corner, so the existing padding stays. */
+@media (min-width: 901px) {
+  .service-hero {
+    padding-top: clamp(44px, 3.8vw, 56px);
+  }
+}
+
+/* Scope: a statement block, heading beside a flowing row of mono pills. */
+.svc-scope {
+  padding-block: clamp(40px, 5vw, 64px) clamp(56px, 7vw, 88px);
+}
+.svc-scope-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+  gap: 28px 56px;
+  align-items: center;
+}
+.svc-scope-intro p {
+  margin-top: 14px;
+  max-width: 380px;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--color-slate);
+}
+.svc-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.svc-pills li {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  background: var(--color-blue-wash);
+  font: 500 0.9375rem/1.45 var(--font-mono);
+  letter-spacing: -0.01em;
+  color: var(--color-navy);
+}
+/* Short technical tokens (e.g. SD-WAN) read as larger stat-style pills. */
+.svc-pills--tokens li {
+  padding: 16px 24px;
+  font-size: 1.125rem;
+}
+.svc-pills li::before {
+  content: "›";
+  font-weight: 700;
+  color: var(--color-bright);
+}
+
+/* Capabilities: stacked intro, then an asymmetric bento of white cards. */
+.svc-stacked-intro {
+  max-width: 760px;
+  margin-bottom: 48px;
+}
+.svc-stacked-intro h2 {
+  margin-top: 16px;
+}
+.svc-stacked-intro h2 + p {
+  max-width: 620px;
+  margin-top: 20px;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--color-slate);
+}
+.svc-bento {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 20px;
+}
+.svc-card {
+  grid-column: span 6;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 28px 30px 30px;
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+.svc-card--feature {
+  grid-column: span 7;
+  grid-row: span 2;
+  overflow: hidden;
+  padding: 40px 40px 0;
+}
+.svc-card--side,
+.svc-card--five {
+  grid-column: span 5;
+}
+.svc-card--seven {
+  grid-column: span 7;
+}
+.svc-card--wide {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-rows: auto 1fr;
+  column-gap: 64px;
+  align-items: start;
+}
+.svc-card--wide > p,
+.svc-card--wide > ul {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  margin-top: 0;
+}
+.svc-card-icon {
+  flex-shrink: 0;
+  margin-bottom: 18px;
+  color: var(--color-mid-blue);
+}
+.svc-card h3 {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.svc-card--feature h3 {
+  max-width: 460px;
+  font-size: clamp(1.6rem, 2.4vw, 2.125rem);
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+.svc-card p {
+  margin-top: 12px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-slate);
+}
+.svc-card--feature p {
+  max-width: 480px;
+  margin-top: 18px;
+  font-size: 1.125rem;
+}
+.svc-ticks {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+}
+.svc-ticks li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--color-slate);
+}
+.svc-ticks li::before {
+  content: "›";
+  position: absolute;
+  left: 2px;
+  font-weight: 700;
+  color: var(--color-bright);
+}
+.svc-card--feature .svc-ticks {
+  gap: 12px;
+  margin-top: 24px;
+}
+.svc-card--feature .svc-ticks li {
+  font-size: 1.0625rem;
+}
+.svc-card--wide .svc-ticks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 36px;
+}
+/* Code-drawn stepped plates: fills the tall feature tile, bleeds off its edge. */
+.svc-card-art {
+  display: block;
+  width: min(100%, 420px);
+  height: auto;
+  margin: auto -40px 0 auto;
+  padding-top: 36px;
+}
+.svc-card-art rect {
+  stroke-width: 1.5;
+}
+.svc-art-base {
+  fill: var(--color-page);
+  stroke: var(--color-border-blue);
+}
+.svc-art-mid {
+  fill: var(--color-blue-wash);
+  stroke: var(--color-border-blue);
+}
+.svc-art-top {
+  fill: var(--color-surface);
+  stroke: var(--color-bright);
+}
+
+/* Workflow: sticky intro beside a vertical timeline. initStepper (motion.js)
+   grows [data-stepper-fill] down the rail and lights each [data-step-dot]. */
+.svc-flow-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 48px 88px;
+  align-items: start;
+}
+.svc-flow-intro {
+  position: sticky;
+  top: calc(var(--nav-offset, 72px) + 32px);
+}
+.svc-flow-intro h2 {
+  margin-top: 16px;
+}
+.svc-flow-intro h2 + p {
+  margin-top: 20px;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--color-slate);
+}
+.svc-timeline {
+  position: relative;
+  margin: 0;
+}
+.svc-rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 23px;
+  width: 2px;
+  background: var(--color-border-blue);
+}
+.svc-rail > [data-stepper-fill] {
+  position: absolute;
+  inset: 0 0 auto;
+  background: var(--color-bright);
+}
+.svc-stages {
+  display: grid;
+  gap: 44px;
+}
+.svc-stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  column-gap: 28px;
+  align-items: start;
+}
+.svc-stage-node {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--color-border-blue);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  font: 600 0.9375rem var(--font-mono);
+  color: var(--color-royal);
+  transition:
+    border-color 0.3s,
+    background-color 0.3s,
+    box-shadow 0.3s,
+    color 0.3s;
+}
+.svc-stage-label {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  font: 600 0.75rem/1.4 var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-royal);
+}
+.svc-stage h3 {
+  margin-top: 2px;
+  font-size: clamp(1.2rem, 1.6vw, 1.4rem);
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.svc-stage p {
+  max-width: 560px;
+  margin-top: 10px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-slate);
+}
+/* The caption closes the rail: a square terminal, and the note's white
+   background masks the rail below it. */
+.svc-flow-note {
+  position: relative;
+  z-index: 1;
+  margin-top: 44px;
+  padding: 28px 0 0 76px;
+  background: var(--color-surface);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--color-slate);
+}
+.svc-flow-note::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 17px;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--color-bright);
+  border-radius: 3px;
+  background: var(--color-surface);
+}
+
+/* Proof: asymmetric split, heading beside a compact icon list. */
+.svc-proof-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 40px 88px;
+  align-items: start;
+}
+.svc-proof-intro p {
+  margin-top: 18px;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--color-slate);
+}
+.svc-proof-list {
+  display: grid;
+  gap: 32px;
+}
+.svc-proof-list li {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  column-gap: 22px;
+  align-items: start;
+}
+.svc-proof-chip {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  color: var(--color-royal);
+}
+.svc-proof-list h3 {
+  padding-top: 2px;
+  font-size: 1.2rem;
+  line-height: 1.35;
+  font-weight: 600;
+}
+.svc-proof-list p {
+  margin-top: 6px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-slate);
+}
+
+/* Related services: a compact row of whole-card links. */
+.svc-related {
+  padding-block: clamp(48px, 6vw, 72px);
+}
+.svc-related-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 8fr);
+  gap: 28px 64px;
+  align-items: center;
+}
+.svc-related-intro h2 {
+  font-size: clamp(1.5rem, 2.2vw, 1.875rem);
+}
+.svc-related-intro p {
+  margin-top: 12px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-slate);
+}
+.svc-related-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.svc-related-links li {
+  flex: 1 1 200px;
+  min-width: 0;
+}
+.svc-related-links a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 100%;
+  min-height: 64px;
+  padding: 18px 20px;
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  font-size: 1rem;
+  line-height: 1.35;
+  font-weight: 600;
+  color: var(--color-navy);
+  transition:
+    box-shadow 0.25s,
+    color 0.25s;
+}
+.svc-related-links a:hover {
+  color: var(--color-royal);
+  box-shadow: var(--shadow-lg);
+}
+.svc-related-links a:focus-visible {
+  outline: 3px solid var(--color-bright);
+  outline-offset: 3px;
+}
+.svc-related-links svg {
+  flex-shrink: 0;
+  color: var(--color-royal);
+  transition: transform 0.2s;
+}
+.svc-related-links a:hover svg {
+  transform: translate(3px, -3px);
+}
+
+@media (max-width: 1000px) {
+  .svc-bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .svc-card,
+  .svc-card--side,
+  .svc-card--five,
+  .svc-card--seven {
+    grid-column: span 1;
+  }
+  .svc-card--feature,
+  .svc-card--wide {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+  .svc-card-art {
+    width: min(100%, 300px);
+  }
+}
+@media (max-width: 900px) {
+  .svc-scope-grid,
+  .svc-flow-grid,
+  .svc-proof-grid,
+  .svc-related-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .svc-flow-intro {
+    position: static;
+  }
+}
+@media (max-width: 760px) {
+  .svc-bento {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .svc-card {
+    padding: 24px 24px 26px;
+  }
+  .svc-card--feature {
+    padding: 30px 26px 0;
+  }
+  .svc-card--wide {
+    display: flex;
+  }
+  .svc-card--wide > p,
+  .svc-card--wide > ul {
+    align-self: stretch;
+    margin-top: 12px;
+  }
+  .svc-card--wide .svc-ticks {
+    display: grid;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .svc-card-art {
+    width: min(85%, 260px);
+    margin-right: -26px;
+    padding-top: 28px;
+  }
+  .svc-pills {
+    gap: 10px;
+    padding-top: 0;
+  }
+  .svc-pills li {
+    padding: 10px 14px;
+    font-size: 0.875rem;
+  }
+  .svc-pills--tokens li {
+    padding: 12px 18px;
+    font-size: 1rem;
+  }
+  .svc-stacked-intro {
+    margin-bottom: 36px;
+  }
+  .svc-rail {
+    left: 19px;
+  }
+  .svc-stages {
+    gap: 36px;
+  }
+  .svc-stage {
+    grid-template-columns: 40px minmax(0, 1fr);
+    column-gap: 18px;
+  }
+  .svc-stage-node {
+    width: 40px;
+    height: 40px;
+    font-size: 0.875rem;
+  }
+  .svc-stage-label {
+    min-height: 40px;
+  }
+  .svc-flow-note {
+    padding-left: 58px;
+  }
+  .svc-flow-note::before {
+    left: 13px;
+  }
+  .svc-proof-list li {
+    grid-template-columns: 44px minmax(0, 1fr);
+    column-gap: 18px;
+  }
+  .svc-proof-chip {
+    width: 44px;
+    height: 44px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* No scroll-driven fill: the rail reads as complete. */
+  .svc-rail > [data-stepper-fill] {
+    height: 100% !important;
+  }
+  .svc-stage-node,
+  .svc-related-links a,
+  .svc-related-links svg {
+    transition: none;
+  }
+  .svc-related-links a:hover svg {
+    transform: none;
   }
 }

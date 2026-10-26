@@ -29,6 +29,28 @@ const videoVariants = {
   "managed-services": "managed-services",
 } as const;
 const videoVariant = videoVariants[content.hero.artwork];
+// Asymmetric bento: one featured tile beside two side tiles, then the rest in
+// alternating 5/7 and 7/5 pairs; an odd leftover runs full width. This keeps
+// 4, 5, 6 and 7 capabilities balanced without an equal-column grid.
+const bentoShapes = (count: number) => {
+  const shapes = ["feature", "side", "side"];
+  let rest = count - shapes.length;
+  let flip = false;
+  while (rest >= 2) {
+    shapes.push(...(flip ? ["seven", "five"] : ["five", "seven"]));
+    flip = !flip;
+    rest -= 2;
+  }
+  if (rest === 1) shapes.push("wide");
+  return shapes.slice(0, count);
+};
+const shapes = bentoShapes(content.capabilities.items.length);
+// Wash/white alternation: capabilities sit on the wash, the workflow on white,
+// proof (when present) on the wash, and related services take whichever
+// background its neighbour does not.
+const relatedOnWash = !content.proof;
+// Scope lists made only of short technical tokens get the larger pill size.
+const scopeTokens = content.scope?.items.every((item) => item.length <= 24);
 const schema = {
   "@context": "https://schema.org",
   "@type": "Service",
@@ -79,123 +101,159 @@ const schema = {
         </div>
       </div>
     </header>
-    <section class="detail-wrap detail-section" id="capabilities">
-      {
-        content.scope && (
-          <div class="detail-scope" data-detail-enter>
-            <div class="detail-intro">
-              <h2>{content.scope.heading}</h2>
+    {
+      content.scope && (
+        <section class="svc-scope" aria-labelledby="svc-scope-heading">
+          <div class="detail-wrap svc-scope-grid" data-detail-enter>
+            <div class="svc-scope-intro">
+              <h2 id="svc-scope-heading">{content.scope.heading}</h2>
               {content.scope.body && <p>{content.scope.body}</p>}
             </div>
-            <ul class="detail-scope-list">
-              {content.scope.items.map((item) => <li>{item}</li>)}
+            <ul class:list={["svc-pills", { "svc-pills--tokens": scopeTokens }]}>
+              {content.scope.items.map((item) => (
+                <li>{item}</li>
+              ))}
             </ul>
           </div>
-        )
-      }
-      <div class="detail-intro" data-detail-enter>
-        <div>
-          <p class="detail-kicker">{content.capabilities.eyebrow}</p><h2>
-            {content.capabilities.heading}
-          </h2>
+        </section>
+      )
+    }
+    <section class="detail-section detail-wash svc-capabilities" id="capabilities">
+      <div class="detail-wrap">
+        <div class="svc-stacked-intro" data-detail-enter>
+          <p class="detail-kicker">{content.capabilities.eyebrow}</p>
+          <h2>{content.capabilities.heading}</h2>
+          {
+            content.capabilities.description && (
+              <p>{content.capabilities.description}</p>
+            )
+          }
         </div>
-        {content.capabilities.description && <p>{content.capabilities.description}</p>}
-      </div>
-      <div class="detail-capabilities">
-        {
-          content.capabilities.items.map(({ title, body, items, Icon }) => (
-            <article class="detail-capability" data-detail-enter>
-              <>
-                <h3>
-                  <Icon size={24} stroke-width={1.5} />
-                  {title}
-                </h3>
-                <p>{body || items?.join(" · ")}</p>
-              </>
-            </article>
-          ))
-        }
+        <div class="svc-bento">
+          {
+            content.capabilities.items.map(({ title, body, items, Icon }, index) => (
+              <article
+                class:list={["svc-card", `svc-card--${shapes[index]}`]}
+                data-detail-enter
+              >
+                <Icon
+                  class="svc-card-icon"
+                  size={shapes[index] === "feature" ? 34 : 26}
+                  stroke-width={1.5}
+                  aria-hidden="true"
+                />
+                <h3>{title}</h3>
+                {body ? (
+                  <p>{body}</p>
+                ) : (
+                  items && (
+                    <ul class="svc-ticks">
+                      {items.map((item) => (
+                        <li>{item}</li>
+                      ))}
+                    </ul>
+                  )
+                )}
+                {shapes[index] === "feature" && (
+                  <svg
+                    class="svc-card-art"
+                    viewBox="0 0 320 132"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <rect class="svc-art-base" x="1" y="83" width="206" height="40" rx="6" />
+                    <rect class="svc-art-mid" x="57" y="47" width="206" height="40" rx="6" />
+                    <rect class="svc-art-top" x="113" y="11" width="206" height="40" rx="6" />
+                  </svg>
+                )}
+              </article>
+            ))
+          }
+        </div>
       </div>
     </section>
     <section
-      class="detail-section detail-wash"
+      class="detail-section svc-flow"
       id={cloud ? "flux" : "workflow"}
     >
-      <div class="detail-wrap">
-        <div class="detail-intro" data-detail-enter>
-          <div>
-            <p class="detail-kicker">{content.flow.eyebrow}</p><h2>
-              {content.flow.heading}
-            </h2>
-          </div><p>{content.flow.description}</p>
+      <div class="detail-wrap svc-flow-grid">
+        <div class="svc-flow-intro" data-detail-enter>
+          <p class="detail-kicker">{content.flow.eyebrow}</p>
+          <h2>{content.flow.heading}</h2>
+          <p>{content.flow.description}</p>
         </div>
-        <figure data-route-visual>
-          <ol class="detail-steps">
+        <figure class="svc-timeline" data-route-visual data-stepper>
+          <div class="svc-rail" aria-hidden="true">
+            <div data-stepper-fill style="height:0"></div>
+          </div>
+          <ol class="svc-stages">
             {
               content.flow.steps.map((step, index) => (
-                <li class="detail-step" data-step data-detail-enter>
-                  <>
-                    <span class="detail-step-number">
-                      0{index + 1} / {step.label}
-                    </span>
+                <li class="svc-stage" data-step data-detail-enter>
+                  <span class="svc-stage-node" data-step-dot aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div class="svc-stage-body" data-step-body>
+                    <span class="svc-stage-label">{step.label}</span>
                     <h3>{step.title}</h3>
                     <p>{step.body}</p>
-                  </>
+                  </div>
                 </li>
               ))
             }
           </ol>
-          <figcaption class="detail-caption">{content.flow.caption}</figcaption>
+          <figcaption class="svc-flow-note">{content.flow.caption}</figcaption>
         </figure>
       </div>
     </section>
     {
       content.proof && (
-        <section class="detail-wrap detail-section">
-          <div class="detail-intro" data-detail-enter>
-            <>
+        <section class="detail-section detail-wash svc-proof">
+          <div class="detail-wrap svc-proof-grid">
+            <div class="svc-proof-intro" data-detail-enter>
               <h2>{content.proof.heading}</h2>
               {content.proof.body && <p>{content.proof.body}</p>}
-            </>
-          </div>
-          <div class="detail-capabilities">
-            {content.proof.items.map(({ title, body, Icon }) => (
-              <article class="detail-capability" data-detail-enter>
-                <h3>
-                  <Icon size={24} stroke-width={1.5} />
-                  {title}
-                </h3>
-                <p>{body}</p>
-              </article>
-            ))}
+            </div>
+            <ul class="svc-proof-list">
+              {content.proof.items.map(({ title, body, Icon }) => (
+                <li data-detail-enter>
+                  <span class="svc-proof-chip" aria-hidden="true">
+                    <Icon size={22} stroke-width={1.5} />
+                  </span>
+                  <div>
+                    <h3>{title}</h3>
+                    <p>{body}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       )
     }
-    <section class="detail-wrap detail-section">
-      <div class="detail-intro" data-detail-enter>
-        <div>
-          <p class="detail-kicker">Smart Control</p><h2>
+    <section
+      class:list={["svc-related", { "detail-wash": relatedOnWash }]}
+      aria-labelledby="svc-related-heading"
+    >
+      <div class="detail-wrap svc-related-grid" data-detail-enter>
+        <div class="svc-related-intro">
+          <h2 id="svc-related-heading">
             {en ? "Related services" : "Servicii conexe"}
           </h2>
-        </div><p>
-          {homeCopy[lang].servicesIntro}
-        </p>
-      </div>
-      <div class="detail-related">
-        {
-          related.map((item) => (
-            <a href={p(item.href)}>
-              <>
-                <h3>
-                  {item.title}
-                  <ArrowUpRight size={20} />
-                </h3>
-                <p>{item.body}</p>
-              </>
-            </a>
-          ))
-        }
+          <p>{homeCopy[lang].servicesIntro}</p>
+        </div>
+        <ul class="svc-related-links">
+          {
+            related.map((item) => (
+              <li>
+                <a href={p(item.href)}>
+                  <span>{item.title}</span>
+                  <ArrowUpRight size={20} aria-hidden="true" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
       </div>
     </section>
     <section class="detail-section detail-close">
