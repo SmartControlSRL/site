@@ -10,11 +10,20 @@
 }
 
 /* ── Hero: the conceptual flow as mono pills joined by a rail ─────────── */
+/* The right half of the hero is the video, not a grid column: let the copy
+   span the grid with its own measure so it is never squeezed. */
+@media (min-width: 901px) {
+  .product-page .detail-hero-grid > div {
+    grid-column: 1 / -1;
+    max-width: 680px;
+  }
+}
+/* One row (≤ 550px wide) above 640px, a vertical flow below: a connector
+   never starts a wrapped row. */
 .prd-signal {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
-  row-gap: 10px;
   margin-top: 28px;
 }
 .prd-signal li {
@@ -79,7 +88,7 @@
   grid-template-columns: auto minmax(0, 1fr);
   gap: 20px;
   align-items: start;
-  width: min(100%, 520px);
+  width: 86%;
   padding: 24px 28px;
   border-radius: var(--radius-xl);
   background: var(--color-surface);
@@ -87,11 +96,10 @@
 }
 /* Strata: each card steps further right, the last one meets the edge. */
 .prd-capability:nth-child(2) {
-  margin-inline-start: auto;
-  margin-inline-end: 12%;
+  margin-inline-start: 7%;
 }
 .prd-capability:nth-child(3) {
-  margin-inline-start: auto;
+  margin-inline-start: 14%;
 }
 .prd-capability-icon {
   display: grid;
@@ -189,7 +197,7 @@
   content: "";
   width: 8px;
   height: 8px;
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
   background: var(--color-bright);
 }
 .prd-stop h3 {
@@ -281,12 +289,9 @@
   padding: 32px;
   border-radius: var(--radius-xl);
   background: var(--color-surface);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-lg);
   color: var(--color-navy);
   transition: box-shadow 0.2s;
-}
-.prd-related:not(.detail-wash) .prd-card {
-  box-shadow: var(--shadow-lg);
 }
 .prd-card:hover {
   box-shadow: var(--shadow-xl);
@@ -320,6 +325,8 @@
 }
 .prd-card--product {
   padding-top: 36px;
+}
+.prd-related:not(.detail-wash) .prd-card--product {
   background: linear-gradient(
     135deg,
     var(--color-blue-wash) 0%,
@@ -329,7 +336,7 @@
 .prd-card .prd-wordmark {
   font-size: clamp(2.25rem, 4vw, 3.25rem);
   line-height: 1;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.04em;
   color: var(--color-navy);
 }
@@ -386,10 +393,8 @@
   .prd-scene {
     max-width: 560px;
   }
-  .prd-capability,
-  .prd-capability:nth-child(2) {
+  .prd-capability {
     width: auto;
-    margin-inline: 0;
   }
   .prd-capability:nth-child(2) {
     margin-inline-start: 20px;
@@ -405,6 +410,7 @@
   .prd-signal {
     flex-direction: column;
     align-items: flex-start;
+    gap: 0;
   }
   .prd-signal li {
     flex-direction: column;

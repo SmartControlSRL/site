@@ -37,10 +37,11 @@ leaves.
   animated scene on top of it competed with the video and covered it.
   `ProductVisual` therefore gained an optional `tone="light"` prop. It keeps the
   same geometry and timing but uses a white card with a navy-tinted shadow,
-  royal node icons, faint royal rails and calmer glows. The navy core/gate
-  remains as the only dark accent, so no new dark zone is added. The default
-  stays `dark`, and the homepage band is unchanged (the dark keyframe colours
-  moved into custom properties with identical values).
+  royal node icons and faint royal rails. It has no glow, because glow is
+  reserved for dark zones; nodes flash with a border colour only. The navy
+  core/gate remains as the only dark accent, so no new dark zone is added. The
+  default stays `dark`, and the homepage band is unchanged (the dark flash
+  shadows moved into custom properties with identical values).
 - **The other product in Related is a wordmark card, not a second scene.** Two
   animated scenes on one light page would compete. The large name and headline
   make the cross-sell distinct at no runtime cost.
@@ -68,11 +69,51 @@ caption moved from the hero strip to the overview scene.
 ## Checks adjusted
 
 - `scripts/check-service-video.mjs`: the toggle-overlap guard listed
-  `.product-signal`, which the template no longer renders. `.prd-signal li` was
-  added so the pause control is still proven not to cover the hero pills. The
-  old selector is kept and matches nothing.
+  `.product-signal`, which no page renders any more. It now lists
+  `.prd-signal li` instead, so the pause control is still proven not to cover
+  the hero pills.
 - `check-localization.mjs` was not changed. Its `data-route-visual` +
   `figcaption` requirement is now met by the overview scene figure.
+
+## Review follow-ups
+
+An independent review found no functional blockers. These fixes followed:
+
+1. **Hero pills wrapped at 901–1060px**, leaving a loose connector at the start
+   of row 2. The hero's right column is the video, so on product pages the copy
+   now spans the hero grid at 901px and up, with a 680px measure. The pill row
+   never wraps above 640px (the widest row is 550px; the narrowest single-row
+   column is 593px) and stacks vertically below that. A connector can no longer
+   start a row; verified at 641–1440px in RO and EN.
+2. **The capability stair flattened at 901–1150px.** The cards now use a
+   percentage width (86%) and offsets (0 / 7% / 14%). The stair holds at every
+   width of 901px and up (offsets measured at 0/32/64px at 901px and
+   0/45/90px at 1280px). Below 900px it keeps the 20/40px (12/24px on mobile)
+   steps.
+3. **Glow removed from the light-tone ProductVisual.** The node flash is a
+   border-colour change only, and the core/gate keep a navy-tinted shadow with
+   no 6px halo.
+4. **Related wordmark weight** reduced from 800 to 700; 800 is hero-only.
+5. **Mobile pill connector**: `gap: 0` in the stacked layout, so the line
+   touches both pills.
+6. **Product card on a wash band**: the wash-to-white gradient disappeared on
+   SEKNET's wash Related band. There the card is plain white, and both cards
+   use `--shadow-lg` everywhere. The gradient remains on S-VPN's white band.
+7. The inner square of each timeline node uses `var(--radius-xs)` instead of a
+   literal 2px.
+8. **Pruning**:
+   - removed the unused `prd-hero`, `prd-overview` and `prd-overview-body`
+     classes;
+   - merged the duplicated `.pv--light` block in `ProductVisual.astro`;
+   - removed the stale `.product-signal` entry from the video check.
+
+   `detail.css` is still untouched; its stale product rules will be pruned
+   after both template branches merge.
+9. **Accessibility**:
+   - the two cross-sell cards are named by their `h3` (`aria-labelledby`), so
+     each link's name is just the product or service name;
+   - the visible journey numbers are `aria-hidden`, since the `<ol>` already
+     conveys the order.
 
 ## Validation
 

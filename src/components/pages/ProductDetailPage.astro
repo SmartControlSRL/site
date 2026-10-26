@@ -59,7 +59,7 @@ const schema = {
     set:html={JSON.stringify(schema)}
   />
   <div class="detail-page product-page">
-    <header class="detail-hero product-hero prd-hero">
+    <header class="detail-hero product-hero">
       <HeroVideoArtwork variant={product} />
       <div class="detail-wrap detail-hero-grid">
         <div>
@@ -82,7 +82,7 @@ const schema = {
       </div>
     </header>
     <section
-      class="detail-section detail-wash prd-overview"
+      class="detail-section detail-wash"
       id="capabilitati"
       aria-labelledby="prd-overview-heading"
     >
@@ -94,7 +94,7 @@ const schema = {
             {copy.contextTitle}
           </h2><p class="prd-lead">{copy.context}</p>
         </div>
-        <div class="prd-overview-body">
+        <div>
           <figure class="prd-scene" data-route-visual data-detail-enter>
             <ProductVisual kind={product} tone="light" />
             <figcaption>
@@ -141,7 +141,7 @@ const schema = {
             copy.journey.map((step, i) => (
               <li class="prd-stop" data-detail-enter>
                 <p class="prd-stop-label">
-                  <span>0{i + 1}</span>
+                  <span aria-hidden="true">0{i + 1}</span>
                   {step.label}
                 </p>
                 <span class="prd-stop-node" aria-hidden="true" />
@@ -197,8 +197,9 @@ const schema = {
         <a
           class="prd-card prd-card--product"
           href={p("/solutii/" + otherKey)}
+          aria-labelledby="prd-related-product"
           data-detail-enter
-          ><h3 class="prd-wordmark">
+          ><h3 class="prd-wordmark" id="prd-related-product">
             {other.name}<ArrowUpRight size={22} />
           </h3><p class="prd-card-headline">{other.headline}</p><p>
             {other.intro}
@@ -207,8 +208,9 @@ const schema = {
         <a
           class="prd-card prd-card--service"
           href={p(copy.relatedHref)}
+          aria-labelledby="prd-related-service"
           data-detail-enter
-          ><h3>{copy.relatedTitle}<ArrowUpRight size={20} /></h3><p>
+          ><h3 id="prd-related-service">{copy.relatedTitle}<ArrowUpRight size={20} /></h3><p>
             {copy.relatedBody}
           </p></a
         >

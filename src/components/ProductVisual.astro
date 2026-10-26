@@ -175,9 +175,9 @@ const resources = [
     --pv-node-border: color-mix(in srgb, var(--color-sky) 34%, transparent);
     --pv-node-icon: var(--color-sky);
     --pv-node-hot: var(--color-surface);
-    --pv-glow: color-mix(in srgb, var(--color-bright) 70%, transparent);
-    --pv-glow-strong: color-mix(in srgb, var(--color-bright) 80%, transparent);
     --pv-node-rest: none;
+    --pv-flash: 0 0 18px color-mix(in srgb, var(--color-bright) 70%, transparent);
+    --pv-flash-strong: 0 0 22px color-mix(in srgb, var(--color-bright) 80%, transparent);
     position: relative;
     aspect-ratio: 560 / 380;
     border-radius: var(--radius-xl);
@@ -270,7 +270,7 @@ const resources = [
       border-color: var(--pv-node-border);
     }
     3% {
-      box-shadow: 0 0 18px var(--pv-glow);
+      box-shadow: var(--pv-flash);
       border-color: var(--color-bright);
     }
     14% {
@@ -287,7 +287,7 @@ const resources = [
       color: var(--pv-node-icon);
     }
     27% {
-      box-shadow: 0 0 22px var(--pv-glow-strong);
+      box-shadow: var(--pv-flash-strong);
       border-color: var(--color-bright);
       color: var(--pv-node-hot);
     }
@@ -391,13 +391,15 @@ const resources = [
       background: var(--color-sky);
     }
   }
-  /* Light tone: same geometry and timing, calmer glow, white card. */
+  /* Light tone: same geometry and timing on a white card. No glow (glow is
+     reserved for dark zones): nodes flash with a border colour only. */
   .pv--light {
     --pv-node-border: var(--color-border-blue);
     --pv-node-icon: var(--color-royal);
     --pv-node-hot: var(--color-bright);
-    --pv-glow: color-mix(in srgb, var(--color-bright) 30%, transparent);
-    --pv-glow-strong: color-mix(in srgb, var(--color-bright) 38%, transparent);
+    --pv-node-rest: var(--shadow-sm);
+    --pv-flash: var(--shadow-sm);
+    --pv-flash-strong: var(--shadow-sm);
     background:
       radial-gradient(
         52% 58% at 50% 50%,
@@ -415,9 +417,6 @@ const resources = [
     stroke: var(--color-bright);
     filter: none;
   }
-  .pv--light {
-    --pv-node-rest: var(--shadow-sm);
-  }
   .pv--light .pv-node {
     background: var(--color-surface);
     box-shadow: var(--pv-node-rest);
@@ -427,9 +426,7 @@ const resources = [
   }
   .pv--light .pv-core,
   .pv--light .pv-gate {
-    box-shadow:
-      0 0 0 6px color-mix(in srgb, var(--color-bright) 12%, transparent),
-      var(--shadow-lg);
+    box-shadow: var(--shadow-lg);
   }
   @media (max-width: 560px) {
     .pv-node {
