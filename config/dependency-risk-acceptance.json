@@ -171,6 +171,30 @@
       "rationale": "The npm fix target changes the Astro major; accept until the coordinated migration passes image and route regression.",
       "owner": "Smart Control site maintainers",
       "reviewBy": "2026-11-26"
+    },
+    {
+      "id": "GHSA-98hj-9722-w3j8",
+      "package": "astro",
+      "severity": "moderate",
+      "affectedRange": "<7.3.2",
+      "affectedPath": "astro (direct devDependency)",
+      "reachability": "Not reachable: the repository has no MDX/JSX pages or components (no @astrojs/mdx, no .mdx files); all <script>/<style> content is repository-authored and no visitor input is rendered.",
+      "exposure": "Build-time static generation only; no Astro server runtime is deployed.",
+      "rationale": "The fixed release is Astro 7.3.2+; accept until the pinned Astro/Tailwind/Vite trio is migrated as one tested unit.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
+    },
+    {
+      "id": "GHSA-mrhx-c7xc-m3w5",
+      "package": "zod",
+      "severity": "high",
+      "affectedRange": "<4.6.6",
+      "affectedPath": "astro > zod (and zod-to-ts)",
+      "reachability": "Not reachable from untrusted input: zod only validates repository-authored content-collection and config schemas at build time; the site has no runtime request handling.",
+      "exposure": "Build-time only; production is static HTML.",
+      "rationale": "The npm fix target is Astro 7 (zod 4); accept until the coordinated toolchain migration passes all gates.",
+      "owner": "Smart Control site maintainers",
+      "reviewBy": "2026-11-26"
     }
   ]
 }
