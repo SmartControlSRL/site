@@ -5,6 +5,7 @@ import LogoMarquee from "../LogoMarquee.astro";
 import HeroStack from "../HeroStack.astro";
 import StackTeardown from "../StackTeardown.astro";
 import ProductVisual from "../ProductVisual.astro";
+import CloudScene from "../scenes/CloudScene.astro";
 import { homeCopy, technologyPartners } from "../../content/home-page";
 import { productPages } from "../../content/product-pages";
 import {
@@ -115,15 +116,9 @@ const org = {
                   <p>{service.body}</p>
                   <span class="service-detail">{service.detail}</span>
                   {index === 0 && (
-                    <img
-                      class="service-visual"
-                      src="/images/architecture-light-800.webp"
-                      width="800"
-                      height="450"
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                    />
+                    <div class="service-visual">
+                      <CloudScene />
+                    </div>
                   )}
                 </a>
               );
@@ -556,15 +551,8 @@ const org = {
     grid-area: detail;
   }
   .service-visual {
-    display: block;
-    width: calc(100% + 80px);
-    max-width: none;
-    margin: 28px -40px 0;
     margin-top: auto;
-    aspect-ratio: 16 / 8;
-    object-fit: cover;
-    object-position: center 60%;
-    mask-image: linear-gradient(180deg, transparent, black 30%);
+    padding-block: 32px 28px;
   }
   .home-stack,
   .home-stack :global(section) {
@@ -859,10 +847,6 @@ const org = {
     }
     .service-link--wide p {
       margin-top: 13px;
-    }
-    .service-visual {
-      width: calc(100% + 44px);
-      margin-inline: -22px;
     }
     .service-link h3 {
       font-size: 21px;
