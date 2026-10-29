@@ -195,7 +195,7 @@ export const productPages: Record<ProductKey, Record<Lang, ProductContent>> = {
           body: "Administrarea și auditul susțin revizuirea accesului.",
         },
       ],
-      relatedTitle: "Networking & Security",
+      relatedTitle: "Networking & Cybersecurity",
       relatedBody:
         "Protecție pentru rețea, identitate, aplicații și operațiuni de securitate.",
       relatedHref: "/servicii/securitate",
@@ -267,7 +267,7 @@ export const productPages: Record<ProductKey, Record<Lang, ProductContent>> = {
           body: "Administration and audit support access review.",
         },
       ],
-      relatedTitle: "Networking & Security",
+      relatedTitle: "Networking & Cybersecurity",
       relatedBody:
         "Protection for networks, identity, applications, and security operations.",
       relatedHref: "/servicii/securitate",

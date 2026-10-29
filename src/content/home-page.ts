@@ -13,7 +13,7 @@ export const homeCopy = {
         href: "/servicii/cloud",
       },
       {
-        title: "Networking & Security",
+        title: "Networking & Cybersecurity",
         body: "Securitate perimetrală și end-point, identitate și operațiuni de securitate gestionate.",
         detail: "Rețea · Identitate · Protecție",
         href: "/servicii/securitate",
@@ -77,7 +77,7 @@ export const homeCopy = {
           "Load balancing",
         ],
         href: "/servicii/securitate",
-        linkLabel: "Networking & Security",
+        linkLabel: "Networking & Cybersecurity",
         aria: "Nivel L2 — Rețea și Conectivitate",
       },
       {
@@ -174,7 +174,7 @@ export const homeCopy = {
         href: "/servicii/cloud",
       },
       {
-        title: "Networking & Security",
+        title: "Networking & Cybersecurity",
         body: "Perimeter and endpoint security, identity and managed security operations.",
         detail: "Network · Identity · Protection",
         href: "/servicii/securitate",
@@ -238,7 +238,7 @@ export const homeCopy = {
           "Load balancing",
         ],
         href: "/servicii/securitate",
-        linkLabel: "Networking & Security",
+        linkLabel: "Networking & Cybersecurity",
         aria: "Layer L2 — Network and Connectivity",
       },
       {
