@@ -102,13 +102,13 @@ export interface ServicePageContent {
 
 const security: Record<Lang, ServicePageContent> = {
   ro: {
-    title: 'Networking & Security — Smart Control',
+    title: 'Networking & Cybersecurity — Smart Control',
     description: 'Proiectăm, securizăm și operăm rețele enterprise, cloud hibrid și Kubernetes: monitorizare SOC/NOC, teste de penetrare, suport pentru conformitate NIS 2 și securitate OT.',
     canonicalPath: '/servicii/securitate/',
-    schemaName: 'Networking & Security',
+    schemaName: 'Networking & Cybersecurity',
     schemaServiceType: ['Enterprise Networking', 'Network Security', 'Managed Security Operations', 'Penetration Testing', 'NIS 2 Compliance Support'],
     hero: { artwork: 'network-security',
-      eyebrow: 'Networking & Security',
+      eyebrow: 'Networking & Cybersecurity',
       lead: 'Rețea solidă.',
       accent: 'Securitate operată.',
       body: 'Proiectăm, securizăm și operăm rețele enterprise — de la campus și data center până la sucursale, cloud și OT. Echipa care construiește infrastructura răspunde și de monitorizarea ei, cu niveluri de serviciu agreate contractual.',
@@ -175,13 +175,13 @@ const security: Record<Lang, ServicePageContent> = {
     cta: { heading: 'Aflați unde sunteți expuși, înainte să afle altcineva', body: 'Assessment-ul inițial clarifică riscurile prioritare, situația față de NIS 2 și pașii următori.' },
   },
   en: {
-    title: 'Networking & Security — Smart Control',
+    title: 'Networking & Cybersecurity — Smart Control',
     description: 'We design, secure, and operate enterprise networks, hybrid cloud, and Kubernetes: SOC/NOC monitoring, penetration testing, NIS 2 compliance support, and OT security.',
     canonicalPath: '/en/servicii/securitate/',
-    schemaName: 'Networking & Security',
+    schemaName: 'Networking & Cybersecurity',
     schemaServiceType: ['Enterprise Networking', 'Network Security', 'Managed Security Operations', 'Penetration Testing', 'NIS 2 Compliance Support'],
     hero: { artwork: 'network-security',
-      eyebrow: 'Networking & Security',
+      eyebrow: 'Networking & Cybersecurity',
       lead: 'A solid network.',
       accent: 'Security, operated.',
       body: 'We design, secure, and operate enterprise networks — from campus and data centre to branch offices, cloud, and OT. The team that builds the infrastructure is also responsible for monitoring it, under contractually agreed service levels.',
