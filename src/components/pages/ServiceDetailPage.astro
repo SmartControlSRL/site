@@ -7,7 +7,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import TextLink from "../TextLink.astro";
 import MailtoLink from "../MailtoLink.astro";
 import DetailMotion from "../DetailMotion.astro";
-import { ArrowUpRight } from "@lucide/astro";
+import Nis2Check from "../nis2/Nis2Check.astro";
+import { ArrowUpRight, ChevronDown } from "@lucide/astro";
+import { partnerLogos } from "../../content/partner-logos";
 import { getLangFromUrl, localizedPath, useTranslations } from "../../i18n/ui";
 import { homeCopy } from "../../content/home-page";
 import type { ServicePageContent } from "../../content/service-pages";
@@ -61,6 +63,16 @@ const motif = content.hero.artwork;
 // proof (when present) on the wash, and related services take whichever
 // background its neighbour does not.
 const relatedOnWash = !content.proof;
+// Vendor logos share the homepage marquee's artwork and optical sizing, at a
+// smaller area for a static row.
+const vendorLogos = (content.vendors?.names ?? []).map((name) => {
+  const logo = partnerLogos[name];
+  if (!logo) return { name };
+  const h = Math.round(
+    Math.min(36, Math.max(18, Math.sqrt(2800 / logo.aspect))) * (logo.scale ?? 1),
+  );
+  return { name, src: `/images/partners/${logo.file}`, h, w: Math.round(h * logo.aspect) };
+});
 // Scope lists made only of short technical tokens get the larger pill size.
 const scopeTokens = content.scope?.items.every((item) => item.length <= 24);
 const schema = {
@@ -111,6 +123,26 @@ const schema = {
         {Scene && <Scene />}
       </div>
     </header>
+    {
+      content.context && (
+        <section class="detail-section svc-why" aria-labelledby="svc-why-heading">
+          <div class="detail-wrap">
+            <div class="svc-stacked-intro" data-detail-enter>
+              <p class="detail-kicker">{content.context.eyebrow}</p>
+              <h2 id="svc-why-heading">{content.context.heading}</h2>
+            </div>
+            <ul class="svc-why-list">
+              {content.context.items.map((item) => (
+                <li data-detail-enter>
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )
+    }
     {
       content.scope && (
         <section class="svc-scope" aria-labelledby="svc-scope-heading">
@@ -273,6 +305,123 @@ const schema = {
         </section>
       )
     }
+    {
+      content.spotlight && (
+        <section class="detail-section svc-spotlight" aria-labelledby="svc-spotlight-heading">
+          <div class="detail-wrap svc-proof-grid">
+            <div class="svc-proof-intro" data-detail-enter>
+              <p class="detail-kicker">{content.spotlight.eyebrow}</p>
+              <h2 id="svc-spotlight-heading">{content.spotlight.heading}</h2>
+              <p>{content.spotlight.body}</p>
+            </div>
+            <ul class="svc-proof-list">
+              {content.spotlight.items.map(({ title, body, Icon }) => (
+                <li data-detail-enter>
+                  <span class="svc-proof-chip" aria-hidden="true">
+                    <Icon size={22} stroke-width={1.5} />
+                  </span>
+                  <div>
+                    <h3>{title}</h3>
+                    <p>{body}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )
+    }
+    {
+      content.process && (
+        <section class="detail-section detail-wash svc-process" aria-labelledby="svc-process-heading">
+          <div class="detail-wrap">
+            <div class="svc-stacked-intro" data-detail-enter>
+              <p class="detail-kicker">{content.process.eyebrow}</p>
+              <h2 id="svc-process-heading">{content.process.heading}</h2>
+            </div>
+            <ol class="detail-steps">
+              {content.process.steps.map((step, index) => (
+                <li class="detail-step" data-detail-enter>
+                  <span class="detail-step-number">{String(index + 1).padStart(2, "0")}</span>
+                  <h3>{step.title}</h3>
+                  <p>{step.body}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      )
+    }
+    {
+      (content.vendors || content.products) && (
+        <section class="detail-section svc-tech">
+          <div class="detail-wrap svc-tech-grid">
+            {content.vendors && (
+              <div class="svc-tech-vendors" data-detail-enter>
+                <p class="detail-kicker">{content.vendors.eyebrow}</p>
+                <h2>{content.vendors.heading}</h2>
+                <p>{content.vendors.body}</p>
+                <ul class="svc-logos">
+                  {vendorLogos.map((logo) => (
+                    <li>
+                      {logo.src ? (
+                        <img src={logo.src} alt={logo.name} width={logo.w} height={logo.h} loading="lazy" decoding="async" />
+                      ) : (
+                        <span>{logo.name}</span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {content.products && (
+              <div class="svc-tech-products" data-detail-enter>
+                <p class="detail-kicker">{content.products.eyebrow}</p>
+                <h3>{content.products.heading}</h3>
+                <p>{content.products.body}</p>
+                <ul class="svc-product-cards">
+                  {content.products.cards.map(({ name, body, href, linkLabel, Icon }) => (
+                    <li>
+                      <a href={p(href)}>
+                        <Icon class="svc-card-icon" size={26} stroke-width={1.5} aria-hidden="true" />
+                        <span class="svc-product-name">{name}</span>
+                        <span class="svc-product-body">{body}</span>
+                        <span class="svc-product-link">
+                          {linkLabel}
+                          <ArrowUpRight size={18} aria-hidden="true" />
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </section>
+      )
+    }
+    {
+      content.faq && (
+        <section class="detail-section detail-wash svc-faq" aria-labelledby="svc-faq-heading">
+          <div class="detail-wrap svc-proof-grid">
+            <div class="svc-proof-intro" data-detail-enter>
+              <h2 id="svc-faq-heading">{content.faq.heading}</h2>
+            </div>
+            <div class="svc-faq-list" data-detail-enter>
+              {content.faq.items.map((item) => (
+                <details>
+                  <summary>
+                    {item.question}
+                    <ChevronDown size={20} stroke-width={1.5} aria-hidden="true" />
+                  </summary>
+                  <p>{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
     <section
       class:list={["svc-related", { "detail-wash": relatedOnWash }]}
       aria-labelledby="svc-related-heading"
@@ -298,6 +447,15 @@ const schema = {
         </ul>
       </div>
     </section>
+    {
+      content.nis2Check && (
+        <div class="svc-nis2">
+          <div class="detail-wrap">
+            <Nis2Check />
+          </div>
+        </div>
+      )
+    }
     <section class="detail-section detail-close">
       <div class="detail-wrap detail-close-grid">
         <div>

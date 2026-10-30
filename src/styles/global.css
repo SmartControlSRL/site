@@ -18,6 +18,10 @@
   --color-bright: #4487dc;   /* ACCENT — rules, large headings, hover. NOT body-size link text (fails AA) */
   --color-sky: #7ab4e8;      /* light accent on dark */
 
+  /* — Compliance teal: the ONLY non-blue, reserved for NIS 2 / DORA / GDPR / ISO content — */
+  --color-compliance: #1a7a6e;
+  --color-compliance-tint: #e6f2f0;
+
   /* — Surfaces (light theme) — */
   --color-blue-wash: #edf5fc;
   --color-page: #f3f6fc;

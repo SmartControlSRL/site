@@ -1,6 +1,4 @@
 import {
-  AppWindow,
-  BadgeCheck,
   Bot,
   Cloud,
   ClipboardList,
@@ -67,7 +65,12 @@ export interface ServicePageContent {
     body: string;
     secondary: string;
   };
-  context?: Array<{ title: string; body: string }>;
+  /** "Why now" band between the hero and the scope statement. */
+  context?: {
+    eyebrow: string;
+    heading: string;
+    items: Array<{ title: string; body: string }>;
+  };
   scope?: {
     heading: string;
     body?: string;
@@ -91,6 +94,39 @@ export interface ServicePageContent {
     body?: string;
     items: Capability[];
   };
+  /** Second split section after proof, e.g. the Kubernetes deep-dive. */
+  spotlight?: {
+    eyebrow: string;
+    heading: string;
+    body: string;
+    items: Capability[];
+  };
+  /** Numbered delivery steps after the spotlight. */
+  process?: {
+    eyebrow: string;
+    heading: string;
+    steps: Array<{ title: string; body: string }>;
+  };
+  /** Vendor logos (names from partner-logos) beside the proprietary products. */
+  vendors?: {
+    eyebrow: string;
+    heading: string;
+    body: string;
+    names: string[];
+  };
+  products?: {
+    eyebrow: string;
+    heading: string;
+    body: string;
+    cards: SupportingCard[];
+  };
+  faq?: {
+    heading: string;
+    items: Array<{ question: string; answer: string }>;
+  };
+  /** Renders the orientative NIS 2 self-check above the closing CTA. */
+  nis2Check?: boolean;
+  /** Not rendered since the September 2026 detail-page redesign. */
   supporting?: {
     eyebrow?: string;
     heading: string;
@@ -114,11 +150,15 @@ const security: Record<Lang, ServicePageContent> = {
       body: 'Proiectăm, securizăm și operăm rețele enterprise — de la campus și data center până la sucursale, cloud și OT. Echipa care construiește infrastructura răspunde și de monitorizarea ei, cu niveluri de serviciu agreate contractual.',
       secondary: 'Vezi capabilitățile',
     },
-    context: [
+    context: {
+      eyebrow: 'De ce acum',
+      heading: 'Ce s-a schimbat în ultimii doi ani',
+      items: [
       { title: 'NIS 2 este lege în România', body: 'OUG 155/2024 obligă entitățile esențiale și importante să se înregistreze la DNSC, să gestioneze riscurile și să raporteze incidentele. Conducerea are responsabilități directe.' },
       { title: 'Perimetrul nu mai e la birou', body: 'Utilizatorii lucrează de oriunde, aplicațiile stau în cloud și SaaS. Firewall-ul de la intrare nu mai vede tot traficul.' },
       { title: 'IT și OT s-au conectat', body: 'Liniile de producție, rețelele energetice și clădirile inteligente sunt acum ținte accesibile din rețeaua de birou.' },
-    ],
+      ],
+    },
     flow: {
       eyebrow: 'NOC + SOC',
       heading: 'Disponibilitate și securitate, monitorizate de aceeași echipă',
@@ -148,10 +188,11 @@ const security: Record<Lang, ServicePageContent> = {
         { title: 'Securitate OT și industrială', body: 'Protecție pentru sisteme care nu se pot opri pentru un patch: inventarul activelor OT, segmentare IT / OT și monitorizare pasivă, aliniate la IEC 62443.', items: ['Inventarul activelor OT', 'Segmentare IT / OT', 'Monitorizare pasivă', 'Aliniere la IEC 62443'], Icon: Factory },
         { title: 'Cloud și hybrid cloud', body: 'Aceleași reguli de securitate în data center și în cloud: conectivitate hibridă, segmentare în cloud, CSPM și identitate unificată între on-premise, cloud și SaaS.', items: ['Conectivitate hibridă', 'Arhitecturi multi-cloud', 'Firewall și segmentare în cloud', 'CSPM și protecția workload-urilor', 'Identitate unificată'], Icon: Cloud },
         { title: 'Kubernetes și cloud-native', body: 'Rețea, microsegmentare și vizibilitate pentru clustere cu Cilium, Hubble și Tetragon, de la BGP spre data center până la securitate la runtime.', items: ['Cilium ca CNI și Gateway API', 'Politici L3–L7 între aplicații', 'Criptare transparentă între noduri', 'Vizibilitate pe fluxuri cu Hubble', 'Securitate la runtime cu Tetragon'], Icon: Container },
-        { title: 'Testare ofensivă', body: 'Găsim breșele înaintea atacatorilor: teste de penetrare pentru rețea, aplicații web și Wi-Fi, managementul vulnerabilităților, simulări de phishing și retestare după remediere.', items: ['Teste de penetrare', 'Managementul vulnerabilităților', 'Simulări de phishing', 'Retestare după remediere'], Icon: Crosshair },
+        { title: 'Testare ofensivă', body: 'Găsim breșele înaintea atacatorilor, cu o echipă de pentest certificată: teste de penetrare pentru rețea, aplicații web și Wi-Fi, managementul vulnerabilităților, simulări de phishing și retestare după remediere.', items: ['Teste de penetrare', 'Managementul vulnerabilităților', 'Simulări de phishing', 'Retestare după remediere'], Icon: Crosshair },
         { title: 'Conformitate și guvernanță', body: 'Cerințele legale transformate în măsuri concrete: suport pentru NIS 2, DORA, ISO 27001 și GDPR, politici, analiză de risc, planuri de răspuns și instruire.', items: ['Plan de conformitate NIS 2', 'Suport DORA, ISO 27001 și GDPR', 'Politici și analiză de risc', 'Instruire pentru conducere și angajați'], Icon: Scale },
       ],
     },
+    nis2Check: true,
     proof: {
       heading: 'Conformitate NIS 2 fără hârtii inutile',
       body: 'OUG 155/2024 cere măsuri tehnice reale, nu doar documente. Pentru că implementăm și operăm acele măsuri, planul de conformitate poate fi și executat, nu doar scris.',
@@ -160,16 +201,57 @@ const security: Record<Lang, ServicePageContent> = {
         { title: 'Analiză de decalaj', body: 'Comparăm situația actuală cu măsurile de gestionare a riscurilor cerute.', Icon: ClipboardList },
         { title: 'Plan de remediere', body: 'Priorități ordonate după risc, efort și buget.', Icon: Route },
         { title: 'Implementare', body: 'Segmentare, MFA, backup, monitorizare și răspuns la incidente.', Icon: Wrench },
-        { title: 'Dovadă și audit', body: 'Documentație, instruirea conducerii și pregătirea pentru auditul de securitate.', Icon: FileCheck },
+        { title: 'Dovadă și audit', body: 'Documentație, instruirea conducerii și pregătirea pentru auditul de securitate. Echipa include auditori de securitate cibernetică atestați de DNSC.', Icon: FileCheck },
       ],
     },
-    supporting: {
+    spotlight: {
+      eyebrow: 'Kubernetes',
+      heading: 'Kubernetes vizibil pentru echipa de rețea și pentru SOC',
+      body: 'Clusterele Kubernetes sunt adesea o zonă oarbă: firewall-ul vede doar IP-urile nodurilor, iar echipa de rețea nu știe ce aplicație vorbește cu ce. Cu Cilium, Hubble și Tetragon, traficul și procesele din cluster primesc aceleași reguli, aceeași vizibilitate și aceeași monitorizare ca restul infrastructurii. Suntem partener Isovalent, iar inginerii noștri au certificări Cilium.',
+      items: [
+        { title: 'Segmentare pentru audit', body: 'Politici zero trust între aplicații, cu dovada fluxurilor permise, pentru NIS 2, DORA sau PCI DSS.', Icon: Layers },
+        { title: 'Integrare cu rețeaua existentă', body: 'Clusterele anunță serviciile prin BGP către routerele și fabric-ul din data center, fără NAT-uri greu de urmărit.', Icon: Network },
+        { title: 'Ieșire controlată', body: 'Traficul spre baze de date sau parteneri pleacă de pe IP-uri fixe, pe care firewall-ul le poate filtra.', Icon: Route },
+        { title: 'Migrare de la ingress-nginx', body: 'Proiectul a fost retras de comunitatea Kubernetes; mutăm rutarea pe Gateway API, cu o migrare planificată.', Icon: GitBranch },
+        { title: 'Runtime în SOC', body: 'Evenimentele Tetragon ajung în SOC, lângă alertele de rețea și de endpoint.', Icon: ScanSearch },
+        { title: 'VM-uri lângă containere', body: 'Migrare de pe platformele clasice de virtualizare pe OpenShift Virtualization, cu păstrarea IP-urilor și a segmentării.', Icon: Server },
+      ],
+    },
+    process: {
+      eyebrow: 'Cum lucrăm',
+      heading: 'De la assessment la operare',
+      steps: [
+        { title: 'Assessment', body: 'Audit de rețea și de postură de securitate. Rezultat: riscurile prioritare și un plan de acțiune.' },
+        { title: 'Arhitectură', body: 'Design independent de producător, cu opțiuni și costuri comparate.' },
+        { title: 'Validare', body: 'Testăm soluția în mediul vostru sau în laboratorul nostru, înainte de achiziție.' },
+        { title: 'Implementare', body: 'Migrare planificată, cu ferestre de lucru agreate și plan de revenire.' },
+        { title: 'Operare', body: 'Monitorizare, mentenanță și îmbunătățire continuă, la nivelurile de serviciu agreate.' },
+      ],
+    },
+    vendors: {
+      eyebrow: 'Tehnologie',
+      heading: 'Alegem tehnologia după problemă, nu după lista de prețuri',
+      body: 'Recomandăm combinația potrivită infrastructurii existente și lucrăm cu ce aveți deja, unde se poate.',
+      names: ['Cisco', 'Fortinet', 'Palo Alto', 'Juniper', 'Microsoft', 'Isovalent'],
+    },
+    products: {
       eyebrow: 'Produse proprii',
       heading: 'SEKNET și S-VPN, integrate în serviciu',
       body: 'Produsele proprii completează serviciile atunci când contextul tehnic și comercial o cere.',
       cards: [
         { name: 'SEKNET', body: 'Monitorizare, securitate și control al infrastructurii, dintr-un singur loc.', href: '/solutii/seknet', linkLabel: 'Vezi SEKNET', Icon: ShieldCheck },
         { name: 'S-VPN', body: 'Acces remote sigur, administrat centralizat, integrat în politicile voastre.', href: '/solutii/s-vpn', linkLabel: 'Vezi S-VPN', Icon: Network },
+      ],
+    },
+    faq: {
+      heading: 'Întrebări frecvente',
+      items: [
+        { question: 'Puteți prelua monitorizarea unei infrastructuri implementate de altcineva?', answer: 'Da. Începem cu un audit, aliniem configurația și abia apoi preluăm operarea.' },
+        { question: 'Securizați și mediile din cloud public?', answer: 'Da. Extindem aceleași politici de rețea, identitate și monitorizare din data center în cloud, ca infrastructura hibridă să fie gestionată unitar.' },
+        { question: 'Lucrați cu clustere gestionate (EKS, AKS, GKE) sau cu OpenShift?', answer: 'Da. Cilium rulează pe clusterele gestionate din cloud, pe OpenShift și pe Kubernetes instalat în data center. Putem migra și de pe alt CNI, de exemplu Calico sau Flannel.' },
+        { question: 'Lucrați doar cu anumiți producători?', answer: 'Nu. Recomandăm soluția potrivită și lucrăm cu ce aveți deja, unde se poate.' },
+        { question: 'Ne ajutați cu înregistrarea și raportarea la DNSC?', answer: 'Da. Vă ajutăm la încadrare, la evaluarea riscului și la notificarea incidentelor.' },
+        { question: 'Testele de penetrare pot afecta producția?', answer: 'Stabilim împreună perimetrul, ferestrele de test și limitele. Sistemele critice și OT se testează cu metode non-intruzive.' },
       ],
     },
     cta: { heading: 'Aflați unde sunteți expuși, înainte să afle altcineva', body: 'Assessment-ul inițial clarifică riscurile prioritare, situația față de NIS 2 și pașii următori.' },
@@ -187,11 +269,15 @@ const security: Record<Lang, ServicePageContent> = {
       body: 'We design, secure, and operate enterprise networks — from campus and data centre to branch offices, cloud, and OT. The team that builds the infrastructure is also responsible for monitoring it, under contractually agreed service levels.',
       secondary: 'View capabilities',
     },
-    context: [
+    context: {
+      eyebrow: 'Why now',
+      heading: 'What has changed in the last two years',
+      items: [
       { title: 'NIS 2 is law in Romania', body: 'Emergency Ordinance 155/2024 requires essential and important entities to register with DNSC, manage risk, and report incidents. Management carries direct responsibility.' },
       { title: 'The perimeter has left the office', body: 'Users work from anywhere and applications run in cloud and SaaS. The firewall at the edge no longer sees all the traffic.' },
       { title: 'IT and OT are now connected', body: 'Production lines, energy networks, and smart buildings are now targets reachable from the office network.' },
-    ],
+      ],
+    },
     flow: {
       eyebrow: 'NOC + SOC',
       heading: 'Availability and security, monitored by the same team',
@@ -221,10 +307,11 @@ const security: Record<Lang, ServicePageContent> = {
         { title: 'OT & industrial security', body: 'Protection for systems that cannot stop for a patch: OT asset inventory, IT / OT segmentation, and passive monitoring, aligned with IEC 62443.', items: ['OT asset inventory', 'IT / OT segmentation', 'Passive monitoring', 'Alignment with IEC 62443'], Icon: Factory },
         { title: 'Cloud & hybrid cloud', body: 'The same security rules in the data centre and in the cloud: hybrid connectivity, cloud segmentation, CSPM, and unified identity across on-premises, cloud, and SaaS.', items: ['Hybrid connectivity', 'Multi-cloud architectures', 'Cloud firewalling and segmentation', 'CSPM and workload protection', 'Unified identity'], Icon: Cloud },
         { title: 'Kubernetes & cloud-native', body: 'Networking, microsegmentation, and visibility for clusters with Cilium, Hubble, and Tetragon, from BGP to the data centre through to runtime security.', items: ['Cilium as CNI and Gateway API', 'L3–L7 policies between applications', 'Transparent node-to-node encryption', 'Flow visibility with Hubble', 'Runtime security with Tetragon'], Icon: Container },
-        { title: 'Offensive testing', body: 'We find the gaps before attackers do: network, web application, and Wi-Fi penetration tests, vulnerability management, phishing simulations, and retesting after remediation.', items: ['Penetration testing', 'Vulnerability management', 'Phishing simulations', 'Retesting after remediation'], Icon: Crosshair },
+        { title: 'Offensive testing', body: 'We find the gaps before attackers do, with a certified pentest team: network, web application, and Wi-Fi penetration tests, vulnerability management, phishing simulations, and retesting after remediation.', items: ['Penetration testing', 'Vulnerability management', 'Phishing simulations', 'Retesting after remediation'], Icon: Crosshair },
         { title: 'Compliance & governance', body: 'Legal requirements turned into concrete measures: NIS 2, DORA, ISO 27001, and GDPR support, policies, risk analysis, response plans, and training.', items: ['NIS 2 compliance plan', 'DORA, ISO 27001 and GDPR support', 'Policies and risk analysis', 'Training for management and staff'], Icon: Scale },
       ],
     },
+    nis2Check: true,
     proof: {
       heading: 'NIS 2 compliance without needless paperwork',
       body: 'Emergency Ordinance 155/2024 requires real technical measures, not just documents. Because we implement and operate those measures, your compliance plan can be executed, not just written.',
@@ -233,16 +320,57 @@ const security: Record<Lang, ServicePageContent> = {
         { title: 'Gap analysis', body: 'We compare the current state with the required risk-management measures.', Icon: ClipboardList },
         { title: 'Remediation plan', body: 'Priorities ordered by risk, effort, and budget.', Icon: Route },
         { title: 'Implementation', body: 'Segmentation, MFA, backup, monitoring, and incident response.', Icon: Wrench },
-        { title: 'Evidence & audit', body: 'Documentation, management training, and preparation for the security audit.', Icon: FileCheck },
+        { title: 'Evidence & audit', body: 'Documentation, management training, and preparation for the security audit. Our team includes DNSC-certified cybersecurity auditors.', Icon: FileCheck },
       ],
     },
-    supporting: {
+    spotlight: {
+      eyebrow: 'Kubernetes',
+      heading: 'Kubernetes made visible to your network team and your SOC',
+      body: 'Kubernetes clusters are often a blind spot: the firewall only sees node IPs, and the network team cannot tell which application talks to which. With Cilium, Hubble, and Tetragon, cluster traffic and processes get the same rules, the same visibility, and the same monitoring as the rest of your infrastructure. We are an Isovalent partner, and our engineers hold Cilium certifications.',
+      items: [
+        { title: 'Segmentation for audit', body: 'Zero trust policies between applications, with proof of the allowed flows, for NIS 2, DORA, or PCI DSS.', Icon: Layers },
+        { title: 'Integration with your existing network', body: 'Clusters advertise services via BGP to data centre routers and fabric, with no hard-to-trace NAT.', Icon: Network },
+        { title: 'Controlled egress', body: 'Traffic to databases or partners leaves from fixed IPs that your firewall can filter.', Icon: Route },
+        { title: 'Moving off ingress-nginx', body: 'The Kubernetes community has retired the project; we move routing to Gateway API in a planned migration.', Icon: GitBranch },
+        { title: 'Runtime in the SOC', body: 'Tetragon events land in the SOC, next to network and endpoint alerts.', Icon: ScanSearch },
+        { title: 'VMs next to containers', body: 'Migration from classic virtualisation platforms to OpenShift Virtualization, keeping IPs and segmentation.', Icon: Server },
+      ],
+    },
+    process: {
+      eyebrow: 'How we work',
+      heading: 'From assessment to operations',
+      steps: [
+        { title: 'Assessment', body: 'Network and security posture audit. Output: your priority risks and an action plan.' },
+        { title: 'Design', body: 'Vendor-neutral architecture, with options and costs compared.' },
+        { title: 'Validate', body: 'We test the solution in your environment or in our lab before you buy.' },
+        { title: 'Implement', body: 'Planned migration, with agreed maintenance windows and a rollback plan.' },
+        { title: 'Operate', body: 'Monitoring, maintenance, and continuous improvement under the agreed service levels.' },
+      ],
+    },
+    vendors: {
+      eyebrow: 'Technology',
+      heading: 'We pick technology for the problem, not the price list',
+      body: 'We recommend the combination that fits your existing infrastructure and work with what you already have, where possible.',
+      names: ['Cisco', 'Fortinet', 'Palo Alto', 'Juniper', 'Microsoft', 'Isovalent'],
+    },
+    products: {
       eyebrow: 'Proprietary products',
       heading: 'SEKNET and S-VPN, built into the service',
       body: 'Our proprietary products complement the services when the technical and commercial context calls for them.',
       cards: [
         { name: 'SEKNET', body: 'Monitoring, security, and infrastructure control from a single place.', href: '/solutii/seknet', linkLabel: 'View SEKNET', Icon: ShieldCheck },
         { name: 'S-VPN', body: 'Secure, centrally managed remote access that fits your policies.', href: '/solutii/s-vpn', linkLabel: 'View S-VPN', Icon: Network },
+      ],
+    },
+    faq: {
+      heading: 'Frequently asked questions',
+      items: [
+        { question: 'Can you take over monitoring of infrastructure someone else built?', answer: 'Yes. We start with an audit, align the configuration, and only then take over operations.' },
+        { question: 'Do you also secure public cloud environments?', answer: 'Yes. We extend the same network, identity, and monitoring policies from your data centre into the cloud, so the hybrid estate is managed as one.' },
+        { question: 'Do you work with managed clusters (EKS, AKS, GKE) or OpenShift?', answer: 'Yes. Cilium runs on managed cloud clusters, on OpenShift, and on Kubernetes in your data centre. We can also migrate you from another CNI, such as Calico or Flannel.' },
+        { question: 'Do you only work with certain vendors?', answer: 'No. We recommend what fits and work with what you already have, where possible.' },
+        { question: 'Can you help with DNSC registration and reporting?', answer: 'Yes. We help with scoping, risk evaluation, and incident notification.' },
+        { question: 'Can penetration tests affect production?', answer: 'We agree the scope, test windows, and limits together. Critical and OT systems are tested with non-intrusive methods.' },
       ],
     },
     cta: { heading: 'Find out where you are exposed, before someone else does', body: 'The initial assessment clarifies your priority risks, your NIS 2 position, and the next steps.' },
