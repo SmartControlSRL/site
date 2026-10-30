@@ -148,6 +148,16 @@ Orchestrator rulings on every open question raised by the design extraction
     Render them as indexable, accessible HTML and preserve the resilient static
     rights-request email link. The advisory processing inventory remains useful
     for future revisions but does not gate publication of this approved source.
+36. **NIS 2 self-check (owner decision 2026-10-30):** an in-browser calculator
+    is not a form under the email-only rule, because nothing is submitted,
+    sent or stored. The orientative check on the Networking & Cybersecurity
+    page classifies activity, size and designation against OUG 155/2024 as
+    consolidated after Legea 124/2025 (arts. 5, 6, 8, 9 and annexes 1–2; size
+    per Legea 346/2004 art. 4 without art. 4^5). It renders only with
+    JavaScript, shows its legal basis and a no-legal-advice notice, and its
+    only follow-up is the existing assessment mail action. Re-check the rules
+    whenever the ordinance or its annexes change; any calculator that would
+    transmit answers stays prohibited.
 
 ## File ownership (conflict avoidance)
 

@@ -1,0 +1,159 @@
+---
+// Orientative NIS 2 self-check (RESOLUTIONS §36). Not a form: nothing is
+// submitted or stored; the answers are classified in the browser and the only
+// follow-up is the page's existing assessment mail action. Hidden until the
+// script runs, so visitors without JavaScript see the static NIS 2 section.
+import MailtoLink from "../MailtoLink.astro";
+import { getLangFromUrl, useTranslations } from "../../i18n/ui";
+import { nis2Copy } from "../../content/nis2-check";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const copy = nis2Copy[lang];
+const strings = {
+  sizes: copy.sizes,
+  sizeLine: copy.sizeLine,
+  borderline: copy.borderline,
+  outcomes: copy.outcomes,
+  dora: copy.dora,
+  basis: copy.basis,
+  activityError: copy.activity.error,
+  sizeError: copy.size.error,
+};
+---
+
+<div class="nis2" data-nis2 data-lang={lang} data-copy={JSON.stringify(strings)} hidden>
+  <p class="detail-kicker">{copy.eyebrow}</p>
+  <h3 class="nis2-heading">{copy.heading}</h3>
+  <p class="nis2-intro">{copy.intro}</p>
+  <div class="nis2-field">
+    <label for="nis2-activity">{copy.activity.label}</label>
+    <select id="nis2-activity" data-nis2-activity aria-describedby="nis2-activity-error">
+      <option value="">{copy.activity.placeholder}</option>
+      {copy.activity.groups.map((group) => (
+        <optgroup label={group.label}>
+          {group.options.map((option) => <option value={option.rule}>{option.label}</option>)}
+        </optgroup>
+      ))}
+    </select>
+    <p class="nis2-error" id="nis2-activity-error" data-nis2-error="activity" aria-live="polite"></p>
+  </div>
+  <fieldset class="nis2-field" data-nis2-size>
+    <legend>{copy.size.legend}</legend>
+    <p class="nis2-help" id="nis2-size-help">{copy.size.help}</p>
+    <div class="nis2-numbers">
+      <label>
+        <span>{copy.size.employees}</span>
+        <input type="number" inputmode="numeric" min="0" step="1" data-nis2-employees aria-describedby="nis2-size-help nis2-size-error" />
+      </label>
+      <label>
+        <span>{copy.size.turnover}</span>
+        <input type="number" inputmode="decimal" min="0" step="0.1" data-nis2-turnover aria-describedby="nis2-size-help" />
+      </label>
+      <label>
+        <span>{copy.size.assets}</span>
+        <input type="number" inputmode="decimal" min="0" step="0.1" data-nis2-assets aria-describedby="nis2-size-help" />
+      </label>
+    </div>
+    <p class="nis2-error" id="nis2-size-error" data-nis2-error="size" aria-live="polite"></p>
+  </fieldset>
+  <div class="nis2-field nis2-check">
+    <input type="checkbox" id="nis2-designated" data-nis2-designated aria-describedby="nis2-designated-help" />
+    <label for="nis2-designated">{copy.designated.label}</label>
+    <p class="nis2-help" id="nis2-designated-help">{copy.designated.help}</p>
+  </div>
+  <button type="button" class="nis2-submit" data-nis2-submit>{copy.submit}</button>
+  <div class="nis2-result" data-nis2-result aria-live="polite" hidden>
+    <p class="nis2-tag" data-nis2-tag></p>
+    <p data-nis2-body></p>
+    <p class="nis2-meta" data-nis2-size-line></p>
+    <p class="nis2-meta" data-nis2-notes></p>
+    <p class="nis2-meta" data-nis2-basis></p>
+    <p class="nis2-meta" data-nis2-next>{copy.next}</p>
+    <MailtoLink variant="button" subject={t("subject.assessment")} class="nis2-cta">{t("cta.assessment")}</MailtoLink>
+  </div>
+  <p class="nis2-disclaimer">{copy.disclaimer}</p>
+</div>
+
+<script>
+  import { classify, sizeIndependent, type ActivityRule } from "./classify";
+
+  // Romanian article references read "art. 5 alin. (2) lit. a)"; English
+  // copy uses the "art. 5(2)(a)" form.
+  const englishBasis = (basis: string) =>
+    basis.replace(/ alin\. \((\d+)\)/g, "($1)").replace(/ lit\. ([a-z])\)/g, "($1)");
+
+  function wire(root: HTMLElement) {
+    const copy = JSON.parse(root.dataset.copy ?? "{}");
+    const en = root.dataset.lang === "en";
+    const q = <T extends Element>(selector: string) => root.querySelector<T>(selector)!;
+    const activity = q<HTMLSelectElement>("[data-nis2-activity]");
+    const employees = q<HTMLInputElement>("[data-nis2-employees]");
+    const turnover = q<HTMLInputElement>("[data-nis2-turnover]");
+    const assets = q<HTMLInputElement>("[data-nis2-assets]");
+    const designated = q<HTMLInputElement>("[data-nis2-designated]");
+    const result = q<HTMLElement>("[data-nis2-result]");
+    const error = (name: string) => q<HTMLElement>(`[data-nis2-error="${name}"]`);
+    const number = (input: HTMLInputElement) => Math.max(0, Number(input.value) || 0);
+
+    const clear = () => {
+      error("activity").textContent = "";
+      error("size").textContent = "";
+      activity.removeAttribute("aria-invalid");
+      employees.removeAttribute("aria-invalid");
+    };
+    [activity, employees, turnover, assets, designated].forEach((input) =>
+      input.addEventListener("input", () => {
+        clear();
+        result.hidden = true;
+      }),
+    );
+
+    q<HTMLButtonElement>("[data-nis2-submit]").addEventListener("click", () => {
+      clear();
+      const rule = activity.value as ActivityRule;
+      if (!rule) {
+        error("activity").textContent = copy.activityError;
+        activity.setAttribute("aria-invalid", "true");
+        activity.focus();
+        return;
+      }
+      if (!sizeIndependent(rule) && employees.value === "") {
+        error("size").textContent = copy.sizeError;
+        employees.setAttribute("aria-invalid", "true");
+        employees.focus();
+        return;
+      }
+      const outcome = classify({
+        rule,
+        employees: number(employees),
+        turnover: number(turnover),
+        assets: number(assets),
+        designated: designated.checked,
+      });
+      result.dataset.outcome = outcome.outcome;
+      q("[data-nis2-tag]").textContent = copy.outcomes[outcome.outcome].tag;
+      q("[data-nis2-body]").textContent = copy.outcomes[outcome.outcome].body;
+      const sizeLine = q<HTMLElement>("[data-nis2-size-line]");
+      sizeLine.hidden = sizeIndependent(rule);
+      sizeLine.textContent = copy.sizeLine.replace("{size}", copy.sizes[outcome.size]);
+      const notes = [outcome.borderline && !sizeIndependent(rule) ? copy.borderline : "", outcome.dora ? copy.dora : ""]
+        .filter(Boolean)
+        .join(" ");
+      const notesLine = q<HTMLElement>("[data-nis2-notes]");
+      notesLine.hidden = !notes;
+      notesLine.textContent = notes;
+      q("[data-nis2-basis]").textContent = copy.basis.replace(
+        "{basis}",
+        en ? englishBasis(outcome.basis) : outcome.basis,
+      );
+      q<HTMLElement>("[data-nis2-next]").hidden = outcome.outcome === "out";
+      result.hidden = false;
+    });
+    root.hidden = false;
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    document.querySelectorAll<HTMLElement>("[data-nis2]").forEach(wire);
+  });
+</script>

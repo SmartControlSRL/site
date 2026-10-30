@@ -91,6 +91,8 @@ export interface ServicePageContent {
     body?: string;
     items: Capability[];
   };
+  /** Renders the orientative NIS 2 self-check under the proof list. */
+  nis2Check?: boolean;
   supporting?: {
     eyebrow?: string;
     heading: string;
@@ -152,6 +154,7 @@ const security: Record<Lang, ServicePageContent> = {
         { title: 'Conformitate și guvernanță', body: 'Cerințele legale transformate în măsuri concrete: suport pentru NIS 2, DORA, ISO 27001 și GDPR, politici, analiză de risc, planuri de răspuns și instruire.', items: ['Plan de conformitate NIS 2', 'Suport DORA, ISO 27001 și GDPR', 'Politici și analiză de risc', 'Instruire pentru conducere și angajați'], Icon: Scale },
       ],
     },
+    nis2Check: true,
     proof: {
       heading: 'Conformitate NIS 2 fără hârtii inutile',
       body: 'OUG 155/2024 cere măsuri tehnice reale, nu doar documente. Pentru că implementăm și operăm acele măsuri, planul de conformitate poate fi și executat, nu doar scris.',
@@ -225,6 +228,7 @@ const security: Record<Lang, ServicePageContent> = {
         { title: 'Compliance & governance', body: 'Legal requirements turned into concrete measures: NIS 2, DORA, ISO 27001, and GDPR support, policies, risk analysis, response plans, and training.', items: ['NIS 2 compliance plan', 'DORA, ISO 27001 and GDPR support', 'Policies and risk analysis', 'Training for management and staff'], Icon: Scale },
       ],
     },
+    nis2Check: true,
     proof: {
       heading: 'NIS 2 compliance without needless paperwork',
       body: 'Emergency Ordinance 155/2024 requires real technical measures, not just documents. Because we implement and operate those measures, your compliance plan can be executed, not just written.',

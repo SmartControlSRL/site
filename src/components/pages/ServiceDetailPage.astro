@@ -7,6 +7,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import TextLink from "../TextLink.astro";
 import MailtoLink from "../MailtoLink.astro";
 import DetailMotion from "../DetailMotion.astro";
+import Nis2Check from "../nis2/Nis2Check.astro";
 import { ArrowUpRight } from "@lucide/astro";
 import { getLangFromUrl, localizedPath, useTranslations } from "../../i18n/ui";
 import { homeCopy } from "../../content/home-page";
@@ -125,6 +126,11 @@ const schema = {
               ))}
             </ul>
           </div>
+          {content.nis2Check && (
+            <div class="detail-wrap">
+              <Nis2Check />
+            </div>
+          )}
         </section>
       )
     }
