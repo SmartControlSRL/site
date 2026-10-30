@@ -154,7 +154,8 @@ Orchestrator rulings on every open question raised by the design extraction
     page classifies activity, size and designation against OUG 155/2024 as
     consolidated after Legea 124/2025 (arts. 5, 6, 8, 9 and annexes 1–2; size
     per Legea 346/2004 art. 4 without art. 4^5). It renders only with
-    JavaScript, shows its legal basis and a no-legal-advice notice, and its
+    JavaScript, sits collapsed just above the closing CTA band, shows its
+    legal basis and a no-legal-advice notice, and its
     only follow-up is the existing assessment mail action. Re-check the rules
     whenever the ordinance or its annexes change; any calculator that would
     transmit answers stays prohibited.

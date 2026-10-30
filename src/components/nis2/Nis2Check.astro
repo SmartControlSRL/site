@@ -3,7 +3,7 @@
 // submitted or stored; the answers are classified in the browser and the only
 // follow-up is the page's existing assessment mail action. Hidden until the
 // script runs, so visitors without JavaScript see the static NIS 2 section.
-import { Info } from "@lucide/astro";
+import { ChevronDown, Info } from "@lucide/astro";
 import MailtoLink from "../MailtoLink.astro";
 import { getLangFromUrl, useTranslations } from "../../i18n/ui";
 import { nis2Copy } from "../../content/nis2-check";
@@ -23,9 +23,12 @@ const strings = {
 };
 ---
 
-<div class="nis2" data-nis2 data-lang={lang} data-copy={JSON.stringify(strings)} hidden>
-  <p class="detail-kicker">{copy.eyebrow}</p>
-  <h3 class="nis2-heading">{copy.heading}</h3>
+<details class="nis2" data-nis2 data-lang={lang} data-copy={JSON.stringify(strings)} hidden>
+  <summary>
+    <span class="nis2-kicker">{copy.eyebrow}</span>
+    <span class="nis2-heading">{copy.heading}</span>
+    <ChevronDown class="nis2-chevron" size={18} stroke-width={1.5} aria-hidden="true" />
+  </summary>
   <p class="nis2-intro">{copy.intro}</p>
   <div class="nis2-field">
     <label for="nis2-activity">{copy.activity.label}</label>
@@ -72,10 +75,10 @@ const strings = {
     <p class="nis2-meta" data-nis2-notes></p>
     <p class="nis2-meta" data-nis2-basis></p>
     <p class="nis2-meta" data-nis2-next>{copy.next}</p>
-    <MailtoLink variant="button" subject={t("subject.assessment")} class="nis2-cta">{t("cta.assessment")}</MailtoLink>
+    <p class="nis2-cta"><MailtoLink subject={t("subject.assessment")}>{t("cta.assessment")}</MailtoLink></p>
   </div>
   <p class="nis2-disclaimer">{copy.disclaimer}</p>
-</div>
+</details>
 
 <script>
   import { classify, sizeIndependent, type ActivityRule } from "./classify";

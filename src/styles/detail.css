@@ -955,36 +955,72 @@
   }
 }
 
-/* — NIS 2 self-check (RESOLUTIONS §36): a white card on the proof wash. Teal
-   marks the in-scope outcome because the content is compliance content. — */
+/* — NIS 2 self-check (RESOLUTIONS §36): a collapsed, low-key panel above the
+   closing CTA. Teal marks the in-scope outcome because the content is
+   compliance content. — */
+.svc-nis2 {
+  padding: 0 0 72px;
+}
 .nis2 {
-  margin-top: 64px;
-  padding: 40px 44px;
-  border-radius: var(--radius-xl);
+  max-width: 820px;
+  border: 1px solid var(--color-border-blue);
+  border-radius: var(--radius-lg);
   background: var(--color-surface);
-  box-shadow: var(--shadow-sm);
+  font-size: var(--text-small);
 }
 .nis2[hidden],
 .nis2 [hidden] {
   display: none;
 }
-.nis2 .detail-kicker {
+.nis2 > summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+  padding: 16px 52px 16px 22px;
+  position: relative;
+  list-style: none;
+  cursor: pointer;
+}
+.nis2 > summary::-webkit-details-marker {
+  display: none;
+}
+.nis2 > summary:focus-visible {
+  outline: 2px solid var(--color-bright);
+  outline-offset: 2px;
+  border-radius: var(--radius-lg);
+}
+.nis2-kicker {
+  font: 600 0.75rem/1.6 var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--color-compliance);
 }
 .nis2-heading {
-  margin-top: 10px;
-  font-size: var(--text-h2);
-  line-height: var(--text-h2--line-height);
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 600;
   color: var(--color-navy);
 }
+.nis2-chevron {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  translate: 0 -50%;
+  color: var(--color-bright-blue);
+  transition: rotate 150ms ease;
+}
+.nis2[open] .nis2-chevron {
+  rotate: 180deg;
+}
+.nis2 > :not(summary) {
+  margin-inline: 22px;
+}
 .nis2-intro {
-  margin-top: 12px;
   max-width: 62ch;
   color: var(--color-slate);
 }
 .nis2-field {
-  margin-top: 28px;
+  margin-top: 18px;
   min-width: 0;
 }
 .nis2-field > label,
@@ -1001,8 +1037,8 @@
 .nis2 select,
 .nis2 input[type="number"] {
   width: 100%;
-  margin-top: 8px;
-  padding: 11px 14px;
+  margin-top: 6px;
+  padding: 8px 12px;
   border: 1px solid var(--color-border-blue);
   border-radius: var(--radius-sm);
   background: var(--color-surface);
@@ -1058,8 +1094,8 @@
   display: none;
 }
 .nis2-submit {
-  margin-top: 28px;
-  padding: 11px 22px;
+  margin-top: 18px;
+  padding: 8px 16px;
   border: 1px solid var(--color-navy);
   border-radius: var(--radius-sm);
   background: var(--color-surface);
@@ -1072,8 +1108,8 @@
   background: var(--color-blue-wash);
 }
 .nis2-result {
-  margin-top: 28px;
-  padding: 24px 28px;
+  margin-top: 18px;
+  padding: 16px 18px;
   border-radius: var(--radius-lg);
   background: var(--color-page);
 }
@@ -1096,8 +1132,8 @@
 .nis2-result > .nis2-notice {
   display: flex;
   gap: 10px;
-  margin-top: 14px;
-  padding: 10px 14px;
+  margin-top: 12px;
+  padding: 8px 12px;
   border-left: 2px solid var(--color-bright-blue);
   border-radius: var(--radius-xs);
   background: var(--color-surface);
@@ -1118,22 +1154,17 @@
   color: var(--color-slate);
 }
 .nis2-cta {
-  margin-top: 20px;
+  margin-top: 12px;
+  font-weight: 600;
 }
 .nis2-disclaimer {
-  margin-top: 20px;
-  font-size: var(--text-small);
+  margin-top: 14px;
+  margin-bottom: 18px;
+  font-size: 0.75rem;
   color: var(--color-cool);
 }
 @media (max-width: 900px) {
-  .nis2 {
-    margin-top: 48px;
-    padding: 28px 22px;
-  }
   .nis2-numbers {
     grid-template-columns: minmax(0, 1fr);
-  }
-  .nis2-result {
-    padding: 20px;
   }
 }

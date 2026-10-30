@@ -126,11 +126,6 @@ const schema = {
               ))}
             </ul>
           </div>
-          {content.nis2Check && (
-            <div class="detail-wrap">
-              <Nis2Check />
-            </div>
-          )}
         </section>
       )
     }
@@ -304,6 +299,15 @@ const schema = {
         </ul>
       </div>
     </section>
+    {
+      content.nis2Check && (
+        <div class="svc-nis2">
+          <div class="detail-wrap">
+            <Nis2Check />
+          </div>
+        </div>
+      )
+    }
     <section class="detail-section detail-close">
       <div class="detail-wrap detail-close-grid">
         <div>
