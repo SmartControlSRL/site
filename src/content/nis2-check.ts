@@ -25,6 +25,7 @@ export interface Nis2Copy {
   dora: string;
   basis: string;
   next: string;
+  notice: string;
   disclaimer: string;
 }
 
@@ -98,7 +99,8 @@ export const nis2Copy: Record<Lang, Nis2Copy> = {
     dora: 'Pentru entitățile supuse DORA, din OUG 155/2024 se aplică doar art. 5–10 și art. 18; cerințele de securitate și raportare vin din DORA.',
     basis: 'Temei: {basis} din OUG 155/2024.',
     next: 'Notificarea se face prin Instrumentul NIS de pe dnsc.ro.',
-    disclaimer: 'Rezultat orientativ, calculat în browser. Nu înlocuiește analiza juridică. Răspunsurile nu sunt trimise și nu sunt salvate.',
+    notice: 'Rezultatul este doar orientativ. Nu reprezintă o încadrare oficială și nu înlocuiește analiza juridică a situației firmei.',
+    disclaimer: 'Calculul se face în browser. Răspunsurile nu sunt trimise și nu sunt salvate.',
   },
   en: {
     eyebrow: 'Quick check',
@@ -169,6 +171,7 @@ export const nis2Copy: Record<Lang, Nis2Copy> = {
     dora: 'For entities subject to DORA, only arts. 5–10 and 18 of Emergency Ordinance 155/2024 apply; security and reporting requirements come from DORA.',
     basis: 'Legal basis: {basis} of Emergency Ordinance 155/2024.',
     next: 'Notification is made through the NIS Instrument on dnsc.ro.',
-    disclaimer: 'Indicative result, calculated in your browser. It does not replace legal advice. Your answers are not sent or stored.',
+    notice: 'This result is indicative only. It is not an official classification and does not replace a legal review of your company’s situation.',
+    disclaimer: 'Calculated in your browser. Your answers are not sent or stored.',
   },
 };

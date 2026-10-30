@@ -3,6 +3,7 @@
 // submitted or stored; the answers are classified in the browser and the only
 // follow-up is the page's existing assessment mail action. Hidden until the
 // script runs, so visitors without JavaScript see the static NIS 2 section.
+import { Info } from "@lucide/astro";
 import MailtoLink from "../MailtoLink.astro";
 import { getLangFromUrl, useTranslations } from "../../i18n/ui";
 import { nis2Copy } from "../../content/nis2-check";
@@ -65,6 +66,7 @@ const strings = {
   <button type="button" class="nis2-submit" data-nis2-submit>{copy.submit}</button>
   <div class="nis2-result" data-nis2-result aria-live="polite" hidden>
     <p class="nis2-tag" data-nis2-tag></p>
+    <p class="nis2-notice"><Info aria-hidden="true" />{copy.notice}</p>
     <p data-nis2-body></p>
     <p class="nis2-meta" data-nis2-size-line></p>
     <p class="nis2-meta" data-nis2-notes></p>

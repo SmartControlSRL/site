@@ -1093,6 +1093,26 @@
   background: var(--color-compliance-tint);
   color: var(--color-compliance);
 }
+.nis2-result > .nis2-notice {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-left: 2px solid var(--color-bright-blue);
+  border-radius: var(--radius-xs);
+  background: var(--color-surface);
+  font-size: var(--text-small);
+  font-weight: 600;
+  color: var(--color-navy);
+}
+.nis2-notice svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  stroke-width: 1.5;
+  color: var(--color-bright-blue);
+}
 .nis2-meta {
   font-size: var(--text-small);
   color: var(--color-slate);
