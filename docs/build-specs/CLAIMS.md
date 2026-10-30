@@ -28,6 +28,7 @@ Romanian and English wording must be approved together.
 | C-009 | Initial assessment offer, duration and price | None until approved; neutral “request an assessment” CTA is allowed | `docs/build-specs/oferta-servicii.txt:563-572` is a source mention, not current commercial approval. Record eligibility, deliverables, exclusions, duration, availability and expiry. | Commercial: pending; Legal: pending | **Blocked**; duration/free claims must not be published |
 | C-010 | ROI or post-launch performance reporting | Only project-specific proposals using agreed indicators and interval | No unconditional 90-day ROI/report promise. Measurement scope and baseline belong in the contract or statement of work. | Technical: pending; Commercial: pending | Safe scoped wording only; review per proposal template |
 | C-011 | `Echipa Smart Control răspunde direct de livrare și coordonează specialiștii și partenerii tehnologici necesari. Fiecare recomandare pleacă de la măsurători făcute în infrastructura clientului.` / `The Smart Control team remains directly accountable for delivery and coordinates the specialists and technology partners each project requires. Every recommendation starts from measurements in the client's own infrastructure.` | Homepage hero, description and organization metadata using equivalent bounded wording | Site-owner confirmation in the Codex task on 2026-08-27. Applies to the current delivery model; do not extrapolate into an all-in-house or universal service-level promise. | Site owner: approved | **Approved 2026-08-27**; reconfirm after a material delivery-model or wording change |
+| C-012 | `Echipa include auditori de securitate cibernetică atestați de DNSC`; `echipă de pentest certificată`; `Suntem partener Isovalent, iar inginerii noștri au certificări Cilium`; `în mediul vostru sau în laboratorul nostru`; the six Kubernetes scenarios as delivered work / EN equivalents | Networking & Cybersecurity page (RO / EN) only | Site owner confirmed Alin Iorguta's pre-publication checklist items in the Claude Code session on 2026-10-30. No certificate names, counts, auditor identities or partner tier are approved; cloud-provider partnerships remain unconfirmed and unnamed. | Site owner: confirmed | **Owner-confirmed 2026-10-30**; reconfirm by 2027-04-30 or when certifications, the partnership or the auditor roster change |
 
 ## Prohibited extrapolations
 
@@ -63,3 +64,13 @@ right cluster (desktop) and at the foot of the mobile menu, same wording in both
 locales. The machine check (`scope: navigation-brand-label`) now permits only a
 `data-brand-since` span with that exact text inside the site `<header>` that
 holds the main navigation. Founding/tenure prose and metadata remain blocked.
+
+### 2026-10-30 — Networking & Cybersecurity checklist (C-012)
+
+The site owner confirmed these items from Alin Iorguta's checklist:
+DNSC-certified auditors, team certifications, the lab, Isovalent partner status
+with Cilium-certified engineers, and delivery of all six Kubernetes scenarios.
+The page uses only the generic wording registered under C-012. Cloud
+partnerships were confirmed without naming providers, so AWS / Azure / Google
+Cloud stay off the page. The emergency phone line, SOC triage time and
+assessment duration stay blocked (email-only contact, C-007, C-009).
