@@ -955,6 +955,184 @@
   }
 }
 
+/* — Security-page sections: why now, spotlight, process, technology, FAQ. — */
+.svc-why {
+  padding-bottom: 0;
+}
+.svc-why-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px 40px;
+}
+.svc-why-list li {
+  padding-top: 20px;
+  border-top: 2px solid var(--color-blue-wash);
+}
+.svc-why-list h3 {
+  font-size: 1.2rem;
+  line-height: 1.35;
+  font-weight: 600;
+}
+.svc-why-list p {
+  margin-top: 10px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-slate);
+}
+.svc-proof-intro .detail-kicker + h2 {
+  margin-top: 16px;
+}
+/* On white, the icon chips take the wash instead of a white card. */
+.svc-spotlight .svc-proof-chip {
+  background: var(--color-blue-wash);
+  box-shadow: none;
+}
+.svc-process .detail-steps {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.svc-tech-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+  gap: 48px 72px;
+  align-items: start;
+}
+.svc-tech-vendors h2 {
+  margin-top: 16px;
+}
+.svc-tech-vendors > p:not(.detail-kicker),
+.svc-tech-products > p:not(.detail-kicker) {
+  margin-top: 16px;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--color-slate);
+}
+.svc-logos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 28px 44px;
+  margin-top: 36px;
+}
+.svc-logos img {
+  display: block;
+  max-width: none;
+}
+.svc-logos span {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-slate);
+}
+.svc-tech-products h3 {
+  margin-top: 16px;
+  font-size: 1.5rem;
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+.svc-product-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+.svc-product-cards a {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 24px;
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.25s;
+}
+.svc-product-cards a:hover {
+  box-shadow: var(--shadow-lg);
+}
+.svc-product-cards a:focus-visible {
+  outline: 3px solid var(--color-bright);
+  outline-offset: 3px;
+}
+.svc-product-name {
+  font: 700 1.125rem/1.3 var(--font-mono);
+  color: var(--color-navy);
+}
+.svc-product-body {
+  margin-top: 8px;
+  flex: 1;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--color-slate);
+}
+.svc-product-link {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: 16px;
+  font-weight: 600;
+  color: var(--color-royal);
+}
+.svc-faq-list details {
+  border-top: 1px solid var(--color-border-blue);
+}
+.svc-faq-list details:last-child {
+  border-bottom: 1px solid var(--color-border-blue);
+}
+.svc-faq-list summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-block: 20px;
+  list-style: none;
+  cursor: pointer;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+.svc-faq-list summary::-webkit-details-marker {
+  display: none;
+}
+.svc-faq-list summary:focus-visible {
+  outline: 2px solid var(--color-bright);
+  outline-offset: 2px;
+}
+.svc-faq-list summary svg {
+  flex: none;
+  margin-top: 2px;
+  color: var(--color-bright-blue);
+  transition: rotate 150ms ease;
+}
+.svc-faq-list details[open] summary svg {
+  rotate: 180deg;
+}
+.svc-faq-list details p {
+  max-width: 62ch;
+  padding-bottom: 22px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-slate);
+}
+@media (max-width: 1000px) {
+  .svc-process .detail-steps {
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  }
+  .svc-tech-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 760px) {
+  .svc-why-list,
+  .svc-product-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .svc-product-cards a,
+  .svc-faq-list summary svg {
+    transition: none;
+  }
+}
+
 /* — NIS 2 self-check (RESOLUTIONS §36): a collapsed, low-key panel above the
    closing CTA. Teal marks the in-scope outcome because the content is
    compliance content. — */
